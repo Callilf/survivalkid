@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	Button button0;
+	Button button1;
 	TextView testView0;
 	
     @Override
@@ -20,13 +21,22 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         
-        button0 = (Button) findViewById(R.id.button1);
+        button0 = (Button) findViewById(R.id.Button0);
+        button1 = (Button) findViewById(R.id.Button01);
         testView0 = (TextView) findViewById(R.id.textView1);
         
         button0.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View v) {
         		testView0.setText("T'es un pd !");
         		testView0.setTextColor(Color.parseColor("#FF0000"));
+        		testView0.setTextSize(25);
+        	}
+        });
+        
+        button1.setOnClickListener(new View.OnClickListener() {
+        	public void onClick(View v) {
+        		testView0.setText("T'es cool !");
+        		testView0.setTextColor(Color.parseColor("#22FF22"));
         		testView0.setTextSize(25);
         	}
         });

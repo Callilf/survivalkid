@@ -13,12 +13,21 @@
         tools:context=".MainActivity" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/Button0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
         android:text="Si tu cliques la, t&apos;es un pd !" />
+
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp"
+        android:text="Mais la t&apos;es cool." />
 
 </RelativeLayout>
