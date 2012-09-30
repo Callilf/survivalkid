@@ -1,50 +1,25 @@
 package com.survivalkid;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
-
-	Button button0;
-	Button button1;
-	TextView testView0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Set fullscreen and remove the title bar
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         
-        
-        button0 = (Button) findViewById(R.id.Button0);
-        button1 = (Button) findViewById(R.id.Button01);
-        testView0 = (TextView) findViewById(R.id.textView1);
-        
-        button0.setOnClickListener(new View.OnClickListener() {
-        	public void onClick(View v) {
-        		testView0.setText("T'es un pd !");
-        		testView0.setTextColor(Color.parseColor("#FF0000"));
-        		testView0.setTextSize(25);
-        	}
-        });
-        
-        button1.setOnClickListener(new View.OnClickListener() {
-        	public void onClick(View v) {
-        		testView0.setText("T'es cool !");
-        		testView0.setTextColor(Color.parseColor("#22FF22"));
-        		testView0.setTextSize(25);
-        	}
-        });
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
+        RelativeLayout back = (RelativeLayout) findViewById(R.id.background01);
+        back.setBackgroundResource(R.drawable.background);
     }
 }
