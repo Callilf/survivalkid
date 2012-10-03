@@ -1,9 +1,7 @@
 package com.survivalkid;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,6 +17,7 @@ public class MainGamePanel extends SurfaceView implements
 
 	private MainThread thread;
 	private Character character;
+	private Yugo yugo;
 
 	public MainGamePanel(Context context) {
 		super(context);
@@ -27,7 +26,15 @@ public class MainGamePanel extends SurfaceView implements
 
 		// create droid and load bitmap
 		character = new Character(BitmapFactory.decodeResource(getResources(),
-				R.drawable.character1), 150, 150);
+				R.drawable.character1), 550, 250);
+		
+		// create Elaine and load bitmap
+		yugo = new Yugo(
+				BitmapFactory.decodeResource(getResources(), R.drawable.yugo)
+				, 150, 150	// initial position
+				, 6, 12	// width and height of sprite
+				, 20, 45);	// FPS and number of frames in the animation
+
 
 		// create the game loop thread
 		thread = new MainThread(getHolder(), this);
@@ -35,6 +42,16 @@ public class MainGamePanel extends SurfaceView implements
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 	}
+	
+	/**
+	 * This is the game update method. It iterates through all the objects
+	 * and calls their update method if they have one or calls specific
+	 * engine's update method.
+	 */
+	public void update() {
+		yugo.update(System.currentTimeMillis());
+	}
+
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
@@ -100,6 +117,7 @@ public class MainGamePanel extends SurfaceView implements
 			// fills the canvas with black
 			canvas.drawColor(Color.BLACK);
 			character.draw(canvas);
+			yugo.draw(canvas);
 		}
 	}
 }
