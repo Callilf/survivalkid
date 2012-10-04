@@ -1,5 +1,7 @@
 package com.survivalkid;
 
+import com.survivalkid.test.TestGamePanel;
+
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -13,7 +15,7 @@ public class MainActivity extends Activity {
 	/** TAG for the logs. */
 	private static final String TAG = MainActivity.class.getSimpleName();
 	
-	MainGamePanel gamePanel;
+	TestGamePanel gamePanel;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,7 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		gamePanel = new MainGamePanel(this);
+		gamePanel = new TestGamePanel(this);
 		setContentView(gamePanel);
 		Log.d(TAG, "View added");
 	}
