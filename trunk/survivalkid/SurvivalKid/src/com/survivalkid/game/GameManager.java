@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.game.manager.CharacterManager;
+import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
 import com.survivalkid.game.manager.ObjectManager;
 import com.survivalkid.game.thread.MainThread;
