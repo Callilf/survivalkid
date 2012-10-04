@@ -1,48 +1,42 @@
 package com.survivalkid.game;
 
-import com.survivalkid.R;
-import com.survivalkid.game.thread.MainThread;
-import com.survivalkid.test.Character;
-import com.survivalkid.test.Yugo;
-
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.survivalkid.game.manager.CharacterManager;
+import com.survivalkid.game.manager.ItemManager;
+import com.survivalkid.game.manager.ObjectManager;
+import com.survivalkid.game.thread.MainThread;
 
 public class GameManager extends SurfaceView implements
 		SurfaceHolder.Callback {
 
 	private static final String TAG = GameManager.class.getSimpleName();
 
+	/** The thread corresponding to the game loop. */
 	private MainThread thread;
-	private Character character;
-	private Yugo yugo;
+	
+	private CharacterManager characterManager;
+	private ObjectManager enemyManager;
+	private ObjectManager itemManager;
+
 
 	public GameManager(Context context) {
 		super(context);
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
-		// create droid and load bitmap
-		character = new Character(BitmapFactory.decodeResource(getResources(),
-				R.drawable.character1), 550, 250);
-		
-		// create Elaine and load bitmap
-		yugo = new Yugo(
-				BitmapFactory.decodeResource(getResources(), R.drawable.yugo)
-				, 150, 150	// initial position
-				, 6, 12	// width and height of sprite
-				, 20, 45);	// FPS and number of frames in the animation
-
-
 		// create the game loop thread
 		thread = new MainThread(getHolder(), this);
+		
+		characterManager = new CharacterManager();
+		enemyManager = new EnemyManager();
+		itemManager = new ItemManager();
 
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
@@ -54,10 +48,26 @@ public class GameManager extends SurfaceView implements
 	 * engine's update method.
 	 */
 	public void update() {
-		yugo.update(System.currentTimeMillis());
+		enemyManager.update();
+		itemManager.update();
+		characterManager.update();
 	}
 
+	@Override
+	public void onDraw(Canvas canvas) {
+		if (canvas != null) {
+			// fills the canvas with black
+			canvas.drawColor(Color.BLACK);
 
+			enemyManager.draw();
+			itemManager.draw();
+			characterManager.draw();
+		}
+	}
+
+	
+	//------------------------------------------------------------------------
+	// Surface managing
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
 	}
@@ -89,40 +99,5 @@ public class GameManager extends SurfaceView implements
 	public void stop() {
 		thread.setRunning(false);
 		((Activity) getContext()).finish();
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			// delegating event handling to the droid
-			character.handleActionDown((int) event.getX(), (int) event.getY());
-
-			Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
-		}
-		if (event.getAction() == MotionEvent.ACTION_MOVE) {
-			// the gestures
-			if (character.isTouched()) {
-				// the droid was picked up and is being dragged
-				character.setX((int) event.getX());
-				character.setY((int) event.getY());
-			}
-		}
-		if (event.getAction() == MotionEvent.ACTION_UP) {
-			// touch was released
-			if (character.isTouched()) {
-				character.setTouched(false);
-			}
-		}
-		return true;
-	}
-
-	@Override
-	public void onDraw(Canvas canvas) {
-		if (canvas != null) {
-			// fills the canvas with black
-			canvas.drawColor(Color.BLACK);
-			character.draw(canvas);
-			yugo.draw(canvas);
-		}
 	}
 }
