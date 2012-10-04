@@ -17,15 +17,19 @@ public abstract class GameEntity {
 	public abstract void draw();
 	public abstract void die();
 	
-	
+	/**
+	 * Constructor called by parents class
+	 * 
+	 * @param _name name of the entity
+	 * @param _sprite sprite of the entity
+	 */
+	public GameEntity(String _name, Rect _sprite) {
+		id = lastId++;
+		name = _name;
+		sprite = _sprite;
+	}
 	
 	//---- Getters and Setters
-	public static int getLastId() {
-		return lastId;
-	}
-	public static void setLastId(int lastId) {
-		GameEntity.lastId = lastId;
-	}
 	public int getId() {
 		return id;
 	}
