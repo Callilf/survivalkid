@@ -5,14 +5,18 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
 import com.survivalkid.game.manager.ObjectManager;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.MainThread;
+import com.survivalkid.game.util.MoveUtil;
 
 public class GameManager extends SurfaceView implements
 		SurfaceHolder.Callback {
@@ -29,6 +33,10 @@ public class GameManager extends SurfaceView implements
 
 	public GameManager(Context context) {
 		super(context);
+		
+		// initialize of the context singleton
+		GameContext.getSingleton().setContext(context);
+		
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
@@ -66,6 +74,16 @@ public class GameManager extends SurfaceView implements
 		}
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		int x = (int) event.getX();
+		int y = (int) event.getY();
+		
+		Personage currentChar = characterManager.getCharacterList(0);
+		MoveUtil.calculMove(x, y, event.getAction(), currentChar);
+
+		return true;
+	}
 	
 	//------------------------------------------------------------------------
 	// Surface managing

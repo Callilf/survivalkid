@@ -83,7 +83,11 @@ public abstract class GameEntity {
 		name = _name;
 		sprite = _sprite;
 	}
-
+	
+	public boolean onFloor() {
+		return false;
+	}
+	
 	// ---- Getters and Setters
 	public int getId() {
 		return id;
@@ -153,4 +157,5 @@ public abstract class GameEntity {
 	public void setSubjectToGravity(boolean _isSubjectToGravity) {
 		this.isSubjectToGravity = _isSubjectToGravity;
 	}
+
 }
