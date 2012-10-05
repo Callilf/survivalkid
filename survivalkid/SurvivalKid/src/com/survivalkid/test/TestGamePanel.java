@@ -36,7 +36,7 @@ public class TestGamePanel extends SurfaceView implements
 		yugo = new Yugo(
 				BitmapFactory.decodeResource(getResources(), R.drawable.yugo)
 				, 150, 150	// initial position
-				, 6, 12	// width and height of sprite
+				, 6, 12		// nbColumn and nbRows of spriteSheet
 				, 20, 45);	// FPS and number of frames in the animation
 
 
