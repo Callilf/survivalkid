@@ -59,7 +59,8 @@ public class GameManager extends SurfaceView implements
 		AnimatedSprite persoSprite = new AnimatedSprite(BitmapFactory.decodeResource(getResources(), R.drawable.yugo),150,150,
 				6,12, 15);
 		
-		persoSprite.addAnimation("run", new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, 15);
+		persoSprite.addAnimation("run", new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, 20);
+		persoSprite.play("run");
 		Personage perso = new Personage(persoSprite);
 		characterManager.addCharacter(perso);
 		
@@ -72,9 +73,10 @@ public class GameManager extends SurfaceView implements
 	 * engine's update method.
 	 */
 	public void update() {
-		enemyManager.update();
-		itemManager.update();
-		characterManager.update();
+		long gameTime = System.currentTimeMillis();
+		enemyManager.update(gameTime);
+		itemManager.update(gameTime);
+		characterManager.update(gameTime);
 	}
 
 	@Override
