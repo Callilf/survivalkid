@@ -1,14 +1,14 @@
-package com.survivalkid.game.entity.character;
+package com.survivalkid.game.entity.personage;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.entity.GameEntity;
 
-public class Character extends GameEntity {
+public class Personage extends GameEntity {
 
 	/**
 	 * Create character
 	 */
-	public Character() {
+	public Personage() {
 		super("CharacterA", new AnimatedSprite());
 		// TODO Auto-generated constructor stub
 	}

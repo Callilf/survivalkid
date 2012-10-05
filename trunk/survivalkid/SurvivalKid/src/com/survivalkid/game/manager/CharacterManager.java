@@ -1,11 +1,12 @@
 package com.survivalkid.game.manager;
 
 import java.util.List;
-import com.survivalkid.game.entity.character.Character;
+
+import com.survivalkid.game.entity.personage.Personage;
 
 public class CharacterManager implements IManager {
 
-	private List<Character> characterList;
+	private List<Personage> characterList;
 
 	public void create() {
 		// TODO Auto-generated method stub
@@ -20,5 +21,13 @@ public class CharacterManager implements IManager {
 	public void draw() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public List<Personage> getCharacterList() {
+		return characterList;
+	}
+	
+	public Personage getCharacterList(int num) {
+		return characterList.get(num);
 	}
 }
