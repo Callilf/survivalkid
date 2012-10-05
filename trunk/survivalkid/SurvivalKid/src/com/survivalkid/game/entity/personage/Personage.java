@@ -10,6 +10,7 @@ public class Personage extends GameEntity {
 	 */
 	public Personage(AnimatedSprite sprite) {
 		super("CharacterA", sprite);
+		setSubjectToGravity(true);
 		// TODO Auto-generated constructor stub
 	}
 
