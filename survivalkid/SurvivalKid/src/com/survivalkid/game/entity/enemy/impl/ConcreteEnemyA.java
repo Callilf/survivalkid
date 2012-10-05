@@ -21,12 +21,6 @@ public class ConcreteEnemyA extends EnemyEntity {
 	}
 
 	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void die() {
 		// TODO Auto-generated method stub
 		

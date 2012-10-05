@@ -1,5 +1,7 @@
 package com.survivalkid.game.entity;
 
+import android.graphics.Canvas;
+
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -21,7 +23,9 @@ public abstract class GameEntity {
 
 	public abstract void collide(GameEntity _gameEntity);
 
-	public abstract void draw();
+	public void draw(Canvas canvas) {
+		sprite.draw(canvas);
+	}
 
 	public abstract void die();
 

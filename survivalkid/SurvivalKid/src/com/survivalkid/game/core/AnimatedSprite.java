@@ -15,7 +15,6 @@ public class AnimatedSprite {
 		//Spritesheet and relatives attributes
 		private Bitmap bitmap;		// the animation sequence
 		private Rect sourceRect;	// the rectangle to be drawn from the animation bitmap
-		private int frameNr;		// number of frames in animation
 		private int framePerRow;	// number of frames in a single row of the png
 		private long frameTicker;	// the time of the last frame update
 		private int framePeriod;	// milliseconds between each frame (1000/fps)
@@ -47,12 +46,11 @@ public class AnimatedSprite {
 		 * @param fps the fps of the animation (usually fluent around 20)
 		 * @param frameCount the number of frames
 		 */
-		public AnimatedSprite(Bitmap bitmap, int x, int y, int nbColum, int nbRows, int fps, int frameCount) {
+		public AnimatedSprite(Bitmap bitmap, int x, int y, int nbColum, int nbRows, int fps) {
 			this.bitmap = bitmap;
 			this.x = x;
 			this.y = y;
 			currentFrame = 0;
-			frameNr = frameCount;
 			framePerRow = nbColum;
 			width = bitmap.getWidth() / nbColum;
 			height = bitmap.getHeight() / nbRows;
@@ -88,13 +86,13 @@ public class AnimatedSprite {
 					
 					//Select the correct frame
 					currentIndex++;
-					if(currentIndex >=  animations.get(currentAnimation).getFrameList().size()) {
+					if(currentIndex >=  animations.get(currentAnimation).getFrameList().length) {
 						currentIndex = 0;
 					}
-					currentFrame = animations.get(currentAnimation).getFrameList().get(currentIndex);
+					currentFrame = animations.get(currentAnimation).getFrameList()[currentIndex];
 				}
 			} else {
-				currentFrame = animations.get(currentAnimation).getFrameList().get(currentIndex);
+				currentFrame = animations.get(currentAnimation).getFrameList()[currentIndex];
 			}
 			
 			// define the rectangle to cut out sprite
@@ -127,7 +125,7 @@ public class AnimatedSprite {
 		 * @param frameList the frame list. Ex: {0,1,2,3,2,1,0}
 		 * @param _fps the fps of the animation (fluent around 15 usually)
 		 */
-		public void addAnimation(String _name, List<Integer> _frameList, int _fps) {
+		public void addAnimation(String _name, int[] _frameList, int _fps) {
 			Animation anim = new Animation(_name, _frameList, _fps);
 			animations.put(_name, anim);
 		}

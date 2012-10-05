@@ -1,14 +1,13 @@
 package com.survivalkid.game.core;
 
-import java.util.List;
 
 public class Animation {
 
 	private String name;
-	private List<Integer> frameList;
+	private int[] frameList;
 	private int fps;
 	
-	public Animation(String _name, List<Integer> _frameList, int _fps) {
+	public Animation(String _name, int[] _frameList, int _fps) {
 		name = _name;
 		frameList = _frameList;
 		fps = _fps;
@@ -31,14 +30,14 @@ public class Animation {
 	/**
 	 * @return the frameList
 	 */
-	public List<Integer> getFrameList() {
+	public int[] getFrameList() {
 		return frameList;
 	}
 
 	/**
 	 * @param frameList the frameList to set
 	 */
-	public void setFrameList(List<Integer> frameList) {
+	public void setFrameList(int[] frameList) {
 		this.frameList = frameList;
 	}
 

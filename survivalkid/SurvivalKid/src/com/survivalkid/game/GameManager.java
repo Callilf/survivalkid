@@ -1,7 +1,10 @@
 package com.survivalkid.game;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
@@ -9,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.survivalkid.R;
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
@@ -49,6 +54,16 @@ public class GameManager extends SurfaceView implements
 
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
+		
+		// create Elaine and load bitmap
+		AnimatedSprite persoSprite = new AnimatedSprite(BitmapFactory.decodeResource(getResources(), R.drawable.yugo),150,150,
+				6,12, 15);
+		
+		persoSprite.addAnimation("run", new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}, 15);
+		Personage perso = new Personage(persoSprite);
+		characterManager.addCharacter(perso);
+		
+		
 	}
 	
 	/**
@@ -68,9 +83,9 @@ public class GameManager extends SurfaceView implements
 			// fills the canvas with black
 			canvas.drawColor(Color.BLACK);
 
-			enemyManager.draw();
-			itemManager.draw();
-			characterManager.draw();
+			enemyManager.draw(canvas);
+			itemManager.draw(canvas);
+			characterManager.draw(canvas);
 		}
 	}
 
