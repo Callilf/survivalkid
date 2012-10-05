@@ -22,6 +22,7 @@ public abstract class GameEntity {
 	private boolean isSubjectToGravity;
 	
 	public void update(long gameTime) {
+		move();
 		sprite.update(gameTime);
 	}
 
@@ -42,7 +43,7 @@ public abstract class GameEntity {
 		addX(speedX);
 		addY(speedY);
 		if (isSubjectToGravity) {
-			speedY -= MoveUtil.GRAVITY;
+			speedY = Math.min(speedY+MoveUtil.GRAVITY,5);
 		}
 	}
 
