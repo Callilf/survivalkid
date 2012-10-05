@@ -1,7 +1,6 @@
 package com.survivalkid.game.entity;
 
-import android.graphics.Rect;
-
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.util.MoveUtil;
 
 public abstract class GameEntity {
@@ -13,7 +12,7 @@ public abstract class GameEntity {
 	/** The name of the gameEntity. */
 	private String name;
 	/** The sprite (will be an animation in the future). */
-	private Rect sprite;
+	private AnimatedSprite sprite;
 
 	// Speed attributes
 	private int speedX;
@@ -40,16 +39,16 @@ public abstract class GameEntity {
 	}
 
 	private void addY(int _dy) {
-		int newY = sprite.top + _dy;
+		int newY = sprite.getY() + _dy;
 		if (newY < 0) {
 			newY = 0;
 			speedY = 0;
-		} else if (newY + sprite.height() > MoveUtil.MAX_Y) {
-			newY = MoveUtil.MAX_Y - sprite.height();
+		} else if (newY + sprite.getHeight() > MoveUtil.MAX_Y) {
+			newY = MoveUtil.MAX_Y - sprite.getHeight();
 			speedY = 0;
 		}
 		// Now set the new X
-		sprite.offset(0, newY - sprite.top);
+		sprite.offset(0, newY - sprite.getY());
 	}
 
 	/**
@@ -59,16 +58,16 @@ public abstract class GameEntity {
 	 * @param _dx
 	 */
 	private void addX(int _dx) {
-		int newX = sprite.left + _dx;
+		int newX = sprite.getX() + _dx;
 		if (newX < 0) {
 			newX = 0;
 			speedX = 0;
-		} else if (newX + sprite.width() > MoveUtil.MAX_X) {
-			newX = MoveUtil.MAX_X - sprite.width();
+		} else if (newX + sprite.getWidth() > MoveUtil.MAX_X) {
+			newX = MoveUtil.MAX_X - sprite.getWidth();
 			speedX = 0;
 		}
 		// Now set the new X
-		sprite.offset(newX - sprite.left, 0);
+		sprite.offset(newX - sprite.getX(), 0);
 	}
 
 	/**
@@ -79,7 +78,7 @@ public abstract class GameEntity {
 	 * @param _sprite
 	 *            sprite of the entity
 	 */
-	public GameEntity(String _name, Rect _sprite) {
+	public GameEntity(String _name, AnimatedSprite _sprite) {
 		id = lastId++;
 		name = _name;
 		sprite = _sprite;
@@ -102,11 +101,11 @@ public abstract class GameEntity {
 		this.name = name;
 	}
 
-	public Rect getSprite() {
+	public AnimatedSprite getSprite() {
 		return sprite;
 	}
 
-	public void setSprite(Rect sprite) {
+	public void setSprite(AnimatedSprite sprite) {
 		this.sprite = sprite;
 	}
 

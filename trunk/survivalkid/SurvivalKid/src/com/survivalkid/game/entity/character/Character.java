@@ -1,7 +1,6 @@
 package com.survivalkid.game.entity.character;
 
-import android.graphics.Rect;
-
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.entity.GameEntity;
 
 public class Character extends GameEntity {
@@ -10,7 +9,7 @@ public class Character extends GameEntity {
 	 * Create character
 	 */
 	public Character() {
-		super("CharacterA", new Rect());
+		super("CharacterA", new AnimatedSprite());
 		// TODO Auto-generated constructor stub
 	}
 

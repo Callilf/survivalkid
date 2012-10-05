@@ -1,7 +1,6 @@
 package com.survivalkid.game.entity.item.impl;
 
-import android.graphics.Rect;
-
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 
@@ -11,7 +10,7 @@ public class ConcreteItemA extends ItemEntity {
 	 * Create item
 	 */
 	public ConcreteItemA() {
-		super("ItemA", new Rect(), 3);
+		super("ItemA", new AnimatedSprite(), 3);
 		// TODO Auto-generated constructor stub
 	}
 

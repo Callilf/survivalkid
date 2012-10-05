@@ -24,8 +24,8 @@ public class AnimatedSprite {
 		private int x;
 		private int y;
 		//Height and Width
-		private int spriteWidth;
-		private int spriteHeight;
+		private int width;
+		private int height;
 		
 		//Map of animations
 		private Map<String,Animation> animations;
@@ -54,13 +54,19 @@ public class AnimatedSprite {
 			currentFrame = 0;
 			frameNr = frameCount;
 			framePerRow = nbColum;
-			spriteWidth = bitmap.getWidth() / nbColum;
-			spriteHeight = bitmap.getHeight() / nbRows;
-			sourceRect = new Rect(0, 0, spriteWidth, spriteHeight);
+			width = bitmap.getWidth() / nbColum;
+			height = bitmap.getHeight() / nbRows;
+			sourceRect = new Rect(0, 0, width, height);
 			framePeriod = 1000 / fps;
 			frameTicker = 0l;
 			
 			animations = new HashMap<String,Animation>();
+		}
+		
+		
+		public AnimatedSprite() {
+			x = 0;
+			y = 0;
 		}
 
 
@@ -69,6 +75,10 @@ public class AnimatedSprite {
 		 * @param gameTime current time
 		 */
 		public void update(long gameTime) {
+			if(bitmap == null || sourceRect == null) {
+				return;
+			}
+			
 			//If there is an animation running
 			if(animations.size() == 0 ) {
 				currentFrame = 0;
@@ -92,10 +102,10 @@ public class AnimatedSprite {
 			row = currentFrame/framePerRow;
 			int frameOfTheRow = currentFrame%framePerRow;
 				
-			this.sourceRect.left = (frameOfTheRow * spriteWidth);
-			this.sourceRect.right = this.sourceRect.left + spriteWidth;
-			this.sourceRect.top = row*spriteHeight;
-		    this.sourceRect.bottom = this.sourceRect.top + spriteHeight;
+			this.sourceRect.left = (frameOfTheRow * width);
+			this.sourceRect.right = this.sourceRect.left + width;
+			this.sourceRect.top = row*height;
+		    this.sourceRect.bottom = this.sourceRect.top + height;
 		}
 
 		
@@ -105,8 +115,10 @@ public class AnimatedSprite {
 		 */
 		public void draw(Canvas canvas) {
 			// where to draw the sprite
-			Rect destRect = new Rect(getX(), getY(), getX() + spriteWidth, getY() + spriteHeight);
-			canvas.drawBitmap(bitmap, sourceRect, destRect, null);
+			if(bitmap != null && sourceRect != null) {
+				Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
+				canvas.drawBitmap(bitmap, sourceRect, destRect, null);
+			}
 		}
 		
 		/**
@@ -138,6 +150,16 @@ public class AnimatedSprite {
 			currentIndex = 0;
 		}
 		
+		/**
+		 * Translate the sprite.
+		 * @param _x horizontal translation 
+		 * @param _y vertical translation
+		 */
+		public void offset(int _x, int _y) {
+			x += _x;
+			y += _y;
+		}
+		
 		//----------------------------------------------------------------------------
 		//Getters & Setters ----------------------------------------------------------
 		/**
@@ -167,5 +189,56 @@ public class AnimatedSprite {
 		public void setY(int y) {
 			this.y = y;
 		}
-	
+
+
+		/**
+		 * @return the width
+		 */
+		public int getWidth() {
+			return width;
+		}
+
+
+		/**
+		 * @param width the width to set
+		 */
+		public void setWidth(int width) {
+			this.width = width;
+		}
+
+
+		/**
+		 * @return the height
+		 */
+		public int getHeight() {
+			return height;
+		}
+
+
+		/**
+		 * @param height the height to set
+		 */
+		public void setHeight(int height) {
+			this.height = height;
+		}
+
+
+		/**
+		 * @return the currentFrame
+		 */
+		public int getCurrentFrame() {
+			return currentFrame;
+		}
+
+
+		/**
+		 * @param currentFrame the currentFrame to set
+		 */
+		public void setCurrentFrame(int currentFrame) {
+			this.currentFrame = currentFrame;
+		}
+		
+		
 }
+
+
