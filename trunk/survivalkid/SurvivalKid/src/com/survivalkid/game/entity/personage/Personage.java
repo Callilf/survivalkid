@@ -9,7 +9,7 @@ public class Personage extends GameEntity {
 	 * Create character
 	 */
 	public Personage(AnimatedSprite sprite) {
-		super("CharacterA", new AnimatedSprite());
+		super("CharacterA", sprite);
 		// TODO Auto-generated constructor stub
 	}
 
