@@ -22,7 +22,7 @@ public class EnemyManager extends ObjectManager {
 
 	}
 
-	public void update() {
+	public void update(long gameTime) {
 		// TODO Auto-generated method stub
 
 	}

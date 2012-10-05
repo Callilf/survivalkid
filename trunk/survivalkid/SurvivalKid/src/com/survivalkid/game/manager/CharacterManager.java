@@ -20,9 +20,11 @@ public class CharacterManager implements IManager {
 		characterList = new ArrayList<Personage>();
 	}
 
-	public void update() {
+	public void update(long gameTime) {
 		// TODO Auto-generated method stub
-		
+		for(Personage perso : characterList) {
+			perso.update(gameTime);
+		}
 	}
 
 	public void draw(Canvas canvas) {

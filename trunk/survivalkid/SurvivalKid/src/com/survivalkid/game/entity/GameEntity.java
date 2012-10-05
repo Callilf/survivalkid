@@ -20,6 +20,10 @@ public abstract class GameEntity {
 	private int speedX;
 	private int speedY;
 	private boolean isSubjectToGravity;
+	
+	public void update(long gameTime) {
+		sprite.update(gameTime);
+	}
 
 	public abstract void collide(GameEntity _gameEntity);
 
