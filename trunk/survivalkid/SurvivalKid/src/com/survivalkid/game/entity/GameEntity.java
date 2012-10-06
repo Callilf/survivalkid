@@ -1,8 +1,10 @@
 package com.survivalkid.game.entity;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Animation;
 import com.survivalkid.game.util.MoveUtil;
 
 public abstract class GameEntity {
@@ -21,19 +23,73 @@ public abstract class GameEntity {
 	private int speedY;
 	private boolean isSubjectToGravity;
 	
+	//----------------------------------------------------
+	// ---- Constructor
+	//----------------------------------------------------
+
+	/**
+	 * Constructor called by parents class
+	 * 
+	 * @param _name
+	 *            name of the entity
+	 * @param _sprite
+	 *            sprite of the entity
+	 */
+	public GameEntity(String _name, Bitmap bitmap, int x, int y, int nbColum, int nbRows) {
+		id = lastId++;
+		name = _name;
+		sprite = new AnimatedSprite(bitmap, x, y, nbColum, nbRows);
+	}
+	
+	/**
+	 * Constructor called by parents class
+	 * 
+	 * @param _name
+	 *            name of the entity
+	 * @param _sprite
+	 *            sprite of the entity
+	 */
+	public GameEntity(String _name, AnimatedSprite _anim) {
+		id = lastId++;
+		name = _name;
+		sprite = _anim;
+	}
+	
+	
+	//----------------------------------------------------
+	// ---- Public methods
+	//----------------------------------------------------
+	
+	/**
+	 * Abstract collide.
+	 * @param _gameEntity the entity with which it collides
+	 */
+	public abstract void collide(GameEntity _gameEntity);
+
+	/**
+	 * When the entity dies.
+	 */
+	public abstract void die();
+	
+	
 	public void update(long gameTime) {
 		move();
 		sprite.update(gameTime);
 	}
-
-	public abstract void collide(GameEntity _gameEntity);
-
+	
 	public void draw(Canvas canvas) {
 		sprite.draw(canvas);
 	}
-
-	public abstract void die();
-
+	
+	
+	//----------------------------- Move functions begin
+	public void setX(int _x) {
+		sprite.setX(_x);
+	}
+	public void setY(int _y) {
+		sprite.setY(_y);
+	}
+	
 	/**
 	 * Move the sprite according to its inertia : its current {@link #speedX}
 	 * and {@link #speedY}, and also gravity if {@link #isSubjectToGravity()} is
@@ -46,7 +102,48 @@ public abstract class GameEntity {
 			speedY = Math.min(speedY+MoveUtil.GRAVITY,5);
 		}
 	}
-
+	
+	/**
+	 * Whether the entity is on the floor or in the air.
+	 * @return true if on the floor
+	 */
+	public boolean onFloor() {
+		return sprite.getY() == (MoveUtil.MAX_Y - sprite.getHeight());
+	}
+	//---------------------------- Move functions end
+	
+	
+	//----- Animations functions begin
+	/**
+	 * Add an animation.
+	 * @param name the name of the animation
+	 * @param frameList the frame list. Ex: {0,1,2,3,2,1,0}
+	 * @param _fps the fps of the animation (fluent around 15 usually)
+	 */
+	public void addAnimation(String _name, int[] _frameList, int _fps) {
+		sprite.addAnimation(_name, _frameList, _fps);
+	}
+	
+	/**
+	 * Launch an animation.
+	 * @param _name the name of the animation
+	 * @param _forceStop true to force the previous animation to stop, false to wait
+	 */
+	public void play(String _name, boolean _repeat, boolean _forceStop) {
+		sprite.play(_name, _repeat, _forceStop);
+	}
+	
+	/**
+	 * Stop the current animation;
+	 */
+	public void stop() {
+		sprite.stop();
+	}
+	//----- Animations functions end
+	
+	//--------------------------------------------
+	// ---- private functions
+	//--------------------------------------------
 	private void addY(int _dy) {
 		int newY = sprite.getY() + _dy;
 		if (newY < 0) {
@@ -78,26 +175,11 @@ public abstract class GameEntity {
 		// Now set the new X
 		sprite.offset(newX - sprite.getX(), 0);
 	}
-
-	/**
-	 * Constructor called by parents class
-	 * 
-	 * @param _name
-	 *            name of the entity
-	 * @param _sprite
-	 *            sprite of the entity
-	 */
-	public GameEntity(String _name, AnimatedSprite _sprite) {
-		id = lastId++;
-		name = _name;
-		sprite = _sprite;
-	}
 	
-	public boolean onFloor() {
-		return sprite.getY() == (MoveUtil.MAX_Y - sprite.getHeight());
-	}
 	
+	//--------------------------------------------
 	// ---- Getters and Setters
+	//--------------------------------------------
 	public int getId() {
 		return id;
 	}
