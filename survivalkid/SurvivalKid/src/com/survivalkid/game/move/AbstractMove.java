@@ -29,9 +29,13 @@ public abstract class AbstractMove {
 			durationJump = 0;
 			perso.setSpeedY(VITESSE_Y);
 		}
-		else if (durationJump++ < 5) {
-			perso.setSpeedY(VITESSE_Y-2*durationJump);
+		else if (durationJump++ < 40) {
+			perso.setSpeedY(VITESSE_Y);
 		}
+		else if (durationJump++ < 65) {
+			perso.setSpeedY(VITESSE_Y+durationJump);
+		}
+		
 	}	
 	
 }
