@@ -55,7 +55,8 @@ public class GameManager extends SurfaceView implements
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 		
-
+		
+		// TEST ------------------
 		Personage yugo = new Personage(BitmapFactory.decodeResource(getResources(), R.drawable.yugo),150,150,
 				6,12);
 		yugo.addAnimation("run", new int[]{1,2,3,5,6,7,9,10,11,12,13,14}, 20);
@@ -81,7 +82,7 @@ public class GameManager extends SurfaceView implements
 		characterManager.addCharacter(yugo);
 		characterManager.addCharacter(yuna);
 		characterManager.addCharacter(yuna2);
-
+		// END TESTS --------------
 
 		
 		
