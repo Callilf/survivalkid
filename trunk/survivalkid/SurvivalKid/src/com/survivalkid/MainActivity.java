@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
 
 	/** TAG for the logs. */
 	private static final String TAG = MainActivity.class.getSimpleName();
-	
+
 	GameManager gamePanel;
 
 	@Override
@@ -25,6 +25,8 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		gamePanel = new GameManager(this);
 		setContentView(gamePanel);
@@ -32,13 +34,13 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO Auto-generated method stub
-        if( keyCode==KeyEvent.KEYCODE_BACK ) {
-        	gamePanel.stop();
-        }
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			gamePanel.stop();
+		}
 		return false;
-    }
+	}
 
 	@Override
 	protected void onDestroy() {
