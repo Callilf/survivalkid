@@ -1,6 +1,7 @@
 package com.survivalkid.game.entity.personage;
 
-import com.survivalkid.game.core.AnimatedSprite;
+import android.graphics.Bitmap;
+
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -9,10 +10,9 @@ public class Personage extends GameEntity {
 	/**
 	 * Create character
 	 */
-	public Personage(AnimatedSprite sprite) {
-		super("CharacterA", sprite);
+	public Personage(Bitmap bitmap, int x, int y, int nbColum, int nbRows) {
+		super("CharacterA", bitmap, x, y, nbColum, nbRows);
 		setSubjectToGravity(true);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

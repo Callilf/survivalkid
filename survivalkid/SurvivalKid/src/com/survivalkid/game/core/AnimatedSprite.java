@@ -1,7 +1,6 @@
 package com.survivalkid.game.core;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ public class AnimatedSprite {
 		private Rect sourceRect;	// the rectangle to be drawn from the animation bitmap
 		private int framePerRow;	// number of frames in a single row of the png
 		private long frameTicker;	// the time of the last frame update
-		private int framePeriod;	// milliseconds between each frame (1000/fps)
 
 		//Position
 		private int x;
@@ -35,6 +33,13 @@ public class AnimatedSprite {
 		private int currentFrame;			//Current frame
 
 		private boolean animating = false;
+		private boolean repeat = false;
+		
+		//Next animation attributes
+		private boolean animationFinished = true; //True is the last anim is over (used to launch another animation after)
+		private boolean waiting = false;
+		private String waitingAnim;
+		private boolean waitingRepeat = true;
 
 		/**
 		 * Constructor.
@@ -43,10 +48,9 @@ public class AnimatedSprite {
 		 * @param y the y position
 		 * @param nbColum the number of column in the spritesheet (the bitmap)
 		 * @param nbRows the number of rows in the spritesheet
-		 * @param fps the fps of the animation (usually fluent around 20)
 		 * @param frameCount the number of frames
 		 */
-		public AnimatedSprite(Bitmap bitmap, int x, int y, int nbColum, int nbRows, int fps) {
+		public AnimatedSprite(Bitmap bitmap, int x, int y, int nbColum, int nbRows) {
 			this.bitmap = bitmap;
 			this.x = x;
 			this.y = y;
@@ -55,7 +59,6 @@ public class AnimatedSprite {
 			width = bitmap.getWidth() / nbColum;
 			height = bitmap.getHeight() / nbRows;
 			sourceRect = new Rect(0, 0, width, height);
-			framePeriod = 1000 / fps;
 			frameTicker = 0l;
 			
 			animations = new HashMap<String,Animation>();
@@ -77,19 +80,22 @@ public class AnimatedSprite {
 				return;
 			}
 			
-			//If there is an animation running
-			if(animations.size() == 0 ) {
+			//If there is no animation
+			if( animations == null || animations.size() == 0 || currentAnimation == null) {
 				currentFrame = 0;
+				
+			//there is an animation running
 			} else if (animating) {
-				if (gameTime > frameTicker + framePeriod) {
+				Animation currAnim = animations.get(currentAnimation);
+				if (gameTime > frameTicker + (1000/currAnim.getFps())) {
 					frameTicker = gameTime;
 					
-					//Select the correct frame
 					currentIndex++;
-					if(currentIndex >=  animations.get(currentAnimation).getFrameList().length) {
-						currentIndex = 0;
+					//If it was the last frame of the animation
+					if(currentIndex >=  currAnim.getFrameList().length) {
+						endAnimation();
 					}
-					currentFrame = animations.get(currentAnimation).getFrameList()[currentIndex];
+					currentFrame = currAnim.getFrameList()[currentIndex];
 				}
 			} else {
 				currentFrame = animations.get(currentAnimation).getFrameList()[currentIndex];
@@ -104,6 +110,24 @@ public class AnimatedSprite {
 			this.sourceRect.right = this.sourceRect.left + width;
 			this.sourceRect.top = row*height;
 		    this.sourceRect.bottom = this.sourceRect.top + height;
+		}
+		
+		/**
+		 * Handle the end of the current animation.
+		 */
+		private void endAnimation() {
+			currentIndex = 0;
+			if(!repeat) {
+				if(waiting) {
+					currentIndex = 0;
+					currentAnimation = waitingAnim;
+					repeat = waitingRepeat;
+					animating = true;
+				} else {
+					animating = false;
+					animationFinished = true;
+				}
+			}
 		}
 
 		
@@ -133,11 +157,22 @@ public class AnimatedSprite {
 		/**
 		 * Launch an animation.
 		 * @param _name the name of the animation
+		 * @param _repeat true is the animation must loop
+		 * @param _forceStop if true, the animation will be launched immediately. If false, it waits for the previous animation to end.
 		 */
-		public void play(String _name) {
-			animating = true;
-			currentAnimation = _name;
-			currentIndex = 0;
+		public void play(String _name, boolean _repeat, boolean _forceStop) {
+			if(_forceStop || currentAnimation == null || !animating) {
+				animating = true;
+				currentAnimation = _name;
+				currentIndex = 0;
+				repeat = _repeat;
+				animationFinished = false;
+				waiting = false;
+			} else {
+				waitingAnim = _name;
+				waitingRepeat = _repeat;
+				waiting = true;
+			}
 		}
 		
 		/**
@@ -145,6 +180,7 @@ public class AnimatedSprite {
 		 */
 		public void stop() {
 			animating = false;
+			animationFinished = true;
 			currentIndex = 0;
 		}
 		
