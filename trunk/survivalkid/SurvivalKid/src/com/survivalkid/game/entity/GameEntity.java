@@ -94,7 +94,7 @@ public abstract class GameEntity {
 	}
 	
 	public boolean onFloor() {
-		return false;
+		return sprite.getY() == (MoveUtil.MAX_Y - sprite.getHeight());
 	}
 	
 	// ---- Getters and Setters

@@ -93,11 +93,9 @@ public class GameManager extends SurfaceView implements
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		int x = (int) event.getX();
-		int y = (int) event.getY();
 		
 		Personage currentChar = characterManager.getCharacterList(0);
-		MoveUtil.calculMove(x, y, event.getAction(), currentChar);
+		MoveUtil.calculMove(event, currentChar);
 
 		return true;
 	}
