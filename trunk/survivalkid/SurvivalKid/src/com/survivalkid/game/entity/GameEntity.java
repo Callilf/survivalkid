@@ -45,6 +45,7 @@ public abstract class GameEntity {
 		name = _name;
 		sprite = new AnimatedSprite(bitmap, x, y, nbColum, nbRows);
 		offsets = new Rect(0,0,sprite.getWidth(),sprite.getHeight());
+		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left + offsets.right,  sprite.getY() + offsets.top + offsets.bottom);
 	}
 	
 	/**
