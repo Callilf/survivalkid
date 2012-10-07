@@ -62,7 +62,10 @@ public final class MoveUtil {
 		}
 		if (isTopEnabled) {
 			moveImpl.jump(perso);
-		}		
+		}
+		else {
+			moveImpl.noJump(perso);
+		}
 	}
 	
 	/**
