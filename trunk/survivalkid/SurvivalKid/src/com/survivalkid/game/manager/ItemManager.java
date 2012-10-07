@@ -25,10 +25,10 @@ public class ItemManager extends ObjectManager {
 
 	}
 
-	public void draw(Canvas canvas) {
+	public void draw(Canvas canvas, boolean displayHitBox) {
 		// TODO Auto-generated method stub
 		for(ItemEntity item : itemList) {
-			item.draw(canvas);
+			item.draw(canvas, displayHitBox);
 		}
 	}
 

@@ -2,9 +2,10 @@ package com.survivalkid.game.entity;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.survivalkid.game.core.AnimatedSprite;
-import com.survivalkid.game.core.Animation;
 import com.survivalkid.game.util.MoveUtil;
 
 public abstract class GameEntity {
@@ -17,6 +18,9 @@ public abstract class GameEntity {
 	private String name;
 	/** The sprite (will be an animation in the future). */
 	private AnimatedSprite sprite;
+	
+	/** The hit box. */
+	private Rect hitBox;
 
 	// Speed attributes
 	private int speedX;
@@ -39,6 +43,7 @@ public abstract class GameEntity {
 		id = lastId++;
 		name = _name;
 		sprite = new AnimatedSprite(bitmap, x, y, nbColum, nbRows);
+		hitBox = new Rect(x,y,x + sprite.getWidth(), y + sprite.getHeight());
 	}
 	
 	/**
@@ -75,10 +80,17 @@ public abstract class GameEntity {
 	public void update(long gameTime) {
 		move();
 		sprite.update(gameTime);
+		hitBox.set( new Rect(sprite.getX(),sprite.getY(),sprite.getX() + sprite.getWidth(), sprite.getY() + sprite.getHeight()));
 	}
 	
-	public void draw(Canvas canvas) {
+	public void draw(Canvas canvas, boolean displayHitBox) {
 		sprite.draw(canvas);
+		
+		if(displayHitBox) {
+			final Paint paint = new Paint();
+			paint.setARGB(128, 255, 0, 0);
+			canvas.drawRect(hitBox, paint);
+		}
 	}
 	
 	

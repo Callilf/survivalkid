@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -37,6 +36,9 @@ public class GameManager extends SurfaceView implements
 	private ObjectManager itemManager;
 	
 	private Bitmap ground;
+	
+	//DEBUG - TEST
+	private boolean displayHitBoxes = true;
 
 
 	@SuppressLint("NewApi")
@@ -97,15 +99,15 @@ public class GameManager extends SurfaceView implements
 			canvas.drawColor(Color.BLUE);
 			canvas.drawBitmap(ground, 0, 0, null);
 
-			enemyManager.draw(canvas);
-			itemManager.draw(canvas);
-			characterManager.draw(canvas);
+			enemyManager.draw(canvas, displayHitBoxes);
+			itemManager.draw(canvas, displayHitBoxes);
+			characterManager.draw(canvas, displayHitBoxes);
 		}
 	}
 
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
 		//Personage currentChar = characterManager.getCharacterList(0);
 		MoveUtil.calculMove(event);
 		//if (event.getAction() != MotionEvent.ACTION_MOVE)	dumpEvent(event);
