@@ -21,7 +21,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 
 @SuppressLint("NewApi")
-public final class MoveUtil {
+public final class MoveUtilGradual {
 
 	private static final Display display = GameContext.getSingleton().getDisplay();
 	
@@ -60,7 +60,7 @@ public final class MoveUtil {
 		mapKeyPressed.put(MAP_TOP, new ArrayList<Integer>());
 	}
 
-	private MoveUtil() {
+	private MoveUtilGradual() {
 	};
 	
 	/**
