@@ -63,16 +63,18 @@ public final class MoveUtil {
 		int action =  event.getAction();
 		int actionCode = action & MotionEvent.ACTION_MASK;
 		int pid = action >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+		Integer pidObject = pid;
 		int pidUP = -1;
 		
 		switch (actionCode) {
 		case MotionEvent.ACTION_DOWN:
 		case MotionEvent.ACTION_POINTER_DOWN:
-			lastPidPressed.add(pid);
+			lastPidPressed.remove(pidObject); // security in case of the point_up don't catch by the previous pressed 
+			lastPidPressed.add(pidObject);
 			break;
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_POINTER_UP:
-			lastPidPressed.remove((Integer)pid);
+			lastPidPressed.remove(pidObject);
 			pidUP = pid;
 			break;
 		default:

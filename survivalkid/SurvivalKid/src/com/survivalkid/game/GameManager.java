@@ -117,8 +117,7 @@ public class GameManager extends SurfaceView implements
 		
 		//Personage currentChar = characterManager.getCharacterList(0);
 		MoveUtil.calculMove(event);
-		//if (event.getAction() != MotionEvent.ACTION_MOVE)
-			dumpEvent(event);
+		//if (event.getAction() != MotionEvent.ACTION_MOVE)	dumpEvent(event);
 		return true;
 	}
 	
