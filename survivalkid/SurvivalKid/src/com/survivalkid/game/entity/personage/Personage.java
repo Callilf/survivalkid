@@ -6,6 +6,8 @@ import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Personage extends GameEntity {
+	
+	int playerNumber = -1;
 
 	/**
 	 * Create character
@@ -29,11 +31,29 @@ public class Personage extends GameEntity {
 	
 	@Override
 	public void update(long gameTime) {
-		MoveUtil.calculNewSpeed(this);
+		if(playerNumber == 0) {
+			MoveUtil.calculNewSpeed(this);
+		}
 		if (!MoveUtil.isHorizontalMoving()) {
 			setSpeedX(getSpeedX()/3);
 		}
 		super.update(gameTime);
 	}
+
+	/**
+	 * @return the playerNumber
+	 */
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+
+	/**
+	 * @param playerNumber the playerNumber to set
+	 */
+	public void setPlayerNumber(int playerNumber) {
+		this.playerNumber = playerNumber;
+	}
+	
+	
 
 }
