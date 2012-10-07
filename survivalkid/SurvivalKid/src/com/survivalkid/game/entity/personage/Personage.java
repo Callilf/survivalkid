@@ -35,12 +35,17 @@ public class Personage extends GameEntity {
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
-			addAnimation("run", new int[]{1,2,3,5,6,7,9,10,11,12,13,14}, 20);
+			addAnimation(PersonageConstants.ANIM_STAND, new int[]{0}, 20);
+			addAnimation(PersonageConstants.ANIM_RUN, new int[]{1,2,3,5,6,7,9,10,11,12,13,14}, 20);
+			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[]{17,18,19}, 13);
+			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[]{17,18,19}, 13);
 			break;
 		case PersonageConstants.PERSO_YUNA:
-			addAnimation("run", new int[]{1,2,4,6,7,8,9,10,11,12,13,14}, 20);
+			addAnimation(PersonageConstants.ANIM_STAND, new int[]{0}, 20);
+			addAnimation(PersonageConstants.ANIM_RUN, new int[]{1,2,4,6,7,8,9,10,11,12,13,14}, 20);
+			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[]{39,40,41}, 13);
+			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[]{17,18,19}, 13);
 			break;
-
 		}
 
 	}
