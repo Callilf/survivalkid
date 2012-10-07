@@ -9,10 +9,12 @@ import com.survivalkid.game.entity.personage.Personage;
 
 public class CharacterManager implements IManager {
 
+	private int numberOfPlayers;
 	private List<Personage> characterList;
 	
 	public CharacterManager() {
 		characterList = new ArrayList<Personage>();
+		numberOfPlayers = 0;
 	}
 
 	public void create() {
@@ -43,6 +45,8 @@ public class CharacterManager implements IManager {
 	}
 	
 	public void addCharacter(Personage perso) {
+		perso.setPlayerNumber(numberOfPlayers);
 		characterList.add(perso);
+		numberOfPlayers++;
     }
 }
