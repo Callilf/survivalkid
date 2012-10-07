@@ -6,5 +6,5 @@ public interface IManager {
 
 	public void create();
 	public void update(long gameTime);
-	public void draw(Canvas canvas);
+	public void draw(Canvas canvas, boolean displayHitBox);
 }
