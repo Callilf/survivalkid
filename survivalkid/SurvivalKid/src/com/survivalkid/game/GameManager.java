@@ -14,6 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
@@ -58,35 +59,19 @@ public class GameManager extends SurfaceView implements
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 		
+		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
 		
 		// TEST ------------------
-		Personage yugo = new Personage(BitmapFactory.decodeResource(getResources(), R.drawable.yugo),150,150,
+		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO,BitmapFactory.decodeResource(getResources(), R.drawable.yugo),150,150,
 				6,12);
-		yugo.addAnimation("run", new int[]{1,2,3,5,6,7,9,10,11,12,13,14}, 20);
 		yugo.play("run", true, true);
 		
-		Personage yuna = new Personage(BitmapFactory.decodeResource(getResources(), R.drawable.yuna),250,150,
+		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, BitmapFactory.decodeResource(getResources(), R.drawable.yuna),250,150,
 				6,12);
-		yuna.addAnimation("run", new int[]{1,2,4,6,7,8,9,10,11,12,13,14}, 20);
 		yuna.play("run", true, false);
-		
-		
-		Point size = new Point();
-		GameContext.getSingleton().getDisplay().getSize(size);
-		
-		Personage yuna2 = new Personage(BitmapFactory.decodeResource(getResources(), R.drawable.yuna),350,150,
-				6,12);
-		yuna2.setX(size.x - yuna2.getSprite().getWidth());
-		yuna2.addAnimation("oneshot", new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35}, 12);
-		yuna2.addAnimation("loop", new int[]{42,43,44,45,46,47,48,49,50}, 15);
-		yuna2.play("oneshot", false, true);
-		yuna2.play("loop", true, false);
 		
 		characterManager.addCharacter(yugo);
 		characterManager.addCharacter(yuna);
-		characterManager.addCharacter(yuna2);
-		
-		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
 		// END TESTS --------------
 
 		
@@ -109,7 +94,7 @@ public class GameManager extends SurfaceView implements
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			// fills the canvas with black
-			canvas.drawColor(Color.BLACK);
+			canvas.drawColor(Color.BLUE);
 			canvas.drawBitmap(ground, 0, 0, null);
 
 			enemyManager.draw(canvas);
