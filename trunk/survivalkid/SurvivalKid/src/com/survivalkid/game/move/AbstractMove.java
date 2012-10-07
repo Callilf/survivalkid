@@ -5,7 +5,7 @@ import com.survivalkid.game.entity.personage.Personage;
 public abstract class AbstractMove {
 	
 	public int GRAVITY = 5;
-	public int VITESSE_X = 10;
+	public int VITESSE_X = 8;
 	public int VITESSE_Y = -25;
 	
 	private int durationJump = 0;
