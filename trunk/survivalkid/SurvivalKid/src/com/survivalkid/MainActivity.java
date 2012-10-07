@@ -36,8 +36,15 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
+		Log.d(TAG, "Touche appuyée : "+keyCode);
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
 			gamePanel.stop();
+			break;
+		case KeyEvent.KEYCODE_MENU:
+			gamePanel.hideShowDisplayHitBoxes();
+		default:
+			break;
 		}
 		return false;
 	}
