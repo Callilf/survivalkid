@@ -17,9 +17,10 @@ public abstract class GameEntity {
 	/** The name of the gameEntity. */
 	private String name;
 	/** The sprite (will be an animation in the future). */
-	private AnimatedSprite sprite;
+	protected AnimatedSprite sprite;
 	
 	/** The hit box. */
+	private Rect offsets;
 	private Rect hitBox;
 
 	// Speed attributes
@@ -43,7 +44,7 @@ public abstract class GameEntity {
 		id = lastId++;
 		name = _name;
 		sprite = new AnimatedSprite(bitmap, x, y, nbColum, nbRows);
-		hitBox = new Rect(x,y,x + sprite.getWidth(), y + sprite.getHeight());
+		offsets = new Rect(0,0,sprite.getWidth(),sprite.getHeight());
 	}
 	
 	/**
@@ -76,11 +77,22 @@ public abstract class GameEntity {
 	 */
 	public abstract void die();
 	
+	/**
+	 * Redefine the hitBox of the entity.
+	 * @param x the offset x
+	 * @param y the offset y
+	 * @param width the width
+	 * @param height the height
+	 */
+	public void redefineHitBox(int x, int y, int width, int height) {
+		offsets = new Rect(x, y, width, height);
+	}
+	
 	
 	public void update(long gameTime) {
 		move();
 		sprite.update(gameTime);
-		hitBox.set( new Rect(sprite.getX(),sprite.getY(),sprite.getX() + sprite.getWidth(), sprite.getY() + sprite.getHeight()));
+		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left + offsets.right,  sprite.getY() + offsets.top + offsets.bottom);
 	}
 	
 	public void draw(Canvas canvas, boolean displayHitBox) {
