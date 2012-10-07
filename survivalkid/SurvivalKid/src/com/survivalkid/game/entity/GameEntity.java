@@ -99,7 +99,7 @@ public abstract class GameEntity {
 		addX(speedX);
 		addY(speedY);
 		if (isSubjectToGravity) {
-			speedY = Math.min(speedY+MoveUtil.GRAVITY,5);
+			speedY = speedY+MoveUtil.GRAVITY;
 		}
 	}
 	
