@@ -40,7 +40,7 @@ public final class MoveUtil {
 		Point size = new Point();
 		display.getSize(size);
 		MAX_X = size.x;
-		MAX_Y = size.y - 30;
+		MAX_Y = size.y - 40;
 		lastPidPressed = new ArrayList<Integer>();
 	}
 
