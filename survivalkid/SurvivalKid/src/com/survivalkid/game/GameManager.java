@@ -3,6 +3,7 @@ package com.survivalkid.game;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -33,6 +34,8 @@ public class GameManager extends SurfaceView implements
 	private CharacterManager characterManager;
 	private ObjectManager enemyManager;
 	private ObjectManager itemManager;
+	
+	private Bitmap ground;
 
 
 	@SuppressLint("NewApi")
@@ -82,6 +85,8 @@ public class GameManager extends SurfaceView implements
 		characterManager.addCharacter(yugo);
 		characterManager.addCharacter(yuna);
 		characterManager.addCharacter(yuna2);
+		
+		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
 		// END TESTS --------------
 
 		
@@ -105,6 +110,7 @@ public class GameManager extends SurfaceView implements
 		if (canvas != null) {
 			// fills the canvas with black
 			canvas.drawColor(Color.BLACK);
+			canvas.drawBitmap(ground, 0, 0, null);
 
 			enemyManager.draw(canvas);
 			itemManager.draw(canvas);
