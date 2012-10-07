@@ -1,28 +1,22 @@
 package com.survivalkid.game.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.http.conn.MultihomePlainSocketFactory;
+import android.annotation.SuppressLint;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.MotionEvent;
 
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.move.AbstractMove;
 import com.survivalkid.game.move.MoveImplSideScreen;
 import com.survivalkid.game.singleton.GameContext;
 
-import android.annotation.SuppressLint;
-import android.graphics.Point;
-import android.location.Address;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.Display;
-import android.view.MotionEvent;
-
 @SuppressLint("NewApi")
 public final class MoveUtil {
 
+	/** the display of the activity */
 	private static final Display display = GameContext.getSingleton().getDisplay();
 	
 	/** Define the implementation of move */
@@ -32,7 +26,10 @@ public final class MoveUtil {
 	public static int MAX_X;
 	public static int MAX_Y;
 	
+	/** list of the last pointer enabled */
 	private static List<Integer> lastPidPressed;
+	
+	/** true if the priority if moving to left, false to right (in case there is both left and right moving enabled) */
 	public static boolean lastEnabledLeft = true;
 	
 	private static boolean isLeftEnabled = false;
@@ -48,15 +45,30 @@ public final class MoveUtil {
 	}
 
 	private MoveUtil() {
+		// static class, the constructor can't be called
 	};
 	
 	/**
-	 * Calculate what has changed
+	 * Calculate the new speed of the perso
 	 * 
-	 * @param touchX new position X
-	 * @param touchY new position Y
+	 * @param perso the perso to apply the new speed
+	 */
+	public static void calculNewSpeed(Personage perso) {
+		if (isLeftEnabled && (!isRightEnabled || lastEnabledLeft)) {
+			moveImpl.moveToLeft(perso);
+		}
+		else if (isRightEnabled) {
+			moveImpl.moveToRight(perso);
+		}
+		if (isTopEnabled) {
+			moveImpl.jump(perso);
+		}		
+	}
+	
+	/**
+	 * Calculate the move to apply which the touch event
+	 * 
 	 * @param event event of motion
-	 * @param perso personage
 	 */
 	public synchronized static void calculMove(MotionEvent event) {
 		// get the action and the pid of the pointer
@@ -81,32 +93,26 @@ public final class MoveUtil {
 			break;
 		}
 
+		// recalculate the move to do.
 		isLeftEnabled = false;
 		isRightEnabled = false;
 		isTopEnabled = false;
 		calculChange(event, pidUP);
 
-	}
-	
-	public static void calculNewSpeed(Personage perso) {
-		if (isLeftEnabled && (!isRightEnabled || lastEnabledLeft)) {
-			moveImpl.moveToLeft(perso);
-		}
-		else if (isRightEnabled) {
-			moveImpl.moveToRight(perso);
-		}
-		if (isTopEnabled) {
-			moveImpl.jump(perso);
-		}		
-	}
-	
+	}	
 
-	public static void calculChange(MotionEvent event, int pid) {
+	/**
+	 * Calculate the changement to aply to the moving
+	 * 
+	 * @param event the event which contains all the data
+	 * @param ignorePid a pid to ignore (pid corresponding to a UP event)
+	 */
+	public static void calculChange(MotionEvent event, int ignorePid) {
 		List<Integer> onLeft = new ArrayList<Integer>();
 		List<Integer> onRight = new ArrayList<Integer>();
 		for (int i = 0; i < event.getPointerCount(); i++) {
 			// the pid up is ignored if exist
-			if (i == pid) continue;
+			if (i == ignorePid) continue;
 			
 			int x = (int) event.getX(i);
 			int y = (int) event.getY(i);
@@ -115,7 +121,7 @@ public final class MoveUtil {
 				onLeft.add(i);
 				isLeftEnabled = true;
 			}
-			if (moveImpl.isOnRight(x, y)) {
+			else if (moveImpl.isOnRight(x, y)) {
 				onRight.add(i);
 				isRightEnabled = true;
 			}
@@ -147,6 +153,11 @@ public final class MoveUtil {
 	}
 
 	
+	/**
+	 * Test if there is the perso is moving horizontally 
+	 * 
+	 * @return true if the perso is moving to the left or to the right
+	 */
 	public static boolean isHorizontalMoving() {
 		return isLeftEnabled || isRightEnabled;
 	}
