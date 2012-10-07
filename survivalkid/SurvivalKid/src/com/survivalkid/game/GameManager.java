@@ -175,4 +175,9 @@ public class GameManager extends SurfaceView implements
 		thread.setRunning(false);
 		((Activity) getContext()).finish();
 	}
+
+	/** Hide or show the hit boxes */
+	public void hideShowDisplayHitBoxes() {
+		displayHitBoxes = !displayHitBoxes;
+	}
 }
