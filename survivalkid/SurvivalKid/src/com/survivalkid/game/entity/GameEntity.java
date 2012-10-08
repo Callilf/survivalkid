@@ -266,10 +266,11 @@ public abstract class GameEntity {
 	private void addX(int _dx) {
 		isMovingHorizontally = false;
 		// calculate the actual translation
-		int newX = hitBox.left + _dx;
+		int leftHitbox =  Math.min(hitBox.left,hitBox.right);
+		int newX = leftHitbox + _dx;
 		int actualDX = 0;
 		if (newX < 0) {
-			actualDX = hitBox.left;
+			actualDX = leftHitbox;
 			speedX = 0;
 		} else if (newX + hitBox.width() > MoveUtil.MAX_X) {
 			actualDX = MoveUtil.MAX_X - hitBox.right;
@@ -280,8 +281,8 @@ public abstract class GameEntity {
 
 		// Now set the new X
 		sprite.offset(actualDX, 0);
-		Log.d(TAG, "dx = " + _dx + " ActualDX=" + actualDX + " sprite = "
-				+ sprite.getX());
+		Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
+				+ sprite.getX() + ", newX= " + newX+", hitbox(l,r)="+hitBox.left+"/"+hitBox.right);
 
 		// Set the direction of the sprite
 		if (speedX != 0 && _dx != 0) {
