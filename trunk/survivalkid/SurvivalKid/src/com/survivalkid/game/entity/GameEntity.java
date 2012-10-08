@@ -31,6 +31,12 @@ public abstract class GameEntity {
 
 	/** Direction. */
 	private int direction;
+	
+	/** actions. */
+	protected boolean isMovingHorizontally;
+	protected boolean isJumpingUp;
+	protected boolean isJumpingDown;
+	protected boolean isOnFloor;
 
 	// ----------------------------------------------------
 	// ---- Constructor
@@ -54,6 +60,11 @@ public abstract class GameEntity {
 				+ offsets.top, sprite.getX() + offsets.left + offsets.right,
 				sprite.getY() + offsets.top + offsets.bottom);
 		direction = DirectionConstants.RIGHT;
+		
+		isMovingHorizontally = false;
+		isJumpingUp = false;
+		isJumpingDown = false;
+		isOnFloor = false;
 	}
 
 	/**
@@ -203,6 +214,10 @@ public abstract class GameEntity {
 	// ---- private functions
 	// --------------------------------------------
 	private void addY(int _dy) {
+		isOnFloor = false;
+		isJumpingUp = false;
+		isJumpingDown = false;
+		
 		int newY = sprite.getY() + _dy;
 		if (newY < 0) {
 			newY = 0;
@@ -210,9 +225,16 @@ public abstract class GameEntity {
 		} else if (newY + sprite.getHeight() > MoveUtil.MAX_Y) {
 			newY = MoveUtil.MAX_Y - sprite.getHeight();
 			speedY = 0;
+			isOnFloor = true;
 		}
 		// Now set the new X
 		sprite.offset(0, newY - sprite.getY());
+		
+		if(!isOnFloor && _dy > 0) {
+			isJumpingDown = true;
+		} else if(!isOnFloor && _dy < 0) {
+			isJumpingUp = true;
+		}
 	}
 
 	/**
@@ -222,6 +244,8 @@ public abstract class GameEntity {
 	 * @param _dx
 	 */
 	private void addX(int _dx) {
+		isMovingHorizontally = false;
+		
 		int newX = sprite.getX() + _dx;
 		if (newX < 0) {
 			newX = 0;
@@ -235,6 +259,7 @@ public abstract class GameEntity {
 
 		// Set the direction of the sprite
 		if (speedX != 0 && _dx != 0) {
+			isMovingHorizontally = true;
 			direction = (_dx > 0) ? DirectionConstants.RIGHT
 					: DirectionConstants.LEFT;
 		}

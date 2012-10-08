@@ -204,6 +204,9 @@ public class AnimatedSprite {
 	 *            it waits for the previous animation to end.
 	 */
 	public void play(String _name, boolean _repeat, boolean _forceStop) {
+		if(currentAnimation != null && currentAnimation.equals(_name)) {
+			return;
+		}
 		if (_forceStop || currentAnimation == null || !animating) {
 			animating = true;
 			currentAnimation = _name;
