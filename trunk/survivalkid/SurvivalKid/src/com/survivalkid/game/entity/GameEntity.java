@@ -239,7 +239,7 @@ public abstract class GameEntity {
 		// Now set the new X
 		sprite.offset(0, newY - sprite.getY());
 		
-		if(!isOnFloor && _dy > 0) {
+		if(!isOnFloor && _dy >= 0) {
 			isJumpingDown = true;
 		} else if(!isOnFloor && _dy < 0) {
 			isJumpingUp = true;
