@@ -46,6 +46,7 @@ public class Personage extends GameEntity {
 			addAnimation(PersonageConstants.ANIM_RUN, new int[]{1,2,4,6,7,8,9,10,11,12,13,14}, 20);
 			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[]{39,40,41}, 13);
 			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[]{17,18,19}, 13);
+			redefineHitBox( (sprite.getX()*23) / 100, (sprite.getY()*10) / 100, (sprite.getWidth()*50) / 100, (sprite.getHeight()*84) / 100);
 			break;
 		}
 		
