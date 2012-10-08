@@ -4,12 +4,18 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
+import com.survivalkid.MainActivity;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.util.MoveUtil;
 
 public abstract class GameEntity {
+
+	/** TAG for the logs. */
+	private static final String TAG = MainActivity.class.getSimpleName();
+	
 	/** Last affected id. */
 	public static int lastId;
 
@@ -65,6 +71,10 @@ public abstract class GameEntity {
 		isJumpingUp = false;
 		isJumpingDown = false;
 		isOnFloor = false;
+		
+		// check the correspondence between sprite and hitbox
+		Log.d(TAG,"init Sprite : X="+sprite.getX()+", Y="+sprite.getY()+", width="+sprite.getWidth()+", height="+sprite.getHeight());
+		Log.d(TAG,"init hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
 	}
 
 	/**
