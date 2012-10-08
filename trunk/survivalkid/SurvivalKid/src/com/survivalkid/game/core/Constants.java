@@ -17,6 +17,15 @@ public final class Constants {
 		public static final String ANIM_RUN = "run";
 		public static final String ANIM_JUMPUP = "jumpup";
 		public static final String ANIM_JUMPDOWN = "jumpdown";
-
+	}
+	
+	/**
+	 * Constants for sprite directions.
+	 * @author Callil
+	 *
+	 */
+	public class DirectionConstants {
+		public static final int LEFT = 0;
+		public static final int RIGHT = 1;
 	}
 }
