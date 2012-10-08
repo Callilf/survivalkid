@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -31,11 +33,19 @@ public class GameManager extends SurfaceView implements
 	/** The thread corresponding to the game loop. */
 	private MainThread thread;
 	
+	private int screenHeight;
+	private int screenWidth;
+	
 	private CharacterManager characterManager;
 	private ObjectManager enemyManager;
 	private ObjectManager itemManager;
 	
 	private Bitmap ground;
+	
+	//Buttons
+	private Bitmap btn_left;
+	private Bitmap btn_right;
+	private Bitmap btn_up;
 	
 	//DEBUG - TEST
 	private boolean displayHitBoxes = true;
@@ -62,18 +72,24 @@ public class GameManager extends SurfaceView implements
 		setFocusable(true);
 		
 		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
+		btn_left = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_left);
+		btn_right = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_right);
+		btn_up = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_up);
 		
+		Point size = new Point();
+		GameContext.getSingleton().getDisplay().getSize(size);
+		screenWidth = size.x;
+		screenHeight = size.y;
+
 		// TEST ------------------
 		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO,BitmapFactory.decodeResource(getResources(), R.drawable.yugo),150,150,
 				6,12);
-		yugo.play("run", true, true);
 		
-		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, BitmapFactory.decodeResource(getResources(), R.drawable.yuna),250,150,
-				6,12);
-		yuna.play("run", true, false);
+//		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, BitmapFactory.decodeResource(getResources(), R.drawable.yuna),250,150,
+//				6,12);
 		
 		characterManager.addCharacter(yugo);
-		characterManager.addCharacter(yuna);
+//		characterManager.addCharacter(yuna);
 		// END TESTS --------------
 
 		
@@ -102,6 +118,10 @@ public class GameManager extends SurfaceView implements
 			enemyManager.draw(canvas, displayHitBoxes);
 			itemManager.draw(canvas, displayHitBoxes);
 			characterManager.draw(canvas, displayHitBoxes);
+			
+			canvas.drawBitmap(btn_left, 0, screenHeight - btn_left.getHeight(), null);
+			canvas.drawBitmap(btn_right, btn_left.getWidth() + btn_left.getWidth()/2, screenHeight - btn_right.getHeight(), null);
+			canvas.drawBitmap(btn_up, screenWidth - btn_up.getWidth(), screenHeight - btn_up.getHeight(), null);
 		}
 	}
 
