@@ -14,7 +14,7 @@ public abstract class GameEntity {
 
 	/** TAG for the logs. */
 	private static final String TAG = GameEntity.class.getSimpleName();
-	
+
 	/** Last affected id. */
 	public static int lastId;
 
@@ -36,7 +36,7 @@ public abstract class GameEntity {
 
 	/** Direction. */
 	private int direction;
-	
+
 	/** actions. */
 	protected boolean isMovingHorizontally;
 	protected boolean isJumpingUp;
@@ -65,15 +65,20 @@ public abstract class GameEntity {
 				+ offsets.top, sprite.getX() + offsets.left + offsets.right,
 				sprite.getY() + offsets.top + offsets.bottom);
 		direction = DirectionConstants.RIGHT;
-		
+
 		isMovingHorizontally = false;
 		isJumpingUp = false;
 		isJumpingDown = false;
 		isOnFloor = false;
-		
+
 		// check the correspondence between sprite and hitbox
-		Log.d(TAG,"init Sprite : X="+sprite.getX()+", Y="+sprite.getY()+", width="+sprite.getWidth()+", height="+sprite.getHeight());
-		Log.d(TAG,"init hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
+		Log.d(TAG,
+				"init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY()
+						+ ", width=" + sprite.getWidth() + ", height="
+						+ sprite.getHeight());
+		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right="
+				+ hitBox.right + ", top=" + hitBox.top + ", bottom="
+				+ hitBox.bottom);
 	}
 
 	/**
@@ -128,9 +133,15 @@ public abstract class GameEntity {
 		sprite.update(gameTime, direction);
 
 		if (direction == DirectionConstants.LEFT) {
-			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left, sprite.getY() + offsets.top, sprite.getX() + sprite.getWidth() - offsets.left - offsets.right, sprite.getY() + offsets.top + offsets.bottom);
+			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left,
+					sprite.getY() + offsets.top, sprite.getX()
+							+ sprite.getWidth() - offsets.left - offsets.right,
+					sprite.getY() + offsets.top + offsets.bottom);
 		} else {
-			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left + offsets.right, sprite.getY() + offsets.top + offsets.bottom);
+			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
+					+ offsets.top,
+					sprite.getX() + offsets.left + offsets.right, sprite.getY()
+							+ offsets.top + offsets.bottom);
 		}
 	}
 
@@ -226,7 +237,7 @@ public abstract class GameEntity {
 		isOnFloor = false;
 		isJumpingUp = false;
 		isJumpingDown = false;
-		
+
 		int newY = sprite.getY() + _dy;
 		if (newY < 0) {
 			newY = 0;
@@ -238,10 +249,10 @@ public abstract class GameEntity {
 		}
 		// Now set the new X
 		sprite.offset(0, newY - sprite.getY());
-		
-		if(!isOnFloor && _dy >= 0) {
+
+		if (!isOnFloor && _dy >= 0) {
 			isJumpingDown = true;
-		} else if(!isOnFloor && _dy < 0) {
+		} else if (!isOnFloor && _dy < 0) {
 			isJumpingUp = true;
 		}
 	}
@@ -254,17 +265,23 @@ public abstract class GameEntity {
 	 */
 	private void addX(int _dx) {
 		isMovingHorizontally = false;
-		
-		int newX = sprite.getX() + _dx;
+		// calculate the actual translation
+		int newX = hitBox.left + _dx;
+		int actualDX = 0;
 		if (newX < 0) {
-			newX = 0;
+			actualDX = hitBox.left;
 			speedX = 0;
-		} else if (newX + sprite.getWidth() > MoveUtil.MAX_X) {
-			newX = MoveUtil.MAX_X - sprite.getWidth();
+		} else if (newX + hitBox.width() > MoveUtil.MAX_X) {
+			actualDX = MoveUtil.MAX_X - hitBox.right;
 			speedX = 0;
+		} else {
+			actualDX = _dx;
 		}
+
 		// Now set the new X
-		sprite.offset(newX - sprite.getX(), 0);
+		sprite.offset(actualDX, 0);
+		Log.d(TAG, "dx = " + _dx + " ActualDX=" + actualDX + " sprite = "
+				+ sprite.getX());
 
 		// Set the direction of the sprite
 		if (speedX != 0 && _dx != 0) {
