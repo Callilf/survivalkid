@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
-import com.survivalkid.MainActivity;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.util.MoveUtil;
@@ -14,7 +13,7 @@ import com.survivalkid.game.util.MoveUtil;
 public abstract class GameEntity {
 
 	/** TAG for the logs. */
-	private static final String TAG = MainActivity.class.getSimpleName();
+	private static final String TAG = GameEntity.class.getSimpleName();
 	
 	/** Last affected id. */
 	public static int lastId;
