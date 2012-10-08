@@ -74,6 +74,16 @@ public class Personage extends GameEntity {
 			setSpeedX(getSpeedX() / 3);
 		}
 		super.update(gameTime);
+		
+		if(isJumpingUp) {
+			play(PersonageConstants.ANIM_JUMPUP, false, true);
+		} else if (isJumpingDown) {
+			play(PersonageConstants.ANIM_JUMPDOWN, false, true);
+		} else if (isMovingHorizontally) {
+			play(PersonageConstants.ANIM_RUN, true, true);
+		} else {
+			play(PersonageConstants.ANIM_STAND, false, true);
+		}
 	}
 
 	/**
