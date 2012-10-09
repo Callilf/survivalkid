@@ -44,14 +44,14 @@ public class Personage extends GameEntity {
 			addAnimation(PersonageConstants.ANIM_RUN, new int[]{1,2,3,5,6,7,9,10,11,12,13,14}, 20);
 			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[]{19,18,17}, 13);
 			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[]{19}, 13);
-			redefineHitBox( (sprite.getX()*23) / 100, (sprite.getY()*10) / 100, (sprite.getWidth()*50) / 100, (sprite.getHeight()*84) / 100);
+			redefineHitBox( (sprite.getWidth()*45) / 100, (sprite.getHeight()*10) / 100, (sprite.getWidth()*40) / 100, (sprite.getHeight()*84) / 100);
 			break;
 		case PersonageConstants.PERSO_YUNA:
 			addAnimation(PersonageConstants.ANIM_STAND, new int[]{0}, 20);
 			addAnimation(PersonageConstants.ANIM_RUN, new int[]{1,2,4,6,7,8,9,10,11,12,13,14}, 20);
 			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[]{39,40,41}, 13);
 			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[]{17,18,19}, 13);
-			redefineHitBox( (sprite.getX()*23) / 100, (sprite.getY()*10) / 100, (sprite.getWidth()*50) / 100, (sprite.getHeight()*84) / 100);
+			redefineHitBox( (sprite.getWidth()*35) / 100, (sprite.getHeight()*10) / 100, (sprite.getWidth()*40) / 100, (sprite.getHeight()*84) / 100);
 			break;
 		}
 		
