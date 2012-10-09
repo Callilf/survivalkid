@@ -6,9 +6,9 @@ public abstract class AbstractMove {
 	
 	
 	// GRAVITY
-	public int GRAVITY = 3;
-	public int NB_FRAME_JUMP = 9;
-	public int NB_FRAME_JUMP_SLOW = 17;
+	// public int GRAVITY = 3;
+	public int NB_FRAME_JUMP = 7;
+	public int NB_FRAME_JUMP_SLOW = 14;
 	
 	
 	public int VITESSE_X = 8;
@@ -44,7 +44,7 @@ public abstract class AbstractMove {
 				perso.setSpeedY(VITESSE_Y);
 			}
 			else if (durationJump < NB_FRAME_JUMP_SLOW) {
-				perso.setSpeedY(VITESSE_Y+durationJump);
+				perso.setSpeedY(VITESSE_Y+perso.getGravity()/2);
 			}
 		}
 	}	
