@@ -42,6 +42,9 @@ public abstract class GameEntity {
 	protected boolean isJumpingUp;
 	protected boolean isJumpingDown;
 	protected boolean isOnFloor;
+	
+	// for test
+	private int cptTest=0;
 
 	// ----------------------------------------------------
 	// ---- Constructor
@@ -133,9 +136,9 @@ public abstract class GameEntity {
 		sprite.update(gameTime, direction);
 
 		if (direction == DirectionConstants.LEFT) {
-			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left,
-					sprite.getY() + offsets.top, sprite.getX()
-							+ sprite.getWidth() - offsets.left - offsets.right,
+			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left - offsets.right,
+					sprite.getY() + offsets.top, 
+					sprite.getX() + sprite.getWidth() - offsets.left,
 					sprite.getY() + offsets.top + offsets.bottom);
 		} else {
 			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
@@ -266,11 +269,10 @@ public abstract class GameEntity {
 	private void addX(int _dx) {
 		isMovingHorizontally = false;
 		// calculate the actual translation
-		int leftHitbox =  Math.min(hitBox.left,hitBox.right);
-		int newX = leftHitbox + _dx;
+		int newX = hitBox.left + _dx;
 		int actualDX = 0;
 		if (newX < 0) {
-			actualDX = leftHitbox;
+			actualDX = hitBox.left;
 			speedX = 0;
 		} else if (newX + hitBox.width() > MoveUtil.MAX_X) {
 			actualDX = MoveUtil.MAX_X - hitBox.right;
@@ -281,7 +283,10 @@ public abstract class GameEntity {
 
 		// Now set the new X
 		sprite.offset(actualDX, 0);
-		Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
+		
+		
+		if (cptTest++%20==0) // avoid to have 50 000 000 logs display
+			Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
 				+ sprite.getX() + ", newX= " + newX+", hitbox(l,r)="+hitBox.left+"/"+hitBox.right);
 
 		// Set the direction of the sprite
