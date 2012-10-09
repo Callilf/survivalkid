@@ -7,12 +7,12 @@ public abstract class AbstractMove {
 	
 	// GRAVITY
 	// public int GRAVITY = 3;
-	public int NB_FRAME_JUMP = 7;
-	public int NB_FRAME_JUMP_SLOW = 14;
+	public int NB_FRAME_JUMP = 9;
+	public int NB_FRAME_JUMP_SLOW = 17;
 	
 	
 	public int VITESSE_X = 8;
-	public int VITESSE_Y = -21;
+	public int VITESSE_Y = -15;
 	
 	private int durationJump = 0;
 	private boolean isDescending = false;
