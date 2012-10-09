@@ -29,6 +29,8 @@ public class GameManager extends SurfaceView implements
 		SurfaceHolder.Callback {
 
 	private static final String TAG = GameManager.class.getSimpleName();
+	
+	public static int OWN_PERSO = 0;
 
 	/** The thread corresponding to the game loop. */
 	private MainThread thread;
@@ -136,7 +138,7 @@ public class GameManager extends SurfaceView implements
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		//Personage currentChar = characterManager.getCharacterList(0);
-		characterManager.getCharacterList(0).getMoveManager().calculMove(event);
+		characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
 		
 		//if (event.getAction() != MotionEvent.ACTION_MOVE)	dumpEvent(event);
 		return true;
@@ -205,7 +207,7 @@ public class GameManager extends SurfaceView implements
 	}
 
 	/** Hide or show the hit boxes */
-	public void hideShowDisplayHitBoxes() {
-		displayHitBoxes = !displayHitBoxes;
+	public boolean hideShowDisplayHitBoxes() {
+		return (displayHitBoxes = !displayHitBoxes);
 	}
 }

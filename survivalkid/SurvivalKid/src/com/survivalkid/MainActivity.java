@@ -42,7 +42,9 @@ public class MainActivity extends Activity {
 			gamePanel.stop();
 			break;
 		case KeyEvent.KEYCODE_MENU:
-			gamePanel.hideShowDisplayHitBoxes();
+			if (gamePanel.hideShowDisplayHitBoxes()) {
+				GameManager.OWN_PERSO = (GameManager.OWN_PERSO+1)%2;
+			}
 		default:
 			break;
 		}
