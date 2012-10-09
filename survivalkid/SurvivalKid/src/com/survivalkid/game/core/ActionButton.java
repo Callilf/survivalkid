@@ -6,8 +6,10 @@ import android.graphics.Canvas;
 public class ActionButton {
 	
 	private Bitmap sprite;
+	private Bitmap spritePressed;
 	private int x;
 	private int y;
+	private boolean isPressed = false;
 	
 	private static final int MARGIN = 25;
 	
@@ -18,8 +20,9 @@ public class ActionButton {
 	 * @param _x the x position
 	 * @param _y the y position
 	 */
-	public ActionButton(Bitmap _bitmap) {
+	public ActionButton(Bitmap _bitmap, Bitmap _bitmapPressed) {
 		sprite = _bitmap;
+		spritePressed = _bitmapPressed;
 	}
 	
 	/**
@@ -28,8 +31,9 @@ public class ActionButton {
 	 * @param _x the x position
 	 * @param _y the y position
 	 */
-	public ActionButton(Bitmap _bitmap, int _x, int _y) {
+	public ActionButton(Bitmap _bitmap, Bitmap _bitmapPressed, int _x, int _y) {
 		sprite = _bitmap;
+		spritePressed = _bitmapPressed;
 		x = _x;
 		y = _y;
 	}
@@ -49,7 +53,12 @@ public class ActionButton {
 	 * @param canvas the canvas
 	 */
 	public void draw(Canvas canvas) {
-		canvas.drawBitmap(sprite, x, y, null);
+		if(isPressed) {
+			canvas.drawBitmap(spritePressed, x, y, null);
+		} else {
+			canvas.drawBitmap(sprite, x, y, null);
+
+		}
 	}
 	
 	/**
@@ -93,4 +102,20 @@ public class ActionButton {
 		//Log.d("TEST", _x+" > "+x+" && "+_x+" < "+x+" + "+getWidth()+" && "+_y+" > "+y+" && "+_y+" < "+y+" + "+getHeight());
 		return _x+MARGIN > x && _y+MARGIN > y && _x - MARGIN < x+ getWidth() && _y - MARGIN < y + getHeight();
 	}
+
+	/**
+	 * @return the isPressed
+	 */
+	public boolean isPressed() {
+		return isPressed;
+	}
+
+	/**
+	 * @param isPressed the isPressed to set
+	 */
+	public void setPressed(boolean isPressed) {
+		this.isPressed = isPressed;
+	}
+	
+	
 }

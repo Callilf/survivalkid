@@ -39,9 +39,9 @@ public final class MoveUtil {
 	public static ActionButton btn_up;
 	
 	public static void initializeButton(Resources resources) {
-		btn_left = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_left));
-		btn_right = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_right));
-		btn_up = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_up));
+		btn_left = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_left), BitmapFactory.decodeResource(resources, R.drawable.arrow_left_pressed));
+		btn_right = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_right), BitmapFactory.decodeResource(resources, R.drawable.arrow_right_pressed));
+		btn_up = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_up), BitmapFactory.decodeResource(resources, R.drawable.arrow_up_pressed));
 		btn_left.setPosition(0, SCREEN_HEIGHT - btn_left.getHeight());
 		btn_right.setPosition(btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
 		btn_up.setPosition(SCREEN_WIDTH - btn_up.getWidth() - btn_up.getWidth()/2, SCREEN_HEIGHT - btn_up.getHeight());		

@@ -16,9 +16,9 @@ public class MovePersoManager {
 	/** true if the priority if moving to left, false to right (in case there is both left and right moving enabled) */
 	public boolean lastEnabledLeft;
 	
-	private boolean isLeftEnabled;
-	private boolean isRightEnabled;
-	private boolean isTopEnabled;
+	public boolean isLeftEnabled;
+	public boolean isRightEnabled;
+	public boolean isTopEnabled;
 	
 	/** list of the last pointer enabled */
 	private static List<Integer> lastPidPressed;
