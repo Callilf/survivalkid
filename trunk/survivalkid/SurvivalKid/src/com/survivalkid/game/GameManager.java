@@ -9,12 +9,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.ActionButton;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
@@ -43,9 +43,9 @@ public class GameManager extends SurfaceView implements
 	private Bitmap ground;
 	
 	//Buttons
-	private Bitmap btn_left;
-	private Bitmap btn_right;
-	private Bitmap btn_up;
+	private ActionButton btn_left;
+	private ActionButton btn_right;
+	private ActionButton btn_up;
 	
 	//DEBUG - TEST
 	private boolean displayHitBoxes = true;
@@ -71,18 +71,25 @@ public class GameManager extends SurfaceView implements
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 		
-		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
-		btn_left = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_left);
-		btn_right = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_right);
-		btn_up = BitmapFactory.decodeResource(getResources(), R.drawable.arrow_up);
-		
+		//Retrieve the screen size
 		Point size = new Point();
 		GameContext.getSingleton().getDisplay().getSize(size);
 		screenWidth = size.x;
 		screenHeight = size.y;
+		
+		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
+		
+		btn_left = new ActionButton(BitmapFactory.decodeResource(getResources(), R.drawable.arrow_left));
+		btn_right = new ActionButton(BitmapFactory.decodeResource(getResources(), R.drawable.arrow_right));
+		btn_up = new ActionButton(BitmapFactory.decodeResource(getResources(), R.drawable.arrow_up));
+		btn_left.setPosition(0, screenHeight - btn_left.getHeight());
+		btn_right.setPosition(btn_left.getWidth()*2, screenHeight - btn_right.getHeight());
+		btn_up.setPosition(screenWidth - btn_up.getWidth() - btn_up.getWidth()/2, screenHeight - btn_up.getHeight());
+		
+
 
 		// TEST ------------------
-		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO,BitmapFactory.decodeResource(getResources(), R.drawable.yugo),150,150,
+		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO,BitmapFactory.decodeResource(getResources(), R.drawable.yugo2),150,150,
 				6,12);
 		
 //		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, BitmapFactory.decodeResource(getResources(), R.drawable.yuna),250,150,
@@ -119,9 +126,9 @@ public class GameManager extends SurfaceView implements
 			itemManager.draw(canvas, displayHitBoxes);
 			characterManager.draw(canvas, displayHitBoxes);
 			
-			canvas.drawBitmap(btn_left, 0, screenHeight - btn_left.getHeight(), null);
-			canvas.drawBitmap(btn_right, btn_left.getWidth() + btn_left.getWidth()/2, screenHeight - btn_right.getHeight(), null);
-			canvas.drawBitmap(btn_up, screenWidth - btn_up.getWidth(), screenHeight - btn_up.getHeight(), null);
+			btn_left.draw(canvas);
+			btn_right.draw(canvas);
+			btn_up.draw(canvas);
 		}
 	}
 
