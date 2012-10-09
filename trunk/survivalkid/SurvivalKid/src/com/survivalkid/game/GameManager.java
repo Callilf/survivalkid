@@ -91,6 +91,10 @@ public class GameManager extends SurfaceView implements
 		enemyManager.update(gameTime);
 		itemManager.update(gameTime);
 		characterManager.update(gameTime);
+		
+		MoveUtil.btn_left.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isLeftEnabled);
+		MoveUtil.btn_right.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isRightEnabled);
+		MoveUtil.btn_up.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isTopEnabled);
 	}
 
 	@Override
