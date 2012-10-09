@@ -34,7 +34,7 @@ public class Personage extends GameEntity {
 	public Personage(int perso, Bitmap bitmap, int x, int y, int nbColum,
 			int nbRows) {
 		super("CharacterA", bitmap, x, y, nbColum, nbRows);
-		gravity = 12;
+		gravity = 4;
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
 
