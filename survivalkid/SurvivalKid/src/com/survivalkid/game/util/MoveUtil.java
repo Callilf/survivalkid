@@ -1,36 +1,50 @@
 package com.survivalkid.game.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.view.Display;
-import android.view.MotionEvent;
 
-import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.move.AbstractMove;
-import com.survivalkid.game.move.MoveImplSideScreen;
+import com.survivalkid.R;
+import com.survivalkid.game.core.ActionButton;
 import com.survivalkid.game.singleton.GameContext;
 
 @SuppressLint("NewApi")
 public final class MoveUtil {
-
+	
+	private MoveUtil() {
+		// static class, the constructor can't be called
+	};
+		
 	/** the display of the activity */
 	private static final Display display = GameContext.getSingleton().getDisplay();
 
-	public static int MAX_X;
-	public static int MAX_Y;
+	public static int SCREEN_WIDTH;
+	public static int SCREEN_HEIGHT;
+	public static int GROUND;
 	
 	static {
 		Point size = new Point();
 		display.getSize(size);
-		MAX_X = size.x;
-		MAX_Y = size.y - 40;
+		SCREEN_WIDTH = size.x;
+		SCREEN_HEIGHT = size.y;
+		GROUND = SCREEN_HEIGHT - 40;
+		
 	}
 
-	private MoveUtil() {
-		// static class, the constructor can't be called
-	};
+	//Buttons
+	public static ActionButton btn_left;
+	public static ActionButton btn_right;
+	public static ActionButton btn_up;
+	
+	public static void initializeButton(Resources resources) {
+		btn_left = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_left));
+		btn_right = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_right));
+		btn_up = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_up));
+		btn_left.setPosition(0, SCREEN_HEIGHT - btn_left.getHeight());
+		btn_right.setPosition(btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
+		btn_up.setPosition(SCREEN_WIDTH - btn_up.getWidth() - btn_up.getWidth()/2, SCREEN_HEIGHT - btn_up.getHeight());		
+	}
 	
 }

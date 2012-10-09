@@ -6,11 +6,12 @@ import java.util.List;
 import android.view.MotionEvent;
 
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.move.impl.MoveImplButton;
 
 public class MovePersoManager {
 
 	/** Define the implementation of move */
-	private AbstractMove moveImpl = new MoveImplSideScreen();
+	private AbstractMove moveImpl = new MoveImplButton();
 	
 	/** true if the priority if moving to left, false to right (in case there is both left and right moving enabled) */
 	public boolean lastEnabledLeft;
