@@ -42,7 +42,7 @@ public abstract class GameEntity {
 	protected boolean isJumpingDown;
 	protected boolean isOnFloor;
 	protected int gravity = 0;
-	protected int maxSpeedDown = 21;
+	protected int maxSpeedDown = 20;
 	
 	// for test
 	private int cptTest=0;
