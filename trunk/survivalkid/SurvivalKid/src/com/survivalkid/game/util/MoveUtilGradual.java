@@ -1,24 +1,18 @@
 package com.survivalkid.game.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.http.conn.MultihomePlainSocketFactory;
-
-import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.move.AbstractMove;
-import com.survivalkid.game.move.MoveImplSideScreen;
-import com.survivalkid.game.singleton.GameContext;
 
 import android.annotation.SuppressLint;
 import android.graphics.Point;
-import android.location.Address;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.Display;
 import android.view.MotionEvent;
+
+import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.move.AbstractMove;
+import com.survivalkid.game.move.impl.MoveImplSideScreen;
+import com.survivalkid.game.singleton.GameContext;
 
 @SuppressLint("NewApi")
 public final class MoveUtilGradual {

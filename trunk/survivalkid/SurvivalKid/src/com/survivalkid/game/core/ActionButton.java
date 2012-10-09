@@ -9,6 +9,8 @@ public class ActionButton {
 	private int x;
 	private int y;
 	
+	private static final int MARGIN = 25;
+	
 	
 	/**
 	 * Constructor
@@ -85,5 +87,10 @@ public class ActionButton {
 	
 	public int getHeight() {
 		return sprite.getHeight();
+	}
+	
+	public boolean isOnButton(int _x, int _y) {
+		//Log.d("TEST", _x+" > "+x+" && "+_x+" < "+x+" + "+getWidth()+" && "+_y+" > "+y+" && "+_y+" < "+y+" + "+getHeight());
+		return _x+MARGIN > x && _y+MARGIN > y && _x - MARGIN < x+ getWidth() && _y - MARGIN < y + getHeight();
 	}
 }

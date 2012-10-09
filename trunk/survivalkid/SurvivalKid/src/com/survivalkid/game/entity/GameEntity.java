@@ -190,7 +190,7 @@ public abstract class GameEntity {
 	 * @return true if on the floor
 	 */
 	public boolean onFloor() {
-		return sprite.getY() == (MoveUtil.MAX_Y - sprite.getHeight());
+		return sprite.getY() == (MoveUtil.GROUND - sprite.getHeight());
 	}
 
 	// ---------------------------- Move functions end
@@ -243,8 +243,8 @@ public abstract class GameEntity {
 		if (newY < 0) {
 			newY = 0;
 			speedY = 0;
-		} else if (newY + sprite.getHeight() > MoveUtil.MAX_Y) {
-			newY = MoveUtil.MAX_Y - sprite.getHeight();
+		} else if (newY + sprite.getHeight() > MoveUtil.GROUND) {
+			newY = MoveUtil.GROUND - sprite.getHeight();
 			speedY = 0;
 			isOnFloor = true;
 		}
@@ -272,8 +272,8 @@ public abstract class GameEntity {
 		if (newX < 0) {
 			actualDX = hitBox.left;
 			speedX = 0;
-		} else if (newX + hitBox.width() > MoveUtil.MAX_X) {
-			actualDX = MoveUtil.MAX_X - hitBox.right;
+		} else if (newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
+			actualDX = MoveUtil.SCREEN_WIDTH - hitBox.right;
 			speedX = 0;
 		} else {
 			actualDX = _dx;
@@ -282,9 +282,9 @@ public abstract class GameEntity {
 		// Now set the new X
 		sprite.offset(actualDX, 0);
 		
-		if (cptTest++%20==0) // avoid to have 50 000 000 logs display
-			Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
-				+ sprite.getX() + ", newX= " + newX+", hitbox(l,r)="+hitBox.left+"/"+hitBox.right);
+//		if (cptTest++%40==0) // avoid to have 50 000 000 logs display
+//			Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
+//				+ sprite.getX() + ", newX= " + newX+", hitbox(l,r)="+hitBox.left+"/"+hitBox.right);
 
 		// Set the direction of the sprite
 		if (speedX != 0 && _dx != 0) {
