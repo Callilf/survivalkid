@@ -40,7 +40,7 @@ public class GameManager extends SurfaceView implements
 	private Bitmap ground;
 	
 	//DEBUG - TEST
-	private boolean displayHitBoxes = true;
+	private boolean displayHitBoxes = false;
 
 
 	@SuppressLint("NewApi")
