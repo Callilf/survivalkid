@@ -41,7 +41,8 @@ public abstract class GameEntity {
 	protected boolean isJumpingUp;
 	protected boolean isJumpingDown;
 	protected boolean isOnFloor;
-	protected int gravity=0;
+	protected int gravity = 0;
+	protected int maxSpeedDown = 21;
 	
 	// for test
 	private int cptTest=0;
@@ -181,7 +182,7 @@ public abstract class GameEntity {
 	public void move() {
 		addX(speedX);
 		addY(speedY);
-		speedY = speedY + gravity;
+		speedY = Math.min(speedY + gravity, maxSpeedDown);
 	}
 
 	/**
