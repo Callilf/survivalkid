@@ -92,11 +92,11 @@ public class GameManager extends SurfaceView implements
 		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO,BitmapFactory.decodeResource(getResources(), R.drawable.yugo2),150,150,
 				6,12);
 		
-//		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, BitmapFactory.decodeResource(getResources(), R.drawable.yuna),250,150,
-//				6,12);
+		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, BitmapFactory.decodeResource(getResources(), R.drawable.yuna),250,150,
+				6,12);
 		
 		characterManager.addCharacter(yugo);
-//		characterManager.addCharacter(yuna);
+		characterManager.addCharacter(yuna);
 		// END TESTS --------------
 
 		
@@ -136,7 +136,8 @@ public class GameManager extends SurfaceView implements
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		//Personage currentChar = characterManager.getCharacterList(0);
-		MoveUtil.calculMove(event);
+		characterManager.getCharacterList(0).getMoveManager().calculMove(event);
+		
 		//if (event.getAction() != MotionEvent.ACTION_MOVE)	dumpEvent(event);
 		return true;
 	}
@@ -164,7 +165,7 @@ public class GameManager extends SurfaceView implements
 			if (i + 1 < event.getPointerCount())
 				sb.append(";" );
 		}
-		sb.append("]" ).append(MoveUtil.lastEnabledLeft);
+		sb.append("]" ).append(characterManager.getCharacterList(0).getMoveManager().lastEnabledLeft);
 		Log.d(TAG, sb.toString());
 	}
 	
