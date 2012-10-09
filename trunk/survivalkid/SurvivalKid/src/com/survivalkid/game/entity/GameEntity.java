@@ -32,7 +32,6 @@ public abstract class GameEntity {
 	// Speed attributes
 	private int speedX;
 	private int speedY;
-	private boolean isSubjectToGravity;
 
 	/** Direction. */
 	private int direction;
@@ -42,6 +41,7 @@ public abstract class GameEntity {
 	protected boolean isJumpingUp;
 	protected boolean isJumpingDown;
 	protected boolean isOnFloor;
+	protected int gravity=0;
 	
 	// for test
 	private int cptTest=0;
@@ -175,15 +175,13 @@ public abstract class GameEntity {
 
 	/**
 	 * Move the sprite according to its inertia : its current {@link #speedX}
-	 * and {@link #speedY}, and also gravity if {@link #isSubjectToGravity()} is
+	 * and {@link #speedY}, and also gravity if {@link #gravity()} is
 	 * true.
 	 */
 	public void move() {
 		addX(speedX);
 		addY(speedY);
-		if (isSubjectToGravity) {
-			speedY = speedY + MoveUtil.GRAVITY;
-		}
+		speedY = speedY + gravity;
 	}
 
 	/**
@@ -284,7 +282,6 @@ public abstract class GameEntity {
 		// Now set the new X
 		sprite.offset(actualDX, 0);
 		
-		
 		if (cptTest++%20==0) // avoid to have 50 000 000 logs display
 			Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
 				+ sprite.getX() + ", newX= " + newX+", hitbox(l,r)="+hitBox.left+"/"+hitBox.right);
@@ -355,18 +352,18 @@ public abstract class GameEntity {
 	}
 
 	/**
-	 * @return the isSubjectToGravity
+	 * @return the gravity
 	 */
-	public boolean isSubjectToGravity() {
-		return isSubjectToGravity;
+	public int getGravity() {
+		return gravity;
 	}
 
 	/**
 	 * @param _isSubjectToGravity
-	 *            the isSubjectToGravity to set
+	 *            the gravity to set
 	 */
-	public void setSubjectToGravity(boolean _isSubjectToGravity) {
-		this.isSubjectToGravity = _isSubjectToGravity;
+	public void setGravity(int _gravity) {
+		this.gravity = _gravity;
 	}
 
 }

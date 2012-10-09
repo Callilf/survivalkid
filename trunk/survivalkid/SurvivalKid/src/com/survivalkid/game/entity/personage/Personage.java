@@ -4,12 +4,16 @@ import android.graphics.Bitmap;
 
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.GameEntity;
+import com.survivalkid.game.move.MovePersoManager;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Personage extends GameEntity {
 
 	private int playerNumber = -1;
 	private int persoType;
+	
+	/** Manager of the move of the perso */
+	private MovePersoManager movePersoManager;
 
 	/**
 	 * Create a personage
@@ -30,8 +34,9 @@ public class Personage extends GameEntity {
 	public Personage(int perso, Bitmap bitmap, int x, int y, int nbColum,
 			int nbRows) {
 		super("CharacterA", bitmap, x, y, nbColum, nbRows);
-		setSubjectToGravity(true);
+		gravity = 3;
 		persoType = perso;
+		movePersoManager = new MovePersoManager();
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
@@ -68,10 +73,8 @@ public class Personage extends GameEntity {
 
 	@Override
 	public void update(long gameTime) {
-		if (playerNumber == 0) {
-			MoveUtil.calculNewSpeed(this);
-		}
-		if (!MoveUtil.isHorizontalMoving()) {
+		movePersoManager.calculNewSpeed(this);
+		if (!movePersoManager.isHorizontalMoving()) {
 			setSpeedX(getSpeedX() / 3);
 		}
 		super.update(gameTime);
@@ -86,7 +89,7 @@ public class Personage extends GameEntity {
 			play(PersonageConstants.ANIM_STAND, false, true);
 		}
 	}
-
+	
 	/**
 	 * @return the playerNumber
 	 */
@@ -100,6 +103,10 @@ public class Personage extends GameEntity {
 	 */
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
+	}
+
+	public MovePersoManager getMoveManager() {
+		return movePersoManager;
 	}
 
 }
