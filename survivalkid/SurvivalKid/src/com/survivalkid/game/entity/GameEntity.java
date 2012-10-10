@@ -30,8 +30,8 @@ public abstract class GameEntity {
 	private Rect hitBox;
 
 	// Speed attributes
-	private int speedX;
-	private int speedY;
+	private float speedX;
+	private float speedY;
 
 	/** Direction. */
 	private int direction;
@@ -180,8 +180,8 @@ public abstract class GameEntity {
 	 * true.
 	 */
 	public void move() {
-		addX(speedX);
-		addY(speedY);
+		addX(getRoundSpeedX());
+		addY(getRoundSpeedY());
 		speedY = Math.min(speedY + gravity, maxSpeedDown);
 	}
 
@@ -325,7 +325,11 @@ public abstract class GameEntity {
 	/**
 	 * @return the speedX
 	 */
-	public int getSpeedX() {
+	public int getRoundSpeedX() {
+		return (int) speedX;
+	}
+
+	public float getSpeedX() {
 		return speedX;
 	}
 
@@ -333,14 +337,18 @@ public abstract class GameEntity {
 	 * @param _speedX
 	 *            the speedX to set
 	 */
-	public void setSpeedX(int _speedX) {
+	public void setSpeedX(float _speedX) {
 		this.speedX = _speedX;
 	}
 
 	/**
 	 * @return the speedY
 	 */
-	public int getSpeedY() {
+	public int getRoundSpeedY() {
+		return (int) speedY;
+	}
+
+	public float getSpeedY() {
 		return speedY;
 	}
 
@@ -348,7 +356,7 @@ public abstract class GameEntity {
 	 * @param _speedY
 	 *            the speedY to set
 	 */
-	public void setSpeedY(int _speedY) {
+	public void setSpeedY(float _speedY) {
 		this.speedY = _speedY;
 	}
 

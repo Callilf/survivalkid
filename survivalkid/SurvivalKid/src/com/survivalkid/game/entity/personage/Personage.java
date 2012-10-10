@@ -74,9 +74,6 @@ public class Personage extends GameEntity {
 	@Override
 	public void update(long gameTime) {
 		movePersoManager.calculNewSpeed(this);
-		if (!movePersoManager.isHorizontalMoving()) {
-			setSpeedX(getSpeedX() / 3);
-		}
 		super.update(gameTime);
 		
 		if(isJumpingUp) {

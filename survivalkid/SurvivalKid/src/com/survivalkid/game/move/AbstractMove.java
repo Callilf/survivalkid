@@ -10,10 +10,10 @@ public abstract class AbstractMove {
 	protected int NB_FRAME_JUMP = 9;
 	protected int NB_FRAME_JUMP_SLOW = 17;
 	
-	protected int VITESSE_MAX_X = 8;
-	protected int ACCELERATION_X = 1;
-	protected int DECELERATE_X = 1;
-	protected int VITESSE_Y = -15;
+	protected float VITESSE_MAX_X = 8;
+	protected float ACCELERATION_X = 1.5f;
+	protected float DECELERATE_X = 1;
+	protected float VITESSE_Y = -15;
 	
 
 	
@@ -21,6 +21,7 @@ public abstract class AbstractMove {
 	
 	private int durationJump = 0;
 	private boolean isDescending = false;
+	private boolean hasReleasedJump = true;
 	
 	public abstract boolean isOnLeft(int x, int y);
 	
@@ -37,7 +38,8 @@ public abstract class AbstractMove {
 	}
 	
 	public void jump(Personage perso) {
-		if (perso.onFloor()) {
+		if (perso.onFloor() && hasReleasedJump) {
+			hasReleasedJump = false;
 			isDescending = false;
 			durationJump = 0;
 			perso.setSpeedY(VITESSE_Y);
@@ -61,6 +63,7 @@ public abstract class AbstractMove {
 	 */
 	public void noJump(Personage perso) {
 		isDescending = !perso.onFloor();
+		hasReleasedJump = true;
 	}
 
 	/**
@@ -69,16 +72,18 @@ public abstract class AbstractMove {
 	 * @param perso the personage
 	 */
 	public void slowDown(Personage perso) {
-		int vitesseX = perso.getSpeedX();
-		if (vitesseX > 0)
-		{
-			vitesseX = Math.max(0, vitesseX-DECELERATE_X);
+		float vitesseX = perso.getSpeedX();
+		if (vitesseX != 0) {
+			if (vitesseX > 0)
+			{
+				vitesseX = Math.max(0, vitesseX-DECELERATE_X);
+			}
+			else
+			{
+				vitesseX = Math.min(0, vitesseX+DECELERATE_X);
+			}
+			perso.setSpeedX(vitesseX);
 		}
-		else if (vitesseX < 0)
-		{
-			vitesseX = Math.min(0, vitesseX+DECELERATE_X);
-		}
-		// we ignore the case vitesseX = 0, the perso dosen't move already
 	}
 	
 }
