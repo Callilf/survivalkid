@@ -1,7 +1,9 @@
 package com.survivalkid.game.entity.personage;
 
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 
+import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.move.MovePersoManager;
@@ -74,13 +76,22 @@ public class Personage extends GameEntity {
 	@Override
 	public void update(long gameTime) {
 		movePersoManager.calculNewSpeed(this);
-		super.update(gameTime);
 		
+		//Set the direction based on the button pushed
+		if(movePersoManager.isLeftEnabled) {
+			direction = DirectionConstants.LEFT;
+		} else if (movePersoManager.isRightEnabled) {
+			direction = DirectionConstants.RIGHT;
+		}
+		
+		super.update(gameTime);
+
+		//Play the correct animation
 		if(isJumpingUp) {
 			play(PersonageConstants.ANIM_JUMPUP, false, true);
 		} else if (isJumpingDown) {
 			play(PersonageConstants.ANIM_JUMPDOWN, false, true);
-		} else if (isMovingHorizontally) {
+		} else if (isMovingHorizontally || movePersoManager.isLeftEnabled || movePersoManager.isRightEnabled) {
 			play(PersonageConstants.ANIM_RUN, true, true);
 		} else {
 			play(PersonageConstants.ANIM_STAND, false, true);
