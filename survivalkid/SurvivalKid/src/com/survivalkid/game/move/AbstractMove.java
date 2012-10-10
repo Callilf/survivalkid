@@ -7,12 +7,17 @@ public abstract class AbstractMove {
 	
 	// GRAVITY
 	// public int GRAVITY = 3;
-	public int NB_FRAME_JUMP = 9;
-	public int NB_FRAME_JUMP_SLOW = 17;
+	protected int NB_FRAME_JUMP = 9;
+	protected int NB_FRAME_JUMP_SLOW = 17;
+	
+	protected int VITESSE_MAX_X = 8;
+	protected int ACCELERATION_X = 1;
+	protected int DECELERATE_X = 1;
+	protected int VITESSE_Y = -15;
+	
+
 	
 	
-	public int VITESSE_X = 8;
-	public int VITESSE_Y = -15;
 	
 	private int durationJump = 0;
 	private boolean isDescending = false;
@@ -24,11 +29,11 @@ public abstract class AbstractMove {
 	public abstract boolean isOnTop(int x, int y);
 	
 	public void moveToLeft(Personage perso) {
-		perso.setSpeedX(-VITESSE_X);
+		perso.setSpeedX(Math.max(-VITESSE_MAX_X,perso.getSpeedX()-ACCELERATION_X));
 	}
 	
 	public void moveToRight(Personage perso) {
-		perso.setSpeedX(VITESSE_X);
+		perso.setSpeedX(Math.min(VITESSE_MAX_X,perso.getSpeedX()+ACCELERATION_X));
 	}
 	
 	public void jump(Personage perso) {
@@ -49,8 +54,31 @@ public abstract class AbstractMove {
 		}
 	}	
 	
+	/**
+	 * Indicate that the player don't click on jump
+	 * 
+	 * @param perso the personage
+	 */
 	public void noJump(Personage perso) {
 		isDescending = !perso.onFloor();
+	}
+
+	/**
+	 * Indicate that the player don't click on left or right
+	 * 
+	 * @param perso the personage
+	 */
+	public void slowDown(Personage perso) {
+		int vitesseX = perso.getSpeedX();
+		if (vitesseX > 0)
+		{
+			vitesseX = Math.max(0, vitesseX-DECELERATE_X);
+		}
+		else if (vitesseX < 0)
+		{
+			vitesseX = Math.min(0, vitesseX+DECELERATE_X);
+		}
+		// we ignore the case vitesseX = 0, the perso dosen't move already
 	}
 	
 }
