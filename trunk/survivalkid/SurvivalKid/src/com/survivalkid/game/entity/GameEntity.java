@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.MoveUtil;
 
 public abstract class GameEntity {
@@ -26,15 +27,15 @@ public abstract class GameEntity {
 	protected AnimatedSprite sprite;
 
 	/** The hit box. */
-	private Rect offsets;
-	private Rect hitBox;
+	protected Rect offsets;
+	protected Rect hitBox;
 
 	// Speed attributes
 	private float speedX;
 	private float speedY;
 
 	/** Direction. */
-	private int direction;
+	protected int direction;
 
 	/** actions. */
 	protected boolean isMovingHorizontally;
@@ -290,8 +291,11 @@ public abstract class GameEntity {
 		// Set the direction of the sprite
 		if (speedX != 0 && _dx != 0) {
 			isMovingHorizontally = true;
+			
+			if( !(this instanceof Personage) ){
 			direction = (_dx > 0) ? DirectionConstants.RIGHT
 					: DirectionConstants.LEFT;
+			}
 		}
 	}
 

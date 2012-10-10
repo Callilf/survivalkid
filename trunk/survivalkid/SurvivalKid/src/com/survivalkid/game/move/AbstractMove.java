@@ -11,7 +11,7 @@ public abstract class AbstractMove {
 	protected int NB_FRAME_JUMP_SLOW = 17;
 	
 	protected float VITESSE_MAX_X = 8;
-	protected float ACCELERATION_X = 1.5f;
+	protected float ACCELERATION_X = 1f;
 	protected float DECELERATE_X = 1;
 	protected float VITESSE_Y = -15;
 	
