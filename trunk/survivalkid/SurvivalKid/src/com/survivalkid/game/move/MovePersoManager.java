@@ -43,6 +43,9 @@ public class MovePersoManager {
 		else if (isRightEnabled) {
 			moveImpl.moveToRight(perso);
 		}
+		else {
+			moveImpl.slowDown(perso);
+		}
 		if (isTopEnabled) {
 			moveImpl.jump(perso);
 		}
