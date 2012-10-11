@@ -9,6 +9,5 @@ public abstract class ObjectManager implements IManager {
 	 */
 	public abstract void generate();
 	
-	
 	public abstract void addEntity(GameEntity ge);
 }

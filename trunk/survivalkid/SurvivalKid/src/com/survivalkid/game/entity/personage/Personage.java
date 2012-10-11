@@ -98,6 +98,10 @@ public class Personage extends GameEntity {
 		}
 	}
 	
+	public void setOverlaping(boolean b) {
+		overlaping = b;
+	}
+	
 	/**
 	 * @return the playerNumber
 	 */
