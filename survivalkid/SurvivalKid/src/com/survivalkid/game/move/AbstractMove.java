@@ -15,10 +15,6 @@ public abstract class AbstractMove {
 	protected float DECELERATE_X = 1;
 	protected float VITESSE_Y = -15;
 	
-
-	
-	
-	
 	private int durationJump = 0;
 	private boolean isDescending = false;
 	private boolean hasReleasedJump = true;

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public abstract class GameEntity {
@@ -155,12 +156,11 @@ public abstract class GameEntity {
 	 * DRAW !
 	 * 
 	 * @param canvas
-	 * @param displayHitBox
 	 */
-	public void draw(Canvas canvas, boolean displayHitBox) {
+	public void draw(Canvas canvas) {
 		sprite.draw(canvas, direction);
 
-		if (displayHitBox) {
+		if (CollisionUtil.displayHitBoxes) {
 			final Paint paint = new Paint();
 			paint.setARGB(128, 255, 0, 0);
 			

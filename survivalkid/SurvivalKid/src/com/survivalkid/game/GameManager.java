@@ -41,9 +41,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	private Bitmap ground;
 
-	// DEBUG - TEST
-	private boolean displayHitBoxes = false;
-
 	@SuppressLint("NewApi")
 	public GameManager(Context context) {
 		super(context);
@@ -127,9 +124,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			canvas.drawColor(Color.BLUE);
 			canvas.drawBitmap(ground, 0, 0, null);
 
-			enemyManager.draw(canvas, displayHitBoxes);
-			itemManager.draw(canvas, displayHitBoxes);
-			characterManager.draw(canvas, displayHitBoxes);
+			enemyManager.draw(canvas);
+			itemManager.draw(canvas);
+			characterManager.draw(canvas);
 
 			MoveUtil.btn_left.draw(canvas);
 			MoveUtil.btn_right.draw(canvas);
@@ -202,10 +199,5 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void stop() {
 		thread.setRunning(false);
 		((Activity) getContext()).finish();
-	}
-
-	/** Hide or show the hit boxes */
-	public boolean hideShowDisplayHitBoxes() {
-		return (displayHitBoxes = !displayHitBoxes);
 	}
 }
