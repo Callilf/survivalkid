@@ -29,10 +29,10 @@ public class CharacterManager implements IManager {
 		}
 	}
 
-	public void draw(Canvas canvas, boolean displayHitBox) {
+	public void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		for(Personage perso : characterList) {
-			perso.draw(canvas, displayHitBox);
+			perso.draw(canvas);
 		}
 	}
 	

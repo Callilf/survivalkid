@@ -30,10 +30,10 @@ public class EnemyManager extends ObjectManager {
 		}
 	}
 
-	public void draw(Canvas canvas, boolean displayHitBox) {
+	public void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		for(EnemyEntity enemy : enemyList) {
-			enemy.draw(canvas, displayHitBox);
+			enemy.draw(canvas);
 		}
 	}
 

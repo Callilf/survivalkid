@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.util.CollisionUtil;
 
 public class MainActivity extends Activity {
 
@@ -42,7 +43,7 @@ public class MainActivity extends Activity {
 			gamePanel.stop();
 			break;
 		case KeyEvent.KEYCODE_MENU:
-			if (gamePanel.hideShowDisplayHitBoxes()) {
+			if (CollisionUtil.hideShowDisplayHitBoxes()) {
 				GameManager.OWN_PERSO = (GameManager.OWN_PERSO+1)%2;
 			}
 		default:
