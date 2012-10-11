@@ -1,5 +1,7 @@
 package com.survivalkid.game.util;
 
+import android.graphics.Rect;
+
 import com.survivalkid.game.entity.GameEntity;
 
 public final class CollisionUtil {
@@ -10,7 +12,8 @@ public final class CollisionUtil {
 	public static boolean displayHitBoxes = false;
 	
 	public static boolean Overlaps(GameEntity ge1, GameEntity ge2) {
-		return ge1.getHitBox().intersect(ge2.getHitBox());
+		ge1.getHitBox();
+		return Rect.intersects(ge2.getHitBox(), ge1.getHitBox());
 	}
 	
 
