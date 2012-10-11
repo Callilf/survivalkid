@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.graphics.Canvas;
 
+import com.survivalkid.game.entity.GameEntity;
+import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 
 public class ItemManager extends ObjectManager {
@@ -36,6 +38,12 @@ public class ItemManager extends ObjectManager {
 	public void generate() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public void addEntity(GameEntity ge) {
+		// TODO Auto-generated method stub
+		itemList.add((ItemEntity)ge);
 	}
 
 }
