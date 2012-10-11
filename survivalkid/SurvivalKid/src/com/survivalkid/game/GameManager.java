@@ -14,6 +14,7 @@ import android.view.SurfaceView;
 
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
+import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.CircularSaw;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
@@ -22,6 +23,7 @@ import com.survivalkid.game.manager.ItemManager;
 import com.survivalkid.game.manager.ObjectManager;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.MainThread;
+import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
@@ -34,8 +36,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private MainThread thread;
 
 	private CharacterManager characterManager;
-	private ObjectManager enemyManager;
-	private ObjectManager itemManager;
+	private EnemyManager enemyManager;
+	private ItemManager itemManager;
 
 	private Bitmap ground;
 
@@ -76,12 +78,14 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		characterManager.addCharacter(yuna);
 
 		CircularSaw saw = new CircularSaw(BitmapFactory.decodeResource(getResources(), R.drawable.enemy_circular_saw),
-				250, 100, 10, 1);
+				500, 350, 10, 1);
 		enemyManager.addEntity(saw);
 		// END TESTS --------------
 
 	}
 
+	
+	
 	/**
 	 * This is the game update method. It iterates through all the objects and
 	 * calls their update method if they have one or calls specific engine's
@@ -89,15 +93,33 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void update() {
 		long gameTime = System.currentTimeMillis();
+		
+		//Update the gameEntities
 		enemyManager.update(gameTime);
 		itemManager.update(gameTime);
 		characterManager.update(gameTime);
 
+		//Check the collisions
+		for(Personage perso : characterManager.getCharacterList()) {
+			perso.setOverlaping(false);
+		}
+		for(Personage perso : characterManager.getCharacterList()) {
+			for(EnemyEntity enemy : enemyManager.getEnemyList()) {
+				if(CollisionUtil.Overlaps(perso, enemy)) {
+					perso.setOverlaping(true);
+				}
+			}
+		}
+		
+		
+		//Change the buttons sprites when they are pressed.
 		MoveUtil.btn_left.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isLeftEnabled);
 		MoveUtil.btn_right.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isRightEnabled);
 		MoveUtil.btn_up.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isTopEnabled);
 	}
 
+	
+	
 	@Override
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {

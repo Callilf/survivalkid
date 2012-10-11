@@ -47,6 +47,7 @@ public abstract class GameEntity {
 	
 	// for test
 	private int cptTest=0;
+	protected boolean overlaping = false;
 
 	// ----------------------------------------------------
 	// ---- Constructor
@@ -162,6 +163,10 @@ public abstract class GameEntity {
 		if (displayHitBox) {
 			final Paint paint = new Paint();
 			paint.setARGB(128, 255, 0, 0);
+			
+			if(this instanceof Personage && overlaping) {
+				paint.setARGB(128, 100, 255, 100);
+			}
 			canvas.drawRect(hitBox, paint);
 		}
 	}
@@ -378,5 +383,14 @@ public abstract class GameEntity {
 	public void setGravity(int _gravity) {
 		this.gravity = _gravity;
 	}
+
+	/**
+	 * @return the hitBox
+	 */
+	public Rect getHitBox() {
+		return hitBox;
+	}
+	
+	
 
 }
