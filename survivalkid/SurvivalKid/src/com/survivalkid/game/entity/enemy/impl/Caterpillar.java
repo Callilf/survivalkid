@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.personage.Personage;
 
 public class Caterpillar extends EnemyEntity {
 
@@ -38,8 +39,10 @@ public class Caterpillar extends EnemyEntity {
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
-		// TODO Auto-generated method stub
-
+		if (_gameEntity instanceof Personage) {
+			((Personage) _gameEntity).getLife().looseLife(1);
+		}
+		// the method die should be called after x touch (or at the first touch)
 	}
 
 	@Override

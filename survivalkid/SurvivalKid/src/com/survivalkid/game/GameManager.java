@@ -1,5 +1,6 @@
 package com.survivalkid.game;
 
+import static com.survivalkid.game.manager.CharacterManager.OWN_PERSO;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -30,8 +31,6 @@ import com.survivalkid.game.util.MoveUtil;
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final String TAG = GameManager.class.getSimpleName();
-
-	public static int OWN_PERSO = 0;
 
 	/** The thread corresponding to the game loop. */
 	private MainThread thread;
@@ -113,6 +112,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			for(EnemyEntity enemy : enemyManager.getEnemyList()) {
 				if(CollisionUtil.Overlaps(perso, enemy)) {
 					perso.setOverlaping(true);
+					enemy.collide(perso);
 				}
 			}
 		}
