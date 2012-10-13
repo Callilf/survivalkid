@@ -6,7 +6,6 @@ import java.util.List;
 import android.graphics.Canvas;
 
 import com.survivalkid.game.entity.GameEntity;
-import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 
 public class ItemManager extends ObjectManager {
@@ -23,8 +22,16 @@ public class ItemManager extends ObjectManager {
 	}
 
 	public void update(long gameTime) {
-		// TODO Auto-generated method stub
-
+		//Clean the list by removing all the dead items
+		for(ItemEntity item : itemList) {
+			if(item.isDead()) {
+				itemList.remove(item);
+			}
+		}
+		
+		for(ItemEntity item : itemList) {
+			item.update(gameTime);
+		}
 	}
 
 	public void draw(Canvas canvas) {

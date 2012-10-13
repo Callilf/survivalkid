@@ -24,7 +24,13 @@ public class EnemyManager extends ObjectManager {
 	}
 
 	public void update(long gameTime) {
-		// TODO Auto-generated method stub
+		//Clean the list by removing all the dead enemies
+		for(EnemyEntity enemy : enemyList) {
+			if(enemy.isDead()) {
+				enemyList.remove(enemy);
+			}
+		}
+		
 		for(EnemyEntity enemy : enemyList) {
 			enemy.update(gameTime);
 		}

@@ -46,6 +46,11 @@ public abstract class GameEntity {
 	protected int gravity = 0;
 	protected int maxSpeedDown = 20;
 	
+	/**
+	 * State
+	 */
+	protected boolean dead;
+	
 	// for test
 	private int cptTest=0;
 	protected boolean overlaping = false;
@@ -77,6 +82,7 @@ public abstract class GameEntity {
 		isJumpingUp = false;
 		isJumpingDown = false;
 		isOnFloor = false;
+		dead = false;
 
 		// check the correspondence between sprite and hitbox
 		Log.d(TAG,
@@ -408,6 +414,14 @@ public abstract class GameEntity {
 	 */
 	public Rect getHitBox() {
 		return hitBox;
+	}
+
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
 	}
 	
 	

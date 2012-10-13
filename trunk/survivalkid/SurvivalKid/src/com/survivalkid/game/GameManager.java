@@ -84,7 +84,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		
 		
 		FredCircularSaw fsaw = new FredCircularSaw(BitmapFactory.decodeResource(getResources(), R.drawable.enemy_circular_saw),
-				10, 200, 10, 1);
+				-20, 200, 10, 1);
 		enemyManager.addEntity(fsaw);
 		// END TESTS --------------
 
