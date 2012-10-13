@@ -1,18 +1,18 @@
 package com.survivalkid.game.entity.personage;
 
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.GameEntity;
+import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.move.MovePersoManager;
-import com.survivalkid.game.util.MoveUtil;
 
 public class Personage extends GameEntity {
 
 	private int playerNumber = -1;
 	private int persoType;
+	private Life life;
 	
 	/** Manager of the move of the perso */
 	private MovePersoManager movePersoManager;
@@ -39,6 +39,7 @@ public class Personage extends GameEntity {
 		gravity = 2;
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
+		life = new Life(100);
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
@@ -119,6 +120,10 @@ public class Personage extends GameEntity {
 
 	public MovePersoManager getMoveManager() {
 		return movePersoManager;
+	}
+
+	public Life getLife() {
+		return life;
 	}
 
 }
