@@ -17,6 +17,7 @@ import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.CircularSaw;
+import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
@@ -80,6 +81,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 				600, 380, 4, 1);
 		enemyManager.addEntity(saw);
 		enemyManager.addEntity(caterpillar);
+		
+		
+		FredCircularSaw fsaw = new FredCircularSaw(BitmapFactory.decodeResource(getResources(), R.drawable.enemy_circular_saw),
+				10, 200, 10, 1);
+		enemyManager.addEntity(fsaw);
 		// END TESTS --------------
 
 	}
