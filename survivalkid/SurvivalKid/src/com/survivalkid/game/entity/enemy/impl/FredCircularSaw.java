@@ -7,12 +7,16 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.Log;
 
+import com.survivalkid.game.GameManager;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.util.MoveUtil;
 
 public class FredCircularSaw extends EnemyEntity {
+	private static final String TAG = FredCircularSaw.class.getSimpleName();
+
 
 	private static int STATE_LINE = 0;
 	private static int STATE_SAW = 1;
@@ -58,8 +62,9 @@ public class FredCircularSaw extends EnemyEntity {
 	public void update(long gameTime) {
 		super.update(gameTime);
 
+		
+		//DRAW THE LINE
 		if (state == STATE_LINE && draw && gameTime > lastDrawnTime + drawPointPeriod) {
-			
 			Point newPoint = null;
 			if (lastNumber > NB_POINTS_MIN) {
 				int randomInt = (int) (Math.random() * 100);
@@ -110,6 +115,8 @@ public class FredCircularSaw extends EnemyEntity {
 			if (newPoint.x > MoveUtil.SCREEN_WIDTH || newPoint.y < 0 || newPoint.y > MoveUtil.SCREEN_HEIGHT) {
 				draw = false;
 			}
+			
+			Log.d(TAG,"Draw point at x=" + lastDrawnPoint.x + ", y=" + lastDrawnPoint.y);
 		}
 	}
 
