@@ -1,6 +1,7 @@
 package com.survivalkid.game.entity.personage;
 
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
@@ -57,8 +58,6 @@ public class Personage extends GameEntity {
 			redefineHitBox( (sprite.getWidth()*35) / 100, (sprite.getHeight()*10) / 100, (sprite.getWidth()*40) / 100, (sprite.getHeight()*84) / 100);
 			break;
 		}
-		
-		
 
 	}
 
