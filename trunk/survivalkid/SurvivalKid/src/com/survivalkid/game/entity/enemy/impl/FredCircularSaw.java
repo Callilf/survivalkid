@@ -114,6 +114,7 @@ public class FredCircularSaw extends EnemyEntity {
 
 			if (newPoint.x > MoveUtil.SCREEN_WIDTH || newPoint.y < 0 || newPoint.y > MoveUtil.SCREEN_HEIGHT) {
 				draw = false;
+				dead = true;
 			}
 			
 			Log.d(TAG,"Draw point at x=" + lastDrawnPoint.x + ", y=" + lastDrawnPoint.y);
