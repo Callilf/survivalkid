@@ -1,6 +1,7 @@
 package com.survivalkid.game.entity.enemy;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 import com.survivalkid.game.entity.GameEntity;
 
@@ -15,4 +16,8 @@ public abstract class EnemyEntity extends GameEntity {
 		difficulty = _difficulty;
 	}
 	
+	@Override
+	public void draw(Canvas canvas) {
+		super.draw(canvas);
+	}
 }
