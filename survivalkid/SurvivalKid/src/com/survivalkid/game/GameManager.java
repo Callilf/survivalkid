@@ -15,12 +15,12 @@ import android.view.SurfaceView;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.CircularSaw;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
-import com.survivalkid.game.manager.ObjectManager;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.MainThread;
 import com.survivalkid.game.util.CollisionUtil;
@@ -76,7 +76,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 		CircularSaw saw = new CircularSaw(BitmapFactory.decodeResource(getResources(), R.drawable.enemy_circular_saw),
 				500, 350, 10, 1);
+		Caterpillar caterpillar = new Caterpillar(BitmapFactory.decodeResource(getResources(), R.drawable.caterpillar),
+				600, 380, 4, 1);
 		enemyManager.addEntity(saw);
+		enemyManager.addEntity(caterpillar);
 		// END TESTS --------------
 
 	}

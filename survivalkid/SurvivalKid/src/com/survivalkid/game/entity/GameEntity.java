@@ -199,6 +199,25 @@ public abstract class GameEntity {
 	public boolean onFloor() {
 		return sprite.getY() == (MoveUtil.GROUND - sprite.getHeight());
 	}
+	
+	
+	/**
+	 * Whether the entity is colliding the left border
+	 * 
+	 * @return true or false
+	 */
+	public boolean touchLeft() {
+		return hitBox.left == 0;
+	}
+	
+	/**
+	 * Whether the entity is colliding the right border
+	 * 
+	 * @return true or false
+	 */
+	public boolean touchRight() {
+		return hitBox.right == MoveUtil.SCREEN_WIDTH;
+	}
 
 	// ---------------------------- Move functions end
 
