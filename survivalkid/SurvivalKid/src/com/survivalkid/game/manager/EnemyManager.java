@@ -24,15 +24,13 @@ public class EnemyManager extends ObjectManager {
 	}
 
 	public void update(long gameTime) {
-		//Clean the list by removing all the dead enemies
 		for(EnemyEntity enemy : enemyList) {
+			//Clean the list by removing all the dead enemies
 			if(enemy.isDead()) {
 				enemyList.remove(enemy);
+			} else {
+				enemy.update(gameTime);
 			}
-		}
-		
-		for(EnemyEntity enemy : enemyList) {
-			enemy.update(gameTime);
 		}
 	}
 

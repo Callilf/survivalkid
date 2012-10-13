@@ -22,15 +22,13 @@ public class ItemManager extends ObjectManager {
 	}
 
 	public void update(long gameTime) {
-		//Clean the list by removing all the dead items
 		for(ItemEntity item : itemList) {
 			if(item.isDead()) {
+				//Clean the list by removing all the dead items		
 				itemList.remove(item);
+			} else {
+				item.update(gameTime);
 			}
-		}
-		
-		for(ItemEntity item : itemList) {
-			item.update(gameTime);
 		}
 	}
 
