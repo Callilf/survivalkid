@@ -65,7 +65,7 @@ public class Life {
 	/// GETTER AND SETTER
 	
 	public float getCurrentPcLife() {
-		return currentLife / maxLife;
+		return currentLife / (float) maxLife;
 	}
 
 	public int getMaxLife() {
