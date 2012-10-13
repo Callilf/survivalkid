@@ -167,7 +167,7 @@ public class FredCircularSaw extends EnemyEntity {
 				lastNumber++;
 			}
 
-			if (newPoint.x > MoveUtil.SCREEN_WIDTH + sprite.getWidth() || newPoint.y < 0 - sprite.getHeight()|| newPoint.y > MoveUtil.GROUND) {
+			if (newPoint.x > MoveUtil.SCREEN_WIDTH + sprite.getWidth() || newPoint.y < 0 - sprite.getHeight()|| newPoint.y + sprite.getHeight()/2 >= MoveUtil.GROUND) {
 				draw = false;
 				state = STATE_SAW;
 			}
