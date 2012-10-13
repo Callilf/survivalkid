@@ -311,7 +311,8 @@ public abstract class GameEntity {
 		int newX = hitBox.left + _dx;
 		int actualDX = 0;
 		if (newX < 0) {
-			actualDX = hitBox.left;
+			// if left > 0, set dx to go near the wall. if left < 0, the perso is out of the screen, give a positive dx to return in the screen
+			actualDX = -hitBox.left;
 			speedX = 0;
 		} else if (newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
 			actualDX = MoveUtil.SCREEN_WIDTH - hitBox.right;
