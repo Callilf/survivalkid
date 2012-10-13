@@ -34,6 +34,11 @@ public abstract class GameEntity {
 	// Speed attributes
 	private float speedX;
 	private float speedY;
+	
+	/** Whether it is affected by walls */
+	protected boolean affectedByWalls;
+	/** Whether it is affected by the floor */
+	protected boolean affectedByFloor;
 
 	/** Direction. */
 	protected int direction;
@@ -46,9 +51,7 @@ public abstract class GameEntity {
 	protected int gravity = 0;
 	protected int maxSpeedDown = 20;
 	
-	/**
-	 * State
-	 */
+	/** States. */
 	protected boolean dead;
 	
 	// for test
@@ -83,6 +86,9 @@ public abstract class GameEntity {
 		isJumpingDown = false;
 		isOnFloor = false;
 		dead = false;
+		
+		affectedByFloor = true;
+		affectedByWalls = true;
 
 		// check the correspondence between sprite and hitbox
 		Log.d(TAG,
@@ -142,7 +148,10 @@ public abstract class GameEntity {
 	}
 
 	public void update(long gameTime) {
-		move();
+		if(affectedByFloor && affectedByWalls) {
+			move();
+		}
+		
 		sprite.update(gameTime, direction);
 
 		if (direction == DirectionConstants.LEFT) {

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.personage.Personage;
 
 public class CircularSaw extends EnemyEntity {
 
@@ -20,8 +21,9 @@ public class CircularSaw extends EnemyEntity {
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
-		// TODO Auto-generated method stub
-
+		if (_gameEntity instanceof Personage) {
+			((Personage) _gameEntity).getLife().looseLife(1);
+		}
 	}
 
 	@Override
