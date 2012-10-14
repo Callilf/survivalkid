@@ -41,7 +41,7 @@ public class MainThread extends Thread {
 	public void run() {
 		Log.d(TAG, "Starting game loop");
 		while (running) {
-			while(!pause) {
+			while(!pause && running) {
 				// try locking the canvas for exclusive pixel editing on the surface
 				try {
 					canvas = this.surfaceHolder.lockCanvas();
@@ -63,12 +63,14 @@ public class MainThread extends Thread {
 					}
 				}	// end finally
 			}
-			try {
-				synchronized (this) {
-					wait();
+			if (running) {
+				try {
+					synchronized (this) {
+						wait();
+					}
+				} catch (InterruptedException e) {
+					Log.d(TAG, e.getMessage());
 				}
-			} catch (InterruptedException e) {
-				Log.d(TAG, e.getMessage());
 			}
 		}
 	}
