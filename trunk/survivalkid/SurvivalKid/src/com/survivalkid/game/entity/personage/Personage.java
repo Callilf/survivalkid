@@ -63,14 +63,14 @@ public class Personage extends GameEntity {
 		case PersonageConstants.PERSO_YUNA:
 			addAnimation(PersonageConstants.ANIM_STAND, new int[] { 0 }, 20);
 			addAnimation(PersonageConstants.ANIM_RUN, new int[] { 1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14 }, 20);
-			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[] { 39, 40, 41 }, 13);
+			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[] { 20, 21, 22 }, 13);
 			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[] { 17, 18, 19 }, 13);
 			redefineHitBox((sprite.getWidth() * 35) / 100, (sprite.getHeight() * 10) / 100,
 					(sprite.getWidth() * 40) / 100, (sprite.getHeight() * 84) / 100);
 			break;
 		}
-		
-		deathAnim.addAnimation("die", new int[] {0,1,2,3,4,5,6 }, 17);
+
+		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 17);
 
 	}
 
@@ -94,8 +94,8 @@ public class Personage extends GameEntity {
 	public void update(long gameTime) {
 		if (dying) {
 			deathAnim.update(gameTime, direction);
-			if(deathAnim.isAnimationFinished()) {
-				dead=true;
+			if (deathAnim.isAnimationFinished()) {
+				dead = true;
 			}
 		} else if (!dying && life.getCurrentLife() == 0) {
 			die();

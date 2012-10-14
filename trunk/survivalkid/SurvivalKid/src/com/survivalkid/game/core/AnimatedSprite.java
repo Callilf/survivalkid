@@ -158,6 +158,7 @@ public class AnimatedSprite {
 			}
 		} else {
 			currentIndex = 0;
+			currentFrame = animations.get(currentAnimation).getFrameList()[currentIndex];
 		}
 	}
 
