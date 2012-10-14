@@ -113,9 +113,6 @@ public class AnimatedSprite {
 				currentIndex++;
 				// If it was the last frame of the animation
 				if (currentIndex >= currAnim.getFrameList().length) {
-					if(currentIndex > 0) {
-						currentIndex --;
-					}
 					endAnimation();
 				} else {
 					currentFrame = currAnim.getFrameList()[currentIndex];
@@ -153,6 +150,9 @@ public class AnimatedSprite {
 				repeat = waitingRepeat;
 				animating = true;
 			} else {
+				if(currentIndex > 0) {
+					currentIndex --;
+				}
 				animating = false;
 				setAnimationFinished(true);
 			}
@@ -206,7 +206,6 @@ public class AnimatedSprite {
 	 */
 	public void play(String _name, boolean _repeat, boolean _forceStop) {
 		if (currentAnimation != null && currentAnimation.equals(_name)) {
-			currentIndex = 0;
 			return;
 		}
 		if (_forceStop || currentAnimation == null || !animating) {
