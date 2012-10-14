@@ -46,6 +46,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		super(context);
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
+		GameContext.getSingleton().initSingleton();
 
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);

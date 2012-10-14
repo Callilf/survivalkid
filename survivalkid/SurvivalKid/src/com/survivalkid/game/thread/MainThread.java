@@ -1,10 +1,10 @@
 package com.survivalkid.game.thread;
 
-import com.survivalkid.game.GameManager;
-
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import com.survivalkid.game.GameManager;
 
 public class MainThread extends Thread {
 	/** Tag for logs. */
