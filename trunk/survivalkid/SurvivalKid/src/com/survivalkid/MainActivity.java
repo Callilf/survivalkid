@@ -71,5 +71,25 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 		Log.d(TAG, "Pausing...");
 		super.onPause();
+		gamePanel.stop();
 	}
+	
+	@Override
+	protected void onResume() {
+		Log.d(TAG, "Resuming...");
+		super.onResume();
+	}	
+	
+	@Override
+	protected void onRestart() {
+		Log.d(TAG, "Restarting...");
+		super.onResume();
+	}
+	
+	@Override
+	protected void onUserLeaveHint() {
+		Log.d(TAG, "User leaving hint...");
+		super.onUserLeaveHint();
+	}
+	
 }
