@@ -1,7 +1,6 @@
 package com.survivalkid.game.entity.personage;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.Log;
