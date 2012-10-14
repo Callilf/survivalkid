@@ -81,8 +81,7 @@ public class AnimatedSprite {
 		// Create the flipped image
 		Matrix matrix = new Matrix();
 		matrix.preScale(-1, 1);
-		flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-				bitmap.getHeight(), matrix, true);
+		flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 	}
 
 	public AnimatedSprite() {
@@ -102,8 +101,7 @@ public class AnimatedSprite {
 		}
 
 		// If there is no animation
-		if (animations == null || animations.size() == 0
-				|| currentAnimation == null) {
+		if (animations == null || animations.size() == 0 || currentAnimation == null) {
 			currentFrame = 0;
 
 			// there is an animation running
@@ -115,9 +113,13 @@ public class AnimatedSprite {
 				currentIndex++;
 				// If it was the last frame of the animation
 				if (currentIndex >= currAnim.getFrameList().length) {
+					if(currentIndex > 0) {
+						currentIndex --;
+					}
 					endAnimation();
+				} else {
+					currentFrame = currAnim.getFrameList()[currentIndex];
 				}
-				currentFrame = currAnim.getFrameList()[currentIndex];
 			}
 		} else {
 			currentFrame = animations.get(currentAnimation).getFrameList()[currentIndex];
@@ -144,7 +146,6 @@ public class AnimatedSprite {
 	 * Handle the end of the current animation.
 	 */
 	private void endAnimation() {
-		currentIndex = 0;
 		if (!repeat) {
 			if (waiting) {
 				currentIndex = 0;
@@ -153,8 +154,10 @@ public class AnimatedSprite {
 				animating = true;
 			} else {
 				animating = false;
-				animationFinished = true;
+				setAnimationFinished(true);
 			}
+		} else {
+			currentIndex = 0;
 		}
 	}
 
@@ -166,12 +169,10 @@ public class AnimatedSprite {
 	public void draw(Canvas canvas, int direction) {
 		if (bitmap != null && sourceRect != null) {
 			if (direction == DirectionConstants.RIGHT) {
-				Rect destRect = new Rect(getX(), getY(), getX() + width, getY()
-						+ height);
+				Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
 				canvas.drawBitmap(bitmap, sourceRect, destRect, null);
 			} else {
-				Rect destRect = new Rect(getX(), getY(), getX() + width, getY()
-						+ height);
+				Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
 				canvas.drawBitmap(flippedBitmap, sourceRect, destRect, null);
 			}
 		}
@@ -204,7 +205,8 @@ public class AnimatedSprite {
 	 *            it waits for the previous animation to end.
 	 */
 	public void play(String _name, boolean _repeat, boolean _forceStop) {
-		if(currentAnimation != null && currentAnimation.equals(_name)) {
+		if (currentAnimation != null && currentAnimation.equals(_name)) {
+			currentIndex = 0;
 			return;
 		}
 		if (_forceStop || currentAnimation == null || !animating) {
@@ -212,7 +214,7 @@ public class AnimatedSprite {
 			currentAnimation = _name;
 			currentIndex = 0;
 			repeat = _repeat;
-			animationFinished = false;
+			setAnimationFinished(false);
 			waiting = false;
 		} else {
 			waitingAnim = _name;
@@ -226,7 +228,7 @@ public class AnimatedSprite {
 	 */
 	public void stop() {
 		animating = false;
-		animationFinished = true;
+		setAnimationFinished(true);
 		currentIndex = 0;
 	}
 
@@ -319,6 +321,14 @@ public class AnimatedSprite {
 	 */
 	public void setCurrentFrame(int currentFrame) {
 		this.currentFrame = currentFrame;
+	}
+
+	public boolean isAnimationFinished() {
+		return animationFinished;
+	}
+
+	public void setAnimationFinished(boolean animationFinished) {
+		this.animationFinished = animationFinished;
 	}
 
 }
