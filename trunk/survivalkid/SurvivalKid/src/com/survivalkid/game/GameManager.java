@@ -75,11 +75,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		MoveUtil.initializeButton(getResources());
 
 		// TEST ------------------
-		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, BitmapFactory.decodeResource(getResources(),
-				R.drawable.yugo), 150, 250, 6, 12);
-
-		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, BitmapFactory.decodeResource(getResources(),
-				R.drawable.yuna), 250, 250, 6, 12);
+		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, getResources(), R.drawable.yugo, 150, 250, 6, 12);
+		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, getResources(), R.drawable.yuna, 250, 250, 6, 12);
 
 		characterManager.addCharacter(yugo);
 		characterManager.addCharacter(yuna);
