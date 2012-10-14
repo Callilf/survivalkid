@@ -24,7 +24,6 @@ public class MainActivity extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		// Set fullscreen and remove the title bar
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -39,7 +38,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		Log.d(TAG, "Touche appuyée : "+keyCode);
+		Log.d(TAG, "Touche appuyï¿½e : "+keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			gamePanel.stop();
