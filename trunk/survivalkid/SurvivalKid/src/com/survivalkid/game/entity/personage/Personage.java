@@ -2,7 +2,9 @@ package com.survivalkid.game.entity.personage;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.util.Log;
 
+import com.survivalkid.game.GameManager;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.GameEntity;
@@ -10,6 +12,7 @@ import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.move.MovePersoManager;
 
 public class Personage extends GameEntity {
+	private static final String TAG = Personage.class.getSimpleName();
 
 	private int playerNumber = -1;
 	private int persoType;
@@ -69,8 +72,8 @@ public class Personage extends GameEntity {
 
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
-
+		Log.d(TAG, "Perso DEAD !");
+		dead = true;
 	}
 
 	@Override
@@ -95,6 +98,10 @@ public class Personage extends GameEntity {
 			play(PersonageConstants.ANIM_RUN, true, true);
 		} else {
 			play(PersonageConstants.ANIM_STAND, false, true);
+		}
+		
+		if(!dead && life.getCurrentLife() == 0) {
+			die();
 		}
 	}
 	

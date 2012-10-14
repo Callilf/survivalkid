@@ -26,6 +26,7 @@ public class FredCircularSaw extends EnemyEntity {
 	private static int DIAG_DOWN = 2;
 
 	private int state;
+	private int speed = 2;
 
 	private List<Point> linePoints;
 	private List<Integer> directionList;
@@ -72,7 +73,7 @@ public class FredCircularSaw extends EnemyEntity {
 		play("rotate", true, true);
 		
 		paint = new Paint();
-		paint.setARGB(255, 0, 0, 0);
+		paint.setARGB(128, 0, 0, 0);
 
 	}
 
@@ -89,11 +90,11 @@ public class FredCircularSaw extends EnemyEntity {
 
 			if (directionIndex < directionList.size()) {
 				if (directionList.get(directionIndex) == DIAG_UP) {
-					sprite.offset(2, 2);
+					sprite.offset(speed, speed);
 				} else if (directionList.get(directionIndex) == STRAIGHT) {
-					sprite.offset(2, 0);
+					sprite.offset(speed, 0);
 				} else if (directionList.get(directionIndex) == DIAG_DOWN) {
-					sprite.offset(2, -2);
+					sprite.offset(speed, -speed);
 				}
 				sawFramesCurrent ++;
 			} else {

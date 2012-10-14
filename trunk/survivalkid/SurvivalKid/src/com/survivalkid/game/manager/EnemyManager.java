@@ -12,10 +12,12 @@ import com.survivalkid.game.entity.personage.Personage;
 public class EnemyManager extends ObjectManager {
 
 	private List<EnemyEntity> enemyList;
+	private List<EnemyEntity> deadEnemies;
 	private long lastEnemy;
 	
 	public EnemyManager() {
 		enemyList = new ArrayList<EnemyEntity>();
+		deadEnemies = new ArrayList<EnemyEntity>();
 	}
 	
 	public void create() {
@@ -25,12 +27,19 @@ public class EnemyManager extends ObjectManager {
 
 	public void update(long gameTime) {
 		for(EnemyEntity enemy : enemyList) {
-			//Clean the list by removing all the dead enemies
 			if(enemy.isDead()) {
-				enemyList.remove(enemy);
+				deadEnemies.add(enemy);
 			} else {
 				enemy.update(gameTime);
 			}
+		}
+		
+		//remove the dead enemis from the list so that they are removed from the game
+		if (deadEnemies.size() > 0) {
+			for (EnemyEntity enemy : deadEnemies) {
+				enemyList.remove(enemy);
+			}
+			deadEnemies.clear();
 		}
 	}
 
