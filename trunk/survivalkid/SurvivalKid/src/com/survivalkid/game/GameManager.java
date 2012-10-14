@@ -47,6 +47,19 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
 
+		// adding the callback (this) to the surface holder to intercept events
+		getHolder().addCallback(this);
+
+		// create the game loop thread
+		thread = new MainThread(getHolder(), this);
+		
+		// make the GamePanel focusable so it can handle events
+		setFocusable(true);
+
+		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
+		MoveUtil.initializeButton(getResources());
+
+		Log.d(TAG, "Start the game !");
 		create();
 	}
 
@@ -56,24 +69,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 * @param context
 	 */
 	public void create() {
-		Log.d(TAG, "Start the game !");
-
-		// adding the callback (this) to the surface holder to intercept events
-		getHolder().addCallback(this);
-
-		// create the game loop thread
-		thread = new MainThread(getHolder(), this);
-
+		
 		characterManager = new CharacterManager();
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
-
-		// make the GamePanel focusable so it can handle events
-		setFocusable(true);
-
-		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
-		MoveUtil.initializeButton(getResources());
-
+		
 		// TEST ------------------
 		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, getResources(), R.drawable.yugo, 150, 250, 6, 12);
 		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, getResources(), R.drawable.yuna, 250, 250, 6, 12);
@@ -93,6 +93,31 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		enemyManager.addEntity(fsaw);
 		// END TESTS --------------
 
+	}
+	
+	/**
+	 * Restart the game
+	 * 
+	 * @return true if the game restart
+	 */
+	public boolean restart() {
+		if (thread.isPause()) {
+			Log.d(TAG, "ReStart the game !");
+					
+			GameContext.getSingleton().initSingleton();
+			create();
+			
+			// Explicit call of the garbage collector before restarting the game
+			System.gc();
+			
+			thread.setPause(false);
+			synchronized (thread) {
+				thread.notify();
+			}
+			
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -135,7 +160,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	private void endGame() {
-		//TODO
+		GameContext s = GameContext.getSingleton();
+		float tempsEcoule = (System.currentTimeMillis()-s.initialTime)/1000;
+		thread.setPause(true);
+		Log.i(TAG, "Time passed : " + tempsEcoule + ", Score : " + s.score+", end difficulty : " + s.currentDifficulty);
 	}
 	
 	

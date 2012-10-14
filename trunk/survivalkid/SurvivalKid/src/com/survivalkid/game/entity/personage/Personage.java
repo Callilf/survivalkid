@@ -49,7 +49,7 @@ public class Personage extends GameEntity {
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
 		life = new Life(100);
-		deathAnim = new AnimatedSprite(BitmapFactory.decodeResource(resource, R.drawable.dead_players), 0, 0, 6, 8);
+		//deathAnim = new AnimatedSprite(BitmapFactory.decodeResource(resource, R.drawable.dead_players), 0, 0, 6, 8);
 		dying = false;
 
 		switch (perso) {
@@ -60,7 +60,7 @@ public class Personage extends GameEntity {
 			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[] { 19 }, 13);
 			redefineHitBox((sprite.getWidth() * 30) / 100, (sprite.getHeight() * 10) / 100,
 					(sprite.getWidth() * 40) / 100, (sprite.getHeight() * 84) / 100);
-			deathAnim.addAnimation("die", new int[] { 8,9,10,11,12,13,14,0,1,2,3,4,5,6,7 }, 17);
+			//deathAnim.addAnimation("die", new int[] { 8,9,10,11,12,13,14,0,1,2,3,4,5,6,7 }, 17);
 			break;
 		case PersonageConstants.PERSO_YUNA:
 			addAnimation(PersonageConstants.ANIM_STAND, new int[] { 0 }, 20);
@@ -69,7 +69,7 @@ public class Personage extends GameEntity {
 			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[] { 17, 18, 19 }, 13);
 			redefineHitBox((sprite.getWidth() * 35) / 100, (sprite.getHeight() * 10) / 100,
 					(sprite.getWidth() * 40) / 100, (sprite.getHeight() * 84) / 100);
-			deathAnim.addAnimation("die", new int[] { 8,9,10,15,16,17,18,19,20,21,22,23,24,25,26}, 17);
+			//deathAnim.addAnimation("die", new int[] { 8,9,10,15,16,17,18,19,20,21,22,23,24,25,26}, 17);
 			break;
 		}
 
@@ -86,21 +86,21 @@ public class Personage extends GameEntity {
 		Log.d(TAG, "Perso DEAD !");
 		dying = true;
 
-		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);
-		deathAnim.setY((sprite.getY() + sprite.getHeight() / 2) - deathAnim.getHeight() / 2);
-		deathAnim.play("die", false, true);
+		//deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);
+		//deathAnim.setY((sprite.getY() + sprite.getHeight() / 2) - deathAnim.getHeight() / 2);
+		//deathAnim.play("die", false, true);
 	}
 
 	@Override
 	public void update(long gameTime) {
 		if (dying) {
-			deathAnim.update(gameTime, direction);
-			if(deathAnim.isAnimationFinished()) {
-				deathAnim.offset(0, -4);
-				if(deathAnim.getY() + deathAnim.getHeight() < 0) {
+//			deathAnim.update(gameTime, direction);
+//			if(deathAnim.isAnimationFinished()) {
+//				deathAnim.offset(0, -4);
+//				if(deathAnim.getY() + deathAnim.getHeight() < 0) {
 					dead = true;
-				}
-			}
+//				}
+//			}
 		} else if (!dying && life.getCurrentLife() == 0) {
 			die();
 			return;
@@ -132,7 +132,7 @@ public class Personage extends GameEntity {
 	@Override
 	public void draw(Canvas canvas) {
 		if (dying) {
-			deathAnim.draw(canvas, direction);
+			//deathAnim.draw(canvas, direction);
 		} else {
 			super.draw(canvas);
 		}

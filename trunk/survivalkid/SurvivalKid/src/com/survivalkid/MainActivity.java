@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		// Set fullscreen and remove the title bar
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -44,8 +45,10 @@ public class MainActivity extends Activity {
 			gamePanel.stop();
 			break;
 		case KeyEvent.KEYCODE_MENU:
-			if (CollisionUtil.hideShowDisplayHitBoxes()) {
-				CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%2;
+			if (!gamePanel.restart()) {
+				if (CollisionUtil.hideShowDisplayHitBoxes()) {
+					CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%2;
+				}
 			}
 		default:
 			break;

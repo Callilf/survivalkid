@@ -12,42 +12,64 @@ public class MainThread extends Thread {
 
 	// flag to hold game state
 	private boolean running;
+	private boolean pause = false;
 	private SurfaceHolder surfaceHolder;
 	private GameManager gameManager;
+	private Canvas canvas;
 
 	public MainThread(SurfaceHolder surfaceHolder, GameManager gamePanel) {
 		super();
 		this.surfaceHolder = surfaceHolder;
 		this.gameManager = gamePanel;
+		this.canvas = null;
 	}
 
 
 	public void setRunning(boolean running) {
 		this.running = running;
 	}
+	
+	public boolean isPause() {
+		return pause;
+	}	
+	
+	public void setPause(boolean _pause) {
+		this.pause = _pause;
+	}
 
 	@Override
 	public void run() {
-		Canvas canvas;
 		Log.d(TAG, "Starting game loop");
 		while (running) {
-			canvas = null;
-			// try locking the canvas for exclusive pixel editing on the surface
+			while(!pause) {
+				// try locking the canvas for exclusive pixel editing on the surface
+				try {
+					canvas = this.surfaceHolder.lockCanvas();
+					synchronized (surfaceHolder) {
+						// update game state 
+						this.gameManager.update();
+						// draws the canvas on the panel
+						this.gameManager.onDraw(canvas);
+					}
+				}
+				catch (IllegalMonitorStateException e) {
+					Log.d(TAG, e.getMessage());
+					throw e;
+				} finally {
+					// in case of an exception the surface is not left in
+					// an inconsistent state
+					if (canvas != null) {
+						surfaceHolder.unlockCanvasAndPost(canvas);
+					}
+				}	// end finally
+			}
 			try {
-				canvas = this.surfaceHolder.lockCanvas();
-				synchronized (surfaceHolder) {
-					// update game state 
-					this.gameManager.update();
-					// draws the canvas on the panel
-					this.gameManager.onDraw(canvas);
+				synchronized (this) {
+					wait();
 				}
-			} finally {
-				// in case of an exception the surface is not left in
-				// an inconsistent state
-				if (canvas != null) {
-					surfaceHolder.unlockCanvasAndPost(canvas);
-				}
-			}	// end finally
+			} catch (InterruptedException e) {
+				Log.d(TAG, e.getMessage());
+			}
 		}
 	}
 
