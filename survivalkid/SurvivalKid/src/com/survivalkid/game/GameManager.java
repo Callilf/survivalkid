@@ -256,6 +256,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	/** Action when clicking on the BACK button. */
 	public void stop() {
 		thread.setRunning(false);
+		if (thread.isPause()) {
+			synchronized (thread) {
+				thread.notify();
+			}
+		}
 		((Activity) getContext()).finish();
 	}
 }

@@ -173,7 +173,7 @@ public class FredCircularSaw extends EnemyEntity {
 				state = STATE_SAW;
 			}
 
-			Log.d(TAG, "Draw point at x=" + lastDrawnPoint.x + ", y=" + lastDrawnPoint.y);
+			//Log.d(TAG, "Draw point at x=" + lastDrawnPoint.x + ", y=" + lastDrawnPoint.y);
 		}
 	}
 
