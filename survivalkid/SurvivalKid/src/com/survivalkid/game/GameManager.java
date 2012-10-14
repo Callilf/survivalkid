@@ -44,9 +44,19 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	@SuppressLint("NewApi")
 	public GameManager(Context context) {
 		super(context);
-
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
+
+		create();
+	}
+
+	/**
+	 * Start the game.
+	 * 
+	 * @param context
+	 */
+	public void create() {
+		Log.d(TAG, "Start the game !");
 
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
@@ -80,17 +90,14 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 				600, 380, 4, 1);
 		enemyManager.addEntity(saw);
 		enemyManager.addEntity(caterpillar);
-		
-		
-		FredCircularSaw fsaw = new FredCircularSaw(BitmapFactory.decodeResource(getResources(), R.drawable.enemy_circular_saw),
-				-20, 200, 10, 1);
+
+		FredCircularSaw fsaw = new FredCircularSaw(BitmapFactory.decodeResource(getResources(),
+				R.drawable.enemy_circular_saw), -20, 200, 10, 1);
 		enemyManager.addEntity(fsaw);
 		// END TESTS --------------
 
 	}
 
-	
-	
 	/**
 	 * This is the game update method. It iterates through all the objects and
 	 * calls their update method if they have one or calls specific engine's
@@ -98,32 +105,41 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void update() {
 		long gameTime = System.currentTimeMillis();
-		
-		//Update the gameEntities
+
+		// Update the gameEntities
 		enemyManager.update(gameTime);
 		itemManager.update(gameTime);
 		characterManager.update(gameTime);
 
-		//Check the collisions
-		for(Personage perso : characterManager.getCharacterList()) {
+		// Check the collisions
+		for (Personage perso : characterManager.getCharacterList()) {
 			perso.setOverlaping(false);
 		}
-		for(Personage perso : characterManager.getCharacterList()) {
-			for(EnemyEntity enemy : enemyManager.getEnemyList()) {
-				if(CollisionUtil.Overlaps(perso, enemy)) {
+		for (Personage perso : characterManager.getCharacterList()) {
+			for (EnemyEntity enemy : enemyManager.getEnemyList()) {
+				if (CollisionUtil.Overlaps(perso, enemy)) {
 					perso.setOverlaping(true);
 					enemy.collide(perso);
 				}
 			}
 		}
-		
-		
-		//Change the buttons sprites when they are pressed.
-		MoveUtil.btn_left.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isLeftEnabled);
-		MoveUtil.btn_right.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isRightEnabled);
-		MoveUtil.btn_up.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isTopEnabled);
+
+		// Change the buttons sprites when they are pressed.
+		if (characterManager.getCharacterList().size() > OWN_PERSO  && characterManager.getCharacterList(OWN_PERSO) != null) {
+			MoveUtil.btn_left.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isLeftEnabled);
+			MoveUtil.btn_right.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isRightEnabled);
+			MoveUtil.btn_up.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isTopEnabled);
+		}
+
+		// Restart the game if all players are dead
+		if (characterManager.getCharacterList().isEmpty()) {
+			endGame();
+		}
 	}
 
+	private void endGame() {
+		//TODO
+	}
 	
 	
 	@Override
@@ -143,10 +159,15 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
+	
+	
+	
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// Personage currentChar = characterManager.getCharacterList(0);
-		characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
+		if (characterManager.getCharacterList().size() > OWN_PERSO && characterManager.getCharacterList(OWN_PERSO) != null) {
+			characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
+		}
 
 		// if (event.getAction() != MotionEvent.ACTION_MOVE) dumpEvent(event);
 		return true;
@@ -176,6 +197,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		Log.d(TAG, sb.toString());
 	}
 
+	
+	
+	
 	// ------------------------------------------------------------------------
 	// Surface managing
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {

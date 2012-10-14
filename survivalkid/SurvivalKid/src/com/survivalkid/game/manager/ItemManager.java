@@ -11,9 +11,11 @@ import com.survivalkid.game.entity.item.ItemEntity;
 public class ItemManager extends ObjectManager {
 
 	private List<ItemEntity> itemList;
+	private List<ItemEntity> deadItems;
 	
 	public ItemManager() {
 		itemList = new ArrayList<ItemEntity>();
+		deadItems = new ArrayList<ItemEntity>();
 	}
 	
 	public void create() {
@@ -29,6 +31,14 @@ public class ItemManager extends ObjectManager {
 			} else {
 				item.update(gameTime);
 			}
+		}
+		
+		//remove the dead items from the list so that they are removed from the game
+		if (deadItems.size() > 0) {
+			for (ItemEntity item : deadItems) {
+				itemList.remove(item);
+			}
+			deadItems.clear();
 		}
 	}
 
