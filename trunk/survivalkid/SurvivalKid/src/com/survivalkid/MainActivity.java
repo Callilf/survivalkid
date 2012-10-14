@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		Log.d(TAG, "Touche appuy�e : "+keyCode);
+		Log.d(TAG, "Touch pressed : "+keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			gamePanel.stop();
@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
 		}
 		return false;
 	}
-
+	
 	@Override
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying...");
@@ -65,5 +65,11 @@ public class MainActivity extends Activity {
 	protected void onStop() {
 		Log.d(TAG, "Stopping...");
 		super.onStop();
+	}
+	
+	@Override
+	protected void onPause() {
+		Log.d(TAG, "Pausing...");
+		super.onPause();
 	}
 }
