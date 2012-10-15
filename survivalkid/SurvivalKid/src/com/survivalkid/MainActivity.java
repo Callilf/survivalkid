@@ -1,10 +1,12 @@
 package com.survivalkid;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -17,7 +19,7 @@ public class MainActivity extends Activity {
 	/** TAG for the logs. */
 	private static final String TAG = MainActivity.class.getSimpleName();
 
-	GameManager gamePanel;
+	private GameManager gamePanel;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,15 +46,61 @@ public class MainActivity extends Activity {
 			gamePanel.stop();
 			break;
 		case KeyEvent.KEYCODE_MENU:
-			if (!gamePanel.restart()) {
-				if (CollisionUtil.hideShowDisplayHitBoxes()) {
-					CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%2;
-				}
-			}
+//			if (!gamePanel.restart()) {
+//				if (CollisionUtil.hideShowDisplayHitBoxes()) {
+//					CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%2;
+//				}
+//			}
 		default:
 			break;
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		gamePanel.getThread().setPause(true);
+		
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.layout.menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu) {
+		gamePanel.getThread().setPause(true);
+		return true;
+	}
+	
+	@Override
+	public void onOptionsMenuClosed(Menu menu) {
+		gamePanel.getThread().setPause(false);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.m_option:
+			return true;
+		case R.id.m_left:
+			gamePanel.stop();
+			break;
+		case R.id.m_hitbox:
+			CollisionUtil.hideShowDisplayHitBoxes();
+			break;
+		case R.id.m_switchchar:
+			CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%2;
+			break;
+		case R.id.m_restart:
+			Log.d(TAG, "Test");
+			gamePanel.restart();
+			break;
+		default:
+			//return false;
+		}
+
+		gamePanel.getThread().setPause(false);
+		return true;
 	}
 	
 	@Override

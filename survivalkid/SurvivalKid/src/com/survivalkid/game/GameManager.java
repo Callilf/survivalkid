@@ -101,24 +101,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 * 
 	 * @return true if the game restart
 	 */
-	public boolean restart() {
-		if (thread.isPause()) {
-			Log.d(TAG, "ReStart the game !");
-					
-			GameContext.getSingleton().initSingleton();
-			create();
-			
-			// Explicit call of the garbage collector before restarting the game
-			System.gc();
-			
-			thread.setPause(false);
-			synchronized (thread) {
-				thread.notify();
-			}
-			
-			return true;
-		}
-		return false;
+	public void restart() {
+		thread.setPause(true);
+
+		Log.d(TAG, "ReStart the game !");
+				
+		GameContext.getSingleton().initSingleton();
+		create();
+		
+		// Explicit call of the garbage collector before restarting the game
+		System.gc();
+		
+		thread.setPause(false);
 	}
 
 	/**
@@ -257,11 +251,12 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	/** Action when clicking on the BACK button. */
 	public void stop() {
 		thread.setRunning(false);
-		if (thread.isPause()) {
-			synchronized (thread) {
-				thread.notify();
-			}
-		}
+		thread.setPause(false);
 		((Activity) getContext()).finish();
+	}
+
+	/// getter & setter
+	public MainThread getThread() {
+		return thread;
 	}
 }
