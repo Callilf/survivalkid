@@ -34,7 +34,15 @@ public class MainThread extends Thread {
 	}	
 	
 	public void setPause(boolean _pause) {
-		this.pause = _pause;
+		if (pause && !_pause) {
+			pause = _pause;
+			synchronized (this) {
+				notify();
+			}
+		}
+		else {
+			this.pause = _pause;
+		}
 	}
 
 	@Override
