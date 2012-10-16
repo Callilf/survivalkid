@@ -1,5 +1,15 @@
 package com.survivalkid.game.algo.enemy;
 
+import java.util.List;
+import java.util.Map;
+
+import android.graphics.Point;
+
+import com.survivalkid.game.entity.EnemyEnum;
+import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.enemy.impl.Caterpillar;
+import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
+
 public class ThreeStepEnemyGenerator {
 
 	/**
@@ -14,7 +24,7 @@ public class ThreeStepEnemyGenerator {
 	 *            d'ennmis la plus difficile.
 	 * @return
 	 */
-	private int firstStep(int _difficulty, int _maxDifficulty) {
+	private static int firstStep(int _difficulty, int _maxDifficulty) {
 		// Create list of probabilities
 		int[] probas = new int[_maxDifficulty];
 		probas[0] = (int) (1.0 / (Math.pow(2, _difficulty)) * 100);
@@ -34,6 +44,46 @@ public class ThreeStepEnemyGenerator {
 		// should not happen
 		return -1;
 
+	}
+
+	private static EnemyEnum secondStep(int difficulty,
+			Map<Integer, List<EnemyEnum>> _enemydifficultymap) {
+		List<EnemyEnum> enemies = _enemydifficultymap.get(Integer
+				.valueOf(difficulty));
+		return enemies.get((int) (Math.random() * (enemies.size() - 1)));
+	}
+
+	private static EnemyEntity thirdStep(EnemyEnum enemyToGenerate,
+			Point _playerPosition) {
+		switch (enemyToGenerate) {
+		case CATERPILLAR:
+			return Caterpillar.generateRandowStartingPosition(_playerPosition);
+		case FRED_CIRCULAR_SAW:
+			return FredCircularSaw
+					.generateRandowStartingPosition(_playerPosition);
+		default:
+			break;
+		}
+		return null;
+	}
+
+	/**
+	 * @param _currentDifficulty
+	 *            Current difficulty of the game.
+	 * @param _maxDifficulty
+	 *            Number of different difficulties available.
+	 * @param _enemydifficultymap
+	 *            The map.
+	 * @param _playerPosition
+	 * @return
+	 */
+	public static EnemyEntity generateRandomEnemy(int _currentDifficulty,
+			int _maxDifficulty,
+			Map<Integer, List<EnemyEnum>> _enemydifficultymap,
+			Point _playerPosition) {
+		int difficulty = firstStep(_currentDifficulty, _maxDifficulty);
+		EnemyEnum enemyToGenerate = secondStep(difficulty, _enemydifficultymap);
+		return thirdStep(enemyToGenerate, _playerPosition);
 	}
 
 }
