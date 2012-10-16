@@ -12,6 +12,7 @@ import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.move.MovePersoManager;
+import com.survivalkid.game.util.BitmapUtil;
 
 public class Personage extends GameEntity {
 	private static final String TAG = Personage.class.getSimpleName();
@@ -42,13 +43,13 @@ public class Personage extends GameEntity {
 	 * @param nbRows
 	 *            the number of rows in the spritesheet
 	 */
-	public Personage(int perso, Resources resource, int spriteSheetId, int x, int y, int nbColum, int nbRows) {
-		super("CharacterA", BitmapFactory.decodeResource(resource, spriteSheetId), x, y, nbColum, nbRows);
+	public Personage(int perso, int spriteSheetId, int x, int y, int nbColum, int nbRows) {
+		super("CharacterA", BitmapUtil.createBitmap(spriteSheetId), x, y, nbColum, nbRows);
 		gravity = 2;
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
 		life = new Life(100);
-		deathAnim = new AnimatedSprite(BitmapFactory.decodeResource(resource, R.drawable.dead_anim), 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(BitmapUtil.createBitmap(R.drawable.dead_anim), 0, 0, 7, 1);
 		dying = false;
 
 		switch (perso) {

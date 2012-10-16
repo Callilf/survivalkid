@@ -25,6 +25,7 @@ import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.MainThread;
+import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -44,6 +45,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	@SuppressLint("NewApi")
 	public GameManager(Context context) {
 		super(context);
+		//Initialize the bitmapUtil
+		BitmapUtil.initialize(getResources());
+		
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
 		GameContext.getSingleton().initSingleton();
@@ -76,8 +80,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		itemManager = new ItemManager();
 		
 		// TEST ------------------
-		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, getResources(), R.drawable.yugo, 150, 250, 6, 4);
-		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, getResources(), R.drawable.yuna, 250, 250, 6, 4);
+		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, R.drawable.yugo, 150, 250, 6, 4);
+		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, R.drawable.yuna, 250, 250, 6, 4);
 
 		characterManager.addCharacter(yugo);
 		characterManager.addCharacter(yuna);
