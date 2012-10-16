@@ -4,13 +4,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public final class BitmapUtil {
 	private final static int IMAGE_MAX_SIZE = 200;
+	
+	private static Resources resource;
 
 	private BitmapUtil(){}
+	
+	public static void initialize(Resources r) {
+		resource = r;
+	}
 	
 	public static Bitmap decodeFile(File f){
 	    Bitmap b = null;
@@ -38,5 +45,14 @@ public final class BitmapUtil {
 	    } catch (IOException e) {
 	    }
 	    return b;
+	}
+	
+	/**
+	 * Create a bitmap based on the id.
+	 * @param id the id from R.java
+	 * @return the bitmap created
+	 */
+	public static Bitmap createBitmap(int id) {
+		return BitmapFactory.decodeResource(resource, id);
 	}
 }
