@@ -1,6 +1,7 @@
 package com.survivalkid.game.entity.enemy.impl;
 
 import android.graphics.Bitmap;
+import android.graphics.Point;
 
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.entity.GameEntity;
@@ -12,25 +13,28 @@ public class Caterpillar extends EnemyEntity {
 	/**
 	 * Create enemy
 	 */
-	public Caterpillar(Bitmap _bitmap, int _x, int _y, int _nbColums, int _nbRows) {
+	public Caterpillar(Bitmap _bitmap, int _x, int _y, int _nbColums,
+			int _nbRows) {
 		super("Caterpillar", _bitmap, _x, _y, _nbColums, _nbRows, 10, 3);
-		
-		redefineHitBox( (sprite.getWidth()*18) / 100, (sprite.getHeight()*65) / 100, (sprite.getWidth()*74) / 100, (sprite.getHeight()*35) / 100);
-		addAnimation("crawl", new int[]{0,1,2,3,2,1}, 13);
+
+		redefineHitBox((sprite.getWidth() * 18) / 100,
+				(sprite.getHeight() * 65) / 100,
+				(sprite.getWidth() * 74) / 100, (sprite.getHeight() * 35) / 100);
+		addAnimation("crawl", new int[] { 0, 1, 2, 3, 2, 1 }, 13);
 		play("crawl", true, true);
 	}
-	
+
 	@Override
 	public void update(long gameTime) {
 		super.update(gameTime);
-		
-		if(touchLeft()) {
+
+		if (touchLeft()) {
 			direction = DirectionConstants.RIGHT;
-		} else if(touchRight()) {
+		} else if (touchRight()) {
 			direction = DirectionConstants.LEFT;
 		}
-		
-		if(direction == DirectionConstants.LEFT) {
+
+		if (direction == DirectionConstants.LEFT) {
 			sprite.offset(-2, 0);
 		} else {
 			sprite.offset(2, 0);
@@ -49,6 +53,12 @@ public class Caterpillar extends EnemyEntity {
 	public void die() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public static EnemyEntity generateRandowStartingPosition(
+			Point playerPosition) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
