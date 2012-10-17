@@ -69,6 +69,7 @@ public class FredCircularSaw extends EnemyEntity {
 
 		affectedByFloor = false;
 		affectedByWalls = false;
+		affectedByCeiling = false;
 
 		redefineHitBox((sprite.getWidth() * 12) / 100,
 				(sprite.getHeight() * 12) / 100,

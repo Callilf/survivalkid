@@ -39,6 +39,8 @@ public abstract class GameEntity {
 	protected boolean affectedByWalls;
 	/** Whether it is affected by the floor */
 	protected boolean affectedByFloor;
+	/** Whether it is affected by the ceiling */
+	protected boolean affectedByCeiling;
 
 	/** Direction. */
 	protected int direction;
@@ -89,6 +91,7 @@ public abstract class GameEntity {
 		
 		affectedByFloor = true;
 		affectedByWalls = true;
+		affectedByCeiling = true;
 
 		// check the correspondence between sprite and hitbox
 		Log.d(TAG,
@@ -148,9 +151,7 @@ public abstract class GameEntity {
 	}
 
 	public void update(long gameTime) {
-		if(affectedByFloor && affectedByWalls) {
-			move();
-		}
+		move();
 		
 		sprite.update(gameTime, direction);
 
@@ -281,10 +282,10 @@ public abstract class GameEntity {
 		isJumpingDown = false;
 
 		int newY = sprite.getY() + _dy;
-		if (newY < 0) {
+		if (affectedByCeiling && newY < 0) {
 			newY = 0;
 			speedY = 0;
-		} else if (newY + sprite.getHeight() > MoveUtil.GROUND) {
+		} else if (affectedByFloor && newY + sprite.getHeight() > MoveUtil.GROUND) {
 			newY = MoveUtil.GROUND - sprite.getHeight();
 			speedY = 0;
 			isOnFloor = true;
@@ -310,11 +311,11 @@ public abstract class GameEntity {
 		// calculate the actual translation
 		int newX = hitBox.left + _dx;
 		int actualDX = 0;
-		if (newX < 0) {
+		if (affectedByWalls && newX < 0) {
 			// if left > 0, set dx to go near the wall. if left < 0, the perso is out of the screen, give a positive dx to return in the screen
 			actualDX = -hitBox.left;
 			speedX = 0;
-		} else if (newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
+		} else if (affectedByWalls && newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
 			actualDX = MoveUtil.SCREEN_WIDTH - hitBox.right;
 			speedX = 0;
 		} else {
