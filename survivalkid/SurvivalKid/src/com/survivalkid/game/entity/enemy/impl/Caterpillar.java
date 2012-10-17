@@ -21,6 +21,7 @@ public class Caterpillar extends EnemyEntity {
 			int _nbRows) {
 		super("Caterpillar", _bitmap, _x, _y, _nbColums, _nbRows, 10, 3);
 
+		gravity = 2;
 		affectedByWalls = false;
 		
 		redefineHitBox((sprite.getWidth() * 18) / 100,
@@ -63,13 +64,21 @@ public class Caterpillar extends EnemyEntity {
 			Point playerPosition) {
 		int random =  (int) (Math.random() * 100);
 		Caterpillar cat = null;
-		if(random<49) {
+		if(random < 34) {
 			cat = new Caterpillar(BitmapUtil.createBitmap(R.drawable.caterpillar),
 					-20, 380, 4, 1);
 			cat.direction = DirectionConstants.RIGHT;
-		} else {
+		} else if(random < 69) {
 			cat = new Caterpillar(BitmapUtil.createBitmap(R.drawable.caterpillar),
 					MoveUtil.SCREEN_WIDTH + 20, 380, 4, 1);
+			cat.direction = DirectionConstants.LEFT;
+		} else if(random < 84){
+			cat = new Caterpillar(BitmapUtil.createBitmap(R.drawable.caterpillar),
+					0, -20, 4, 1);
+			cat.direction = DirectionConstants.RIGHT;
+		} else {
+			cat = new Caterpillar(BitmapUtil.createBitmap(R.drawable.caterpillar),
+					MoveUtil.SCREEN_WIDTH, -20, 4, 1);
 			cat.direction = DirectionConstants.LEFT;
 		}
 		return cat;
