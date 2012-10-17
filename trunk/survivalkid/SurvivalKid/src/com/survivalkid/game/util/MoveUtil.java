@@ -1,16 +1,14 @@
 package com.survivalkid.game.util;
 
-import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.view.Display;
 
 import com.survivalkid.R;
 import com.survivalkid.game.core.ActionButton;
 import com.survivalkid.game.singleton.GameContext;
 
-@SuppressLint("NewApi")
 public final class MoveUtil {
 	
 	private MoveUtil() {
@@ -25,11 +23,18 @@ public final class MoveUtil {
 	public static int GROUND;
 	
 	static {
+		DisplayMetrics metrics = new DisplayMetrics();
+		display.getMetrics(metrics);
+		SCREEN_WIDTH = metrics.widthPixels;
+		SCREEN_HEIGHT = metrics.heightPixels;
+		GROUND = SCREEN_HEIGHT - 40;
+		
+		/* new API not used
 		Point size = new Point();
 		display.getSize(size);
 		SCREEN_WIDTH = size.x;
 		SCREEN_HEIGHT = size.y;
-		GROUND = SCREEN_HEIGHT - 40;
+		 */
 		
 	}
 
