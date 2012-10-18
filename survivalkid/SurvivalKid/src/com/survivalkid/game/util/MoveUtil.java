@@ -2,8 +2,10 @@ package com.survivalkid.game.util;
 
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.MotionEvent;
 
 import com.survivalkid.R;
 import com.survivalkid.game.core.ActionButton;
@@ -18,6 +20,11 @@ public final class MoveUtil {
 	/** the display of the activity */
 	private static final Display display = GameContext.getSingleton().getDisplay();
 
+	// to be compatible with android 2.1
+	@SuppressWarnings("deprecation")
+	public static final int ACTION_POINTER_INDEX_SHIFT = (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1)? 
+			MotionEvent.ACTION_POINTER_INDEX_SHIFT:MotionEvent.ACTION_POINTER_ID_SHIFT;
+	
 	public static int SCREEN_WIDTH;
 	public static int SCREEN_HEIGHT;
 	public static int GROUND;

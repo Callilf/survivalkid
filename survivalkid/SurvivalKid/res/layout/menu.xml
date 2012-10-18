@@ -2,20 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
  
 <item android:id="@+id/m_option" 
-      android:title="Options">
+      android:title="@string/menu_settings">
+        <!-- Attribute not used in the menu item : 
+        android:orderInCategory="100" android:showAsAction="never" --> 
  
      <menu android:id="@+id/m_sousmenu">
 	 <item android:id="@+id/m_hitbox"
-	       android:title="Hitbox"   />	
+	       android:title="@string/hitbox"   />	
  
 	 <item android:id="@+id/m_restart"
-	       android:title="Restart"  />
+	       android:title="@string/restart"  />
      </menu>
 </item>
  
 <item android:id="@+id/m_left" 
-     android:title="Leave Game"/>
+     android:title="@string/leave"/>
 
 <item android:id="@+id/m_switchchar" 
-     android:title="Switch"/>
+     android:title="@string/switchar"/>
 </menu>

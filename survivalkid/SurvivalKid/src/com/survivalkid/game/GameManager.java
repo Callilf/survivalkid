@@ -203,7 +203,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		int actionCode = action & MotionEvent.ACTION_MASK;
 		sb.append("event ACTION_").append(names[actionCode]);
 		if (actionCode == MotionEvent.ACTION_POINTER_DOWN || actionCode == MotionEvent.ACTION_POINTER_UP) {
-			sb.append("(pid ").append(action >> MotionEvent.ACTION_POINTER_INDEX_SHIFT);
+			sb.append("(pid ").append(action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT);
 			sb.append(")");
 		}
 		sb.append("[");
