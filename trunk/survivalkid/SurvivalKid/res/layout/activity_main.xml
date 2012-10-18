@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/background01"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:id="@+id/background01">
+    <!-- android:layout_width="match_parent"
+    android:layout_height="match_parent"  
+    => No effect and not compatible with android 2.1 user fill_parent for 2.1 -->
 
 </RelativeLayout>

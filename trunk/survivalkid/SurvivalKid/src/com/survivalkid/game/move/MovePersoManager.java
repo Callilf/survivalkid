@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.move.impl.MoveImplButton;
+import com.survivalkid.game.util.MoveUtil;
 
 public class MovePersoManager {
 
@@ -63,7 +64,7 @@ public class MovePersoManager {
 		// get the action and the pid of the pointer
 		int action =  event.getAction();
 		int actionCode = action & MotionEvent.ACTION_MASK;
-		int pid = action >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+		int pid = action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT;
 		Integer pidObject = pid;
 		int pidUP = -1;
 		
