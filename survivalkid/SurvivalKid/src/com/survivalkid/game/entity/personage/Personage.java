@@ -106,7 +106,8 @@ public class Personage extends GameEntity {
 		movePersoManager.calculNewSpeed(this);
 
 		// Set the direction based on the button pushed
-		if (movePersoManager.isLeftEnabled) {
+		if (movePersoManager.isLeftEnabled && 
+				(!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
 			direction = DirectionConstants.LEFT;
 		} else if (movePersoManager.isRightEnabled) {
 			direction = DirectionConstants.RIGHT;
