@@ -100,7 +100,7 @@ public class Personage extends GameEntity {
 	@Override
 	public void update(long gameTime) {
 		if (dying) {
-			deathAnim.update(gameTime, DirectionConstants.LEFT);
+			deathAnim.update(gameTime, direction);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
 			}

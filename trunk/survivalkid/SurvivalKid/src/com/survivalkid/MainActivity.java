@@ -1,6 +1,7 @@
 package com.survivalkid;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,6 +21,7 @@ public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	private GameManager gamePanel;
+	private MediaPlayer backgroundMusic;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class MainActivity extends Activity {
 
 		gamePanel = new GameManager(this);
 		setContentView(gamePanel);
+		backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
+		backgroundMusic.start();
+		
 		Log.d(TAG, "View added");
 	}
 
@@ -119,6 +124,7 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 		Log.d(TAG, "Pausing...");
 		super.onPause();
+		backgroundMusic.release();
 		gamePanel.stop();
 	}
 	
