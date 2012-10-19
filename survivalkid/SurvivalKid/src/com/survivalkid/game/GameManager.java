@@ -87,7 +87,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		
 		// TEST ------------------
 		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, R.drawable.yugo, 150, 250, 6, 4);
-		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, R.drawable.yuna, 250, 250, 6, 4);
+//		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, R.drawable.yuna, 250, 250, 6, 4);
 
 		characterManager.addCharacter(yugo);
 //		characterManager.addCharacter(yuna);
