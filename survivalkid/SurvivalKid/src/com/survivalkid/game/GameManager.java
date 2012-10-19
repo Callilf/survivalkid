@@ -7,17 +7,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
-import com.survivalkid.game.entity.enemy.impl.Caterpillar;
-import com.survivalkid.game.entity.enemy.impl.CircularSaw;
-import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
@@ -26,10 +26,12 @@ import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.MainThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.HandlerUtil;
+import com.survivalkid.game.util.HandlerUtil.HandlerEnum;
 import com.survivalkid.game.util.MoveUtil;
 
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
-
+	
 	private static final String TAG = GameManager.class.getSimpleName();
 
 	/** The thread corresponding to the game loop. */
@@ -64,6 +66,12 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 		Log.d(TAG, "Start the game !");
 		create();
+		
+		HandlerUtil.handlerFin = new Handler() {
+				public void handleMessage(Message msg) {
+				     Toast.makeText(getContext(), "Survive duration : " + msg.arg1/1000f + " seconds", Toast.LENGTH_LONG).show();
+				}
+			};
 	}
 
 	/**
@@ -158,9 +166,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	private void endGame() {
 		GameContext s = GameContext.getSingleton();
-		float tempsEcoule = (System.currentTimeMillis()-s.initialTime)/1000;
+		long timePassed = System.currentTimeMillis()-s.initialTime;
 		thread.setPause(true);
-		Log.i(TAG, "Time passed : " + tempsEcoule + ", Score : " + s.score+", end difficulty : " + s.currentDifficulty);
+		HandlerUtil.sendMessage((int)timePassed, HandlerEnum.HANDLER_FIN);
+		Log.i(TAG, "Time passed : " + timePassed/1000f + ", Score : " + s.score+", end difficulty : " + s.currentDifficulty);
 	}
 	
 	
