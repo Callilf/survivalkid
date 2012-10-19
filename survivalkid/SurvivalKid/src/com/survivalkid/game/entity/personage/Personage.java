@@ -1,7 +1,5 @@
 package com.survivalkid.game.entity.personage;
 
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.Log;
 
@@ -9,6 +7,7 @@ import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
+import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.move.MovePersoManager;
@@ -23,6 +22,10 @@ public class Personage extends GameEntity {
 	private AnimatedSprite deathAnim;
 
 	private boolean dying;
+	
+	//State recovery
+	private int recoveryMaxTime = 700;
+	private long recoveryBeginTime;
 
 	/** Manager of the move of the perso */
 	private MovePersoManager movePersoManager;
@@ -51,6 +54,9 @@ public class Personage extends GameEntity {
 		life = new Life(100);
 		deathAnim = new AnimatedSprite(BitmapUtil.createBitmap(R.drawable.dead_anim), 0, 0, 7, 1);
 		dying = false;
+		
+		//state attributes
+		recoveryBeginTime = -1;
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
@@ -94,7 +100,7 @@ public class Personage extends GameEntity {
 	@Override
 	public void update(long gameTime) {
 		if (dying) {
-			deathAnim.update(gameTime, direction);
+			deathAnim.update(gameTime, DirectionConstants.LEFT);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
 			}
@@ -112,6 +118,21 @@ public class Personage extends GameEntity {
 		} else if (movePersoManager.isRightEnabled) {
 			direction = DirectionConstants.RIGHT;
 		}
+		
+		//Handle the update of different states
+		if (StateEnum.STATE_RECOVERY.equals(state)) {
+			if(recoveryBeginTime == -1) {
+				recoveryBeginTime = gameTime;
+			}
+			
+			if(gameTime - recoveryBeginTime >= recoveryMaxTime) {
+				setState(StateEnum.STATE_NORMAL);
+				recoveryBeginTime = -1;
+			}
+		}
+		
+		
+		
 
 		super.update(gameTime);
 
