@@ -1,11 +1,13 @@
 package com.survivalkid.game.entity.enemy.impl;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Point;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
@@ -14,15 +16,22 @@ import com.survivalkid.game.util.MoveUtil;
 
 public class Caterpillar extends EnemyEntity {
 
+	private AnimatedSprite deathAnim;
+	private boolean dying;
+	
 	/**
 	 * Create enemy
 	 */
 	public Caterpillar(Bitmap _bitmap, int _x, int _y, int _nbColums,
 			int _nbRows) {
-		super("Caterpillar", _bitmap, _x, _y, _nbColums, _nbRows, 10, 3);
+		super("Caterpillar", _bitmap, _x, _y, _nbColums, _nbRows, 5, 0);
 
 		gravity = 2;
 		affectedByWalls = false;
+		
+		deathAnim = new AnimatedSprite(BitmapUtil.createBitmap(R.drawable.dead_anim_small), 0, 0, 7, 1);
+		dying = false;
+		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 		
 		redefineHitBox((sprite.getWidth() * 18) / 100,
 				(sprite.getHeight() * 65) / 100,
@@ -33,6 +42,13 @@ public class Caterpillar extends EnemyEntity {
 
 	@Override
 	public void update(long gameTime) {
+		if (dying) {
+			deathAnim.update(gameTime, direction);
+			if (deathAnim.isAnimationFinished()) {
+				dead = true;
+			}
+		}
+		
 		super.update(gameTime);
 
 		if (direction == DirectionConstants.LEFT) {
@@ -48,18 +64,37 @@ public class Caterpillar extends EnemyEntity {
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
-		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).getLife().looseLife(1);
+		if (_gameEntity instanceof Personage ) {
+			if(StateEnum.STATE_RECOVERY.equals(((Personage) _gameEntity).getState())) {
+				return;
+			}
+			
+			((Personage) _gameEntity).getLife().looseLife(dammage);
+			((Personage) _gameEntity).setState(StateEnum.STATE_RECOVERY);
+			die();
 		}
 		// the method die should be called after x touch (or at the first touch)
 	}
 
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
+		dying = true;
 
+		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);
+		deathAnim.setY((sprite.getY() + sprite.getHeight() / 2) - deathAnim.getHeight() / 2);
+		deathAnim.play("die", false, true);
 	}
 
+	@Override
+	public void draw(Canvas canvas) {
+		if (dying) {
+			deathAnim.draw(canvas, direction);
+		} else {
+			super.draw(canvas);
+		}
+	}
+	
+	
 	public static EnemyEntity generateRandowStartingPosition(
 			Point playerPosition) {
 		int random =  (int) (Math.random() * 100);

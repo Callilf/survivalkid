@@ -49,6 +49,12 @@ public class AnimatedSprite {
 	private String waitingAnim;
 	private boolean waitingRepeat = true;
 
+	// recovery after hit attributes
+	private boolean recovery;
+	private int blinkPeriod = 2;
+	private int currentBlinkFrame;
+	private boolean visible;
+
 	/**
 	 * Constructor.
 	 * 
@@ -82,6 +88,9 @@ public class AnimatedSprite {
 		Matrix matrix = new Matrix();
 		matrix.preScale(-1, 1);
 		flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+		recovery = false;
+		currentBlinkFrame = 0;
 	}
 
 	public AnimatedSprite() {
@@ -150,8 +159,8 @@ public class AnimatedSprite {
 				repeat = waitingRepeat;
 				animating = true;
 			} else {
-				if(currentIndex > 0) {
-					currentIndex --;
+				if (currentIndex > 0) {
+					currentIndex--;
 				}
 				animating = false;
 				setAnimationFinished(true);
@@ -169,12 +178,28 @@ public class AnimatedSprite {
 	 */
 	public void draw(Canvas canvas, int direction) {
 		if (bitmap != null && sourceRect != null) {
+			Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
+			Bitmap bitmapToUse = null;
 			if (direction == DirectionConstants.RIGHT) {
-				Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
-				canvas.drawBitmap(bitmap, sourceRect, destRect, null);
+				bitmapToUse = bitmap;
 			} else {
-				Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
-				canvas.drawBitmap(flippedBitmap, sourceRect, destRect, null);
+				bitmapToUse = flippedBitmap;
+			}
+
+			if (recovery) {
+				//In recovery state after a hit
+				if (currentBlinkFrame % blinkPeriod == 0) {
+					visible = !visible;
+					currentBlinkFrame = 0;
+				} else {
+					currentBlinkFrame++;
+				}
+				if (visible) {
+					canvas.drawBitmap(bitmapToUse, sourceRect, destRect, null);
+				}
+			} else {
+				canvas.drawBitmap(bitmapToUse, sourceRect, destRect, null);
+
 			}
 		}
 	}
@@ -329,6 +354,20 @@ public class AnimatedSprite {
 
 	public void setAnimationFinished(boolean animationFinished) {
 		this.animationFinished = animationFinished;
+	}
+
+	/**
+	 * @return the recovery
+	 */
+	public boolean isRecovery() {
+		return recovery;
+	}
+
+	/**
+	 * @param recovery the recovery to set
+	 */
+	public void setRecovery(boolean recovery) {
+		this.recovery = recovery;
 	}
 
 }

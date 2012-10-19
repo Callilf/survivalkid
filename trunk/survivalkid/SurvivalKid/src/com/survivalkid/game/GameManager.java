@@ -82,18 +82,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, R.drawable.yuna, 250, 250, 6, 4);
 
 		characterManager.addCharacter(yugo);
-		characterManager.addCharacter(yuna);
+//		characterManager.addCharacter(yuna);
 
-		CircularSaw saw = new CircularSaw(BitmapFactory.decodeResource(getResources(), R.drawable.enemy_circular_saw),
-				500, 350, 10, 1);
-		Caterpillar caterpillar = new Caterpillar(BitmapFactory.decodeResource(getResources(), R.drawable.caterpillar),
-				600, 380, 4, 1);
-		enemyManager.addEntity(saw);
-		enemyManager.addEntity(caterpillar);
-
-		FredCircularSaw fsaw = new FredCircularSaw(BitmapFactory.decodeResource(getResources(),
-				R.drawable.enemy_circular_saw), -20, 200, 10, 1);
-		enemyManager.addEntity(fsaw);
+//		CircularSaw saw = new CircularSaw(BitmapFactory.decodeResource(getResources(), R.drawable.enemy_circular_saw),
+//				500, 350, 10, 1);
+//		Caterpillar caterpillar = new Caterpillar(BitmapFactory.decodeResource(getResources(), R.drawable.caterpillar),
+//				600, 380, 4, 1);
+//		enemyManager.addEntity(saw);
+//		enemyManager.addEntity(caterpillar);
+//
+//		FredCircularSaw fsaw = new FredCircularSaw(BitmapFactory.decodeResource(getResources(),
+//				R.drawable.enemy_circular_saw), -20, 200, 10, 1);
+//		enemyManager.addEntity(fsaw);
 		// END TESTS --------------
 
 	}

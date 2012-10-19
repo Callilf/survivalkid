@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
@@ -34,7 +35,7 @@ public abstract class GameEntity {
 	// Speed attributes
 	private float speedX;
 	private float speedY;
-	
+
 	/** Whether it is affected by walls */
 	protected boolean affectedByWalls;
 	/** Whether it is affected by the floor */
@@ -52,12 +53,14 @@ public abstract class GameEntity {
 	protected boolean isOnFloor;
 	protected int gravity = 0;
 	protected int maxSpeedDown = 20;
-	
+
 	/** States. */
+	private boolean changedState;
+	protected StateEnum state;
 	protected boolean dead;
-	
+
 	// for test
-	private int cptTest=0;
+	private int cptTest = 0;
 	protected boolean overlaping = false;
 
 	// ----------------------------------------------------
@@ -72,35 +75,32 @@ public abstract class GameEntity {
 	 * @param _sprite
 	 *            sprite of the entity
 	 */
-	public GameEntity(String _name, Bitmap bitmap, int x, int y, int nbColum,
-			int nbRows) {
+	public GameEntity(String _name, Bitmap bitmap, int x, int y, int nbColum, int nbRows) {
 		id = lastId++;
 		name = _name;
 		sprite = new AnimatedSprite(bitmap, x, y, nbColum, nbRows);
 		offsets = new Rect(0, 0, sprite.getWidth(), sprite.getHeight());
-		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
-				+ offsets.top, sprite.getX() + offsets.left + offsets.right,
-				sprite.getY() + offsets.top + offsets.bottom);
+		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
+				+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
 		direction = DirectionConstants.RIGHT;
 
 		isMovingHorizontally = false;
 		isJumpingUp = false;
 		isJumpingDown = false;
 		isOnFloor = false;
-		dead = false;
-		
+
 		affectedByFloor = true;
 		affectedByWalls = true;
 		affectedByCeiling = true;
 
+		changedState = false;
+		dead = false;
+
 		// check the correspondence between sprite and hitbox
-		Log.d(TAG,
-				"init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY()
-						+ ", width=" + sprite.getWidth() + ", height="
-						+ sprite.getHeight());
-		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right="
-				+ hitBox.right + ", top=" + hitBox.top + ", bottom="
-				+ hitBox.bottom);
+		Log.d(TAG, "init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY() + ", width=" + sprite.getWidth()
+				+ ", height=" + sprite.getHeight());
+		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right=" + hitBox.right + ", top=" + hitBox.top
+				+ ", bottom=" + hitBox.bottom);
 	}
 
 	/**
@@ -152,19 +152,26 @@ public abstract class GameEntity {
 
 	public void update(long gameTime) {
 		move();
-		
+
 		sprite.update(gameTime, direction);
 
 		if (direction == DirectionConstants.LEFT) {
-			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left - offsets.right,
-					sprite.getY() + offsets.top, 
-					sprite.getX() + sprite.getWidth() - offsets.left,
-					sprite.getY() + offsets.top + offsets.bottom);
+			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left - offsets.right, sprite.getY()
+					+ offsets.top, sprite.getX() + sprite.getWidth() - offsets.left, sprite.getY() + offsets.top
+					+ offsets.bottom);
 		} else {
-			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
-					+ offsets.top,
-					sprite.getX() + offsets.left + offsets.right, sprite.getY()
-							+ offsets.top + offsets.bottom);
+			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
+					+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
+		}
+
+		//Handle the changes of state
+		if (changedState) {
+			if (StateEnum.STATE_RECOVERY.equals(state)) {
+				sprite.setRecovery(true);
+			} else if (StateEnum.STATE_NORMAL.equals(state)) {
+				sprite.setRecovery(false);
+			}
+			changedState = false;
 		}
 	}
 
@@ -179,8 +186,8 @@ public abstract class GameEntity {
 		if (CollisionUtil.displayHitBoxes) {
 			final Paint paint = new Paint();
 			paint.setARGB(128, 255, 0, 0);
-			
-			if(this instanceof Personage && overlaping) {
+
+			if (this instanceof Personage && overlaping) {
 				paint.setARGB(128, 100, 255, 100);
 			}
 			canvas.drawRect(hitBox, paint);
@@ -198,8 +205,7 @@ public abstract class GameEntity {
 
 	/**
 	 * Move the sprite according to its inertia : its current {@link #speedX}
-	 * and {@link #speedY}, and also gravity if {@link #gravity()} is
-	 * true.
+	 * and {@link #speedY}, and also gravity if {@link #gravity()} is true.
 	 */
 	public void move() {
 		addX(getRoundSpeedX());
@@ -215,8 +221,7 @@ public abstract class GameEntity {
 	public boolean onFloor() {
 		return sprite.getY() == (MoveUtil.GROUND - sprite.getHeight());
 	}
-	
-	
+
 	/**
 	 * Whether the entity is colliding the left border
 	 * 
@@ -225,7 +230,7 @@ public abstract class GameEntity {
 	public boolean touchLeft() {
 		return hitBox.left == 0;
 	}
-	
+
 	/**
 	 * Whether the entity is colliding the right border
 	 * 
@@ -312,7 +317,8 @@ public abstract class GameEntity {
 		int newX = hitBox.left + _dx;
 		int actualDX = 0;
 		if (affectedByWalls && newX < 0) {
-			// if left > 0, set dx to go near the wall. if left < 0, the perso is out of the screen, give a positive dx to return in the screen
+			// if left > 0, set dx to go near the wall. if left < 0, the perso
+			// is out of the screen, give a positive dx to return in the screen
 			actualDX = -hitBox.left;
 			speedX = 0;
 		} else if (affectedByWalls && newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
@@ -324,18 +330,18 @@ public abstract class GameEntity {
 
 		// Now set the new X
 		sprite.offset(actualDX, 0);
-		
-//		if (cptTest++%40==0) // avoid to have 50 000 000 logs display
-//			Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
-//				+ sprite.getX() + ", newX= " + newX+", hitbox(l,r)="+hitBox.left+"/"+hitBox.right);
+
+		// if (cptTest++%40==0) // avoid to have 50 000 000 logs display
+		// Log.d(TAG, "dx= " + _dx + ", ActualDX=" + actualDX + ", sprite= "
+		// + sprite.getX() + ", newX= " +
+		// newX+", hitbox(l,r)="+hitBox.left+"/"+hitBox.right);
 
 		// Set the direction of the sprite
 		if (speedX != 0 && _dx != 0) {
 			isMovingHorizontally = true;
-			
-			if( !(this instanceof Personage) ){
-			direction = (_dx > 0) ? DirectionConstants.RIGHT
-					: DirectionConstants.LEFT;
+
+			if (!(this instanceof Personage)) {
+				direction = (_dx > 0) ? DirectionConstants.RIGHT : DirectionConstants.LEFT;
 			}
 		}
 	}
@@ -434,7 +440,21 @@ public abstract class GameEntity {
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
-	
-	
+
+	/**
+	 * @return the state
+	 */
+	public StateEnum getState() {
+		return state;
+	}
+
+	/**
+	 * @param state
+	 *            the state to set
+	 */
+	public void setState(StateEnum state) {
+		changedState = true;
+		this.state = state;
+	}
 
 }

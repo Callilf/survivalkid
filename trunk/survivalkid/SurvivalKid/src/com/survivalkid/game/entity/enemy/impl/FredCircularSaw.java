@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
@@ -53,7 +54,7 @@ public class FredCircularSaw extends EnemyEntity {
 	 */
 	public FredCircularSaw(Bitmap _bitmap, int _x, int _y, int _nbColums,
 			int _nbRows) {
-		super("CircularSaw", _bitmap, _x, _y, _nbColums, _nbRows, 10, 3);
+		super("CircularSaw", _bitmap, _x, _y, _nbColums, _nbRows, 20, 1);
 
 		state = STATE_LINE;
 		draw = true;
@@ -213,7 +214,12 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).getLife().looseLife(1);
+			if(StateEnum.STATE_RECOVERY.equals(((Personage) _gameEntity).getState())) {
+				return;
+			}
+			
+			((Personage) _gameEntity).getLife().looseLife(dammage);
+			((Personage) _gameEntity).setState(StateEnum.STATE_RECOVERY);
 		}
 	}
 
