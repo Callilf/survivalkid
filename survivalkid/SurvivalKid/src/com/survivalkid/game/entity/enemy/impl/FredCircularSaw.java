@@ -3,7 +3,6 @@ package com.survivalkid.game.entity.enemy.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -47,19 +46,19 @@ public class FredCircularSaw extends EnemyEntity {
 	private int sawFramesCurrent;
 
 	private boolean draw;
-	final Paint paint;
+	private Paint paint;
 
-	/**
-	 * Create enemy
-	 */
-	public FredCircularSaw(Bitmap _bitmap, int _x, int _y, int _nbColums,
-			int _nbRows) {
-		super("CircularSaw", _bitmap, _x, _y, _nbColums, _nbRows, 20, 1);
-
+	/** Default constructor. */
+	public FredCircularSaw() {
+		super("FredCircularSaw", BitmapUtil.createBitmap(R.drawable.enemy_circular_saw), 0, 0, 10, 1, 20, 1);
+	}
+	
+	/** Initialize the enemy. */
+	private void init() {
 		state = STATE_LINE;
 		draw = true;
 		linePoints = new ArrayList<Point>();
-		lastDrawnPoint = new Point(_x + sprite.getWidth() / 2, _y
+		lastDrawnPoint = new Point(sprite.getX() + sprite.getWidth() / 2, sprite.getY()
 				+ sprite.getHeight() / 2);
 		linePoints.add(new Point(lastDrawnPoint));
 		lastNumber = 0;
@@ -80,7 +79,6 @@ public class FredCircularSaw extends EnemyEntity {
 
 		paint = new Paint();
 		paint.setARGB(128, 0, 0, 0);
-
 	}
 
 	@Override
@@ -230,19 +228,17 @@ public class FredCircularSaw extends EnemyEntity {
 
 	}
 
-	public static EnemyEntity generateRandowStartingPosition(
-			Point playerPosition) {
-		// y in [20 ~ Ground-40]
-		int randomY = (int) (20 + Math.random() * (MoveUtil.GROUND - 40));
-		FredCircularSaw saw = new FredCircularSaw(
-				BitmapUtil.createBitmap(R.drawable.enemy_circular_saw), -20,
-				randomY, 10, 1);
-		return saw;
-	}
 
+	/**
+	 * Initialize the position, speed and misc. attributes of the enemy.
+	 */
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
-		// TODO Auto-generated method stub
-
+		//Random spawn position
+		int randomY = (int) (20 + Math.random() * (MoveUtil.GROUND - 40));
+		sprite.setX(-20);
+		sprite.setY(randomY);
+		
+		init();
 	}
 }
