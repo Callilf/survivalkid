@@ -7,7 +7,9 @@ import java.util.TreeMap;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.util.Log;
 
+import com.survivalkid.game.GameManager;
 import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
@@ -15,6 +17,7 @@ import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 
 public class EnemyManager extends ObjectManager {
+	private static final String TAG = EnemyManager.class.getSimpleName();
 
 	private List<EnemyEntity> enemyList;
 	private List<EnemyEntity> deadEnemies;
@@ -23,10 +26,12 @@ public class EnemyManager extends ObjectManager {
 	 * Counter used to see when to generate.
 	 */
 	private long generationCounter;
+	private long difficultyIncreasingCounter;
 	/**
 	 * Generation frequency in ms.
 	 */
-	private static final long GENERATION_FREQUENCY = 2000;
+	private long generationFrequency = 2000;
+	private long difficultyIncreasingPeriod = 3000;
 
 	private static final Map<Integer, List<Class<? extends EnemyEntity>>> enemyDifficultyMap;
 
@@ -69,9 +74,18 @@ public class EnemyManager extends ObjectManager {
 		}
 
 		// Do we have to generate?
-		if (gameTime - generationCounter >= GENERATION_FREQUENCY) {
+		if (gameTime - generationCounter >= generationFrequency) {
 			generationCounter = gameTime;
 			generate();
+		}
+		
+		if(generationFrequency != 500 && gameTime - difficultyIncreasingCounter >= difficultyIncreasingPeriod) {
+			difficultyIncreasingCounter = gameTime;
+			generationFrequency -= 20;
+			Log.i(TAG, "Fréquence de génération : " + generationFrequency);
+			if(generationFrequency <= 500) {
+				generationFrequency = 500;
+			}
 		}
 	}
 
