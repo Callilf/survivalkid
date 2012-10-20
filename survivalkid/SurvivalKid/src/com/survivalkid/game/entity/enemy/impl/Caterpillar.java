@@ -43,10 +43,11 @@ public class Caterpillar extends EnemyEntity {
 	@Override
 	public void update(long gameTime) {
 		if (dying) {
-			deathAnim.update(gameTime, direction);
+			deathAnim.update(gameTime, DirectionConstants.RIGHT);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
 			}
+			return;
 		}
 
 		super.update(gameTime);
@@ -86,7 +87,7 @@ public class Caterpillar extends EnemyEntity {
 	@Override
 	public void draw(Canvas canvas) {
 		if (dying) {
-			deathAnim.draw(canvas, direction);
+			deathAnim.draw(canvas, DirectionConstants.RIGHT);
 		} else {
 			super.draw(canvas);
 		}

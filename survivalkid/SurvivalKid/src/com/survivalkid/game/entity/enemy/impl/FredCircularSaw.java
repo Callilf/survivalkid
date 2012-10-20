@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
@@ -49,18 +51,21 @@ public class FredCircularSaw extends EnemyEntity {
 	private boolean draw;
 	private Paint paint;
 
+	// explosion when the saw touch the ground
+	private AnimatedSprite deathAnim;
+	private boolean dying;
+
 	/** Default constructor. */
 	public FredCircularSaw() {
 		super("FredCircularSaw", BitmapUtil.createBitmap(R.drawable.enemy_circular_saw), 0, 0, 10, 1, 20, 1);
 	}
-	
+
 	/** Initialize the enemy. */
 	private void init() {
 		state = STATE_LINE;
 		draw = true;
 		linePoints = new ArrayList<Point>();
-		lastDrawnPoint = new Point(sprite.getX() + sprite.getWidth() / 2, sprite.getY()
-				+ sprite.getHeight() / 2);
+		lastDrawnPoint = new Point(sprite.getX() + sprite.getWidth() / 2, sprite.getY() + sprite.getHeight() / 2);
 		linePoints.add(new Point(lastDrawnPoint));
 		lastNumber = 0;
 		directionList = new ArrayList<Integer>();
@@ -72,9 +77,12 @@ public class FredCircularSaw extends EnemyEntity {
 		affectedByWalls = false;
 		affectedByCeiling = false;
 
-		redefineHitBox((sprite.getWidth() * 12) / 100,
-				(sprite.getHeight() * 12) / 100,
-				(sprite.getWidth() * 80) / 100, (sprite.getHeight() * 80) / 100);
+		deathAnim = new AnimatedSprite(BitmapUtil.createBitmap(R.drawable.dead_anim_small), 0, 0, 7, 1);
+		dying = false;
+		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
+
+		redefineHitBox((sprite.getWidth() * 12) / 100, (sprite.getHeight() * 12) / 100, (sprite.getWidth() * 80) / 100,
+				(sprite.getHeight() * 80) / 100);
 		addAnimation("rotate", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 20);
 		play("rotate", true, true);
 
@@ -85,6 +93,14 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void update(long gameTime) {
 		if (state == STATE_SAW) {
+			if (dying) {
+				deathAnim.update(gameTime, DirectionConstants.RIGHT);
+				if (deathAnim.isAnimationFinished()) {
+					dead = true;
+				}
+				return;
+			}
+
 			super.update(gameTime);
 
 			if (sawFramesCurrent == sawFramesPeriod) {
@@ -103,26 +119,24 @@ public class FredCircularSaw extends EnemyEntity {
 				}
 				sawFramesCurrent++;
 			} else {
-				dead = true;
+				die();
 			}
 
 			// Destroyed if touches the floor
 			if (onFloor()) {
-				dead = true;
+				die();
 			}
 		}
 
 		// DRAW THE LINE
-		if (state == STATE_LINE && draw
-				&& gameTime > lastDrawnTime + drawPointPeriod) {
+		if (state == STATE_LINE && draw && gameTime > lastDrawnTime + drawPointPeriod) {
 			Point newPoint = null;
 			if (lastNumber > NB_POINTS_MIN) {
 				int randomInt = (int) (Math.random() * 100);
 
 				if (randomInt < 32) {
 					// Diag up
-					newPoint = new Point(lastDrawnPoint.x + 10,
-							lastDrawnPoint.y + 10);
+					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y + 10);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_UP);
 					drawList.add(true);
@@ -130,8 +144,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = DIAG_UP;
 				} else if (randomInt < 66) {
 					// straight
-					newPoint = new Point(lastDrawnPoint.x + 10,
-							lastDrawnPoint.y);
+					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y);
 					linePoints.add(newPoint);
 					directionList.add(STRAIGHT);
 					drawList.add(true);
@@ -139,8 +152,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = STRAIGHT;
 				} else {
 					// Diag down
-					newPoint = new Point(lastDrawnPoint.x + 10,
-							lastDrawnPoint.y - 10);
+					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y - 10);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_DOWN);
 					drawList.add(true);
@@ -151,8 +163,7 @@ public class FredCircularSaw extends EnemyEntity {
 			} else {
 				if (lastPointType == DIAG_UP) {
 					// Diag up
-					newPoint = new Point(lastDrawnPoint.x + 10,
-							lastDrawnPoint.y + 10);
+					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y + 10);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_UP);
 					drawList.add(true);
@@ -160,8 +171,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = DIAG_UP;
 				} else if (lastPointType == STRAIGHT) {
 					// straight
-					newPoint = new Point(lastDrawnPoint.x + 10,
-							lastDrawnPoint.y);
+					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y);
 					linePoints.add(newPoint);
 					directionList.add(STRAIGHT);
 					drawList.add(true);
@@ -169,8 +179,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = STRAIGHT;
 				} else if (lastPointType == DIAG_DOWN) {
 					// Diag down
-					newPoint = new Point(lastDrawnPoint.x + 10,
-							lastDrawnPoint.y - 10);
+					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y - 10);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_DOWN);
 					drawList.add(true);
@@ -180,8 +189,7 @@ public class FredCircularSaw extends EnemyEntity {
 				lastNumber++;
 			}
 
-			if (newPoint.x > MoveUtil.SCREEN_WIDTH + sprite.getWidth()
-					|| newPoint.y < 0 - sprite.getHeight()
+			if (newPoint.x > MoveUtil.SCREEN_WIDTH + sprite.getWidth() || newPoint.y < 0 - sprite.getHeight()
 					|| newPoint.y + sprite.getHeight() / 2 >= MoveUtil.GROUND) {
 				draw = false;
 				state = STATE_SAW;
@@ -199,14 +207,19 @@ public class FredCircularSaw extends EnemyEntity {
 				canvas.drawCircle(p.x, p.y, 2, paint);
 			}
 		} else {
-			int i = 0;
-			for (Point p : linePoints) {
-				if (i < drawList.size() && drawList.get(i)) {
-					canvas.drawCircle(p.x, p.y, 2, paint);
+
+			if (dying) {
+				deathAnim.draw(canvas, DirectionConstants.RIGHT);
+			} else {
+				int i = 0;
+				for (Point p : linePoints) {
+					if (i < drawList.size() && drawList.get(i)) {
+						canvas.drawCircle(p.x, p.y, 2, paint);
+					}
+					i++;
 				}
-				i++;
+				super.draw(canvas);
 			}
-			super.draw(canvas);
 		}
 	}
 
@@ -220,20 +233,23 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void die() {
 		// TODO Auto-generated method stub
+		dying = true;
 
+		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);
+		deathAnim.setY((sprite.getY() + sprite.getHeight() / 2) - deathAnim.getHeight() / 2);
+		deathAnim.play("die", false, true);
 	}
-
 
 	/**
 	 * Initialize the position, speed and misc. attributes of the enemy.
 	 */
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
-		//Random spawn position
+		// Random spawn position
 		int randomY = (int) (20 + Math.random() * (MoveUtil.GROUND - 40));
 		sprite.setX(-20);
 		sprite.setY(randomY);
-		
+
 		init();
 	}
 }
