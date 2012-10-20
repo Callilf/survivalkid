@@ -1,6 +1,5 @@
 package com.survivalkid.game.entity.enemy.impl;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
@@ -19,13 +18,13 @@ public class Caterpillar extends EnemyEntity {
 	private AnimatedSprite deathAnim;
 	private boolean dying;
 
-	/**
-	 * Create enemy
-	 */
-	public Caterpillar(Bitmap _bitmap, int _x, int _y, int _nbColums,
-			int _nbRows) {
-		super("Caterpillar", _bitmap, _x, _y, _nbColums, _nbRows, 5, 0);
-
+	/** Default constructor. */
+	public Caterpillar(){
+		super("Caterpillar", BitmapUtil.createBitmap(R.drawable.caterpillar), 0, 0, 4, 1, 5, 0);
+	};
+	
+	/** Initialize the enemy. */
+	private void init() {
 		gravity = 2;
 		affectedByWalls = false;
 
@@ -99,37 +98,32 @@ public class Caterpillar extends EnemyEntity {
 		}
 	}
 
-	public static EnemyEntity generateRandowStartingPosition(
-			Point playerPosition) {
-		int random = (int) (Math.random() * 100);
-		Caterpillar cat = null;
-		if (random < 34) {
-			cat = new Caterpillar(
-					BitmapUtil.createBitmap(R.drawable.caterpillar), -20, 380,
-					4, 1);
-			cat.direction = DirectionConstants.RIGHT;
-		} else if (random < 69) {
-			cat = new Caterpillar(
-					BitmapUtil.createBitmap(R.drawable.caterpillar),
-					MoveUtil.SCREEN_WIDTH + 20, 380, 4, 1);
-			cat.direction = DirectionConstants.LEFT;
-		} else if (random < 84) {
-			cat = new Caterpillar(
-					BitmapUtil.createBitmap(R.drawable.caterpillar), 0, -20, 4,
-					1);
-			cat.direction = DirectionConstants.RIGHT;
-		} else {
-			cat = new Caterpillar(
-					BitmapUtil.createBitmap(R.drawable.caterpillar),
-					MoveUtil.SCREEN_WIDTH, -20, 4, 1);
-			cat.direction = DirectionConstants.LEFT;
-		}
-		return cat;
-	}
-
+	/**
+	 * Initialize the position, speed and misc. attributes of the enemy.
+	 */
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
-
+		//random spawn position
+		int random = (int) (Math.random() * 100);
+		if (random < 34) {
+			sprite.setX(-20);
+			sprite.setY(380);
+			direction = DirectionConstants.RIGHT;
+		} else if (random < 69) {			
+			sprite.setX(MoveUtil.SCREEN_WIDTH + 20);
+			sprite.setY(380);
+			direction = DirectionConstants.LEFT;
+		} else if (random < 84) {
+			sprite.setX(0);
+			sprite.setY(-20);
+			direction = DirectionConstants.RIGHT;
+		} else {
+			sprite.setX(MoveUtil.SCREEN_WIDTH);
+			sprite.setY(-20);
+			direction = DirectionConstants.LEFT;
+		}
+		
+		init();
 	}
 
 }
