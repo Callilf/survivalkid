@@ -10,6 +10,7 @@ import android.graphics.Point;
 import com.survivalkid.R;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
+import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.BitmapUtil;
@@ -50,7 +51,7 @@ public class FredCircularSaw extends EnemyEntity {
 
 	/** Default constructor. */
 	public FredCircularSaw() {
-		super("FredCircularSaw", BitmapUtil.createBitmap(R.drawable.enemy_circular_saw), 0, 0, 10, 1, -20, 1);
+		super("FredCircularSaw", BitmapUtil.createBitmap(R.drawable.enemy_circular_saw), 0, 0, 10, 1, 20, 1);
 	}
 	
 	/** Initialize the enemy. */
@@ -212,7 +213,7 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).takeDamage(dammage);
+			((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
 		}
 	}
 

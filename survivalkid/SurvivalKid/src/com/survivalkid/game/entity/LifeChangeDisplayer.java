@@ -1,5 +1,7 @@
 package com.survivalkid.game.entity;
 
+import com.survivalkid.game.entity.Life.EnumLife;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,18 +16,19 @@ public class LifeChangeDisplayer {
 	private int displayDamagesDuration = 1000;
 	private long displayDamagesBeginTime;
 	private boolean over;
+	private EnumLife typeChange;
 	
 	private Point position;
 	
-	public LifeChangeDisplayer(int _damages, long _beginTime, int _x, int _y) {
+	public LifeChangeDisplayer(int _damages, EnumLife _typeChange, long _beginTime, int _x, int _y) {
 		//Text
 		paint = new Paint(); 
 		paint.setTextSize(20);
 		paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 		
-		
+		typeChange = _typeChange;
 		displayDamagesBeginTime = _beginTime;
-		damageTaken = _damages;
+		damageTaken = _damages * typeChange.getFacteur();
 		position = new Point(_x,_y);
 		setOver(false);
 	}
@@ -40,7 +43,8 @@ public class LifeChangeDisplayer {
 	
 	public void draw(Canvas canvas) {
 		paint.setColor( damageTaken < 0 ? Color.RED : Color.GREEN);
-		canvas.drawText( (damageTaken > 0) ? "+" + damageTaken : String.valueOf(damageTaken), position.x, position.y, paint);
+		String damageSring = damageTaken + typeChange.getUnite();
+		canvas.drawText( (damageTaken > 0) ? "+" + damageSring : damageSring, position.x, position.y, paint);
 	}
 
 	public boolean isOver() {
