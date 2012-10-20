@@ -39,7 +39,8 @@ public class Life {
 	 */
 	public boolean looseLife(int hp)
 	{
-		currentLife = max(0, currentLife - hp);
+		currentLife = max(0, currentLife + hp);
+		currentLife = Math.min(100, currentLife);
 		return currentLife == 0;
 	}	
 	
