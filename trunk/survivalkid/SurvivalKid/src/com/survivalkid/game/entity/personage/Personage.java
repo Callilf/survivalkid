@@ -11,6 +11,7 @@ import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.enums.StateEnum;
+import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.LifeChangeDisplayer;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life;
@@ -103,15 +104,27 @@ public class Personage extends GameEntity {
 	 * When the character is hit
 	 * @param _damage the amount of damages
 	 */
-	public void takeDamage(int _damage) {
+	public void takeDamage(int _damage, EnumLife typeChange) {
 		if (StateEnum.STATE_RECOVERY.equals(state)) {
 			return;
 		}
 
-		life.looseLife(_damage);
+		life.modifyLife(_damage, typeChange);
 		setState(StateEnum.STATE_RECOVERY);
 		//Display the damages above the head of the character
-		damages.add(new LifeChangeDisplayer(_damage, System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
+		damages.add(new LifeChangeDisplayer(_damage, typeChange,
+				System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
+	}
+	
+	/**
+	 * When the character take a bonus
+	 * 
+	 * @param _bonusLife the amount of hp win
+	 */
+	public void revoceryLife(int _bonusLife, EnumLife typeChange) {
+		life.modifyLife(_bonusLife, typeChange);
+		damages.add(new LifeChangeDisplayer(_bonusLife, typeChange,
+				System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
 	}
 
 	@Override

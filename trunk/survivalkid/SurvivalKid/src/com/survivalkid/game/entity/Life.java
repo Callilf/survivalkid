@@ -12,6 +12,31 @@ public class Life {
 	private int maxLife;
 	private int currentLife;
 	
+	public enum EnumLife { 
+			
+		/** loose life */
+		TAKE_DAMAGE(-1, ""), 
+		/** loose a percentage of life */
+		TAKE_DAMAGE_PC(-1, "%"), 
+		/** gain life */
+		RECOVERY_LIFE(1, ""),
+		/** gain a percentage of life */
+		RECOVERY_LIFE_PC(1, "%");
+		
+		private int facteur;
+		private String unite;
+		private EnumLife(int _facteur, String _unite) {
+			facteur = _facteur;
+			unite = _unite;
+		}
+		public int getFacteur() {
+			return facteur;
+		}
+		public String getUnite() {
+			return unite;
+		}
+	}
+	
 	/**
 	 * Constructor which initialize the max life and the current Life at hp
 	 * 
@@ -32,15 +57,29 @@ public class Life {
 		currentLife = hpMax;			
 	}	
 	
+	public boolean modifyLife(int hp, EnumLife typeChange) {
+		switch (typeChange) {
+		case TAKE_DAMAGE:
+			return looseLife(hp);
+		case RECOVERY_LIFE:
+			return gainLife(hp);
+		case TAKE_DAMAGE_PC:
+			return loosePcLife(hp);
+		case RECOVERY_LIFE_PC:
+			return gainPcLife(hp);
+		default:
+			throw new IllegalStateException("Typechange " + typeChange + "unknown");
+		}
+	}
+	
 	/**
 	 * Decrease the hp of the perso
 	 * @param hp the augmentation of pv
 	 * @return true if the entity has no remained life
 	 */
-	public boolean looseLife(int hp)
+	private boolean looseLife(int hp)
 	{
-		currentLife = max(0, currentLife + hp);
-		currentLife = Math.min(100, currentLife);
+		currentLife = max(0, currentLife - hp);
 		return currentLife == 0;
 	}	
 	
@@ -49,17 +88,17 @@ public class Life {
 	 * @param hp the augmentation of pv
 	 * @return true if the entity has the max if his life
 	 */
-	public boolean gainLife(int hp)
+	private boolean gainLife(int hp)
 	{
 		currentLife = Math.min(max(currentLife, maxLife), currentLife + hp);
 		return maxLife == currentLife;
 	}
 	
-	public boolean loosePcLife(int pourcent) {
+	private boolean loosePcLife(int pourcent) {
 		return looseLife(maxLife * pourcent / 100);
 	}
 	
-	public boolean gainPcLife(int pourcent) {
+	private boolean gainPcLife(int pourcent) {
 		return gainLife(maxLife * pourcent / 100);
 	}
 

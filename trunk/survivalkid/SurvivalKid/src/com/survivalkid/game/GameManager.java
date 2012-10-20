@@ -69,7 +69,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		
 		HandlerUtil.handlerFin = new Handler() {
 				public void handleMessage(Message msg) {
-				     Toast.makeText(getContext(), "Survive duration : " + msg.arg1/1000f + " seconds", Toast.LENGTH_LONG).show();
+				     Toast.makeText(getContext(), "Survival time : " + msg.arg1/1000f + " seconds", Toast.LENGTH_LONG).show();
 				}
 			};
 	}
