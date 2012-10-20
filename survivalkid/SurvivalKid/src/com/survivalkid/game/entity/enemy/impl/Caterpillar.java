@@ -6,7 +6,6 @@ import android.graphics.Point;
 import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
-import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
@@ -20,7 +19,7 @@ public class Caterpillar extends EnemyEntity {
 
 	/** Default constructor. */
 	public Caterpillar(){
-		super("Caterpillar", BitmapUtil.createBitmap(R.drawable.caterpillar), 0, 0, 4, 1, 5, 0);
+		super("Caterpillar", BitmapUtil.createBitmap(R.drawable.caterpillar), 0, 0, 4, 1, -5, 0);
 	};
 	
 	/** Initialize the enemy. */
@@ -66,13 +65,7 @@ public class Caterpillar extends EnemyEntity {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			if (StateEnum.STATE_RECOVERY.equals(((Personage) _gameEntity)
-					.getState())) {
-				return;
-			}
-
-			((Personage) _gameEntity).getLife().looseLife(dammage);
-			((Personage) _gameEntity).setState(StateEnum.STATE_RECOVERY);
+			((Personage) _gameEntity).takeDamage(dammage);
 			die();
 		}
 		// the method die should be called after x touch (or at the first touch)

@@ -1,5 +1,8 @@
 package com.survivalkid.game.entity.personage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Canvas;
 import android.util.Log;
 
@@ -8,6 +11,7 @@ import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.enums.StateEnum;
+import com.survivalkid.game.entity.LifeChangeDisplayer;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.move.MovePersoManager;
@@ -26,6 +30,10 @@ public class Personage extends GameEntity {
 	//State recovery
 	private int recoveryMaxTime = 700;
 	private long recoveryBeginTime;
+	
+	//Damages when the player has been hit
+	private List<LifeChangeDisplayer> damages;
+	List<LifeChangeDisplayer> damagesOver;
 
 	/** Manager of the move of the perso */
 	private MovePersoManager movePersoManager;
@@ -57,7 +65,11 @@ public class Personage extends GameEntity {
 		
 		//state attributes
 		recoveryBeginTime = -1;
-
+		
+		//damages
+		damages = new ArrayList<LifeChangeDisplayer>();
+		damagesOver = new ArrayList<LifeChangeDisplayer>();
+		
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
 			addAnimation(PersonageConstants.ANIM_STAND, new int[] { 0 }, 20);
@@ -85,6 +97,21 @@ public class Personage extends GameEntity {
 	public void collide(GameEntity _gameEntity) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	/**
+	 * When the character is hit
+	 * @param _damage the amount of damages
+	 */
+	public void takeDamage(int _damage) {
+		if (StateEnum.STATE_RECOVERY.equals(state)) {
+			return;
+		}
+
+		life.looseLife(_damage);
+		setState(StateEnum.STATE_RECOVERY);
+		//Display the damages above the head of the character
+		damages.add(new LifeChangeDisplayer(_damage, System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
 	}
 
 	@Override
@@ -146,6 +173,17 @@ public class Personage extends GameEntity {
 		} else {
 			play(PersonageConstants.ANIM_STAND, false, true);
 		}
+		
+		//Handle the damage displayers
+		for(LifeChangeDisplayer dd : damages) {
+			dd.update(gameTime);
+			if(dd.isOver()) {
+				damagesOver.add(dd);
+			}
+		}
+		for(LifeChangeDisplayer dd : damagesOver) {
+			damages.remove(dd);
+		}
 	}
 
 	@Override
@@ -154,6 +192,10 @@ public class Personage extends GameEntity {
 			deathAnim.draw(canvas, direction);
 		} else {
 			super.draw(canvas);
+			//Handle the damage displayers
+			for(LifeChangeDisplayer dd : damages) {
+				dd.draw(canvas);
+			}
 		}
 	}
 
