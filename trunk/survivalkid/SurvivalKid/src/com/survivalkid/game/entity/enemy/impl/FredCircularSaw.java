@@ -214,10 +214,11 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			if(StateEnum.STATE_RECOVERY.equals(((Personage) _gameEntity).getState())) {
+			if (StateEnum.STATE_RECOVERY.equals(((Personage) _gameEntity)
+					.getState())) {
 				return;
 			}
-			
+
 			((Personage) _gameEntity).getLife().looseLife(dammage);
 			((Personage) _gameEntity).setState(StateEnum.STATE_RECOVERY);
 		}
@@ -237,5 +238,11 @@ public class FredCircularSaw extends EnemyEntity {
 				BitmapUtil.createBitmap(R.drawable.enemy_circular_saw), -20,
 				randomY, 10, 1);
 		return saw;
+	}
+
+	@Override
+	public void initRandomPositionAndSpeed(Point playerPosition) {
+		// TODO Auto-generated method stub
+
 	}
 }

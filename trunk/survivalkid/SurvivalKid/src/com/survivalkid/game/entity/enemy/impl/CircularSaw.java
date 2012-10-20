@@ -42,4 +42,10 @@ public class CircularSaw extends EnemyEntity {
 		return null;
 	}
 
+	@Override
+	public void initRandomPositionAndSpeed(Point playerPosition) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

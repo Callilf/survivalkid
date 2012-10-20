@@ -2,6 +2,7 @@ package com.survivalkid.game.entity.enemy;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 import com.survivalkid.game.entity.GameEntity;
 
@@ -17,9 +18,15 @@ public abstract class EnemyEntity extends GameEntity {
 		difficulty = _difficulty;
 	}
 
+	public EnemyEntity() {
+		super();
+	}
+
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 	}
+
+	public abstract void initRandomPositionAndSpeed(Point playerPosition);
 
 }

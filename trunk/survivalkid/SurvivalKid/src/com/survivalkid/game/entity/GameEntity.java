@@ -75,13 +75,15 @@ public abstract class GameEntity {
 	 * @param _sprite
 	 *            sprite of the entity
 	 */
-	public GameEntity(String _name, Bitmap bitmap, int x, int y, int nbColum, int nbRows) {
+	public GameEntity(String _name, Bitmap bitmap, int x, int y, int nbColum,
+			int nbRows) {
 		id = lastId++;
 		name = _name;
 		sprite = new AnimatedSprite(bitmap, x, y, nbColum, nbRows);
 		offsets = new Rect(0, 0, sprite.getWidth(), sprite.getHeight());
-		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
-				+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
+		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
+				+ offsets.top, sprite.getX() + offsets.left + offsets.right,
+				sprite.getY() + offsets.top + offsets.bottom);
 		direction = DirectionConstants.RIGHT;
 
 		isMovingHorizontally = false;
@@ -97,10 +99,13 @@ public abstract class GameEntity {
 		dead = false;
 
 		// check the correspondence between sprite and hitbox
-		Log.d(TAG, "init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY() + ", width=" + sprite.getWidth()
-				+ ", height=" + sprite.getHeight());
-		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right=" + hitBox.right + ", top=" + hitBox.top
-				+ ", bottom=" + hitBox.bottom);
+		Log.d(TAG,
+				"init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY()
+						+ ", width=" + sprite.getWidth() + ", height="
+						+ sprite.getHeight());
+		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right="
+				+ hitBox.right + ", top=" + hitBox.top + ", bottom="
+				+ hitBox.bottom);
 	}
 
 	/**
@@ -115,6 +120,10 @@ public abstract class GameEntity {
 		id = lastId++;
 		name = _name;
 		sprite = _anim;
+	}
+
+	public GameEntity() {
+		// TODO Auto-generated constructor stub
 	}
 
 	// ----------------------------------------------------
@@ -156,15 +165,18 @@ public abstract class GameEntity {
 		sprite.update(gameTime, direction);
 
 		if (direction == DirectionConstants.LEFT) {
-			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left - offsets.right, sprite.getY()
-					+ offsets.top, sprite.getX() + sprite.getWidth() - offsets.left, sprite.getY() + offsets.top
-					+ offsets.bottom);
+			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left
+					- offsets.right, sprite.getY() + offsets.top, sprite.getX()
+					+ sprite.getWidth() - offsets.left, sprite.getY()
+					+ offsets.top + offsets.bottom);
 		} else {
-			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
-					+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
+			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
+					+ offsets.top,
+					sprite.getX() + offsets.left + offsets.right, sprite.getY()
+							+ offsets.top + offsets.bottom);
 		}
 
-		//Handle the changes of state
+		// Handle the changes of state
 		if (changedState) {
 			if (StateEnum.STATE_RECOVERY.equals(state)) {
 				sprite.setRecovery(true);
@@ -290,7 +302,8 @@ public abstract class GameEntity {
 		if (affectedByCeiling && newY < 0) {
 			newY = 0;
 			speedY = 0;
-		} else if (affectedByFloor && newY + sprite.getHeight() > MoveUtil.GROUND) {
+		} else if (affectedByFloor
+				&& newY + sprite.getHeight() > MoveUtil.GROUND) {
 			newY = MoveUtil.GROUND - sprite.getHeight();
 			speedY = 0;
 			isOnFloor = true;
@@ -321,7 +334,8 @@ public abstract class GameEntity {
 			// is out of the screen, give a positive dx to return in the screen
 			actualDX = -hitBox.left;
 			speedX = 0;
-		} else if (affectedByWalls && newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
+		} else if (affectedByWalls
+				&& newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
 			actualDX = MoveUtil.SCREEN_WIDTH - hitBox.right;
 			speedX = 0;
 		} else {
@@ -341,7 +355,8 @@ public abstract class GameEntity {
 			isMovingHorizontally = true;
 
 			if (!(this instanceof Personage)) {
-				direction = (_dx > 0) ? DirectionConstants.RIGHT : DirectionConstants.LEFT;
+				direction = (_dx > 0) ? DirectionConstants.RIGHT
+						: DirectionConstants.LEFT;
 			}
 		}
 	}
