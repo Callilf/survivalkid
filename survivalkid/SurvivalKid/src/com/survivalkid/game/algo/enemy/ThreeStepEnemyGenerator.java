@@ -5,10 +5,7 @@ import java.util.Map;
 
 import android.graphics.Point;
 
-import com.survivalkid.game.entity.EnemyEnum;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
-import com.survivalkid.game.entity.enemy.impl.Caterpillar;
-import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 
 public class ThreeStepEnemyGenerator {
 
@@ -46,25 +43,25 @@ public class ThreeStepEnemyGenerator {
 
 	}
 
-	private static EnemyEnum secondStep(int difficulty,
-			Map<Integer, List<EnemyEnum>> _enemydifficultymap) {
-		List<EnemyEnum> enemies = _enemydifficultymap.get(Integer
-				.valueOf(difficulty));
+	private static Class<? extends EnemyEntity> secondStep(int difficulty,
+			Map<Integer, List<Class<? extends EnemyEntity>>> enemydifficultymap) {
+		List<Class<? extends EnemyEntity>> enemies = enemydifficultymap
+				.get(Integer.valueOf(difficulty));
 		return enemies.get((int) (Math.random() * (enemies.size() - 1)));
 	}
 
-	private static EnemyEntity thirdStep(EnemyEnum enemyToGenerate,
-			Point _playerPosition) {
-		switch (enemyToGenerate) {
-		case CATERPILLAR:
-			return Caterpillar.generateRandowStartingPosition(_playerPosition);
-		case FRED_CIRCULAR_SAW:
-			return FredCircularSaw
-					.generateRandowStartingPosition(_playerPosition);
-		default:
-			break;
+	private static EnemyEntity thirdStep(
+			Class<? extends EnemyEntity> _enemyClassToGenerate, Point _playerPosition) {
+		EnemyEntity newEnemy = null;
+		try {
+			newEnemy = _enemyClassToGenerate.newInstance();
+			newEnemy.initRandomPositionAndSpeed(_playerPosition);
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 		}
-		return null;
+		return newEnemy;
 	}
 
 	/**
@@ -72,18 +69,20 @@ public class ThreeStepEnemyGenerator {
 	 *            Current difficulty of the game.
 	 * @param _maxDifficulty
 	 *            Number of different difficulties available.
-	 * @param _enemydifficultymap
+	 * @param enemydifficultymap
 	 *            The map.
 	 * @param _playerPosition
 	 * @return
 	 */
-	public static EnemyEntity generateRandomEnemy(int _currentDifficulty,
+	public static EnemyEntity generateRandomEnemy(
+			int _currentDifficulty,
 			int _maxDifficulty,
-			Map<Integer, List<EnemyEnum>> _enemydifficultymap,
+			Map<Integer, List<Class<? extends EnemyEntity>>> enemydifficultymap,
 			Point _playerPosition) {
 		int difficulty = firstStep(_currentDifficulty, _maxDifficulty);
-		EnemyEnum enemyToGenerate = secondStep(difficulty, _enemydifficultymap);
-		return thirdStep(enemyToGenerate, _playerPosition);
+		Class<? extends EnemyEntity> enemyClassToGenerate = secondStep(difficulty,
+				enemydifficultymap);
+		return thirdStep(enemyClassToGenerate, _playerPosition);
 	}
 
 }

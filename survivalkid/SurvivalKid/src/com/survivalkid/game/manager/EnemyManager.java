@@ -9,9 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 
 import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
-import com.survivalkid.game.entity.EnemyEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.enemy.impl.Caterpillar;
+import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 
 public class EnemyManager extends ObjectManager {
 
@@ -27,15 +28,15 @@ public class EnemyManager extends ObjectManager {
 	 */
 	private static final long GENERATION_FREQUENCY = 2000;
 
-	private static final Map<Integer, List<EnemyEnum>> enemyDifficultyMap;
+	private static final Map<Integer, List<Class<? extends EnemyEntity>>> enemyDifficultyMap;
 
 	static {
-		enemyDifficultyMap = new TreeMap<Integer, List<EnemyEnum>>();
-		ArrayList<EnemyEnum> zeroDiff = new ArrayList<EnemyEnum>();
-		zeroDiff.add(EnemyEnum.CATERPILLAR);
+		enemyDifficultyMap = new TreeMap<Integer, List<Class<? extends EnemyEntity>>>();
+		ArrayList<Class<? extends EnemyEntity>> zeroDiff = new ArrayList<Class<? extends EnemyEntity>>();
+		zeroDiff.add(Caterpillar.class);
 		enemyDifficultyMap.put(0, zeroDiff);
-		ArrayList<EnemyEnum> oneDiff = new ArrayList<EnemyEnum>();
-		oneDiff.add(EnemyEnum.FRED_CIRCULAR_SAW);
+		ArrayList<Class<? extends EnemyEntity>> oneDiff = new ArrayList<Class<? extends EnemyEntity>>();
+		oneDiff.add(FredCircularSaw.class);
 		enemyDifficultyMap.put(1, oneDiff);
 	}
 
