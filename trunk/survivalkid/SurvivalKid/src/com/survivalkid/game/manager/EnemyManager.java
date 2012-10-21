@@ -9,12 +9,12 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.util.Log;
 
-import com.survivalkid.game.GameManager;
 import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
+import com.survivalkid.game.entity.enemy.impl.Meteorite;
 
 public class EnemyManager extends ObjectManager {
 	private static final String TAG = EnemyManager.class.getSimpleName();
@@ -39,9 +39,11 @@ public class EnemyManager extends ObjectManager {
 		enemyDifficultyMap = new TreeMap<Integer, List<Class<? extends EnemyEntity>>>();
 		ArrayList<Class<? extends EnemyEntity>> zeroDiff = new ArrayList<Class<? extends EnemyEntity>>();
 		zeroDiff.add(Caterpillar.class);
+		zeroDiff.add(Meteorite.class);
 		enemyDifficultyMap.put(0, zeroDiff);
 		ArrayList<Class<? extends EnemyEntity>> oneDiff = new ArrayList<Class<? extends EnemyEntity>>();
 		oneDiff.add(FredCircularSaw.class);
+		oneDiff.add(Meteorite.class);
 		enemyDifficultyMap.put(1, oneDiff);
 	}
 

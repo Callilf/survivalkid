@@ -70,10 +70,12 @@ public abstract class GameEntity {
 	/**
 	 * Constructor called by parents class
 	 * 
-	 * @param _name
-	 *            name of the entity
-	 * @param _sprite
-	 *            sprite of the entity
+	 * @param _name name of the entity
+	 * @param bitmap image of the entity
+	 * @param x position x initial
+	 * @param y position y initial
+	 * @param nbColum number of column in the sprite
+	 * @param nbRows number of line in the sprite
 	 */
 	public GameEntity(String _name, Bitmap bitmap, int x, int y, int nbColum,
 			int nbRows) {
