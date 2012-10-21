@@ -68,8 +68,6 @@ public class AnimatedSprite {
 	 *            the number of column in the spritesheet (the bitmap)
 	 * @param nbRows
 	 *            the number of rows in the spritesheet
-	 * @param frameCount
-	 *            the number of frames
 	 */
 	public AnimatedSprite(Bitmap bitmap, int x, int y, int nbColum, int nbRows) {
 		this.bitmap = bitmap;
