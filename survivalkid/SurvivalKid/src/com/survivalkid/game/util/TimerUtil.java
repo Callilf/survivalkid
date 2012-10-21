@@ -97,14 +97,13 @@ public final class TimerUtil {
 	 * @param object the object
 	 */
 	public static void log(String object) {
-		Log.i(TAG, "Duration for "+object);
-		Log.i(TAG, mapTime.get(object).toString());
+		Log.i(TAG, "Timer - " + object + " > " + mapTime.get(object));
 	}
 	
 	public static void logAll() {
 		Log.i(TAG, "LOG ALL DURATION");
 		for (Entry<String, LocalTimer> entry : mapTime.entrySet()) {
-			Log.i(TAG, "LocalTimer - " + entry.getKey() + " > " + entry.getValue());
+			Log.i(TAG, "Timer - " + entry.getKey() + " > " + entry.getValue());
 		}
 		Log.i(TAG, "END LOG ALL DURATION");
 	}
