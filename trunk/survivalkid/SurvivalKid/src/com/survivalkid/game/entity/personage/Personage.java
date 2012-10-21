@@ -144,7 +144,8 @@ public class Personage extends GameEntity {
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
 			}
-		} else if (!dying && life.getCurrentLife() == 0) {
+			return;
+		} else if (life.getCurrentLife() == 0) {
 			die();
 			return;
 		}
