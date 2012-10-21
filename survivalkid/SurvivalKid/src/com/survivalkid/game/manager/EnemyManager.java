@@ -108,7 +108,7 @@ public class EnemyManager extends ObjectManager {
 			generate();
 			return;
 		}
-		TimerUtil.init("generation");
+		TimerUtil.start("generation");
 		generate();
 		TimerUtil.end("generation");
 	}

@@ -95,7 +95,10 @@ public class MainActivity extends Activity {
 			CollisionUtil.hideShowDisplayHitBoxes();
 			break;
 		case R.id.m_switchchar:
-			CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%2;
+			int nbPlayer = gamePanel.getNbPlayer();
+			if (nbPlayer > 0) {
+				CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%nbPlayer;
+			}
 			break;
 		case R.id.m_restart:
 			Log.d(TAG, "Test");

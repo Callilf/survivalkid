@@ -273,4 +273,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public MainThread getThread() {
 		return thread;
 	}
+	
+	public int getNbPlayer() {
+		return characterManager.getCharacterList().size();
+	}
 }

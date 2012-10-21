@@ -101,11 +101,11 @@ public class MainThread extends Thread {
 			launchUpdateAndDraw();
 		}
 		// update game state 
-		TimerUtil.init("update");
+		TimerUtil.start("update");
 		this.gameManager.update();
 		TimerUtil.end("update");
 		// draws the canvas on the panel
-		TimerUtil.init("draw");
+		TimerUtil.start("draw");
 		this.gameManager.onDraw(canvas);
 		TimerUtil.end("draw");
 	}	
