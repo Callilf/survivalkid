@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import com.survivalkid.R;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,11 +14,28 @@ public final class BitmapUtil {
 	private final static int IMAGE_MAX_SIZE = 200;
 	
 	private static Resources resource;
+	
+	public static Bitmap CIRCULAR_SAW;
+	public static Bitmap CATERPILLAR;
+	public static Bitmap METEORE;
+	public static Bitmap FIRE_TRAIL;
+	public static Bitmap FIRE_GROUND;
+	public static Bitmap SMOKE_WHITE_LARGE;
+	public static Bitmap SMOKE_WHITE_SMALL;
+	public static Bitmap SMOKE_BROWN_LARGE;
 
 	private BitmapUtil(){}
 	
 	public static void initialize(Resources r) {
 		resource = r;
+		CIRCULAR_SAW = createBitmap(R.drawable.enemy_circular_saw);
+		CATERPILLAR = createBitmap(R.drawable.caterpillar);
+		METEORE = createBitmap(R.drawable.meteor);
+		FIRE_TRAIL = createBitmap(R.drawable.fire);
+		FIRE_GROUND = createBitmap(R.drawable.fire_ground);
+		SMOKE_WHITE_LARGE = createBitmap(R.drawable.dead_anim);
+		SMOKE_WHITE_SMALL = createBitmap(R.drawable.dead_anim_small);
+		SMOKE_BROWN_LARGE = createBitmap(R.drawable.dead_anim_black);
 	}
 	
 	public static Bitmap decodeFile(File f){

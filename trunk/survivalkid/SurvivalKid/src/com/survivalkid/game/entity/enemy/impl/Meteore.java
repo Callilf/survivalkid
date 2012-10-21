@@ -3,7 +3,6 @@ package com.survivalkid.game.entity.enemy.impl;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.entity.GameEntity;
@@ -21,7 +20,7 @@ public class Meteore extends EnemyEntity {
 	private int fall = 1;
 	
 	public Meteore() {
-		super("Meteore", BitmapUtil.createBitmap(R.drawable.meteor), 0, 0, 1, 1, 10, 1);
+		super("Meteore", BitmapUtil.METEORE, 0, 0, 1, 1, 10, 1);
 	}
 	
 	public void init() {
@@ -31,12 +30,12 @@ public class Meteore extends EnemyEntity {
 
 		// fire
 		fireAnim = new AnimatedSprite(
-				BitmapUtil.createBitmap(R.drawable.fire), 0, 0, 6, 1);
+				BitmapUtil.FIRE_TRAIL, 0, 0, 6, 1);
 		fireAnim.addAnimation("fire", new int[] { 0, 1, 2, 3, 4, 5 }, 15);
 		
 		// death
 		deathAnim = new AnimatedSprite(
-				BitmapUtil.createBitmap(R.drawable.dead_anim_black), 0, 0, 7, 1);
+				BitmapUtil.SMOKE_BROWN_LARGE, 0, 0, 7, 1);
 		dying = false;
 		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 

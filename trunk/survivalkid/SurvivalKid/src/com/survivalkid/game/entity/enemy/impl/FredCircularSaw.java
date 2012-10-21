@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.Log;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.entity.GameEntity;
@@ -43,6 +42,7 @@ public class FredCircularSaw extends EnemyEntity {
 	private Point lastDrawnPoint;
 	private int lastNumber;
 	private int lastPointType;
+	private boolean drawSaw;
 
 	// SAW attributes
 	private int sawFramesPeriod = 5;
@@ -57,7 +57,7 @@ public class FredCircularSaw extends EnemyEntity {
 
 	/** Default constructor. */
 	public FredCircularSaw() {
-		super("FredCircularSaw", BitmapUtil.createBitmap(R.drawable.enemy_circular_saw), 0, 0, 10, 1, 20, 1);
+		super("FredCircularSaw", BitmapUtil.CIRCULAR_SAW, -20, -20, 10, 1, 20, 1);
 	}
 
 	/** Initialize the enemy. */
@@ -72,12 +72,13 @@ public class FredCircularSaw extends EnemyEntity {
 		drawList = new ArrayList<Boolean>();
 		directionIndex = 0;
 		sawFramesCurrent = 0;
+		drawSaw = false;
 
 		affectedByFloor = false;
 		affectedByWalls = false;
 		affectedByCeiling = false;
 
-		deathAnim = new AnimatedSprite(BitmapUtil.createBitmap(R.drawable.dead_anim_small), 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(BitmapUtil.SMOKE_WHITE_SMALL, 0, 0, 7, 1);
 		dying = false;
 		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 
@@ -93,6 +94,7 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void update(long gameTime) {
 		if (state == STATE_SAW) {
+			drawSaw = true;
 			if (dying) {
 				deathAnim.update(gameTime, DirectionConstants.RIGHT);
 				if (deathAnim.isAnimationFinished()) {
@@ -221,7 +223,9 @@ public class FredCircularSaw extends EnemyEntity {
 					}
 					i++;
 				}
-				super.draw(canvas);
+				if (drawSaw) {
+					super.draw(canvas);
+				}
 			}
 		}
 	}
