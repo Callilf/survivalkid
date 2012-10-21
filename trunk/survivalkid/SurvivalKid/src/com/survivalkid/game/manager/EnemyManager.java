@@ -57,23 +57,7 @@ public class EnemyManager extends ObjectManager {
 	}
 
 	public void update(long gameTime) {
-		for (EnemyEntity enemy : enemyList) {
-			if (enemy.isDead()) {
-				deadEnemies.add(enemy);
-			} else {
-				enemy.update(gameTime);
-			}
-		}
-
-		// remove the dead enemis from the list so that they are removed from
-		// the game
-		if (deadEnemies.size() > 0) {
-			for (EnemyEntity enemy : deadEnemies) {
-				enemyList.remove(enemy);
-			}
-			deadEnemies.clear();
-		}
-
+		
 		// Do we have to generate?
 		if (gameTime - generationCounter >= generationFrequency) {
 			generationCounter = gameTime;
@@ -87,6 +71,24 @@ public class EnemyManager extends ObjectManager {
 			if(generationFrequency <= 500) {
 				generationFrequency = 500;
 			}
+		}
+		
+		// update the existing enemies
+		for (EnemyEntity enemy : enemyList) {
+			if (enemy.isDead()) {
+				deadEnemies.add(enemy);
+			} else {
+				enemy.update(gameTime);
+			}
+		}
+
+		// remove the dead enemies from the list so that they are removed from
+		// the game
+		if (deadEnemies.size() > 0) {
+			for (EnemyEntity enemy : deadEnemies) {
+				enemyList.remove(enemy);
+			}
+			deadEnemies.clear();
 		}
 	}
 
