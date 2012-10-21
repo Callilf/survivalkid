@@ -1,23 +1,34 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
  
-<item android:id="@+id/m_option" 
-      android:title="@string/menu_settings">
-        <!-- Attribute not used in the menu item : 
-        android:orderInCategory="100" android:showAsAction="never" --> 
- 
-     <menu android:id="@+id/m_sousmenu">
-	 <item android:id="@+id/m_hitbox"
-	       android:title="@string/hitbox"   />	
- 
-	 <item android:id="@+id/m_restart"
-	       android:title="@string/restart"  />
-     </menu>
-</item>
- 
-<item android:id="@+id/m_left" 
-     android:title="@string/leave"/>
+	<item android:id="@+id/m_option" 
+	      android:title="@string/menu_settings">
+	        <!-- Attribute not used in the menu item : 
+	        android:orderInCategory="100" android:showAsAction="never" --> 
+	 
+	     <menu android:id="@+id/m_sousmenu">
+			 <item android:id="@+id/m_hitbox"
+			       android:title="@string/hitbox"   />	
+		
+			 <item android:id="@+id/m_switchchar" 
+		     	android:title="@string/switchar"/>
 
-<item android:id="@+id/m_switchchar" 
-     android:title="@string/switchar"/>
+	     </menu>
+	</item>
+	
+	<item android:id="@+id/m_timer"
+	      android:title="@string/timer"  />
+	
+	<item android:id="@+id/m_restart"
+	      android:title="@string/restart"  />	
+		 
+	<item android:id="@+id/m_test1" 
+	     android:title="@string/test1"/>	
+	     	 
+	<item android:id="@+id/m_test2" 
+	     android:title="@string/test2"/>
+		 
+	<item android:id="@+id/m_left" 
+	     android:title="@string/leave"/>
+
 </menu>

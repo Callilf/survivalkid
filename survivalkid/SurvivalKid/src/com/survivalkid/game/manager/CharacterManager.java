@@ -46,7 +46,7 @@ public class CharacterManager implements IManager {
 			if (perso.isDead()) {
 				deadCharacters.add(perso);
 			} else {
-				perso.update(gameTime);
+				perso.updateTimed(gameTime);
 			}
 		}
 
@@ -62,7 +62,7 @@ public class CharacterManager implements IManager {
 	public void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		for (Personage perso : characterList) {
-			perso.draw(canvas);
+			perso.drawTimed(canvas);
 		}
 
 		if (characterList.size() > OWN_PERSO) {

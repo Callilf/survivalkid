@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import com.survivalkid.game.GameManager;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.TimerUtil;
 
 public class MainActivity extends Activity {
 
@@ -99,6 +100,15 @@ public class MainActivity extends Activity {
 		case R.id.m_restart:
 			Log.d(TAG, "Test");
 			gamePanel.restart();
+			break;
+		case R.id.m_timer:
+			TimerUtil.logAll();
+			break;
+		case R.id.m_test1:
+			// TO CODE, FOR TESTING
+			break;
+		case R.id.m_test2:
+			// TO CODE, FOR TESTING
 			break;
 		default:
 			//return false;

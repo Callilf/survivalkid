@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.util.TimerUtil;
 
 public class MainThread extends Thread {
 	/** Tag for logs. */
@@ -61,10 +62,7 @@ public class MainThread extends Thread {
 					try {
 						canvas = this.surfaceHolder.lockCanvas();
 						synchronized (surfaceHolder) {
-							// update game state 
-							this.gameManager.update();
-							// draws the canvas on the panel
-							this.gameManager.onDraw(canvas);
+							launchUpdateAndDrawTimed();
 						}
 					}
 					catch (IllegalMonitorStateException e) {
@@ -90,5 +88,26 @@ public class MainThread extends Thread {
 			}
 		}
 	}
+	
+	private void launchUpdateAndDraw() {
+		// update game state 
+		this.gameManager.update();
+		// draws the canvas on the panel
+		this.gameManager.onDraw(canvas);
+	}
+	
+	private void launchUpdateAndDrawTimed() {
+		if (!TimerUtil.TIMER_ACTIVE) {
+			launchUpdateAndDraw();
+		}
+		// update game state 
+		TimerUtil.init("update");
+		this.gameManager.update();
+		TimerUtil.end("update");
+		// draws the canvas on the panel
+		TimerUtil.init("draw");
+		this.gameManager.onDraw(canvas);
+		TimerUtil.end("draw");
+	}	
 
 }

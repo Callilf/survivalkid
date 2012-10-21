@@ -15,6 +15,7 @@ import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 import com.survivalkid.game.entity.enemy.impl.Meteore;
+import com.survivalkid.game.util.TimerUtil;
 
 public class EnemyManager extends ObjectManager {
 	private static final String TAG = EnemyManager.class.getSimpleName();
@@ -64,7 +65,7 @@ public class EnemyManager extends ObjectManager {
 		// Do we have to generate?
 		if (gameTime - generationCounter >= generationFrequency) {
 			generationCounter = gameTime;
-			generate();
+			generateTimed();
 		}
 		
 		if(generationFrequency != 500 && gameTime - difficultyIncreasingCounter >= difficultyIncreasingPeriod) {
@@ -81,7 +82,7 @@ public class EnemyManager extends ObjectManager {
 			if (enemy.isDead()) {
 				deadEnemies.add(enemy);
 			} else {
-				enemy.update(gameTime);
+				enemy.updateTimed(gameTime);
 			}
 		}
 
@@ -98,10 +99,20 @@ public class EnemyManager extends ObjectManager {
 	public void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		for (EnemyEntity enemy : enemyList) {
-			enemy.draw(canvas);
+			enemy.drawTimed(canvas);
 		}
 	}
 
+	private void generateTimed() {
+		if (!TimerUtil.TIMER_ACTIVE) {
+			generate();
+			return;
+		}
+		TimerUtil.init("generation");
+		generate();
+		TimerUtil.end("generation");
+	}
+	
 	@Override
 	public void generate() {
 		EnemyEntity newEnemyEntity = ThreeStepEnemyGenerator
