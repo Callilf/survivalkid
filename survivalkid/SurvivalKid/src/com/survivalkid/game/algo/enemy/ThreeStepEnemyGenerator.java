@@ -47,7 +47,7 @@ public class ThreeStepEnemyGenerator {
 			Map<Integer, List<Class<? extends EnemyEntity>>> enemydifficultymap) {
 		List<Class<? extends EnemyEntity>> enemies = enemydifficultymap
 				.get(Integer.valueOf(difficulty));
-		return enemies.get((int) (Math.random() * (enemies.size() - 1)));
+		return enemies.get((int) (Math.random() * (enemies.size())));
 	}
 
 	private static EnemyEntity thirdStep(
