@@ -7,5 +7,8 @@
     <string name="leave">Leave game</string>
     <string name="switchar">Switch</string>
     <string name="restart">Restart</string>
+    <string name="timer">Timer</string>
+    <string name="test1">Test 1</string>
+    <string name="test2">Test 2</string>
 
 </resources>

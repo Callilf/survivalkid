@@ -12,6 +12,7 @@ import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
+import com.survivalkid.game.util.TimerUtil;
 
 public abstract class GameEntity {
 
@@ -160,7 +161,7 @@ public abstract class GameEntity {
 	public void redefineHitBox(int x, int y, int width, int height) {
 		offsets = new Rect(x, y, width, height);
 	}
-
+	
 	public void update(long gameTime) {
 		move();
 
@@ -363,6 +364,30 @@ public abstract class GameEntity {
 		}
 	}
 
+	// for timer
+
+	public void updateTimed(long gameTime) {
+		if (!TimerUtil.TIMER_ACTIVE) {
+			update(gameTime);
+			return;
+		}
+		String object = name+"-u";
+		TimerUtil.init(object);
+		update(gameTime);
+		TimerUtil.end(object);
+	}
+	
+	public void drawTimed(Canvas canvas) {
+		if (!TimerUtil.TIMER_ACTIVE) {
+			draw(canvas);
+			return;
+		}
+		String object = name+"-d";
+		TimerUtil.init(object);
+		draw(canvas);
+		TimerUtil.end(object);		
+	}
+	
 	// --------------------------------------------
 	// ---- Getters and Setters
 	// --------------------------------------------

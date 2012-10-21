@@ -29,7 +29,7 @@ public class ItemManager extends ObjectManager {
 				//Clean the list by removing all the dead items		
 				itemList.remove(item);
 			} else {
-				item.update(gameTime);
+				item.updateTimed(gameTime);
 			}
 		}
 		
@@ -45,7 +45,7 @@ public class ItemManager extends ObjectManager {
 	public void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		for(ItemEntity item : itemList) {
-			item.draw(canvas);
+			item.drawTimed(canvas);
 		}
 	}
 
