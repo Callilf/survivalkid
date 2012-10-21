@@ -372,7 +372,7 @@ public abstract class GameEntity {
 			return;
 		}
 		String object = name+"-u";
-		TimerUtil.init(object);
+		TimerUtil.start(object);
 		update(gameTime);
 		TimerUtil.end(object);
 	}
@@ -383,7 +383,7 @@ public abstract class GameEntity {
 			return;
 		}
 		String object = name+"-d";
-		TimerUtil.init(object);
+		TimerUtil.start(object);
 		draw(canvas);
 		TimerUtil.end(object);		
 	}

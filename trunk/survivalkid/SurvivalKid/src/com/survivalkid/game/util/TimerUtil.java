@@ -1,33 +1,51 @@
 package com.survivalkid.game.util;
 
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import android.util.Log;
 
+/**
+ * Use : 
+ * - call TimerUtil.start(tag);
+ * - do your process you want to check
+ * - call TimerUtil.end(tag);
+ * 
+ * To show the result of the timer, call log(tag); or logAll();
+ * 
+ * @author Thomas
+ *
+ */
 public final class TimerUtil {
 
 	public static final boolean TIMER_ACTIVE = true;
 	
 	private static final String TAG = TimerUtil.class.getSimpleName();
 	
-	private static class TimeCoef {
+	private static class LocalTimer {
 		
+		/** Last initialization of the timer */
 		private long lastInit;
+		/** Total duration of the timer */
 		private long duration;
+		/** Max duration of one call of the timer */
 		private int maxDuration;
+		/** Min duration of one call of the timer */
 		private int minDuration;
+		/** Number of times the timer has been called */
 		private int nbTime;
 		
-		public TimeCoef() {
+		public LocalTimer() {
 			duration = 0;
 			nbTime = 0;
 			maxDuration = 0;
 			minDuration = Integer.MAX_VALUE;
 		}
 		
+		/**
+		 * After an new initialization of lastInit, terminate the current call of this timer
+		 */
 		public void update() {
 			long timePassed = System.currentTimeMillis() - lastInit;
 			duration += timePassed;
@@ -37,26 +55,28 @@ public final class TimerUtil {
 			nbTime++;
 		}
 		
-		public void logDuration() {
+		@Override
+		public String toString() {
+			float moyenne = ((duration*10000)/(long)nbTime)/10000f;
 			StringBuilder sb = new StringBuilder();
-			sb.append("For ").append(nbTime).append(" time use : ").append("total=").append(duration)
-				.append("ms, moyenne=").append(duration/(float)nbTime).append("ms, min=")
+			sb.append("nbCall=").append(nbTime).append(", tot=").append(duration)
+				.append("ms, moy=").append(moyenne).append("ms, min=")
 				.append(minDuration).append("ms, max=").append(maxDuration).append("ms");
-			Log.i(TAG, sb.toString());
+			return sb.toString();
 		}
 	}
 	
 	private TimerUtil() {}
 	
-	private static Map<String, TimeCoef> mapTime = new HashMap<String, TimeCoef>();
+	private static Map<String, LocalTimer> mapTime = new HashMap<String, LocalTimer>();
 	
 	/**
 	 * Call to initialize the time
 	 */
-	public static void init(String object) {
-		 TimeCoef calc = mapTime.get(object);
+	public static void start(String object) {
+		 LocalTimer calc = mapTime.get(object);
 		 if (calc == null) {
-			 calc = new TimeCoef();
+			 calc = new LocalTimer();
 			 mapTime.put(object, calc);
 		 }
 		 calc.lastInit = System.currentTimeMillis();
@@ -78,14 +98,13 @@ public final class TimerUtil {
 	 */
 	public static void log(String object) {
 		Log.i(TAG, "Duration for "+object);
-		mapTime.get(object).logDuration();
+		Log.i(TAG, mapTime.get(object).toString());
 	}
 	
 	public static void logAll() {
 		Log.i(TAG, "LOG ALL DURATION");
-		for (Entry<String, TimeCoef> entry : mapTime.entrySet()) {
-			Log.i(TAG, "Duration for " + entry.getKey());
-			entry.getValue().logDuration();
+		for (Entry<String, LocalTimer> entry : mapTime.entrySet()) {
+			Log.i(TAG, "LocalTimer - " + entry.getKey() + " > " + entry.getValue());
 		}
 		Log.i(TAG, "END LOG ALL DURATION");
 	}

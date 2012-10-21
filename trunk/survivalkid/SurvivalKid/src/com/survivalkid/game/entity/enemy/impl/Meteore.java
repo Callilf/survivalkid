@@ -23,7 +23,7 @@ public class Meteore extends EnemyEntity {
 		super("Meteore", BitmapUtil.METEORE, 0, 0, 1, 1, 10, 1);
 	}
 	
-	public void init() {
+	private void init() {
 		affectedByWalls = false;
 		affectedByCeiling = false;
 		affectedByFloor = false;
