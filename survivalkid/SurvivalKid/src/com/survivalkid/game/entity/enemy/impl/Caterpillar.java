@@ -3,7 +3,6 @@ package com.survivalkid.game.entity.enemy.impl;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.entity.GameEntity;
@@ -20,7 +19,7 @@ public class Caterpillar extends EnemyEntity {
 
 	/** Default constructor. */
 	public Caterpillar() {
-		super("Caterpillar", BitmapUtil.createBitmap(R.drawable.caterpillar), 0, 0, 4, 1, 5, 0);
+		super("Caterpillar", BitmapUtil.CATERPILLAR, 0, 0, 4, 1, 5, 0);
 	};
 
 	/** Initialize the enemy. */
@@ -28,7 +27,7 @@ public class Caterpillar extends EnemyEntity {
 		gravity = 2;
 		affectedByWalls = false;
 
-		deathAnim = new AnimatedSprite(BitmapUtil.createBitmap(R.drawable.dead_anim_small), 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(BitmapUtil.SMOKE_WHITE_SMALL, 0, 0, 7, 1);
 		dying = false;
 		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 

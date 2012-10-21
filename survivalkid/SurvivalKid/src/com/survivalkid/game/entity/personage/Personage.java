@@ -6,15 +6,14 @@ import java.util.List;
 import android.graphics.Canvas;
 import android.util.Log;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.enums.StateEnum;
-import com.survivalkid.game.entity.Life.EnumLife;
-import com.survivalkid.game.entity.LifeChangeDisplayer;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life;
+import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.LifeChangeDisplayer;
 import com.survivalkid.game.move.MovePersoManager;
 import com.survivalkid.game.util.BitmapUtil;
 
@@ -61,7 +60,7 @@ public class Personage extends GameEntity {
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
 		life = new Life(100);
-		deathAnim = new AnimatedSprite(BitmapUtil.createBitmap(R.drawable.dead_anim), 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(BitmapUtil.SMOKE_WHITE_LARGE, 0, 0, 7, 1);
 		dying = false;
 		
 		//state attributes
