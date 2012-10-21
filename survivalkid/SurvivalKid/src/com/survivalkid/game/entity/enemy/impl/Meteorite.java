@@ -1,5 +1,6 @@
 package com.survivalkid.game.entity.enemy.impl;
 
+import android.graphics.Canvas;
 import android.graphics.Point;
 
 import com.survivalkid.R;
@@ -16,7 +17,7 @@ public class Meteorite extends EnemyEntity {
 
 	private AnimatedSprite deathAnim;
 	private boolean dying;
-	private int fall = 2;
+	private int fall = 1;
 	
 	public Meteorite() {
 		super("Meteorite", BitmapUtil.createBitmap(R.drawable.meteor), 0, 0, 1, 1, 10, 1);
@@ -88,14 +89,23 @@ public class Meteorite extends EnemyEntity {
 
 		super.update(gameTime);
 
-		if (sprite.getX() - sprite.getWidth() < 0	|| sprite.getX() > MoveUtil.SCREEN_WIDTH) {
+		if (sprite.getX() + sprite.getWidth() < 0	|| sprite.getX() > MoveUtil.SCREEN_WIDTH) {
 			dead = true;
 		}
 		else if (sprite.getY() + sprite.getHeight()*3/4 >= MoveUtil.GROUND) {
-			dying = true;
+			die();
 		}
-		else if (sprite.getY() > 0) {
+		else if (sprite.getY() + sprite.getHeight()*2/3 > 0) {
 			fall = 8;
+		}
+	}
+	
+	@Override
+	public void draw(Canvas canvas) {
+		if (dying) {
+			deathAnim.draw(canvas, DirectionConstants.RIGHT);
+		} else {
+			super.draw(canvas);
 		}
 	}
 

@@ -38,8 +38,8 @@ public class EnemyManager extends ObjectManager {
 	static {
 		enemyDifficultyMap = new TreeMap<Integer, List<Class<? extends EnemyEntity>>>();
 		ArrayList<Class<? extends EnemyEntity>> zeroDiff = new ArrayList<Class<? extends EnemyEntity>>();
+		zeroDiff.add(Meteorite.class); // TODO TO DELETE
 		zeroDiff.add(Caterpillar.class);
-		zeroDiff.add(Meteorite.class);
 		enemyDifficultyMap.put(0, zeroDiff);
 		ArrayList<Class<? extends EnemyEntity>> oneDiff = new ArrayList<Class<? extends EnemyEntity>>();
 		oneDiff.add(FredCircularSaw.class);
