@@ -32,11 +32,11 @@ public class Meteore extends EnemyEntity {
 		// fire
 		fireAnim = new AnimatedSprite(
 				BitmapUtil.createBitmap(R.drawable.fire), 0, 0, 6, 1);
-		fireAnim.addAnimation("fire", new int[] { 0, 1, 2, 3, 4, 5 }, 10);
+		fireAnim.addAnimation("fire", new int[] { 0, 1, 2, 3, 4, 5 }, 15);
 		
 		// death
 		deathAnim = new AnimatedSprite(
-				BitmapUtil.createBitmap(R.drawable.dead_anim_small), 0, 0, 7, 1);
+				BitmapUtil.createBitmap(R.drawable.dead_anim_black), 0, 0, 7, 1);
 		dying = false;
 		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 
@@ -122,7 +122,7 @@ public class Meteore extends EnemyEntity {
 	@Override
 	public void draw(Canvas canvas) {
 		if (dying) {
-			deathAnim.draw(canvas, direction);
+			deathAnim.draw(canvas, DirectionConstants.RIGHT);
 		} else {
 			fireAnim.draw(canvas, direction);
 			super.draw(canvas);
