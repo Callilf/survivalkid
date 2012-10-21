@@ -1,16 +1,13 @@
 package com.survivalkid.game.util;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
-import com.survivalkid.game.singleton.GameContext;
-
-public class HandlerUtil {
+public final class HandlerUtil {
 	
 	private HandlerUtil() {}
 	
-	private static final Context CONTEXT = GameContext.getSingleton().getContext();
+	//private static final Context CONTEXT = GameContext.getSingleton().getContext();
 	
 	public enum HandlerEnum { HANDLER_FIN }
 	

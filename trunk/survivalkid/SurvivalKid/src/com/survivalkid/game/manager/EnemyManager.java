@@ -21,7 +21,10 @@ public class EnemyManager extends ObjectManager {
 
 	private List<EnemyEntity> enemyList;
 	private List<EnemyEntity> deadEnemies;
-	private long lastEnemy;
+	
+	/* Save the last time a enemy was created */
+	//private long lastEnemy; TODO to use or to deleted
+	
 	/**
 	 * Counter used to see when to generate.
 	 */

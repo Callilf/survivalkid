@@ -1,9 +1,5 @@
 package com.survivalkid.test;
 
-import com.survivalkid.R;
-import com.survivalkid.R.drawable;
-import com.survivalkid.game.thread.MainThread;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -13,6 +9,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.survivalkid.R;
 
 public class TestGamePanel extends SurfaceView implements
 		SurfaceHolder.Callback {

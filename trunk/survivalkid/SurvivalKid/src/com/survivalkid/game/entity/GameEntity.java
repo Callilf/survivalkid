@@ -60,7 +60,7 @@ public abstract class GameEntity {
 	protected boolean dead;
 
 	// for test
-	private int cptTest = 0;
+	// private int cptTest = 0;
 	protected boolean overlaping = false;
 
 	// ----------------------------------------------------

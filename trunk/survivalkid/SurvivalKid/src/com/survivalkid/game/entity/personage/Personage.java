@@ -92,6 +92,7 @@ public class Personage extends GameEntity {
 
 		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 17);
 
+		Log.d(TAG, "Personage " + persoType + " created");
 	}
 
 	@Override
