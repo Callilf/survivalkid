@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Rect;
+import android.util.Log;
 
 import com.survivalkid.game.core.Constants.DirectionConstants;
 
@@ -104,6 +105,7 @@ public class AnimatedSprite {
 	 */
 	public void update(long gameTime, int direction) {
 		if (bitmap == null || sourceRect == null) {
+			Log.d(TAG, "Update on a sprite with a bitmap or a sourceRect null");
 			return;
 		}
 

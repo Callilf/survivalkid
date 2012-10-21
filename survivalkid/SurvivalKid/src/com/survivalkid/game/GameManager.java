@@ -1,6 +1,7 @@
 package com.survivalkid.game;
 
 import static com.survivalkid.game.manager.CharacterManager.OWN_PERSO;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -30,6 +31,7 @@ import com.survivalkid.game.util.HandlerUtil;
 import com.survivalkid.game.util.HandlerUtil.HandlerEnum;
 import com.survivalkid.game.util.MoveUtil;
 
+@SuppressLint("HandlerLeak") // TODO DELETE WHEN THE HANDLER WOULDN'T BE USE ANYMORE
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private static final String TAG = GameManager.class.getSimpleName();
@@ -68,6 +70,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		create();
 		
 		HandlerUtil.handlerFin = new Handler() {
+				@Override
 				public void handleMessage(Message msg) {
 				     Toast.makeText(getContext(), "Survival time : " + msg.arg1/1000f + " seconds", Toast.LENGTH_LONG).show();
 				}
@@ -204,7 +207,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		return true;
 	}
 
-	/** Show an event in the LogCat view, for debugging */
+	/** Show an event in the LogCat view, for debugging
 	private void dumpEvent(MotionEvent event) {
 		String names[] = { "DOWN", "UP", "MOVE", "CANCEL", "OUTSIDE", "POINTER_DOWN", "POINTER_UP", "7?", "8?", "9?" };
 		StringBuilder sb = new StringBuilder();
@@ -226,7 +229,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		sb.append("]").append(characterManager.getCharacterList(0).getMoveManager().lastEnabledLeft);
 		Log.d(TAG, sb.toString());
-	}
+	} */
 
 	
 	

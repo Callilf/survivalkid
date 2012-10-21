@@ -6,11 +6,11 @@ import java.util.List;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.Log;
 
 import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
-import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
@@ -129,7 +129,7 @@ public class FredCircularSaw extends EnemyEntity {
 		}
 
 		// DRAW THE LINE
-		if (state == STATE_LINE && draw && gameTime > lastDrawnTime + drawPointPeriod) {
+		else if (state == STATE_LINE && draw && gameTime > lastDrawnTime + drawPointPeriod) {
 			Point newPoint = null;
 			if (lastNumber > NB_POINTS_MIN) {
 				int randomInt = (int) (Math.random() * 100);
@@ -197,6 +197,9 @@ public class FredCircularSaw extends EnemyEntity {
 
 			// Log.d(TAG, "Draw point at x=" + lastDrawnPoint.x + ", y=" +
 			// lastDrawnPoint.y);
+		}
+		else {
+			Log.d(TAG, "State incorrect : " + state);
 		}
 	}
 

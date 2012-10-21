@@ -6,7 +6,7 @@ import android.graphics.Rect;
 
 public class Yugo {
 
-		private static final String TAG = Yugo.class.getSimpleName();
+		//private static final String TAG = Yugo.class.getSimpleName();
 
 		private Bitmap bitmap;		// the animation sequence
 		private Rect sourceRect;	// the rectangle to be drawn from the animation bitmap

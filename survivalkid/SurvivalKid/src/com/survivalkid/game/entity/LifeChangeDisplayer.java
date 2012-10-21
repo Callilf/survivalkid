@@ -11,7 +11,6 @@ import android.graphics.Typeface;
 public class LifeChangeDisplayer {
 
 	private Paint paint;
-	private Paint recoverPaint;
 	private int damageTaken;
 	private int displayDamagesDuration = 1000;
 	private long displayDamagesBeginTime;

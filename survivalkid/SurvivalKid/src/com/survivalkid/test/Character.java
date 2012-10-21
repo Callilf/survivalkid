@@ -2,7 +2,6 @@ package com.survivalkid.test;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.view.MotionEvent;
 
 public class Character {
 
