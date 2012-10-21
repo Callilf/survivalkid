@@ -14,7 +14,7 @@ import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
-import com.survivalkid.game.entity.enemy.impl.Meteorite;
+import com.survivalkid.game.entity.enemy.impl.Meteore;
 
 public class EnemyManager extends ObjectManager {
 	private static final String TAG = EnemyManager.class.getSimpleName();
@@ -38,12 +38,12 @@ public class EnemyManager extends ObjectManager {
 	static {
 		enemyDifficultyMap = new TreeMap<Integer, List<Class<? extends EnemyEntity>>>();
 		ArrayList<Class<? extends EnemyEntity>> zeroDiff = new ArrayList<Class<? extends EnemyEntity>>();
-		zeroDiff.add(Meteorite.class); // TODO TO DELETE
+		zeroDiff.add(Meteore.class); // TODO TO DELETE
 		zeroDiff.add(Caterpillar.class);
 		enemyDifficultyMap.put(0, zeroDiff);
 		ArrayList<Class<? extends EnemyEntity>> oneDiff = new ArrayList<Class<? extends EnemyEntity>>();
 		oneDiff.add(FredCircularSaw.class);
-		oneDiff.add(Meteorite.class);
+		oneDiff.add(Meteore.class);
 		enemyDifficultyMap.put(1, oneDiff);
 	}
 
@@ -84,7 +84,7 @@ public class EnemyManager extends ObjectManager {
 		if(generationFrequency != 500 && gameTime - difficultyIncreasingCounter >= difficultyIncreasingPeriod) {
 			difficultyIncreasingCounter = gameTime;
 			generationFrequency -= 20;
-			Log.i(TAG, "Fréquence de génération : " + generationFrequency);
+			Log.i(TAG, "Generation frequency : " + generationFrequency);
 			if(generationFrequency <= 500) {
 				generationFrequency = 500;
 			}

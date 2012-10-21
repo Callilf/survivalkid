@@ -13,14 +13,14 @@ import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
-public class Meteorite extends EnemyEntity {
+public class Meteore extends EnemyEntity {
 
 	private AnimatedSprite deathAnim;
 	private boolean dying;
 	private int fall = 1;
 	
-	public Meteorite() {
-		super("Meteorite", BitmapUtil.createBitmap(R.drawable.meteor), 0, 0, 1, 1, 10, 1);
+	public Meteore() {
+		super("Meteore", BitmapUtil.createBitmap(R.drawable.meteor), 0, 0, 1, 1, 10, 1);
 	}
 	
 	public void init() {

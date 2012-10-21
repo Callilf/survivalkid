@@ -122,7 +122,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		// Explicit call of the garbage collector before restarting the game
 		System.gc();
 		
-		thread.setPause(false);
+		thread.setEndGame(false);
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private void endGame() {
 		GameContext s = GameContext.getSingleton();
 		long timePassed = System.currentTimeMillis()-s.initialTime;
-		thread.setPause(true);
+		thread.setEndGame(true);
 		HandlerUtil.sendMessage((int)timePassed, HandlerEnum.HANDLER_FIN);
 		Log.i(TAG, "Time passed : " + timePassed/1000f + ", Score : " + s.score+", end difficulty : " + s.currentDifficulty);
 	}
