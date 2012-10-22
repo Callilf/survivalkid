@@ -5,11 +5,11 @@ import android.graphics.Point;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Meteore extends EnemyEntity {
@@ -20,7 +20,7 @@ public class Meteore extends EnemyEntity {
 	private int fall = 1;
 	
 	public Meteore() {
-		super("Meteore", BitmapUtil.METEORE, 0, 0, 1, 1, 10, 1);
+		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
 	}
 	
 	private void init() {
@@ -29,15 +29,11 @@ public class Meteore extends EnemyEntity {
 		affectedByFloor = false;
 
 		// fire
-		fireAnim = new AnimatedSprite(
-				BitmapUtil.FIRE_TRAIL, 0, 0, 6, 1);
-		fireAnim.addAnimation("fire", new int[] { 0, 1, 2, 3, 4, 5 }, 15);
+		fireAnim = new AnimatedSprite(SpriteEnum.FIRE_TRAIL, 0, 0);
 		
 		// death
-		deathAnim = new AnimatedSprite(
-				BitmapUtil.SMOKE_BROWN_LARGE, 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_BROWN_LARGE, 0, 0);
 		dying = false;
-		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 
 		redefineHitBox((sprite.getWidth() * 18) / 100,
 				(sprite.getHeight() * 18) / 100,

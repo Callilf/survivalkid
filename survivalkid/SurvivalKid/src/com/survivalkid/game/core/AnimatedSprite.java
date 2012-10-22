@@ -1,15 +1,14 @@
 package com.survivalkid.game.core;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.util.Log;
 
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.enums.SpriteEnum;
 
 public class AnimatedSprite {
 
@@ -56,37 +55,27 @@ public class AnimatedSprite {
 	private int currentBlinkFrame;
 	private boolean visible;
 
+
 	/**
-	 * Constructor.
-	 * 
-	 * @param bitmap
-	 *            the bitmap sprite
-	 * @param x
-	 *            the x position
-	 * @param y
-	 *            the y position
-	 * @param nbColum
-	 *            the number of column in the spritesheet (the bitmap)
-	 * @param nbRows
-	 *            the number of rows in the spritesheet
+	 * Constructor
+	 * @param spriteEnum the spriteEnum
+	 * @param x the position X
+	 * @param y the position Y
 	 */
-	public AnimatedSprite(Bitmap bitmap, int x, int y, int nbColum, int nbRows) {
-		this.bitmap = bitmap;
+	public AnimatedSprite(SpriteEnum spriteEnum, int x, int y) {
 		this.x = x;
 		this.y = y;
+		
+		this.bitmap = spriteEnum.getBitmap();
+		this.flippedBitmap = spriteEnum.getFlippedBitmap();
 		currentFrame = 0;
-		framePerRow = nbColum;
-		width = bitmap.getWidth() / nbColum;
-		height = bitmap.getHeight() / nbRows;
+		framePerRow = spriteEnum.getNbColumn();
+		width = bitmap.getWidth() / spriteEnum.getNbColumn();
+		height = bitmap.getHeight() / spriteEnum.getNbRows();
 		sourceRect = new Rect(0, 0, width, height);
 		frameTicker = 0l;
 
-		animations = new HashMap<String, Animation>();
-
-		// Create the flipped image
-		Matrix matrix = new Matrix();
-		matrix.preScale(-1, 1);
-		flippedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		animations = spriteEnum.getAnimations();
 
 		recovery = false;
 		currentBlinkFrame = 0;

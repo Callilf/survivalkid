@@ -10,11 +10,11 @@ import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class FredCircularSaw extends EnemyEntity {
@@ -57,7 +57,7 @@ public class FredCircularSaw extends EnemyEntity {
 
 	/** Default constructor. */
 	public FredCircularSaw() {
-		super("FredCircularSaw", BitmapUtil.CIRCULAR_SAW, -20, -20, 10, 1, 20, 1);
+		super("FredCircularSaw",SpriteEnum.CIRCULAR_SAW, -20, -20, 20, 1);
 	}
 
 	/** Initialize the enemy. */
@@ -78,13 +78,11 @@ public class FredCircularSaw extends EnemyEntity {
 		affectedByWalls = false;
 		affectedByCeiling = false;
 
-		deathAnim = new AnimatedSprite(BitmapUtil.SMOKE_WHITE_SMALL, 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_SMALL, 0, 0);
 		dying = false;
-		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 
 		redefineHitBox((sprite.getWidth() * 12) / 100, (sprite.getHeight() * 12) / 100, (sprite.getWidth() * 80) / 100,
 				(sprite.getHeight() * 80) / 100);
-		addAnimation("rotate", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 20);
 		play("rotate", true, true);
 
 		paint = new Paint();
