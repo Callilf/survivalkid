@@ -1,8 +1,8 @@
 package com.survivalkid.game.util;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import android.util.Log;
 
@@ -59,16 +59,15 @@ public final class TimerUtil {
 		public String toString() {
 			float moyenne = ((duration*10000)/(long)nbTime)/10000f;
 			StringBuilder sb = new StringBuilder();
-			sb.append("nbCall=").append(nbTime).append(", tot=").append(duration)
-				.append("ms, moy=").append(moyenne).append("ms, min=")
-				.append(minDuration).append("ms, max=").append(maxDuration).append("ms");
+			sb.append("avg=").append(moyenne).append("ms, tot=").append(duration).append("ms (for ").append(nbTime)
+				.append(" calls), min=").append(minDuration).append("ms, max=").append(maxDuration).append("ms");
 			return sb.toString();
 		}
 	}
 	
 	private TimerUtil() {}
 	
-	private static Map<String, LocalTimer> mapTime = new HashMap<String, LocalTimer>();
+	private static Map<String, LocalTimer> mapTime = new TreeMap<String, LocalTimer>();
 	
 	/**
 	 * Call to initialize the time
@@ -106,6 +105,10 @@ public final class TimerUtil {
 			Log.i(TAG, "Timer - " + entry.getKey() + " > " + entry.getValue());
 		}
 		Log.i(TAG, "END LOG ALL DURATION");
+	}
+	
+	public static void reset() {
+		mapTime.clear();
 	}
 	
 }
