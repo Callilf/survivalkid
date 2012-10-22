@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.CollisionUtil;
@@ -78,11 +79,10 @@ public abstract class GameEntity {
 	 * @param nbColum number of column in the sprite
 	 * @param nbRows number of line in the sprite
 	 */
-	public GameEntity(String _name, Bitmap bitmap, int x, int y, int nbColum,
-			int nbRows) {
+	public GameEntity(String _name, SpriteEnum spriteEnum, int x, int y) {
 		id = lastId++;
 		name = _name;
-		sprite = new AnimatedSprite(bitmap, x, y, nbColum, nbRows);
+		sprite = new AnimatedSprite(spriteEnum, x, y);
 		offsets = new Rect(0, 0, sprite.getWidth(), sprite.getHeight());
 		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
 				+ offsets.top, sprite.getX() + offsets.left + offsets.right,

@@ -5,11 +5,11 @@ import android.graphics.Point;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Caterpillar extends EnemyEntity {
@@ -19,7 +19,7 @@ public class Caterpillar extends EnemyEntity {
 
 	/** Default constructor. */
 	public Caterpillar() {
-		super("Caterpillar", BitmapUtil.CATERPILLAR, 0, 0, 4, 1, 5, 0);
+		super("Caterpillar", SpriteEnum.CATERPILLAR, 0, 0, 5, 0);
 	};
 
 	/** Initialize the enemy. */
@@ -27,13 +27,11 @@ public class Caterpillar extends EnemyEntity {
 		gravity = 2;
 		affectedByWalls = false;
 
-		deathAnim = new AnimatedSprite(BitmapUtil.SMOKE_WHITE_SMALL, 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_SMALL, 0, 0);
 		dying = false;
-		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25);
 
 		redefineHitBox((sprite.getWidth() * 18) / 100, (sprite.getHeight() * 65) / 100, (sprite.getWidth() * 74) / 100,
 				(sprite.getHeight() * 35) / 100);
-		addAnimation("crawl", new int[] { 0, 1, 2, 3, 2, 1 }, 13);
 		play("crawl", true, true);
 	}
 

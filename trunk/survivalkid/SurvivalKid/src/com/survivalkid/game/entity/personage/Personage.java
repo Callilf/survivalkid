@@ -9,6 +9,7 @@ import android.util.Log;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
+import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life;
@@ -54,13 +55,13 @@ public class Personage extends GameEntity {
 	 * @param nbRows
 	 *            the number of rows in the spritesheet
 	 */
-	public Personage(int perso, int spriteSheetId, int x, int y, int nbColum, int nbRows) {
-		super("CharacterA", BitmapUtil.createBitmap(spriteSheetId), x, y, nbColum, nbRows);
+	public Personage(int perso, SpriteEnum spriteEnum, int x, int y) {
+		super("CharacterA", spriteEnum, x, y);
 		gravity = 2;
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
 		life = new Life(100);
-		deathAnim = new AnimatedSprite(BitmapUtil.SMOKE_WHITE_LARGE, 0, 0, 7, 1);
+		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 		dying = false;
 		
 		//state attributes
@@ -72,24 +73,14 @@ public class Personage extends GameEntity {
 		
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
-			addAnimation(PersonageConstants.ANIM_STAND, new int[] { 0 }, 20);
-			addAnimation(PersonageConstants.ANIM_RUN, new int[] { 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14 }, 20);
-			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[] { 19, 18, 17 }, 13);
-			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[] { 19 }, 13);
 			redefineHitBox((sprite.getWidth() * 30) / 100, (sprite.getHeight() * 10) / 100,
 					(sprite.getWidth() * 40) / 100, (sprite.getHeight() * 84) / 100);
 			break;
 		case PersonageConstants.PERSO_YUNA:
-			addAnimation(PersonageConstants.ANIM_STAND, new int[] { 0 }, 20);
-			addAnimation(PersonageConstants.ANIM_RUN, new int[] { 1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14 }, 20);
-			addAnimation(PersonageConstants.ANIM_JUMPUP, new int[] { 20, 21, 22 }, 13);
-			addAnimation(PersonageConstants.ANIM_JUMPDOWN, new int[] { 17, 18, 19 }, 13);
 			redefineHitBox((sprite.getWidth() * 35) / 100, (sprite.getHeight() * 10) / 100,
 					(sprite.getWidth() * 40) / 100, (sprite.getHeight() * 84) / 100);
 			break;
 		}
-
-		deathAnim.addAnimation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 17);
 
 		Log.d(TAG, "Personage " + persoType + " created");
 	}
