@@ -1,6 +1,5 @@
 package com.survivalkid.game.entity;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -73,11 +72,9 @@ public abstract class GameEntity {
 	 * Constructor called by parents class
 	 * 
 	 * @param _name name of the entity
-	 * @param bitmap image of the entity
+	 * @param SpriteEnum the sprite of the entity
 	 * @param x position x initial
 	 * @param y position y initial
-	 * @param nbColum number of column in the sprite
-	 * @param nbRows number of line in the sprite
 	 */
 	public GameEntity(String _name, SpriteEnum spriteEnum, int x, int y) {
 		id = lastId++;
@@ -371,7 +368,7 @@ public abstract class GameEntity {
 			update(gameTime);
 			return;
 		}
-		String object = name+"-u";
+		String object = "u-"+name;
 		TimerUtil.start(object);
 		update(gameTime);
 		TimerUtil.end(object);
@@ -382,7 +379,7 @@ public abstract class GameEntity {
 			draw(canvas);
 			return;
 		}
-		String object = name+"-d";
+		String object = "d-"+name;
 		TimerUtil.start(object);
 		draw(canvas);
 		TimerUtil.end(object);		

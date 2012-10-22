@@ -16,7 +16,6 @@ import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.LifeChangeDisplayer;
 import com.survivalkid.game.move.MovePersoManager;
-import com.survivalkid.game.util.BitmapUtil;
 
 public class Personage extends GameEntity {
 	private static final String TAG = Personage.class.getSimpleName();
