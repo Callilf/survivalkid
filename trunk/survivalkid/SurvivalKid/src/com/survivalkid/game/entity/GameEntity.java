@@ -294,6 +294,8 @@ public abstract class GameEntity {
 	// ---- private functions
 	// --------------------------------------------
 	private void addY(int _dy) {
+		_dy = MoveUtil.normY(_dy);
+		
 		isOnFloor = false;
 		isJumpingUp = false;
 		isJumpingDown = false;
@@ -325,6 +327,8 @@ public abstract class GameEntity {
 	 * @param _dx
 	 */
 	private void addX(int _dx) {
+		_dx = MoveUtil.normX(_dx);
+		
 		isMovingHorizontally = false;
 		// calculate the actual translation
 		int newX = hitBox.left + _dx;

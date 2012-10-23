@@ -1,5 +1,6 @@
 package com.survivalkid.game.util;
 
+import static java.lang.Math.round;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -29,12 +30,22 @@ public final class MoveUtil {
 	public static int SCREEN_HEIGHT;
 	public static int GROUND;
 	
+	public static float RATIO_WIDTH;
+	public static float RATIO_HEIGHT;
+	
+	public static final int NORMALIZE_WIDTH = 800;
+	public static final int NORMALIZE_HEIGHT = 480;
+	
 	static {
 		DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
 		SCREEN_WIDTH = metrics.widthPixels;
 		SCREEN_HEIGHT = metrics.heightPixels;
-		GROUND = SCREEN_HEIGHT - 40;
+		
+		RATIO_WIDTH = SCREEN_WIDTH/(float)NORMALIZE_WIDTH;
+		RATIO_HEIGHT = SCREEN_HEIGHT/(float)NORMALIZE_HEIGHT;
+		
+		GROUND = (int) (SCREEN_HEIGHT - 40*RATIO_HEIGHT);
 		
 		/* new API not used
 		Point size = new Point();
@@ -58,6 +69,13 @@ public final class MoveUtil {
 		btn_left.setPosition(LEFT_X, SCREEN_HEIGHT - btn_left.getHeight());
 		btn_right.setPosition(LEFT_X + btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
 		btn_up.setPosition(SCREEN_WIDTH - btn_up.getWidth() - btn_up.getWidth()/2, SCREEN_HEIGHT - btn_up.getHeight());		
+	}
+	
+	public static int normX(int x) {
+		return round(x*RATIO_WIDTH);
+	}
+	public static int normY(int y) {
+		return round(y*RATIO_HEIGHT);
 	}
 	
 }

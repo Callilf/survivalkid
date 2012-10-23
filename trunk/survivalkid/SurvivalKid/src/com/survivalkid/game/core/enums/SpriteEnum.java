@@ -10,6 +10,7 @@ import com.survivalkid.R;
 import com.survivalkid.game.core.Animation;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.MoveUtil;
 
 public enum SpriteEnum {
 	YUGO(R.drawable.yugo, 6, 4, new Animation(PersonageConstants.ANIM_STAND, new int[] { 0 }, 20), 
@@ -58,6 +59,12 @@ public enum SpriteEnum {
 	 */
 	SpriteEnum(int _id, int _nbColumn, int _nbRows, Animation... _anims) {
 		bitmap = BitmapUtil.createBitmap(_id);
+		
+		if (MoveUtil.RATIO_WIDTH != 1 || MoveUtil.RATIO_HEIGHT != 1) {
+			Matrix matrixRatio = new Matrix();
+			matrixRatio.preScale(MoveUtil.RATIO_WIDTH, MoveUtil.RATIO_HEIGHT);
+			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrixRatio, true);
+		}
 		
 		// Create the flipped image
 		Matrix matrix = new Matrix();
