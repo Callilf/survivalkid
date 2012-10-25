@@ -177,12 +177,12 @@ public class AnimatedSprite {
 
 			if (recovery) {
 				//In recovery state after a hit
+				currentBlinkFrame++;
 				if (currentBlinkFrame % blinkPeriod == 0) {
 					visible = !visible;
 					currentBlinkFrame = 0;
-				} else {
-					currentBlinkFrame++;
 				}
+				Log.d("VISIBLE", currentBlinkFrame+"-"+visible);
 				if (visible) {
 					canvas.drawBitmap(bitmapToUse, sourceRect, destRect, null);
 				}
