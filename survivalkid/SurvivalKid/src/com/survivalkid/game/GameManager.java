@@ -4,6 +4,7 @@ import static com.survivalkid.game.manager.CharacterManager.OWN_PERSO;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -55,6 +56,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		GameContext.getSingleton().setContext(context);
 		GameContext.getSingleton().initSingleton();
 
+		// initialize multitouch
+		MoveUtil.HAS_MULTITOUCH = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
+		
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
