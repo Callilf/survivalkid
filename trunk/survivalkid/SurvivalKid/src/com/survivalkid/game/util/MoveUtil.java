@@ -26,6 +26,8 @@ public final class MoveUtil {
 	public static final int ACTION_POINTER_INDEX_SHIFT = (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1)? 
 			MotionEvent.ACTION_POINTER_INDEX_SHIFT:MotionEvent.ACTION_POINTER_ID_SHIFT;
 	
+	public static boolean HAS_MULTITOUCH;
+	
 	public static int SCREEN_WIDTH;
 	public static int SCREEN_HEIGHT;
 	public static int GROUND;
@@ -66,9 +68,25 @@ public final class MoveUtil {
 		btn_right = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_right), BitmapFactory.decodeResource(resources, R.drawable.arrow_right_pressed));
 		btn_up = new ActionButton(BitmapFactory.decodeResource(resources, R.drawable.arrow_up), BitmapFactory.decodeResource(resources, R.drawable.arrow_up_pressed));
 		int LEFT_X = (int) (SCREEN_WIDTH*0.03);
-		btn_left.setPosition(LEFT_X, SCREEN_HEIGHT - btn_left.getHeight());
-		btn_right.setPosition(LEFT_X + btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
-		btn_up.setPosition(SCREEN_WIDTH - btn_up.getWidth() - btn_up.getWidth()/2, SCREEN_HEIGHT - btn_up.getHeight());		
+		if (HAS_MULTITOUCH) {
+			btn_left.setPosition(LEFT_X, SCREEN_HEIGHT - btn_left.getHeight());
+			btn_right.setPosition(LEFT_X + btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
+			btn_up.setPosition(SCREEN_WIDTH - btn_up.getWidth() - btn_up.getWidth()/2, SCREEN_HEIGHT - btn_up.getHeight());		
+		}
+		else {
+			// not multitouch, the button are superposed so the player can jump and move un the same time
+			int heightHo = btn_left.getHeight();
+			int widthUp = btn_up.getWidth();
+			int widthHo = btn_left.getWidth();
+			btn_left.setMarginVertical(heightHo);
+			btn_right.setMarginVertical(heightHo);
+			btn_up.setMarginHorizontal(widthUp + btn_left.getMarginHorizontal());
+			btn_up.setMarginVertical(heightHo);
+			btn_left.setPosition(LEFT_X, SCREEN_HEIGHT - heightHo);
+			btn_right.setPosition(LEFT_X + widthHo*2, SCREEN_HEIGHT - heightHo);
+			btn_up.setPosition(LEFT_X + widthHo + btn_left.getMarginHorizontal() - widthUp/2,
+					SCREEN_HEIGHT - 2*heightHo - btn_up.getHeight());
+		}
 	}
 	
 	public static int normX(int x) {

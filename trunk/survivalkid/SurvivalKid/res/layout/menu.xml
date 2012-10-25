@@ -7,8 +7,9 @@
 	        android:orderInCategory="100" android:showAsAction="never" --> 
 	 
 	     <menu android:id="@+id/m_sousmenu">
-			 <item android:id="@+id/m_hitbox"
-			       android:title="@string/hitbox"   />	
+
+			<item android:id="@+id/m_timer"
+			      android:title="@string/timer"  />
 		
 			 <item android:id="@+id/m_switchchar" 
 		     	android:title="@string/switchar"/>
@@ -16,9 +17,9 @@
 	     </menu>
 	</item>
 	
-	<item android:id="@+id/m_timer"
-	      android:title="@string/timer"  />
-	
+	<item android:id="@+id/m_hitbox"
+	      android:title="@string/hitbox"   />	
+			       	
 	<item android:id="@+id/m_restart"
 	      android:title="@string/restart"  />	
 		 

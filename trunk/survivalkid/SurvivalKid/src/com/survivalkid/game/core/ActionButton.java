@@ -22,7 +22,8 @@ public class ActionButton {
 	private int y;
 	private boolean isPressed = false;
 	
-	private static final int MARGIN = 24;
+	private int marginHorizontal = 25;
+	private int marginVertical = 25;
 	
 	
 	/**
@@ -59,9 +60,9 @@ public class ActionButton {
 	public void setPosition(int _x, int _y) {
 		x = _x;
 		y = _y;
-		hitBox = new Rect(max(0,x - MARGIN), max(0,y - MARGIN), 
-				min(MoveUtil.SCREEN_WIDTH, x + sprite.getWidth() + MARGIN), 
-				min(MoveUtil.SCREEN_HEIGHT, y + sprite.getHeight() + MARGIN));
+		hitBox = new Rect(max(0,x - marginHorizontal), max(0,y - marginVertical), 
+				min(MoveUtil.SCREEN_WIDTH, x + sprite.getWidth() + marginHorizontal), 
+				min(MoveUtil.SCREEN_HEIGHT, y + sprite.getHeight() + marginVertical));
 		// log the initial position of the hitbox
 		Log.d(TAG, "Hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
 	}
@@ -120,6 +121,14 @@ public class ActionButton {
 		return sprite.getHeight();
 	}
 	
+	public int getMarginHorizontal() {
+		return marginHorizontal;
+	}
+	
+	public int getMarginVertical() {
+		return marginVertical;
+	}
+	
 	public boolean isOnButton(int _x, int _y) {
 		//Log.d("TESTB", "left:"+hitBox.left+",right:"+hitBox.right+",top:"+hitBox.top+",bottom:"+hitBox.bottom);
 		return hitBox.contains(_x, _y);
@@ -139,6 +148,14 @@ public class ActionButton {
 	 */
 	public void setPressed(boolean isPressed) {
 		this.isPressed = isPressed;
+	}
+	
+	public void setMarginHorizontal(int marginHorizontal) {
+		this.marginHorizontal = marginHorizontal;
+	}
+	
+	public void setMarginVertical(int marginVertical) {
+		this.marginVertical = marginVertical;
 	}
 	
 	
