@@ -182,7 +182,6 @@ public class AnimatedSprite {
 					visible = !visible;
 					currentBlinkFrame = 0;
 				}
-				Log.d("VISIBLE", currentBlinkFrame+"-"+visible);
 				if (visible) {
 					canvas.drawBitmap(bitmapToUse, sourceRect, destRect, null);
 				}
