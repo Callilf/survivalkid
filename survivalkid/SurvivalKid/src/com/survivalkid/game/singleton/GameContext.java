@@ -11,7 +11,10 @@ public class GameContext {
 	/** the context */
 	Context context;	
 
-	/** The time when the game started. */
+	/** duration of the game */
+	public long gameDuration;
+	
+	/** The time when the game started. */ // TODO : use gameDuration instead of initialTime for all traitment
 	public long initialTime;
 	/** The current on-screen difficulty. */
 	public int currentDifficulty;
@@ -32,6 +35,7 @@ public class GameContext {
 	public void initSingleton() {
 		instance.initialTime=System.currentTimeMillis();
 		currentDifficulty = 0;
+		gameDuration = 0;
 		score = 0;
 	}
 

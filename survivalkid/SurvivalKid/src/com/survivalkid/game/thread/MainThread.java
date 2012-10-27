@@ -5,12 +5,16 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.TimerUtil;
 
 public class MainThread extends Thread {
 	/** Tag for logs. */
 	private static final String TAG = MainThread.class.getSimpleName();
 
+	/** Duration of a frame maximum in milliseconds */
+	private static final int FRAME_DURATION = 33;
+	
 	// flag to hold game state
 	private boolean running;
 	private boolean pause = false;
@@ -60,14 +64,26 @@ public class MainThread extends Thread {
 				while(!pause && running) {
 					// try locking the canvas for exclusive pixel editing on the surface
 					try {
+						long time = System.currentTimeMillis();
 						canvas = this.surfaceHolder.lockCanvas();
 						synchronized (surfaceHolder) {
 							launchUpdateAndDrawTimed();
 						}
+						// normalization of the duration of a frame
+						long timePassed = System.currentTimeMillis() - time;
+						if (timePassed < FRAME_DURATION) {
+							synchronized (this) {
+								wait(FRAME_DURATION-timePassed);
+							}
+						}
+						GameContext.getSingleton().gameDuration += FRAME_DURATION;
 					}
 					catch (IllegalMonitorStateException e) {
 						Log.d(TAG, e.getMessage());
 						throw e;
+					} catch (InterruptedException e) {
+						// for the wait
+						Log.d(TAG, e.getMessage());
 					} finally {
 						// in case of an exception the surface is not left in
 						// an inconsistent state

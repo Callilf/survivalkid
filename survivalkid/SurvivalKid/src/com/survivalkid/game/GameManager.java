@@ -134,7 +134,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void update() {
 		long gameTime = System.currentTimeMillis();
-		chrono.setTime(gameTime - GameContext.getSingleton().initialTime);
+		chrono.setTime(GameContext.getSingleton().gameDuration);
 
 		// Update the gameEntities
 		enemyManager.update(gameTime);
@@ -169,7 +169,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	private void endGame() {
 		GameContext s = GameContext.getSingleton();
-		long timePassed = System.currentTimeMillis()-s.initialTime;
+		long timePassed = s.gameDuration;
 		thread.setEndGame(true);
 		HandlerUtil.sendMessage((int)timePassed, HandlerEnum.HANDLER_FIN);
 		Log.i(TAG, "Time passed : " + timePassed/1000f + ", Score : " + s.score+", end difficulty : " + s.currentDifficulty);
