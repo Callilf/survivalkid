@@ -19,7 +19,7 @@ import android.util.Log;
  */
 public final class TimerUtil {
 
-	public static final boolean TIMER_ACTIVE = true;
+	public static final boolean TIMER_ACTIVE = false;
 	
 	private static final String TAG = TimerUtil.class.getSimpleName();
 	
