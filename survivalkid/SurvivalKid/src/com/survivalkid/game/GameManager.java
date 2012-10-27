@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.widget.Toast;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
@@ -44,6 +45,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private CharacterManager characterManager;
 	private EnemyManager enemyManager;
 	private ItemManager itemManager;
+	private ChronoDisplayer chrono;
 
 	private Bitmap ground;
 
@@ -92,6 +94,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		characterManager = new CharacterManager();
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
+		chrono = new ChronoDisplayer(10, 20);
+		
 		
 		// TEST ------------------
 		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, SpriteEnum.YUGO, 300, 250);
@@ -101,6 +105,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 //		characterManager.addCharacter(yuna);
 		// END TESTS --------------
 
+		
 	}
 	
 	/**
@@ -129,6 +134,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void update() {
 		long gameTime = System.currentTimeMillis();
+		chrono.setTime(gameTime - GameContext.getSingleton().initialTime);
 
 		// Update the gameEntities
 		enemyManager.update(gameTime);
@@ -177,6 +183,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			canvas.drawColor(Color.BLUE);
 			canvas.drawBitmap(ground, 0, 0, null);
 
+			chrono.draw(canvas);
 			enemyManager.draw(canvas);
 			itemManager.draw(canvas);
 			characterManager.draw(canvas);
