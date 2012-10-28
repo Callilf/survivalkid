@@ -14,10 +14,12 @@ import com.survivalkid.game.util.MoveUtil;
 
 public class Meteore extends EnemyEntity {
 
+	private int fallInit = 1;
+	private int fallNext = 8;
+	
 	private AnimatedSprite deathAnim;
 	private AnimatedSprite fireAnim;
 	private boolean dying;
-	private int fall = 1;
 	
 	public Meteore() {
 		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
@@ -50,6 +52,14 @@ public class Meteore extends EnemyEntity {
 		sprite.setY(1-sprite.getHeight());
 		direction = (random <= MoveUtil.SCREEN_WIDTH/2)? DirectionConstants.LEFT : DirectionConstants.RIGHT;
 
+		// init speed
+		setSpeedY(fallInit);
+		if (direction == DirectionConstants.LEFT) {
+			setSpeedX(fallInit/(float)fallNext);
+		} else {
+			setSpeedX(-fallInit/(float)fallNext);
+		}
+		
 		init();
 	}
 
@@ -92,14 +102,7 @@ public class Meteore extends EnemyEntity {
 
 			return;
 		}
-		
-		if (direction == DirectionConstants.LEFT) {
-			sprite.offset(1, fall);
-		} else {
-			sprite.offset(-1, fall);
-		}
 
-		super.update(gameTime);
 		setPositionFire();
 		fireAnim.update(gameTime, direction);
 
@@ -110,8 +113,10 @@ public class Meteore extends EnemyEntity {
 			die();
 		}
 		else if (sprite.getY() + sprite.getHeight()*2/3 > 0) {
-			fall = 8;
+			setSpeedY(fallNext);		
 		}
+		
+		super.update(gameTime);
 	}
 	
 	@Override
