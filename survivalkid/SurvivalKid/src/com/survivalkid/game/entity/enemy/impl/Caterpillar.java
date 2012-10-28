@@ -45,17 +45,11 @@ public class Caterpillar extends EnemyEntity {
 			return;
 		}
 
-		super.update(gameTime);
-
-		if (direction == DirectionConstants.LEFT) {
-			sprite.offset(-2, 0);
-		} else {
-			sprite.offset(2, 0);
-		}
-
 		if (sprite.getX() < -20 || sprite.getX() > MoveUtil.SCREEN_WIDTH + sprite.getWidth()) {
 			dead = true;
 		}
+		
+		super.update(gameTime);
 	}
 
 	@Override
@@ -110,6 +104,14 @@ public class Caterpillar extends EnemyEntity {
 			sprite.setX(MoveUtil.SCREEN_WIDTH);
 			sprite.setY(-20);
 			direction = DirectionConstants.LEFT;
+		}
+		
+		// init speed
+		setSpeedY(0);
+		if (direction == DirectionConstants.LEFT) {
+			setSpeedX(-2);
+		} else {
+			setSpeedX(2);
 		}
 
 		init();

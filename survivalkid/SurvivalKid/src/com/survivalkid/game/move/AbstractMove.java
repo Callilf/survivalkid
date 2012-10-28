@@ -1,14 +1,15 @@
 package com.survivalkid.game.move;
 
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.thread.MainThread;
 
 public abstract class AbstractMove {
 	
 	
 	// GRAVITY
 	// public int GRAVITY = 3;
-	protected int NB_FRAME_JUMP = 9;
-	protected int NB_FRAME_JUMP_SLOW = 17;
+	protected int NB_FRAME_JUMP = (int) (9/MainThread.FPS_RATIO);
+	protected int NB_FRAME_JUMP_SLOW = (int) (17/MainThread.FPS_RATIO);
 	
 	protected float VITESSE_MAX_X = 8;
 	protected float ACCELERATION_X = 1f;

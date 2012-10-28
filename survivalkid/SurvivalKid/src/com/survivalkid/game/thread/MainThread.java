@@ -12,8 +12,16 @@ public class MainThread extends Thread {
 	/** Tag for logs. */
 	private static final String TAG = MainThread.class.getSimpleName();
 
-	/** Duration of a frame maximum in milliseconds */
-	private static final int FRAME_DURATION = 33;
+	/** indicative FPS to compute the speed */
+	private static final int FPS_INDICATIVE = 60;
+	
+	/** real minimum FPS of the game */	
+	private static final int FPS_REAL = 30;
+	
+	/** ratio of the indicative fps and the real fps */
+	public static final float FPS_RATIO = FPS_INDICATIVE/(float)FPS_REAL;
+	
+	private static final int FRAME_DURATION = 1000/FPS_REAL;
 	
 	// flag to hold game state
 	private boolean running;
@@ -76,6 +84,7 @@ public class MainThread extends Thread {
 								wait(FRAME_DURATION-timePassed);
 							}
 						}
+						Log.d("TEST", ""+timePassed);
 						GameContext.getSingleton().gameDuration += FRAME_DURATION;
 					}
 					catch (IllegalMonitorStateException e) {
@@ -115,6 +124,7 @@ public class MainThread extends Thread {
 	private void launchUpdateAndDrawTimed() {
 		if (!TimerUtil.TIMER_ACTIVE) {
 			launchUpdateAndDraw();
+			return;
 		}
 		// update game state 
 		TimerUtil.start("_globalupdate");

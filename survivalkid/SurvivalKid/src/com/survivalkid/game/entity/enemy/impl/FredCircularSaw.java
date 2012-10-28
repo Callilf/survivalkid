@@ -1,5 +1,8 @@
 package com.survivalkid.game.entity.enemy.impl;
 
+import static com.survivalkid.game.util.MoveUtil.normX;
+import static com.survivalkid.game.util.MoveUtil.normY;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,8 +104,6 @@ public class FredCircularSaw extends EnemyEntity {
 				return;
 			}
 
-			super.update(gameTime);
-
 			if (sawFramesCurrent == sawFramesPeriod) {
 				sawFramesCurrent = 0;
 				drawList.set(directionIndex, false);
@@ -111,11 +112,11 @@ public class FredCircularSaw extends EnemyEntity {
 
 			if (directionIndex < directionList.size()) {
 				if (directionList.get(directionIndex) == DIAG_UP) {
-					sprite.offset(speed, speed);
+					setSpeedY(speed);
 				} else if (directionList.get(directionIndex) == STRAIGHT) {
-					sprite.offset(speed, 0);
+					setSpeedY(0);
 				} else if (directionList.get(directionIndex) == DIAG_DOWN) {
-					sprite.offset(speed, -speed);
+					setSpeedY(-speed);
 				}
 				sawFramesCurrent++;
 			} else {
@@ -126,17 +127,22 @@ public class FredCircularSaw extends EnemyEntity {
 			if (onFloor()) {
 				die();
 			}
+			
+			super.update(gameTime);
 		}
 
 		// DRAW THE LINE
 		else if (state == STATE_LINE && draw && gameTime > lastDrawnTime + drawPointPeriod) {
 			Point newPoint = null;
+
+			int newX = lastDrawnPoint.x + sawFramesPeriod*normX(speed);
+			int moveY = sawFramesPeriod*normY(speed);
 			if (lastNumber > NB_POINTS_MIN) {
 				int randomInt = (int) (Math.random() * 100);
 
 				if (randomInt < 32) {
 					// Diag up
-					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y + 10);
+					newPoint = new Point(newX, lastDrawnPoint.y + moveY);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_UP);
 					drawList.add(true);
@@ -144,7 +150,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = DIAG_UP;
 				} else if (randomInt < 66) {
 					// straight
-					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y);
+					newPoint = new Point(newX, lastDrawnPoint.y);
 					linePoints.add(newPoint);
 					directionList.add(STRAIGHT);
 					drawList.add(true);
@@ -152,7 +158,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = STRAIGHT;
 				} else {
 					// Diag down
-					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y - 10);
+					newPoint = new Point(newX, lastDrawnPoint.y - moveY);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_DOWN);
 					drawList.add(true);
@@ -163,7 +169,7 @@ public class FredCircularSaw extends EnemyEntity {
 			} else {
 				if (lastPointType == DIAG_UP) {
 					// Diag up
-					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y + 10);
+					newPoint = new Point(newX, lastDrawnPoint.y + moveY);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_UP);
 					drawList.add(true);
@@ -171,7 +177,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = DIAG_UP;
 				} else if (lastPointType == STRAIGHT) {
 					// straight
-					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y);
+					newPoint = new Point(newX, lastDrawnPoint.y);
 					linePoints.add(newPoint);
 					directionList.add(STRAIGHT);
 					drawList.add(true);
@@ -179,7 +185,7 @@ public class FredCircularSaw extends EnemyEntity {
 					lastPointType = STRAIGHT;
 				} else if (lastPointType == DIAG_DOWN) {
 					// Diag down
-					newPoint = new Point(lastDrawnPoint.x + 10, lastDrawnPoint.y - 10);
+					newPoint = new Point(newX, lastDrawnPoint.y - moveY);
 					linePoints.add(newPoint);
 					directionList.add(DIAG_DOWN);
 					drawList.add(true);
@@ -257,6 +263,9 @@ public class FredCircularSaw extends EnemyEntity {
 		sprite.setX(-20);
 		sprite.setY(randomY);
 
+		// init speed
+		setSpeedX(speed);
+		
 		init();
 	}
 }

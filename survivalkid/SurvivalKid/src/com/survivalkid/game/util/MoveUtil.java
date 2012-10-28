@@ -1,5 +1,6 @@
 package com.survivalkid.game.util;
 
+import static com.survivalkid.game.thread.MainThread.FPS_RATIO;
 import static java.lang.Math.round;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
@@ -90,10 +91,10 @@ public final class MoveUtil {
 	}
 	
 	public static int normX(int x) {
-		return round(x*RATIO_WIDTH);
+		return round(x*RATIO_WIDTH*FPS_RATIO);
 	}
 	public static int normY(int y) {
-		return round(y*RATIO_HEIGHT);
+		return round(y*RATIO_HEIGHT*FPS_RATIO);
 	}
 	
 }
