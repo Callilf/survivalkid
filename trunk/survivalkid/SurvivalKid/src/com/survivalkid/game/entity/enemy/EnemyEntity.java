@@ -2,14 +2,25 @@ package com.survivalkid.game.entity.enemy;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.util.Log;
 
+import com.survivalkid.game.GameManager;
+import com.survivalkid.game.core.Constants.CollisionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
+import com.survivalkid.game.entity.personage.Personage;
 
 public abstract class EnemyEntity extends GameEntity {
+	private static final String TAG = EnemyEntity.class.getSimpleName();
 
 	protected int dammage;
 	protected int difficulty;
+	
+	//For collisions with the character :
+	/** The id of the character colliding. -1 if no one is colliding. */
+	private int collidingCharacter;
+	/**The number of frames the character has been colliding this enemy. */
+	private int collidingFrames;
 
 	/**
 	 * 
@@ -33,10 +44,46 @@ public abstract class EnemyEntity extends GameEntity {
 	}
 
 	@Override
+	public void collide(GameEntity _gameEntity) {
+		if (_gameEntity instanceof Personage) {
+			if(((Personage) _gameEntity).getId() == collidingCharacter) {
+				collidingFrames ++;
+			} else {
+				collidingCharacter = ((Personage) _gameEntity).getId();
+				collidingFrames = 1;
+			}
+			
+			Log.d(TAG, this.getName() + " colliding with character " + ((Personage) _gameEntity).getId() + " for " + collidingFrames + " frames !");
+			
+			if(collidingFrames >= CollisionConstants.MAX_FRAMES_OF_COLLISION) {
+				Log.i(TAG, this.getName() + " apply collision to character " + ((Personage) _gameEntity).getId());
+				applyCollision(_gameEntity);
+			}
+		}
+	}
+	
+	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 	}
 
+	public abstract void applyCollision(GameEntity _gameEntity);
 	public abstract void initRandomPositionAndSpeed(Point playerPosition);
+
+	/**
+	 * @return the collidingCharacter
+	 */
+	public int getCollidingCharacter() {
+		return collidingCharacter;
+	}
+
+	/**
+	 * @param collidingCharacter the collidingCharacter to set
+	 */
+	public void setCollidingCharacter(int collidingCharacter) {
+		this.collidingCharacter = collidingCharacter;
+	}
+
+	
 
 }

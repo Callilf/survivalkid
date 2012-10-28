@@ -229,7 +229,7 @@ public class FredCircularSaw extends EnemyEntity {
 	}
 
 	@Override
-	public void collide(GameEntity _gameEntity) {
+	public void applyCollision(GameEntity _gameEntity) {
 		if (!dying) {
 			if (_gameEntity instanceof Personage) {
 				((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
