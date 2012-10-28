@@ -150,6 +150,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 				if (CollisionUtil.Overlaps(perso, enemy)) {
 					perso.setOverlaping(true);
 					enemy.collide(perso);
+				} else {
+					enemy.setCollidingCharacter(-1);
 				}
 			}
 		}

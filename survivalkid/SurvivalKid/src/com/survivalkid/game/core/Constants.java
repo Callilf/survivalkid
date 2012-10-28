@@ -26,10 +26,19 @@ public final class Constants {
 	 * Constants for sprite directions.
 	 * 
 	 * @author Callil
-	 * 
 	 */
 	public class DirectionConstants {
 		public static final int LEFT = 0;
 		public static final int RIGHT = 1;
+	}
+	
+	
+	/**
+	 * Constants for collisions.
+	 * 
+	 * @author Callil
+	 */
+	public class CollisionConstants {
+		public static final int MAX_FRAMES_OF_COLLISION = 2;
 	}
 }
