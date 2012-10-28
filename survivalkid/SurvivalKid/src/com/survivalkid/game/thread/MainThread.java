@@ -13,10 +13,10 @@ public class MainThread extends Thread {
 	private static final String TAG = MainThread.class.getSimpleName();
 
 	/** indicative FPS to compute the speed */
-	private static final int FPS_INDICATIVE = 60;
+	private static final int FPS_INDICATIVE = 70;
 	
-	/** real minimum FPS of the game */	
-	private static final int FPS_REAL = 30;
+	/** real maximum FPS of the game */	
+	private static final int FPS_REAL = 46;
 	
 	/** ratio of the indicative fps and the real fps */
 	public static final float FPS_RATIO = FPS_INDICATIVE/(float)FPS_REAL;
@@ -84,7 +84,7 @@ public class MainThread extends Thread {
 								wait(FRAME_DURATION-timePassed);
 							}
 						}
-						Log.d("TEST", ""+timePassed);
+						//Log.d("DURATIONFRAME", ""+timePassed);
 						GameContext.getSingleton().gameDuration += FRAME_DURATION;
 					}
 					catch (IllegalMonitorStateException e) {
