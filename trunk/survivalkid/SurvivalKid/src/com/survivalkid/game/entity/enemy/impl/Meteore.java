@@ -19,7 +19,6 @@ public class Meteore extends EnemyEntity {
 	
 	private AnimatedSprite deathAnim;
 	private AnimatedSprite fireAnim;
-	private boolean dying;
 	
 	public Meteore() {
 		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
@@ -35,7 +34,6 @@ public class Meteore extends EnemyEntity {
 		
 		// death
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_BROWN_LARGE, 0, 0);
-		dying = false;
 
 		redefineHitBox((sprite.getWidth() * 18) / 100,
 				(sprite.getHeight() * 18) / 100,
@@ -65,11 +63,9 @@ public class Meteore extends EnemyEntity {
 
 	@Override
 	public void applyCollision(GameEntity _gameEntity) {
-		if (!dying) {
-			if (_gameEntity instanceof Personage) {
-				((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
-				die();
-			}
+		if (_gameEntity instanceof Personage) {
+			((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
+			die();
 		}
 	}
 

@@ -56,7 +56,6 @@ public class FredCircularSaw extends EnemyEntity {
 
 	// explosion when the saw touch the ground
 	private AnimatedSprite deathAnim;
-	private boolean dying;
 
 	/** Default constructor. */
 	public FredCircularSaw() {
@@ -82,7 +81,6 @@ public class FredCircularSaw extends EnemyEntity {
 		affectedByCeiling = false;
 
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_SMALL, 0, 0);
-		dying = false;
 
 		redefineHitBox((sprite.getWidth() * 12) / 100, (sprite.getHeight() * 12) / 100, (sprite.getWidth() * 80) / 100,
 				(sprite.getHeight() * 80) / 100);
@@ -236,10 +234,8 @@ public class FredCircularSaw extends EnemyEntity {
 
 	@Override
 	public void applyCollision(GameEntity _gameEntity) {
-		if (!dying) {
-			if (_gameEntity instanceof Personage) {
-				((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
-			}
+		if (_gameEntity instanceof Personage) {
+			((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
 		}
 	}
 

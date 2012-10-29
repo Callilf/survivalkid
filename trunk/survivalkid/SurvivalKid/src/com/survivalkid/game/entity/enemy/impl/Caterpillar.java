@@ -15,8 +15,7 @@ import com.survivalkid.game.util.MoveUtil;
 public class Caterpillar extends EnemyEntity {
 
 	private AnimatedSprite deathAnim;
-	private boolean dying;
-
+	
 	/** Default constructor. */
 	public Caterpillar() {
 		super("Caterpillar", SpriteEnum.CATERPILLAR, 0, 0, 5, 0);
@@ -28,7 +27,6 @@ public class Caterpillar extends EnemyEntity {
 		affectedByWalls = false;
 
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_SMALL, 0, 0);
-		dying = false;
 
 		redefineHitBox((sprite.getWidth() * 18) / 100, (sprite.getHeight() * 65) / 100, (sprite.getWidth() * 74) / 100,
 				(sprite.getHeight() * 35) / 100);
@@ -54,11 +52,9 @@ public class Caterpillar extends EnemyEntity {
 
 	@Override
 	public void applyCollision(GameEntity _gameEntity) {
-		if (!dying) {
-			if (_gameEntity instanceof Personage) {
-				((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
-				die();
-			}
+		if (_gameEntity instanceof Personage) {
+			((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
+			die();
 		}
 		// the method die should be called after x touch (or at the first touch)
 	}
