@@ -45,6 +45,13 @@ public final class MoveUtil {
 		SCREEN_WIDTH = metrics.widthPixels;
 		SCREEN_HEIGHT = metrics.heightPixels;
 		
+		// in case of the width and height are exchanged
+		if (SCREEN_WIDTH < SCREEN_HEIGHT) {
+			int tmp = SCREEN_WIDTH;
+			SCREEN_WIDTH = SCREEN_HEIGHT;
+			SCREEN_HEIGHT = tmp;
+		}
+		
 		RATIO_WIDTH = SCREEN_WIDTH/(float)NORMALIZE_WIDTH;
 		RATIO_HEIGHT = SCREEN_HEIGHT/(float)NORMALIZE_HEIGHT;
 		

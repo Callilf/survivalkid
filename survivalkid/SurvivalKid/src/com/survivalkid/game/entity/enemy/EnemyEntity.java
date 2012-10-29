@@ -22,6 +22,9 @@ public abstract class EnemyEntity extends GameEntity {
 	/**The number of frames the character has been colliding this enemy. */
 	private int collidingFrames;
 
+	/** When dying is true, the enemy isn't already disappear but don't collide anymore */
+	protected boolean dying;
+
 	/**
 	 * 
 	 * Constructor called by parents class
@@ -35,6 +38,7 @@ public abstract class EnemyEntity extends GameEntity {
 	 */
 	public EnemyEntity(String _name, SpriteEnum spriteEnum, int _x, int _y, int _dammage, int _difficulty) {
 		super(_name, spriteEnum, _x, _y);
+		dying = false;
 		dammage = _dammage;
 		difficulty = _difficulty;
 	}
@@ -45,18 +49,18 @@ public abstract class EnemyEntity extends GameEntity {
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
-		if (_gameEntity instanceof Personage) {
-			if(((Personage) _gameEntity).getId() == collidingCharacter) {
+		if (_gameEntity instanceof Personage && !dying) {
+			if(_gameEntity.getId() == collidingCharacter) {
 				collidingFrames ++;
 			} else {
-				collidingCharacter = ((Personage) _gameEntity).getId();
+				collidingCharacter = _gameEntity.getId();
 				collidingFrames = 1;
 			}
 			
-			Log.d(TAG, this.getName() + " colliding with character " + ((Personage) _gameEntity).getId() + " for " + collidingFrames + " frames !");
+			Log.d(TAG, this.getName() + " colliding with character " + _gameEntity.getId() + " for " + collidingFrames + " frames !");
 			
 			if(collidingFrames >= CollisionConstants.MAX_FRAMES_OF_COLLISION) {
-				Log.i(TAG, this.getName() + " apply collision to character " + ((Personage) _gameEntity).getId());
+				Log.i(TAG, this.getName() + " apply collision to character " + _gameEntity.getId());
 				applyCollision(_gameEntity);
 			}
 		}
