@@ -29,6 +29,8 @@ public enum SpriteEnum {
 	
 	METEORE(R.drawable.meteor, 1, 1),
 	
+	MEDKIT(R.drawable.medkit, 1, 1),
+	
 	FIRE_TRAIL(R.drawable.fire, 6, 1, new Animation("fire", new int[] { 0, 1, 2, 3, 4, 5 }, 15)),
 	
 	FIRE_GROUND(R.drawable.fire_ground, 7, 1,  new Animation("fire", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 15)),

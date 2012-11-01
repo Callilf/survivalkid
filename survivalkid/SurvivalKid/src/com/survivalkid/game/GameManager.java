@@ -22,6 +22,8 @@ import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.item.ItemEntity;
+import com.survivalkid.game.entity.item.impl.Medkit;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
@@ -99,9 +101,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		
 		// TEST ------------------
 		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, SpriteEnum.YUGO, 300, 250);
+		Medkit medkit = new Medkit(100,-500);
 //		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, SpriteEnum.YUNA, 250, 250);
 
 		characterManager.addCharacter(yugo);
+		itemManager.addEntity(medkit);
 //		characterManager.addCharacter(yuna);
 		// END TESTS --------------
 
@@ -146,6 +150,12 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			perso.setOverlaping(false);
 		}
 		for (Personage perso : characterManager.getCharacterList()) {
+			for (ItemEntity item : itemManager.getItemList()) {
+				if (CollisionUtil.Overlaps(perso, item)) {
+					perso.setOverlaping(true);
+					item.collide(perso);
+				}
+			}
 			for (EnemyEntity enemy : enemyManager.getEnemyList()) {
 				if (CollisionUtil.Overlaps(perso, enemy)) {
 					perso.setOverlaping(true);

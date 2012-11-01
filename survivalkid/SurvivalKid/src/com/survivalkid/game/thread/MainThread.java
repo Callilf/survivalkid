@@ -16,7 +16,7 @@ public class MainThread extends Thread {
 	private static final int FPS_INDICATIVE = 70;
 	
 	/** real maximum FPS of the game */	
-	private static final int FPS_REAL = 46;
+	private static final int FPS_REAL = 60;
 	
 	/** ratio of the indicative fps and the real fps */
 	public static final float FPS_RATIO = FPS_INDICATIVE/(float)FPS_REAL;

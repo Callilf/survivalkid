@@ -61,4 +61,20 @@ public class ItemManager extends ObjectManager {
 		itemList.add((ItemEntity)ge);
 	}
 
+	/**
+	 * @return the itemList
+	 */
+	public List<ItemEntity> getItemList() {
+		return itemList;
+	}
+
+	/**
+	 * @param itemList the itemList to set
+	 */
+	public void setItemList(List<ItemEntity> itemList) {
+		this.itemList = itemList;
+	}
+	
+	
+
 }
