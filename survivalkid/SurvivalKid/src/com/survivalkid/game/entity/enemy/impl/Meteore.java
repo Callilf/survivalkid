@@ -14,11 +14,14 @@ import com.survivalkid.game.util.MoveUtil;
 
 public class Meteore extends EnemyEntity {
 
-	private int fallInit = 1;
-	private int fallNext = 8;
+	protected int fallInit = 1;
+	protected int fallNext = 8;
+	protected int shiftX = 1;
 	
 	private AnimatedSprite deathAnim;
 	private AnimatedSprite fireAnim;
+	
+	private int directionFire;
 	
 	public Meteore() {
 		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
@@ -48,14 +51,21 @@ public class Meteore extends EnemyEntity {
 		int random = (int) (Math.random() * MoveUtil.SCREEN_WIDTH);
 		sprite.setX(random);
 		sprite.setY(1-sprite.getHeight());
-		direction = (random <= MoveUtil.SCREEN_WIDTH/2)? DirectionConstants.LEFT : DirectionConstants.RIGHT;
+		if (random <= MoveUtil.SCREEN_WIDTH/2) {
+			direction = DirectionConstants.RIGHT;
+			directionFire = DirectionConstants.LEFT;
+		}
+		else {
+			direction = DirectionConstants.LEFT;
+			directionFire = DirectionConstants.RIGHT;
+		}
 
 		// init speed
 		setSpeedY(fallInit);
 		if (direction == DirectionConstants.LEFT) {
-			setSpeedX(fallInit/(float)fallNext);
+			setSpeedX(-shiftX/(float)fallNext);
 		} else {
-			setSpeedX(-fallInit/(float)fallNext);
+			setSpeedX(shiftX/(float)fallNext);
 		}
 		
 		init();
@@ -82,7 +92,7 @@ public class Meteore extends EnemyEntity {
 	
 	private void setPositionFire() {
 		int decalX = (direction == DirectionConstants.LEFT)? 
-				sprite.getX() + sprite.getWidth() / 3 : sprite.getX() + sprite.getWidth()* 2/3;
+				sprite.getX() + sprite.getWidth()* 2/3 : sprite.getX() + sprite.getWidth() / 3;
 		
 		fireAnim.setX(decalX - fireAnim.getWidth() / 2);
 		fireAnim.setY(sprite.getY() - fireAnim.getHeight() * 3/4);
@@ -99,9 +109,6 @@ public class Meteore extends EnemyEntity {
 			return;
 		}
 
-		setPositionFire();
-		fireAnim.update(gameTime, direction);
-
 		if (sprite.getX() + sprite.getWidth() < 0	|| sprite.getX() > MoveUtil.SCREEN_WIDTH) {
 			dead = true;
 		}
@@ -109,10 +116,18 @@ public class Meteore extends EnemyEntity {
 			die();
 		}
 		else if (sprite.getY() + sprite.getHeight()*2/3 > 0) {
+			if (direction == DirectionConstants.LEFT) {
+				setSpeedX(-shiftX);
+			} else {
+				setSpeedX(shiftX);
+			}
 			setSpeedY(fallNext);		
 		}
 		
 		super.update(gameTime);
+		// update of the fire after the meteor is moved
+		setPositionFire();
+		fireAnim.update(gameTime, directionFire);
 	}
 	
 	@Override
@@ -120,7 +135,7 @@ public class Meteore extends EnemyEntity {
 		if (dying) {
 			deathAnim.draw(canvas, DirectionConstants.RIGHT);
 		} else {
-			fireAnim.draw(canvas, direction);
+			fireAnim.draw(canvas, directionFire);
 			super.draw(canvas);
 		}
 	}

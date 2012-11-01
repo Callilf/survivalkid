@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.util.Log;
 
-import com.survivalkid.game.GameManager;
 import com.survivalkid.game.core.Constants.CollisionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
