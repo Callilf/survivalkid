@@ -20,6 +20,8 @@ public class GameContext {
 	public int currentDifficulty;
 	/** The current score. */
 	public int score;
+	/** The current time in milliseconds */
+	public long currentTimeMillis;
 	
 	/** Get the singleton. */
 	public static GameContext getSingleton() {
@@ -55,5 +57,21 @@ public class GameContext {
 	public Display getDisplay() {
 		return ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 	}
+
+	/**
+	 * @return the currentTimeMillis
+	 */
+	public long getCurrentTimeMillis() {
+		return currentTimeMillis;
+	}
+
+	/**
+	 * @param currentTimeMillis the currentTimeMillis to set
+	 */
+	public void setCurrentTimeMillis(long currentTimeMillis) {
+		this.currentTimeMillis = currentTimeMillis;
+	}
+	
+	
 	
 }

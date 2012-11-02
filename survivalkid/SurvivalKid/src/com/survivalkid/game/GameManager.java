@@ -101,11 +101,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		
 		// TEST ------------------
 		Personage yugo = new Personage(PersonageConstants.PERSO_YUGO, SpriteEnum.YUGO, 300, 250);
-		Medkit medkit = new Medkit(100,-500);
 //		Personage yuna = new Personage(PersonageConstants.PERSO_YUNA, SpriteEnum.YUNA, 250, 250);
 
 		characterManager.addCharacter(yugo);
-		itemManager.addEntity(medkit);
 //		characterManager.addCharacter(yuna);
 		// END TESTS --------------
 
@@ -139,6 +137,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void update() {
 		long gameTime = System.currentTimeMillis();
 		chrono.setTime(GameContext.getSingleton().gameDuration);
+		GameContext.getSingleton().setCurrentTimeMillis(gameTime);
 
 		// Update the gameEntities
 		enemyManager.update(gameTime);
