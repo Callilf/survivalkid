@@ -1,12 +1,14 @@
 package com.survivalkid.game.entity.item.impl;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.util.MoveUtil;
 
 public class Medkit extends ItemEntity {
 	
@@ -23,6 +25,8 @@ public class Medkit extends ItemEntity {
 
 	/** Initialize the enemy. */
 	private void init() {
+		timeToLive = 5000;
+		
 		gravity = 1;
 		affectedByFloor = true;
 		affectedByCeiling = false;
@@ -48,38 +52,15 @@ public class Medkit extends ItemEntity {
 	/**
 	 * Initialize the position, speed and misc. attributes of the enemy.
 	 */
-//	@Override
-//	public void initRandomPositionAndSpeed(Point playerPosition) {
-//		// random spawn position
-//		int random = (int) (Math.random() * 100);
-//		if (random < 34) {
-//			sprite.setX(-20);
-//			sprite.setY(380);
-//			direction = DirectionConstants.RIGHT;
-//		} else if (random < 69) {
-//			sprite.setX(MoveUtil.SCREEN_WIDTH + 20);
-//			sprite.setY(380);
-//			direction = DirectionConstants.LEFT;
-//		} else if (random < 84) {
-//			sprite.setX(0);
-//			sprite.setY(-20);
-//			direction = DirectionConstants.RIGHT;
-//		} else {
-//			sprite.setX(MoveUtil.SCREEN_WIDTH);
-//			sprite.setY(-20);
-//			direction = DirectionConstants.LEFT;
-//		}
-//		
-//		// init speed
-//		setSpeedY(0);
-//		if (direction == DirectionConstants.LEFT) {
-//			setSpeedX(-2);
-//		} else {
-//			setSpeedX(2);
-//		}
-//
-//		init();
-//	}
+	@Override
+	public void initRandomPositionAndSpeed(Point playerPosition) {
+		// random spawn position
+		int randomX = 20 + (int) (Math.random() * MoveUtil.SCREEN_WIDTH - 20 - sprite.getWidth());
+		sprite.setX(randomX);
+		sprite.setY(-sprite.getHeight());
+
+		init();
+	}
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
