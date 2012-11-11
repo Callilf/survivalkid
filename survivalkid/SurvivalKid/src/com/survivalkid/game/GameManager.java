@@ -214,6 +214,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		if (characterManager.getCharacterList().size() > OWN_PERSO && characterManager.getCharacterList(OWN_PERSO) != null) {
 			characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
 		}
+		
+		//Check if a balloon has been touched
+		if (itemManager.getItemList().size() > 0) {
+			itemManager.checkBalloonTouchBox(event);
+		}
 
 		// if (event.getAction() != MotionEvent.ACTION_MOVE) dumpEvent(event);
 		return true;
