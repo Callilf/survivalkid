@@ -112,7 +112,9 @@ public abstract class ItemEntity extends GameEntity {
 	}
 	
 	public void balloonTouched() {
-		Log.w(TAG, "balloon touched");
-		balloon.touched();
+		if(!balloon.isPierced()) {
+			Log.w(TAG, "balloon touched");
+			balloon.touched();
+		}
 	}
 }

@@ -13,7 +13,9 @@ import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public enum SpriteEnum {
-	BALLOON_CRATE(R.drawable.balloon_crate, 6, 1, new Animation("swing", new int[] { 0, 1, 2, 1, 0, 3, 4, 3}, 8)),
+	BALLOON_CRATE(R.drawable.balloon_crate, 6, 2, new Animation("swing", new int[] { 0, 1, 2, 1, 0, 3, 4, 3}, 8),
+			new Animation("explode", new int[] { 5, 6, 7, 8, 9, 10}, 40),
+			new Animation("exploded", new int[] { 10}, 20)),
 	
 	YUGO(R.drawable.yugo, 6, 4, new Animation(PersonageConstants.ANIM_STAND, new int[] { 0 }, 20), 
 			new Animation(PersonageConstants.ANIM_RUN, new int[] { 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14 }, 20), 
