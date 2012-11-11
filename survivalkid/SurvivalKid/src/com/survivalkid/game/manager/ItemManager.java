@@ -116,7 +116,7 @@ public class ItemManager extends ObjectManager {
 	//*******************	
 	public void checkBalloonTouchBox(MotionEvent event) {
 		for(ItemEntity item : itemList) {
-			if (item.isInBalloon()) {
+			if (item.isInBalloon() && !item.getBalloon().isPierced()) {
 				for (int i = 0; i < event.getPointerCount(); i++) {
 					int x = (int) event.getX(i);
 					int y = (int) event.getY(i);

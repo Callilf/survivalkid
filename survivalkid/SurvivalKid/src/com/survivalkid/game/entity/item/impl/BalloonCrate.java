@@ -14,6 +14,9 @@ public class BalloonCrate extends ItemEntity {
 	
 	private Rect balloonTouchBox;
 	
+	private boolean pierced = false;
+	private boolean explosionBegin = false;
+	private boolean exploding = false;
 	private boolean falling = false;
 	private boolean releaseObject = false;
 	
@@ -40,8 +43,8 @@ public class BalloonCrate extends ItemEntity {
 		redefineHitBox((sprite.getWidth() * 30) / 100, (sprite.getHeight() * 65) / 100, (sprite.getWidth() * 36) / 100,
 				(sprite.getHeight() * 30) / 100);
 		
-		setBalloonTouchBox(new Rect(sprite.getX() + (sprite.getWidth() * 30) / 100, sprite.getY() + (sprite.getHeight() * 5) / 100, sprite.getX() + (sprite.getWidth() * 30) / 100 + (sprite.getWidth() * 36) / 100,
-				sprite.getY() + (sprite.getHeight() * 5) / 100 + (sprite.getHeight() * 45) / 100));
+		setBalloonTouchBox(new Rect(sprite.getX() + (sprite.getWidth() * 20) / 100, sprite.getY() + sprite.getHeight() / 100, sprite.getX() + (sprite.getWidth() * 20) / 100 + (sprite.getWidth() * 60) / 100,
+				sprite.getY() + sprite.getHeight() / 100 + (sprite.getHeight() * 50) / 100));
 		
 		new Animation("test", new int[] { 2}, 8);
 		
@@ -49,8 +52,22 @@ public class BalloonCrate extends ItemEntity {
 	}
 
 	@Override
-	public void update(long gameTime) {		
-		if(falling) {
+	public void update(long gameTime) {
+		if(explosionBegin) {
+			play("explode", false, true);
+			exploding = true;
+			explosionBegin = false;
+			super.update(gameTime);
+			return;
+		} else if (exploding) {
+			if(sprite.isAnimationFinished()) {
+				falling = true;
+				exploding = false;
+				play("exploded", true, true);
+			}
+			super.update(gameTime);
+			return;
+		} else if (falling) {
 			stop();
 			gravity = 1;
 		}
@@ -78,8 +95,10 @@ public class BalloonCrate extends ItemEntity {
 
 	
 	public void touched() {
-		falling = true;
+		pierced = true;
+		explosionBegin = true;
 		setSpeedX(0);
+		setSpeedY(0);
 	}
 	
 	
@@ -149,5 +168,14 @@ public class BalloonCrate extends ItemEntity {
 	public boolean isReleaseObject() {
 		return releaseObject;
 	}
+
+	/**
+	 * @return the pierced
+	 */
+	public boolean isPierced() {
+		return pierced;
+	}
+	
+	
 
 }
