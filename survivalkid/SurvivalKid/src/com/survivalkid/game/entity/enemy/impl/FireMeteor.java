@@ -14,7 +14,6 @@ public class FireMeteor extends Meteore {
 	@Override
 	protected void terminate() {
 		FireGround fire = creator.createEnemy(FireGround.class, true);
-		fire.setX(sprite.getX() + sprite.getWidth()/2 - fire.getSprite().getWidth()/2);
-		fire.setY(sprite.getY());
+		fire.place(sprite.getX() + sprite.getWidth()/2 - fire.getSprite().getWidth()/2, sprite.getY());
 	}
 }
