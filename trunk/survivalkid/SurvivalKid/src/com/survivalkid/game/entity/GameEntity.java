@@ -52,7 +52,7 @@ public abstract class GameEntity {
 	protected boolean isJumpingUp;
 	protected boolean isJumpingDown;
 	protected boolean isOnFloor;
-	protected int gravity = 0;
+	protected float gravity = 0;
 	protected int maxSpeedDown = 20;
 
 	/** States. */
@@ -457,7 +457,7 @@ public abstract class GameEntity {
 	/**
 	 * @return the gravity
 	 */
-	public int getGravity() {
+	public float getGravity() {
 		return gravity;
 	}
 
@@ -465,7 +465,7 @@ public abstract class GameEntity {
 	 * @param _isSubjectToGravity
 	 *            the gravity to set
 	 */
-	public void setGravity(int _gravity) {
+	public void setGravity(float _gravity) {
 		this.gravity = _gravity;
 	}
 

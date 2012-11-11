@@ -27,6 +27,20 @@ public class Meteore extends EnemyEntity {
 		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
 	}
 	
+	/**
+	 * 
+	 * Constructor use for the fireMeteor
+	 * @param name name
+	 * @param sprite the sprite
+	 * @param x position x
+	 * @param y position y
+	 * @param damage the damages
+	 * @param difficulty the difficulty
+	 */
+	protected Meteore(String _name, SpriteEnum _sprite, int _x, int _y, int _damage, int _difficulty) {
+		super(_name, _sprite, _x, _y, _damage, _difficulty);
+	}
+	
 	private void init() {
 		affectedByWalls = false;
 		affectedByCeiling = false;
@@ -104,6 +118,7 @@ public class Meteore extends EnemyEntity {
 			deathAnim.update(gameTime, DirectionConstants.RIGHT);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
+				terminate();
 			}
 
 			return;
@@ -130,6 +145,10 @@ public class Meteore extends EnemyEntity {
 		fireAnim.update(gameTime, directionFire);
 	}
 	
+	protected void terminate() {
+		// nothing to do : use by the fire meteor to pop the ground fire
+	}
+
 	@Override
 	public void draw(Canvas canvas) {
 		if (dying) {
