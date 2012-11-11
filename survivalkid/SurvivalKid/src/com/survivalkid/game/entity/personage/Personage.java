@@ -19,6 +19,8 @@ import com.survivalkid.game.move.MovePersoManager;
 
 public class Personage extends GameEntity {
 	private static final String TAG = Personage.class.getSimpleName();
+	
+	private static final int DEFAULT_RECOVERYTIME = 700;
 
 	private int playerNumber = -1;
 	private int persoType;
@@ -89,21 +91,34 @@ public class Personage extends GameEntity {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	/**
-	 * When the character is hit
+	 * 
 	 * @param _damage the amount of damages
+	 * @param typeChange TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
+	 * @param recoveryMaxTime duration of the recovery
 	 */
-	public void takeDamage(int _damage, EnumLife typeChange) {
+	public void takeDamage(int _damage, EnumLife _typeChange, int _recoveryMaxTime) {
 		if (StateEnum.STATE_RECOVERY.equals(state)) {
 			return;
 		}
 
-		life.modifyLife(_damage, typeChange);
+		life.modifyLife(_damage, _typeChange);
 		setState(StateEnum.STATE_RECOVERY);
+		recoveryMaxTime = _recoveryMaxTime;
+		
 		//Display the damages above the head of the character
-		damages.add(new LifeChangeDisplayer(_damage, typeChange,
-				System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
+		damages.add(new LifeChangeDisplayer(_damage, _typeChange,
+				System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));		
+	}
+	
+	/**
+	 * When the character is hit
+	 * @param _damage the amount of damages
+	 * @param typeChange TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
+	 */
+	public void takeDamage(int _damage, EnumLife _typeChange) {
+		takeDamage(_damage, _typeChange, DEFAULT_RECOVERYTIME);
 	}
 	
 	/**

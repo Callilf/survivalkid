@@ -1,0 +1,65 @@
+package com.survivalkid.game.entity.enemy.impl;
+
+import android.graphics.Point;
+import android.util.Log;
+
+import com.survivalkid.game.core.enums.SpriteEnum;
+import com.survivalkid.game.entity.GameEntity;
+import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.util.MoveUtil;
+
+public class FireGround extends EnemyEntity {
+
+	/** nominal duration in ms of the fire */
+	private static final int INDEX_TIMELIFE = 3000;
+	
+	/** duration of the recovery when the player is hit */
+	private static final int RECOVERY_TIME = 200;
+	
+	/** time of the dead of the fire */
+	private long endTime;
+		
+	/**
+	 * Constructor
+	 */
+	public FireGround() {
+		super("FireGround", SpriteEnum.FIRE_GROUND, 0, MoveUtil.GROUND, 2, 1);
+	}
+	
+	@Override
+	public void applyCollision(GameEntity _gameEntity) {
+		if (_gameEntity instanceof Personage) {
+			((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME);
+		}
+	}
+
+	@Override
+	public void initRandomPositionAndSpeed(Point playerPosition) {
+		// no random position neither speed
+		
+		// multiply INDEX_TIMELIFE by a number between 0.8 and 1.2
+		long timeLife = (long) (((Math.random()/2.5)+0.8)*INDEX_TIMELIFE);
+		Log.d("FIRE", "Duration of the fire : "+timeLife);
+		endTime = timeLife + GameContext.getSingleton().gameDuration;
+		gravity = 0.5f;
+		play("fire", true, true);
+	}
+
+	@Override
+	public void die() {
+		dead = true;
+	}
+	
+	@Override
+	public void update(long gameTime) {
+		super.update(gameTime);
+		if (GameContext.getSingleton().gameDuration > endTime) {
+			dead = true;
+		}
+	}
+
+
+}

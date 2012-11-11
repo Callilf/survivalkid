@@ -8,6 +8,7 @@ import com.survivalkid.game.core.Constants.CollisionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.manager.EnemyManager;
 
 public abstract class EnemyEntity extends GameEntity {
 	private static final String TAG = EnemyEntity.class.getSimpleName();
@@ -23,6 +24,9 @@ public abstract class EnemyEntity extends GameEntity {
 
 	/** When dying is true, the enemy isn't already disappear but don't collide anymore */
 	protected boolean dying;
+	
+	/** The creator of the enemy */
+	protected EnemyManager creator;
 
 	/**
 	 * 
@@ -85,6 +89,10 @@ public abstract class EnemyEntity extends GameEntity {
 	 */
 	public void setCollidingCharacter(int collidingCharacter) {
 		this.collidingCharacter = collidingCharacter;
+	}
+
+	public void setCreator(EnemyManager creator) {
+		this.creator = creator;
 	}
 
 	

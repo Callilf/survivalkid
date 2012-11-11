@@ -5,7 +5,6 @@ import java.util.Map;
 
 import android.graphics.Point;
 
-import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 
 public class ThreeStepItemGenerator {
