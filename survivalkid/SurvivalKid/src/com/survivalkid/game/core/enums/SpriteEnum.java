@@ -31,6 +31,8 @@ public enum SpriteEnum {
 	
 	CATERPILLAR(R.drawable.caterpillar, 4, 1, new Animation("crawl", new int[] { 0, 1, 2, 3, 2, 1 }, 13)),
 	
+	CRATE_EXPLOSION(R.drawable.crate_explosion, 6, 1, new Animation("explode", new int[] { 0, 1, 2, 3, 4, 5 }, 20)),
+	
 	METEORE(R.drawable.meteor, 1, 1),
 	
 	FIRE_METEORE(R.drawable.meteor_fire, 1, 1),

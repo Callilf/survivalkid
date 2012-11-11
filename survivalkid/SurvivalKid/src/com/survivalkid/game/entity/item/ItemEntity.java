@@ -25,6 +25,7 @@ public abstract class ItemEntity extends GameEntity {
 	//Attributes for the balloon mode
 	private boolean inBalloon = false;
 	private BalloonCrate balloon;
+	private boolean released = false;
 
 	/**
 	 * 
@@ -53,18 +54,24 @@ public abstract class ItemEntity extends GameEntity {
 	@Override
 	public void update(long gameTime) {
 		if(inBalloon) {
+			
 			balloon.update(gameTime);
 			
-			if(balloon.isReleaseObject()) {
+			if( balloon.isDead()) {
+				inBalloon = false;
+			}
+			
+			if(balloon.isReleaseObject() && !released) {
 				setX(balloon.getSprite().getX() + balloon.getSprite().getWidth()/2 - sprite.getWidth()/2);
 				setY(MoveUtil.GROUND - sprite.getHeight());
 				spawnTime = GameContext.getSingleton().getCurrentTimeMillis();
 				blinking = false;
-				inBalloon = false;
+				released = true;
+			} else if(!balloon.isReleaseObject()){
+				return;
 			}
-			
-			return;
 		}
+		
 		
 		
 		super.update(gameTime);
@@ -85,10 +92,11 @@ public abstract class ItemEntity extends GameEntity {
 	
 	@Override
 	public void draw(Canvas canvas){
+		if(!inBalloon || balloon.isReleaseObject()){
+			super.draw(canvas);
+		}
 		if(inBalloon) {
 			balloon.draw(canvas);
-		} else {
-			super.draw(canvas);
 		}
 	}
 	
