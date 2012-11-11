@@ -157,13 +157,10 @@ public abstract class GameEntity {
 	 */
 	public void redefineHitBox(int x, int y, int width, int height) {
 		offsets = new Rect(x, y, width, height);
+		updateHitBox();
 	}
 	
-	public void update(long gameTime) {
-		move();
-
-		sprite.update(gameTime, direction);
-
+	protected void updateHitBox() {
 		if (direction == DirectionConstants.LEFT) {
 			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left
 					- offsets.right, sprite.getY() + offsets.top, sprite.getX()
@@ -174,7 +171,15 @@ public abstract class GameEntity {
 					+ offsets.top,
 					sprite.getX() + offsets.left + offsets.right, sprite.getY()
 							+ offsets.top + offsets.bottom);
-		}
+		}		
+	}
+	
+	public void update(long gameTime) {
+		move();
+
+		sprite.update(gameTime, direction);
+		updateHitBox();
+
 
 		// Handle the changes of state
 		if (changedState) {
@@ -231,7 +236,8 @@ public abstract class GameEntity {
 	 * @return true if on the floor
 	 */
 	public boolean onFloor() {
-		return sprite.getY() == (MoveUtil.GROUND - sprite.getHeight());
+		//return sprite.getY() == (MoveUtil.GROUND - sprite.getHeight());
+		return hitBox.bottom == MoveUtil.GROUND;
 	}
 
 	/**
@@ -293,33 +299,35 @@ public abstract class GameEntity {
 	// --------------------------------------------
 	// ---- private functions
 	// --------------------------------------------
-	private void addY(int _dy) {
+	private void addY(int _dy) {	
 		_dy = MoveUtil.normY(_dy);
+		
 		
 		isOnFloor = false;
 		isJumpingUp = false;
 		isJumpingDown = false;
 
-		int newY = sprite.getY() + _dy;
+		int newY = hitBox.top + _dy;
+		int actualDY = _dy;
 		if (affectedByCeiling && newY < 0) {
-			newY = 0;
+			actualDY = -hitBox.top;
 			speedY = 0;
 		} else if (affectedByFloor
-				&& newY + sprite.getHeight() > MoveUtil.GROUND) {
-			newY = MoveUtil.GROUND - sprite.getHeight();
+				&& hitBox.bottom+_dy > MoveUtil.GROUND) {
+			actualDY = MoveUtil.GROUND - hitBox.bottom;
 			speedY = 0;
 			isOnFloor = true;
 		}
-		// Now set the new X
-		sprite.offset(0, newY - sprite.getY());
+		// Now set the new Y
+		sprite.offset(0, actualDY);
 
-		if (!isOnFloor && _dy >= 0) {
+		if (!isOnFloor && actualDY >= 0) {
 			isJumpingDown = true;
-		} else if (!isOnFloor && _dy < 0) {
+		} else if (!isOnFloor && actualDY < 0) {
 			isJumpingUp = true;
 		}
 	}
-
+	
 	/**
 	 * Adds _dx to the position of the sprite, checking if it goes out of
 	 * screen. If it does reset speed to 0.

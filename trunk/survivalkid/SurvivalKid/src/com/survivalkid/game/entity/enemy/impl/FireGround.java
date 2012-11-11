@@ -30,7 +30,11 @@ public class FireGround extends EnemyEntity {
 	 */
 	public FireGround() {
 		super("FireGround", SpriteEnum.FIRE_GROUND, 0, MoveUtil.GROUND, 2, 1);
-		
+	}
+	
+	public void place(int _x, int _y) {
+		setX(_x);
+		setY(_y);
 		redefineHitBox((sprite.getWidth() * 15) / 100,
 				(sprite.getHeight() * 65) / 100,
 				(sprite.getWidth() * 75) / 100,
