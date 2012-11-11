@@ -19,6 +19,9 @@ public class FireGround extends EnemyEntity {
 	/** duration of the recovery when the player is hit */
 	private static final int RECOVERY_TIME = 200;
 	
+	/** Speed of the fall*/
+	private static final int FALL = 2;
+	
 	/** time of the dead of the fire */
 	private long endTime;
 		
@@ -42,9 +45,8 @@ public class FireGround extends EnemyEntity {
 		
 		// multiply INDEX_TIMELIFE by a number between 0.8 and 1.2
 		long timeLife = (long) (((Math.random()/2.5)+0.8)*INDEX_TIMELIFE);
-		Log.d("FIRE", "Duration of the fire : "+timeLife);
 		endTime = timeLife + GameContext.getSingleton().gameDuration;
-		gravity = 0.5f;
+		setSpeedY(FALL);
 		play("fire", true, true);
 	}
 
