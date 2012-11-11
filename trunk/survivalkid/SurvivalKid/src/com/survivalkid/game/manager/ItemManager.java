@@ -2,19 +2,12 @@ package com.survivalkid.game.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import android.graphics.Canvas;
-import android.graphics.Point;
+import android.view.MotionEvent;
 
-import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
 import com.survivalkid.game.algo.item.BasicItemGenerator;
 import com.survivalkid.game.entity.GameEntity;
-import com.survivalkid.game.entity.enemy.EnemyEntity;
-import com.survivalkid.game.entity.enemy.impl.Caterpillar;
-import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
-import com.survivalkid.game.entity.enemy.impl.Meteore;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.item.impl.Medkit;
 import com.survivalkid.game.util.TimerUtil;
@@ -31,7 +24,7 @@ public class ItemManager extends ObjectManager {
 	/**
 	 * Generation frequency in ms.
 	 */
-	private long generationFrequency = 5000;
+	private long generationFrequency = 2000;
 
 	private static final List<Class<? extends ItemEntity>> itemMap;
 
@@ -50,6 +43,10 @@ public class ItemManager extends ObjectManager {
 
 	}
 
+	
+	//*******************
+	// UPDATE
+	//*******************	
 	public void update(long gameTime) {
 		// Do we have to generate?
 		if (gameTime - generationCounter >= generationFrequency) {
@@ -76,6 +73,11 @@ public class ItemManager extends ObjectManager {
 		}
 	}
 
+	
+	
+	//*******************
+	// DRAW
+	//*******************	
 	public void draw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		for (ItemEntity item : itemList) {
@@ -83,6 +85,12 @@ public class ItemManager extends ObjectManager {
 		}
 	}
 
+	
+	
+	
+	//*******************
+	// GENERATION FUNCTIONS
+	//*******************	
 	private void generateTimed() {
 		if (!TimerUtil.TIMER_ACTIVE) {
 			generate();
@@ -101,9 +109,32 @@ public class ItemManager extends ObjectManager {
 		}
 	}
 
+	
+	
+	//*******************
+	// CHECK BALLOON TOUCHBOX
+	//*******************	
+	public void checkBalloonTouchBox(MotionEvent event) {
+		for(ItemEntity item : itemList) {
+			if (item.isInBalloon()) {
+				for (int i = 0; i < event.getPointerCount(); i++) {
+					int x = (int) event.getX(i);
+					int y = (int) event.getY(i);
+					
+					//If the balloon is touched
+					if(item.getBalloon().getBalloonTouchBox().contains(x, y)) {
+						item.balloonTouched();
+					}
+					
+				}
+			}
+		}
+	}
+	
+	
+	
 	@Override
 	public void addEntity(GameEntity ge) {
-		// TODO Auto-generated method stub
 		itemList.add((ItemEntity) ge);
 	}
 

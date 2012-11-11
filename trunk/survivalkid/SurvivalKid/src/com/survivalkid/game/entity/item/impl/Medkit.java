@@ -26,6 +26,7 @@ public class Medkit extends ItemEntity {
 	/** Initialize the enemy. */
 	private void init() {
 		timeToLive = 5000;
+		setInBalloon(true);
 		
 		gravity = 1;
 		affectedByFloor = true;
@@ -43,11 +44,7 @@ public class Medkit extends ItemEntity {
 	public void die() {
 		dead = true;
 	}
-
-	@Override
-	public void draw(Canvas canvas) {
-		super.draw(canvas);
-	}
+	
 
 	/**
 	 * Initialize the position, speed and misc. attributes of the enemy.

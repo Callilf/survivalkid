@@ -31,7 +31,12 @@ public class BasicItemGenerator {
 		ItemEntity newItem = null;
 		try {
 			newItem = itemClassToGenerate.newInstance();
-			newItem.initRandomPositionAndSpeed(new Point(0,0));
+			
+			//If in balloon mode, the ballon will initialize it's own spanw point
+			//and the item will spawn at the drop point of the crate
+			if(!newItem.isInBalloon()) {
+				newItem.initRandomPositionAndSpeed(new Point(0,0));
+			}
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
