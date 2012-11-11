@@ -34,7 +34,7 @@ public class FireGround extends EnemyEntity {
 		redefineHitBox((sprite.getWidth() * 15) / 100,
 				(sprite.getHeight() * 65) / 100,
 				(sprite.getWidth() * 75) / 100,
-				(sprite.getHeight() * 35) / 100);
+				(sprite.getHeight() * 30) / 100);
 	}
 	
 	@Override
