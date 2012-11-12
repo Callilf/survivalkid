@@ -35,7 +35,11 @@ public enum SpriteEnum {
 	
 	METEORE(R.drawable.meteor, 1, 1),
 	
+	METEORE_EXPLOSION(R.drawable.meteor_explosion, 6, 2,  new Animation("explode", new int[] { 0, 1, 2, 3, 4, 5}, 20)),
+	
 	FIRE_METEORE(R.drawable.meteor_fire, 1, 1),
+	
+	FIRE_METEORE_EXPLOSION(R.drawable.meteor_fire_explosion, 6, 2,  new Animation("explode", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8}, 20)),
 	
 	MEDKIT(R.drawable.medkit, 1, 1),
 	
