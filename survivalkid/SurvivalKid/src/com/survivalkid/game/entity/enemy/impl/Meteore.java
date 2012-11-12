@@ -50,7 +50,7 @@ public class Meteore extends EnemyEntity {
 		fireAnim = new AnimatedSprite(SpriteEnum.FIRE_TRAIL, 0, 0);
 		
 		// death
-		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_BROWN_LARGE, 0, 0);
+		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_METEORE_EXPLOSION, 0, 0);
 
 		redefineHitBox((sprite.getWidth() * 18) / 100,
 				(sprite.getHeight() * 18) / 100,
@@ -99,9 +99,8 @@ public class Meteore extends EnemyEntity {
 
 		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2)
 				- deathAnim.getWidth() / 2);
-		deathAnim.setY((sprite.getY() + sprite.getHeight() / 2)
-				- deathAnim.getHeight() / 2);
-		deathAnim.play("die", false, true);
+		deathAnim.setY(sprite.getY() - deathAnim.getHeight()/2);
+		deathAnim.play("explode", false, true);
 	}
 	
 	private void setPositionFire() {
