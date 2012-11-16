@@ -1,6 +1,8 @@
 package com.survivalkid.game.entity.enemy.impl;
 
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.enums.SpriteEnum;
+import com.survivalkid.game.util.MoveUtil;
 
 public class FireMeteor extends Meteore {
 	
@@ -14,6 +16,13 @@ public class FireMeteor extends Meteore {
 	@Override
 	protected void terminate() {
 		FireGround fire = creator.createEnemy(FireGround.class, true);
-		fire.place(sprite.getX() + sprite.getWidth()/2 - fire.getSprite().getWidth()/2, sprite.getY());
+		//Log.w("FIRE",""+(Math.min(hitBox.bottom,MoveUtil.GROUND) - fire.getSprite().getHeight())+ " - "+(MoveUtil.GROUND-sprite.getHeight()));
+		fire.place(sprite.getX() + sprite.getWidth()/2 - fire.getSprite().getWidth()/2, 
+				Math.min(hitBox.bottom,MoveUtil.GROUND) - (int)(Math.ceil(fire.getSprite().getHeight()*0.95)));
+	}
+	
+	@Override
+	protected void initDeathAnim() {
+		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_METEORE_EXPLOSION, 0, 0);
 	}
 }

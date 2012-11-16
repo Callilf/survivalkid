@@ -18,7 +18,7 @@ public class Meteore extends EnemyEntity {
 	protected int fallNext = 8;
 	protected int shiftX = 1;
 	
-	private AnimatedSprite deathAnim;
+	protected AnimatedSprite deathAnim;
 	private AnimatedSprite fireAnim;
 	
 	private int directionFire;
@@ -50,7 +50,7 @@ public class Meteore extends EnemyEntity {
 		fireAnim = new AnimatedSprite(SpriteEnum.FIRE_TRAIL, 0, 0);
 		
 		// death
-		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_METEORE_EXPLOSION, 0, 0);
+		initDeathAnim();
 
 		redefineHitBox((sprite.getWidth() * 18) / 100,
 				(sprite.getHeight() * 18) / 100,
@@ -58,6 +58,10 @@ public class Meteore extends EnemyEntity {
 		
 		setPositionFire();
 		fireAnim.play("fire", true, true);
+	}
+	
+	protected void initDeathAnim() {
+		deathAnim = new AnimatedSprite(SpriteEnum.METEORE_EXPLOSION, 0, 0);
 	}
 	
 	@Override
