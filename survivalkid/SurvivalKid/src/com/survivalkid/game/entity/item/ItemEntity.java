@@ -111,6 +111,7 @@ public abstract class ItemEntity extends GameEntity {
 		this.inBalloon = inBalloon;
 		if(inBalloon) {
 			balloon = new BalloonCrate();
+			balloon.setContainedItem(this);
 			balloon.initRandomPositionAndSpeed(null);
 		}
 	}

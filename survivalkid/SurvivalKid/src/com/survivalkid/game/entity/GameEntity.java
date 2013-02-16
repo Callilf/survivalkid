@@ -71,19 +71,22 @@ public abstract class GameEntity {
 	/**
 	 * Constructor called by parents class
 	 * 
-	 * @param _name name of the entity
-	 * @param SpriteEnum the sprite of the entity
-	 * @param x position x initial
-	 * @param y position y initial
+	 * @param _name
+	 *            name of the entity
+	 * @param SpriteEnum
+	 *            the sprite of the entity
+	 * @param x
+	 *            position x initial
+	 * @param y
+	 *            position y initial
 	 */
 	public GameEntity(String _name, SpriteEnum spriteEnum, int x, int y) {
 		id = lastId++;
 		name = _name;
 		sprite = new AnimatedSprite(spriteEnum, x, y);
 		offsets = new Rect(0, 0, sprite.getWidth(), sprite.getHeight());
-		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
-				+ offsets.top, sprite.getX() + offsets.left + offsets.right,
-				sprite.getY() + offsets.top + offsets.bottom);
+		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
+				+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
 		direction = DirectionConstants.RIGHT;
 
 		isMovingHorizontally = false;
@@ -99,13 +102,10 @@ public abstract class GameEntity {
 		dead = false;
 
 		// check the correspondence between sprite and hitbox
-		Log.d(TAG,
-				"init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY()
-						+ ", width=" + sprite.getWidth() + ", height="
-						+ sprite.getHeight());
-		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right="
-				+ hitBox.right + ", top=" + hitBox.top + ", bottom="
-				+ hitBox.bottom);
+		Log.d(TAG, "init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY() + ", width=" + sprite.getWidth()
+				+ ", height=" + sprite.getHeight());
+		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right=" + hitBox.right + ", top=" + hitBox.top
+				+ ", bottom=" + hitBox.bottom);
 	}
 
 	/**
@@ -159,27 +159,23 @@ public abstract class GameEntity {
 		offsets = new Rect(x, y, width, height);
 		updateHitBox();
 	}
-	
+
 	protected void updateHitBox() {
 		if (direction == DirectionConstants.LEFT) {
-			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left
-					- offsets.right, sprite.getY() + offsets.top, sprite.getX()
-					+ sprite.getWidth() - offsets.left, sprite.getY()
-					+ offsets.top + offsets.bottom);
+			hitBox = new Rect(sprite.getX() + sprite.getWidth() - offsets.left - offsets.right, sprite.getY()
+					+ offsets.top, sprite.getX() + sprite.getWidth() - offsets.left, sprite.getY() + offsets.top
+					+ offsets.bottom);
 		} else {
-			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY()
-					+ offsets.top,
-					sprite.getX() + offsets.left + offsets.right, sprite.getY()
-							+ offsets.top + offsets.bottom);
-		}		
+			hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
+					+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
+		}
 	}
-	
+
 	public void update(long gameTime) {
 		move();
 
 		sprite.update(gameTime, direction);
 		updateHitBox();
-
 
 		// Handle the changes of state
 		if (changedState) {
@@ -236,8 +232,13 @@ public abstract class GameEntity {
 	 * @return true if on the floor
 	 */
 	public boolean onFloor() {
-		//return sprite.getY() == (MoveUtil.GROUND - sprite.getHeight());
+		// return sprite.getY() == (MoveUtil.GROUND - sprite.getHeight());
 		return hitBox.bottom == MoveUtil.GROUND;
+	}
+
+	public boolean onScreen() {
+		return (sprite.getX() + sprite.getWidth() >= 0) && (sprite.getY() + sprite.getHeight() >= 0)
+				&& sprite.getX() < MoveUtil.SCREEN_WIDTH && sprite.getY() < MoveUtil.SCREEN_HEIGHT;
 	}
 
 	/**
@@ -299,10 +300,9 @@ public abstract class GameEntity {
 	// --------------------------------------------
 	// ---- private functions
 	// --------------------------------------------
-	private void addY(int _dy) {	
+	private void addY(int _dy) {
 		_dy = MoveUtil.normY(_dy);
-		
-		
+
 		isOnFloor = false;
 		isJumpingUp = false;
 		isJumpingDown = false;
@@ -312,8 +312,7 @@ public abstract class GameEntity {
 		if (affectedByCeiling && newY < 0) {
 			actualDY = -hitBox.top;
 			speedY = 0;
-		} else if (affectedByFloor
-				&& hitBox.bottom+_dy > MoveUtil.GROUND) {
+		} else if (affectedByFloor && hitBox.bottom + _dy > MoveUtil.GROUND) {
 			actualDY = MoveUtil.GROUND - hitBox.bottom;
 			speedY = 0;
 			isOnFloor = true;
@@ -327,7 +326,7 @@ public abstract class GameEntity {
 			isJumpingUp = true;
 		}
 	}
-	
+
 	/**
 	 * Adds _dx to the position of the sprite, checking if it goes out of
 	 * screen. If it does reset speed to 0.
@@ -336,7 +335,7 @@ public abstract class GameEntity {
 	 */
 	private void addX(int _dx) {
 		_dx = MoveUtil.normX(_dx);
-		
+
 		isMovingHorizontally = false;
 		// calculate the actual translation
 		int newX = hitBox.left + _dx;
@@ -346,8 +345,7 @@ public abstract class GameEntity {
 			// is out of the screen, give a positive dx to return in the screen
 			actualDX = -hitBox.left;
 			speedX = 0;
-		} else if (affectedByWalls
-				&& newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
+		} else if (affectedByWalls && newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
 			actualDX = MoveUtil.SCREEN_WIDTH - hitBox.right;
 			speedX = 0;
 		} else {
@@ -367,8 +365,7 @@ public abstract class GameEntity {
 			isMovingHorizontally = true;
 
 			if (!(this instanceof Personage)) {
-				direction = (_dx > 0) ? DirectionConstants.RIGHT
-						: DirectionConstants.LEFT;
+				direction = (_dx > 0) ? DirectionConstants.RIGHT : DirectionConstants.LEFT;
 			}
 		}
 	}
@@ -380,23 +377,23 @@ public abstract class GameEntity {
 			update(gameTime);
 			return;
 		}
-		String object = "u-"+name;
+		String object = "u-" + name;
 		TimerUtil.start(object);
 		update(gameTime);
 		TimerUtil.end(object);
 	}
-	
+
 	public void drawTimed(Canvas canvas) {
 		if (!TimerUtil.TIMER_ACTIVE) {
 			draw(canvas);
 			return;
 		}
-		String object = "d-"+name;
+		String object = "d-" + name;
 		TimerUtil.start(object);
 		draw(canvas);
-		TimerUtil.end(object);		
+		TimerUtil.end(object);
 	}
-	
+
 	// --------------------------------------------
 	// ---- Getters and Setters
 	// --------------------------------------------
