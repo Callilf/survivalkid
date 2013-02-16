@@ -8,13 +8,13 @@ public abstract class AbstractMove {
 	
 	// GRAVITY
 	// public int GRAVITY = 3;
-	protected int NB_FRAME_JUMP = (int) (9/MainThread.FPS_RATIO);
+	protected int NB_FRAME_JUMP = (int) (20/MainThread.FPS_RATIO);
 	protected int NB_FRAME_JUMP_SLOW = (int) (17/MainThread.FPS_RATIO);
 	
-	protected float VITESSE_MAX_X = 8;
-	protected float ACCELERATION_X = 1f;
+	protected float VITESSE_MAX_X = 7;
+	protected float ACCELERATION_X = 0.7f;
 	protected float DECELERATE_X = 1;
-	protected float VITESSE_Y = -15;
+	protected float VITESSE_Y = -12;
 	
 	private int durationJump = 0;
 	private boolean isDescending = false;
