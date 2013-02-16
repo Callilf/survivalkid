@@ -17,6 +17,10 @@ public class BalloonCrate extends ItemEntity {
 
 	private AnimatedSprite deathAnim;
 	private boolean dying;
+	private ItemEntity containedItem;
+	
+	//Used to check when the crate leaves the screen
+	private boolean wasOnScreen;
 
 	private boolean pierced = false;
 	private boolean explosionBegin = false;
@@ -93,9 +97,16 @@ public class BalloonCrate extends ItemEntity {
 				+ (sprite.getWidth() * 36) / 100, sprite.getY() + (sprite.getHeight() * 5) / 100
 				+ (sprite.getHeight() * 45) / 100));
 
-		if (onFloor()) {
+		if (onFloor() && onScreen()) {
 			releaseObject = true;
 			explode();
+		}
+		
+		if(onScreen() && !wasOnScreen) {
+			wasOnScreen = true;
+		} else if (wasOnScreen && !onScreen()) {
+			dead = true;
+			containedItem.setDead(true);
 		}
 
 		super.update(gameTime);
@@ -201,6 +212,20 @@ public class BalloonCrate extends ItemEntity {
 	 */
 	public boolean isPierced() {
 		return pierced;
+	}
+
+	/**
+	 * @return the containedItem
+	 */
+	public ItemEntity getContainedItem() {
+		return containedItem;
+	}
+
+	/**
+	 * @param containedItem the containedItem to set
+	 */
+	public void setContainedItem(ItemEntity containedItem) {
+		this.containedItem = containedItem;
 	}
 
 }
