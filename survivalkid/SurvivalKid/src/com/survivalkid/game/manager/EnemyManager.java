@@ -36,7 +36,7 @@ public class EnemyManager extends ObjectManager {
 	/**
 	 * Generation frequency in ms.
 	 */
-	private long generationFrequency = 1000;
+	private long generationFrequency = 1500;
 	private long difficultyIncreasingPeriod = 3000;
 
 	private static final Map<Integer, List<Class<? extends EnemyEntity>>> enemyDifficultyMap;
