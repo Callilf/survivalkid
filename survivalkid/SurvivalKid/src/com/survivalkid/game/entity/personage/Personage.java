@@ -86,6 +86,20 @@ public class Personage extends GameEntity {
 		Log.d(TAG, "Personage " + persoType + " created");
 	}
 
+	/**
+	 * @return the persoType
+	 */
+	public int getPersoType() {
+		return persoType;
+	}
+
+	/**
+	 * @param persoType the persoType to set
+	 */
+	public void setPersoType(int persoType) {
+		this.persoType = persoType;
+	}
+
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		// TODO Auto-generated method stub
