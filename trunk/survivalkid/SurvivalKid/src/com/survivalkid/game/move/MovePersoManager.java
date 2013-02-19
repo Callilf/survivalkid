@@ -150,5 +150,20 @@ public class MovePersoManager {
 	public boolean isHorizontalMoving() {
 		return isLeftEnabled || isRightEnabled;
 	}
+	
+	/**
+	 * change the speed of the player
+	 * @param factor
+	 */
+	public void changeSpeed(float factor) {
+		moveImpl.modifySpeedPlayer(factor);
+	}
+	
+	/**
+	 * Reset the default speed
+	 */
+	public void reinitializeSpeed() {
+		moveImpl.init();
+	}
 }
 

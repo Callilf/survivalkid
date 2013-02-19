@@ -1,27 +1,31 @@
 package com.survivalkid.game.entity.item.impl;
 
 import com.survivalkid.game.core.enums.SpriteEnum;
+import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
-import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.singleton.GameContext;
 
-public class Medkit extends StandardObject {
+public class PlayerSpeedReducer extends StandardObject {
+	
+	/** Duration of the effect */
+	private static final long PLAYER_SPEED_REDUCING_DURATION = 4000;
 	
 	/** Default constructor. */
-	public Medkit() {
-		super("Medkit", SpriteEnum.MEDKIT, 0, 0, 0);
-	}
+	public PlayerSpeedReducer() {
+		super("PlayerSpeedReducer", SpriteEnum.PLAYER_SPEED_REDUCER, 0, 0, 0);
+	};
 	
 	/** Default constructor. */
-	public Medkit(int _x, int _y) {
-		super("Medkit", SpriteEnum.MEDKIT, _x, _y, 0);
+	public PlayerSpeedReducer(int _x, int _y) {
+		super("PlayerSpeedReducer", SpriteEnum.PLAYER_SPEED_REDUCER, _x, _y, 0);
 		init();
-	}
+	};
 
 	@Override
 	protected void init() {
-		timeToLive = 5000;
+		timeToLive = 4000;
 		setInBalloon(true);
 		
 		gravity = 1;
@@ -34,7 +38,8 @@ public class Medkit extends StandardObject {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).revoceryLife(30, EnumLife.RECOVERY_LIFE);
+			long expiration = GameContext.getSingleton().gameDuration + PLAYER_SPEED_REDUCING_DURATION;
+			_gameEntity.addState(StateEnum.STATE_LOW_SPEED, expiration);
 			die();
 		}
 	}
