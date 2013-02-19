@@ -177,10 +177,10 @@ public abstract class GameEntity {
 		}
 	}
 
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		move();
 
-		sprite.update(gameTime, direction);
+		sprite.update(gameDuration, direction);
 		updateHitBox();
 
 		// update states
@@ -413,14 +413,14 @@ public abstract class GameEntity {
 
 	// for timer
 
-	public void updateTimed(long gameTime) {
+	public void updateTimed(long gameDuration) {
 		if (!TimerUtil.TIMER_ACTIVE) {
-			update(gameTime);
+			update(gameDuration);
 			return;
 		}
 		String object = "u-" + name;
 		TimerUtil.start(object);
-		update(gameTime);
+		update(gameDuration);
 		TimerUtil.end(object);
 	}
 

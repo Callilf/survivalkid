@@ -116,9 +116,9 @@ public class Meteore extends EnemyEntity {
 	}
 	
 	@Override
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		if (dying) {
-			deathAnim.update(gameTime, DirectionConstants.RIGHT);
+			deathAnim.update(gameDuration, DirectionConstants.RIGHT);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
 				terminate();
@@ -142,10 +142,10 @@ public class Meteore extends EnemyEntity {
 			setSpeedY(fallNext);		
 		}
 		
-		super.update(gameTime);
+		super.update(gameDuration);
 		// update of the fire after the meteor is moved
 		setPositionFire();
-		fireAnim.update(gameTime, directionFire);
+		fireAnim.update(gameDuration, directionFire);
 	}
 	
 	protected void terminate() {

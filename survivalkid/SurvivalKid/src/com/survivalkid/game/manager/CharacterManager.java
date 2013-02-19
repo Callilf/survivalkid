@@ -45,14 +45,14 @@ public class CharacterManager implements IManager {
 		characterList = new ArrayList<Personage>();
 	}
 
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		// TODO Auto-generated method stub
 
 		for (Personage perso : characterList) {
 			if (perso.isDead()) {
 				deadCharacters.add(perso);
 			} else {
-				perso.updateTimed(gameTime);
+				perso.updateTimed(gameDuration);
 			}
 		}
 

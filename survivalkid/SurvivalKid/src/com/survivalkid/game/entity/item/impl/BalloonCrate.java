@@ -64,12 +64,12 @@ public class BalloonCrate extends ItemEntity {
 	}
 
 	@Override
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		if (explosionBegin) {
 			play("explode", false, true);
 			exploding = true;
 			explosionBegin = false;
-			super.update(gameTime);
+			super.update(gameDuration);
 			return;
 		} else if (exploding) {
 			if (sprite.isAnimationFinished()) {
@@ -77,7 +77,7 @@ public class BalloonCrate extends ItemEntity {
 				exploding = false;
 				play("exploded", true, true);
 			}
-			super.update(gameTime);
+			super.update(gameDuration);
 			return;
 		} else if (falling) {
 			stop();
@@ -85,7 +85,7 @@ public class BalloonCrate extends ItemEntity {
 		}
 
 		if (dying) {
-			deathAnim.update(gameTime, direction);
+			deathAnim.update(gameDuration, direction);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
 			}
@@ -109,7 +109,7 @@ public class BalloonCrate extends ItemEntity {
 			containedItem.setDead(true);
 		}
 
-		super.update(gameTime);
+		super.update(gameDuration);
 	}
 
 	@Override

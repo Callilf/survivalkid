@@ -49,10 +49,10 @@ public class ItemManager extends ObjectManager {
 	//*******************
 	// UPDATE
 	//*******************	
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		// Do we have to generate?
-		if (gameTime - generationCounter >= generationFrequency) {
-			generationCounter = gameTime;
+		if (gameDuration - generationCounter >= generationFrequency) {
+			generationCounter = gameDuration;
 			generateTimed();
 		}
 
@@ -61,7 +61,7 @@ public class ItemManager extends ObjectManager {
 				// Clean the list by removing all the dead items
 				deadItems.add(item);
 			} else {
-				item.updateTimed(gameTime);
+				item.updateTimed(gameDuration);
 			}
 		}
 

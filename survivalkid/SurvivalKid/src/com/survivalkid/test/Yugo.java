@@ -37,9 +37,9 @@ public class Yugo {
 		}
 		
 		
-		public void update(long gameTime) {
-			if (gameTime > frameTicker + framePeriod) {
-				frameTicker = gameTime;
+		public void update(long gameDuration) {
+			if (gameDuration > frameTicker + framePeriod) {
+				frameTicker = gameDuration;
 				// increment the frame
 				currentFrame++;
 				if (currentFrame >= frameNr) {

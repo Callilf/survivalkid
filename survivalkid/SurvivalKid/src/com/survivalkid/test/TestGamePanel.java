@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.R;
+import com.survivalkid.game.singleton.GameContext;
 
 public class TestGamePanel extends SurfaceView implements
 		SurfaceHolder.Callback {
@@ -51,7 +52,7 @@ public class TestGamePanel extends SurfaceView implements
 	 * engine's update method.
 	 */
 	public void update() {
-		yugo.update(System.currentTimeMillis());
+		yugo.update(GameContext.getSingleton().gameDuration);
 	}
 
 

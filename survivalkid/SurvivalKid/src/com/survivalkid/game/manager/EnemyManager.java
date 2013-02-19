@@ -66,16 +66,16 @@ public class EnemyManager extends ObjectManager {
 		enemyList = new ArrayList<EnemyEntity>();
 	}
 
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		
 		// Do we have to generate?
-		if (gameTime - generationCounter >= generationFrequency) {
-			generationCounter = gameTime;
+		if (gameDuration - generationCounter >= generationFrequency) {
+			generationCounter = gameDuration;
 			generateTimed();
 		}
 		
-		if(generationFrequency != 500 && gameTime - difficultyIncreasingCounter >= difficultyIncreasingPeriod) {
-			difficultyIncreasingCounter = gameTime;
+		if(generationFrequency != 500 && gameDuration - difficultyIncreasingCounter >= difficultyIncreasingPeriod) {
+			difficultyIncreasingCounter = gameDuration;
 			generationFrequency -= 20;
 			Log.i(TAG, "Generation frequency : " + generationFrequency);
 			if(generationFrequency <= 500) {
@@ -88,7 +88,7 @@ public class EnemyManager extends ObjectManager {
 			if (enemy.isDead()) {
 				deadEnemies.add(enemy);
 			} else {
-				enemy.updateTimed(gameTime);
+				enemy.updateTimed(gameDuration);
 			}
 		}
 

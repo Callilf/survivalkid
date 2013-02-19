@@ -89,10 +89,10 @@ public class AnimatedSprite {
 	/**
 	 * Update.
 	 * 
-	 * @param gameTime
+	 * @param gameDuration
 	 *            current time
 	 */
-	public void update(long gameTime, int direction) {
+	public void update(long gameDuration, int direction) {
 		if (bitmap == null || sourceRect == null) {
 			Log.d(TAG, "Update on a sprite with a bitmap or a sourceRect null");
 			return;
@@ -105,8 +105,8 @@ public class AnimatedSprite {
 			// there is an animation running
 		} else if (animating) {
 			Animation currAnim = animations.get(currentAnimation);
-			if (gameTime > frameTicker + (1000 / currAnim.getFps())) {
-				frameTicker = gameTime;
+			if (gameDuration > frameTicker + (1000 / currAnim.getFps())) {
+				frameTicker = gameDuration;
 
 				currentIndex++;
 				// If it was the last frame of the animation

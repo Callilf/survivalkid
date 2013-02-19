@@ -134,13 +134,14 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void update() {
 		long gameTime = System.currentTimeMillis();
-		chrono.setTime(GameContext.getSingleton().gameDuration);
+		long gameDuration = GameContext.getSingleton().gameDuration;
+		chrono.setTime(gameDuration);
 		GameContext.getSingleton().setCurrentTimeMillis(gameTime);
 
 		// Update the gameEntities
-		enemyManager.update(gameTime);
-		itemManager.update(gameTime);
-		characterManager.update(gameTime);
+		enemyManager.update(gameDuration);
+		itemManager.update(gameDuration);
+		characterManager.update(gameDuration);
 
 		// Check the collisions
 		for (Personage perso : characterManager.getCharacterList()) {
