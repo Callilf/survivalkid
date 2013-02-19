@@ -47,15 +47,15 @@ public abstract class ItemEntity extends GameEntity {
 	public ItemEntity(String _name, SpriteEnum spriteEnum, int _x, int _y, int _power) {
 		super(_name, spriteEnum, _x, _y);
 		power = _power;
-		spawnTime = GameContext.getSingleton().getCurrentTimeMillis();
+		spawnTime = GameContext.getSingleton().gameDuration;
 		blinking = false;
 	}
 
 	@Override
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		if(inBalloon) {
 			
-			balloon.update(gameTime);
+			balloon.update(gameDuration);
 			
 			if( balloon.isDead()) {
 				inBalloon = false;
@@ -64,7 +64,7 @@ public abstract class ItemEntity extends GameEntity {
 			if(balloon.isReleaseObject() && !released) {
 				setX(balloon.getSprite().getX() + balloon.getSprite().getWidth()/2 - sprite.getWidth()/2);
 				setY(MoveUtil.GROUND - sprite.getHeight());
-				spawnTime = GameContext.getSingleton().getCurrentTimeMillis();
+				spawnTime = gameDuration;
 				blinking = false;
 				released = true;
 			} else if(!balloon.isReleaseObject()){
@@ -74,16 +74,16 @@ public abstract class ItemEntity extends GameEntity {
 		
 		
 		
-		super.update(gameTime);
+		super.update(gameDuration);
 
 		if (!blinking) {
-			if (gameTime - spawnTime > timeToLive) {
+			if (gameDuration - spawnTime > timeToLive) {
 				blinking = true;
-				blinkBeginTime = gameTime;
+				blinkBeginTime = gameDuration;
 			}
 		} else {
 			sprite.setRecovery(true);
-			if (gameTime - blinkBeginTime > blinkDuration) {
+			if (gameDuration - blinkBeginTime > blinkDuration) {
 				dead = true;
 			}
 		}

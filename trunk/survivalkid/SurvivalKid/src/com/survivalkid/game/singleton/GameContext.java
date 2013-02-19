@@ -20,8 +20,9 @@ public class GameContext {
 	public int currentDifficulty;
 	/** The current score. */
 	public int score;
-	/** The current time in milliseconds */
-	public long currentTimeMillis;
+	
+	/** The current time in milliseconds - do not be use anymore or for statistic only */
+	private long currentTimeMillis;
 	
 	/** Get the singleton. */
 	public static GameContext getSingleton() {
@@ -59,6 +60,8 @@ public class GameContext {
 	}
 
 	/**
+	 * This function should be use only for statistics, and not for the game (gameDuration should be use)
+	 * 
 	 * @return the currentTimeMillis
 	 */
 	public long getCurrentTimeMillis() {

@@ -1,12 +1,13 @@
 package com.survivalkid.game.entity;
 
-import com.survivalkid.game.entity.Life.EnumLife;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Typeface;
+
+import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.singleton.GameContext;
 
 public class LifeChangeDisplayer {
 
@@ -19,21 +20,21 @@ public class LifeChangeDisplayer {
 	
 	private Point position;
 	
-	public LifeChangeDisplayer(int _damages, EnumLife _typeChange, long _beginTime, int _x, int _y) {
+	public LifeChangeDisplayer(int _damages, EnumLife _typeChange, int _x, int _y) {
 		//Text
 		paint = new Paint(); 
 		paint.setTextSize(20);
 		paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 		
 		typeChange = _typeChange;
-		displayDamagesBeginTime = _beginTime;
+		displayDamagesBeginTime = GameContext.getSingleton().gameDuration;
 		damageTaken = _damages * typeChange.getFacteur();
 		position = new Point(_x,_y);
 		setOver(false);
 	}
 	
-	public void update(long gameTime) {
-		if(gameTime - displayDamagesBeginTime >= displayDamagesDuration) {
+	public void update(long gameDuration) {
+		if(gameDuration - displayDamagesBeginTime >= displayDamagesDuration) {
 			over = true;
 		} else {
 			position.offset(0, -1);

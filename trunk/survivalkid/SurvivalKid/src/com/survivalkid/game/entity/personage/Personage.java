@@ -115,8 +115,7 @@ public class Personage extends GameEntity {
 		addState(StateEnum.STATE_RECOVERY, GameContext.getSingleton().gameDuration + _recoveryMaxTime);
 		
 		//Display the damages above the head of the character
-		damages.add(new LifeChangeDisplayer(_damage, _typeChange,
-				System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));		
+		damages.add(new LifeChangeDisplayer(_damage, _typeChange, sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));		
 	}
 	
 	/**
@@ -135,8 +134,7 @@ public class Personage extends GameEntity {
 	 */
 	public void revoceryLife(int _bonusLife, EnumLife typeChange) {
 		life.modifyLife(_bonusLife, typeChange);
-		damages.add(new LifeChangeDisplayer(_bonusLife, typeChange,
-				System.currentTimeMillis(), sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
+		damages.add(new LifeChangeDisplayer(_bonusLife, typeChange,	sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
 	}
 
 	@Override
@@ -150,9 +148,9 @@ public class Personage extends GameEntity {
 	}
 
 	@Override
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		if (dying) {
-			deathAnim.update(gameTime, direction);
+			deathAnim.update(gameDuration, direction);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
 			}
@@ -172,7 +170,7 @@ public class Personage extends GameEntity {
 			direction = DirectionConstants.RIGHT;
 		}		
 
-		super.update(gameTime);
+		super.update(gameDuration);
 
 		// Play the correct animation
 		if (isJumpingUp) {
@@ -187,7 +185,7 @@ public class Personage extends GameEntity {
 		
 		//Handle the damage displayers
 		for(LifeChangeDisplayer dd : damages) {
-			dd.update(gameTime);
+			dd.update(gameDuration);
 			if(dd.isOver()) {
 				damagesOver.add(dd);
 			}

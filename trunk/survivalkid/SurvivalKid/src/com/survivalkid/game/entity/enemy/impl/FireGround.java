@@ -1,7 +1,6 @@
 package com.survivalkid.game.entity.enemy.impl;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
@@ -65,8 +64,8 @@ public class FireGround extends EnemyEntity {
 	}
 	
 	@Override
-	public void update(long gameTime) {
-		super.update(gameTime);
+	public void update(long gameDuration) {
+		super.update(gameDuration);
 		if (GameContext.getSingleton().gameDuration > endTime) {
 			dead = true;
 		}

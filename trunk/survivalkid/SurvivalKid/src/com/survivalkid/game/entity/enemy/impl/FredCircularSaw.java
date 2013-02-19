@@ -91,11 +91,11 @@ public class FredCircularSaw extends EnemyEntity {
 	}
 
 	@Override
-	public void update(long gameTime) {
+	public void update(long gameDuration) {
 		if (state == STATE_SAW) {
 			drawSaw = true;
 			if (dying) {
-				deathAnim.update(gameTime, DirectionConstants.RIGHT);
+				deathAnim.update(gameDuration, DirectionConstants.RIGHT);
 				if (deathAnim.isAnimationFinished()) {
 					dead = true;
 				}
@@ -126,11 +126,11 @@ public class FredCircularSaw extends EnemyEntity {
 				die();
 			}
 			
-			super.update(gameTime);
+			super.update(gameDuration);
 		}
 
 		// DRAW THE LINE
-		else if (state == STATE_LINE && draw && gameTime > lastDrawnTime + drawPointPeriod) {
+		else if (state == STATE_LINE && draw && gameDuration > lastDrawnTime + drawPointPeriod) {
 			Point newPoint = null;
 
 			int newX = lastDrawnPoint.x + sawFramesPeriod*normX(speed);
