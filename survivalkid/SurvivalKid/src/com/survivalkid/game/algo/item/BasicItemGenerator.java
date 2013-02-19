@@ -26,7 +26,7 @@ public class BasicItemGenerator {
 			return null;
 		}
 		
-		Class<? extends ItemEntity> itemClassToGenerate = itemList.get(0);
+		Class<? extends ItemEntity> itemClassToGenerate = itemList.get((int) (Math.random() * itemList.size()));
 		
 		ItemEntity newItem = null;
 		try {

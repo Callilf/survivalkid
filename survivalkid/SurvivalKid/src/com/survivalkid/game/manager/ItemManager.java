@@ -10,6 +10,7 @@ import com.survivalkid.game.algo.item.BasicItemGenerator;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.item.impl.Medkit;
+import com.survivalkid.game.entity.item.impl.PlayerSpeedReducer;
 import com.survivalkid.game.util.TimerUtil;
 
 public class ItemManager extends ObjectManager {
@@ -31,6 +32,7 @@ public class ItemManager extends ObjectManager {
 	static {
 		itemMap = new ArrayList<Class<? extends ItemEntity>>();
 		itemMap.add(Medkit.class);
+		itemMap.add(PlayerSpeedReducer.class);
 	}
 
 	public ItemManager() {

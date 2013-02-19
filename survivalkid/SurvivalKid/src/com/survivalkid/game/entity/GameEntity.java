@@ -1,5 +1,11 @@
 package com.survivalkid.game.entity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -10,6 +16,7 @@ import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.TimerUtil;
@@ -56,8 +63,7 @@ public abstract class GameEntity {
 	protected int maxSpeedDown = 20;
 
 	/** States. */
-	private boolean changedState;
-	protected StateEnum state;
+	protected Map<StateEnum,Long> states;
 	protected boolean dead;
 
 	// for test
@@ -88,6 +94,7 @@ public abstract class GameEntity {
 		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
 				+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
 		direction = DirectionConstants.RIGHT;
+		states = new HashMap<StateEnum,Long>();
 
 		isMovingHorizontally = false;
 		isJumpingUp = false;
@@ -98,7 +105,6 @@ public abstract class GameEntity {
 		affectedByWalls = true;
 		affectedByCeiling = true;
 
-		changedState = false;
 		dead = false;
 
 		// check the correspondence between sprite and hitbox
@@ -177,17 +183,52 @@ public abstract class GameEntity {
 		sprite.update(gameTime, direction);
 		updateHitBox();
 
-		// Handle the changes of state
-		if (changedState) {
-			if (StateEnum.STATE_RECOVERY.equals(state)) {
-				sprite.setRecovery(true);
-			} else if (StateEnum.STATE_NORMAL.equals(state)) {
-				sprite.setRecovery(false);
+		// update states
+		if (!states.isEmpty()) {
+			List<StateEnum> stateToRemove = new ArrayList<StateEnum>();
+			for (Entry<StateEnum, Long> state : states.entrySet()) {
+				long expiration = state.getValue();
+				if (expiration < GameContext.getSingleton().gameDuration)
+				{
+					stateToRemove.add(state.getKey());
+				}
 			}
-			changedState = false;
+			for (StateEnum stateEnum : stateToRemove) {
+				processEndState(stateEnum);
+				states.remove(stateEnum);
+			}
+		}
+
+	}
+	
+	/**
+	 * Process the action to do when a state is gone.
+	 * 
+	 * @param stateEnum the state
+	 */
+	protected void processEndState(StateEnum stateEnum) {
+		switch(stateEnum) {
+		case STATE_RECOVERY: 
+			sprite.setRecovery(false);break;
+		default:
+			break;
 		}
 	}
 
+	/**
+	 * Process the action to do when a state is gone.
+	 * 
+	 * @param stateEnum the state
+	 */
+	protected void processStartState(StateEnum stateEnum) {
+		switch(stateEnum) {
+		case STATE_RECOVERY: 
+			sprite.setRecovery(true);break;
+		default:
+			break;
+		}
+	}	
+	
 	/**
 	 * DRAW !
 	 * 
@@ -488,21 +529,14 @@ public abstract class GameEntity {
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
-
-	/**
-	 * @return the state
-	 */
-	public StateEnum getState() {
-		return state;
+	
+	public void addState(StateEnum state, long expiration) {
+		processStartState(state);
+		states.put(state, expiration);
 	}
-
-	/**
-	 * @param state
-	 *            the state to set
-	 */
-	public void setState(StateEnum state) {
-		changedState = true;
-		this.state = state;
+	
+	public boolean hasState(StateEnum state) {
+		return states.containsKey(state);
 	}
 
 }

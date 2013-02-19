@@ -16,6 +16,7 @@ import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.LifeChangeDisplayer;
 import com.survivalkid.game.move.MovePersoManager;
+import com.survivalkid.game.singleton.GameContext;
 
 public class Personage extends GameEntity {
 	private static final String TAG = Personage.class.getSimpleName();
@@ -28,10 +29,6 @@ public class Personage extends GameEntity {
 	private AnimatedSprite deathAnim;
 
 	private boolean dying;
-	
-	//State recovery
-	private int recoveryMaxTime = 700;
-	private long recoveryBeginTime;
 	
 	//Damages when the player has been hit
 	private List<LifeChangeDisplayer> damages;
@@ -64,10 +61,7 @@ public class Personage extends GameEntity {
 		life = new Life(100);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 		dying = false;
-		
-		//state attributes
-		recoveryBeginTime = -1;
-		
+
 		//damages
 		damages = new ArrayList<LifeChangeDisplayer>();
 		damagesOver = new ArrayList<LifeChangeDisplayer>();
@@ -113,13 +107,12 @@ public class Personage extends GameEntity {
 	 * @param recoveryMaxTime duration of the recovery
 	 */
 	public void takeDamage(int _damage, EnumLife _typeChange, int _recoveryMaxTime) {
-		if (StateEnum.STATE_RECOVERY.equals(state)) {
+		if (hasState(StateEnum.STATE_RECOVERY)) {
 			return;
 		}
 
 		life.modifyLife(_damage, _typeChange);
-		setState(StateEnum.STATE_RECOVERY);
-		recoveryMaxTime = _recoveryMaxTime;
+		addState(StateEnum.STATE_RECOVERY, GameContext.getSingleton().gameDuration + _recoveryMaxTime);
 		
 		//Display the damages above the head of the character
 		damages.add(new LifeChangeDisplayer(_damage, _typeChange,
@@ -177,22 +170,7 @@ public class Personage extends GameEntity {
 			direction = DirectionConstants.LEFT;
 		} else if (movePersoManager.isRightEnabled) {
 			direction = DirectionConstants.RIGHT;
-		}
-		
-		//Handle the update of different states
-		if (StateEnum.STATE_RECOVERY.equals(state)) {
-			if(recoveryBeginTime == -1) {
-				recoveryBeginTime = gameTime;
-			}
-			
-			if(gameTime - recoveryBeginTime >= recoveryMaxTime) {
-				setState(StateEnum.STATE_NORMAL);
-				recoveryBeginTime = -1;
-			}
-		}
-		
-		
-		
+		}		
 
 		super.update(gameTime);
 
@@ -219,6 +197,26 @@ public class Personage extends GameEntity {
 		}
 	}
 
+	@Override
+	protected void processStartState(StateEnum stateEnum) {
+		switch(stateEnum) {
+		case STATE_LOW_SPEED: 
+			movePersoManager.changeSpeed(0.5f);break;
+		default:
+			super.processStartState(stateEnum);
+		}	
+	}
+	
+	@Override
+	protected void processEndState(StateEnum stateEnum) {
+		switch(stateEnum) {
+		case STATE_LOW_SPEED: 
+			movePersoManager.reinitializeSpeed();break;
+		default:
+			super.processEndState(stateEnum);
+		}	
+	}
+	
 	@Override
 	public void draw(Canvas canvas) {
 		if (dying) {

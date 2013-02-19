@@ -6,20 +6,39 @@ import com.survivalkid.game.thread.MainThread;
 public abstract class AbstractMove {
 	
 	
-	// GRAVITY
-	// public int GRAVITY = 3;
-	protected int NB_FRAME_JUMP = (int) (20/MainThread.FPS_RATIO);
-	protected int NB_FRAME_JUMP_SLOW = (int) (17/MainThread.FPS_RATIO);
+	protected static final int DEFAULT_NB_FRAME_JUMP = (int) (20/MainThread.FPS_RATIO);
+	protected static final int DEFAULT_NB_FRAME_JUMP_SLOW = (int) (17/MainThread.FPS_RATIO);
+
+	protected static final float DEFAULT_VITESSE_MAX_X = 7;
+	protected static final float DEFAULT_ACCELERATION_X = 0.7f;
+	protected static final float DEFAULT_DECELERATE_X = 1;
+	protected static final float DEFAULT_VITESSE_Y = -12;
+
+	protected int nbFrameJump = (int) (20/MainThread.FPS_RATIO);
+	protected int nbFrameJumpSlow = (int) (17/MainThread.FPS_RATIO);
 	
-	protected float VITESSE_MAX_X = 7;
-	protected float ACCELERATION_X = 0.7f;
-	protected float DECELERATE_X = 1;
-	protected float VITESSE_Y = -12;
+	protected float vitesseMaxX = 7;
+	protected float accelerationX = 0.7f;
+	protected float decelerateX = 1;
+	protected float vitesseY = -12;
 	
 	private int durationJump = 0;
 	private boolean isDescending = false;
 	private boolean hasReleasedJump = true;
 	
+	public AbstractMove() {
+		init();
+	}
+	
+	public void init() {
+		nbFrameJump = DEFAULT_NB_FRAME_JUMP;
+		nbFrameJumpSlow = DEFAULT_NB_FRAME_JUMP_SLOW;
+		vitesseMaxX = DEFAULT_VITESSE_MAX_X;
+		accelerationX = DEFAULT_ACCELERATION_X;
+		decelerateX = DEFAULT_DECELERATE_X;
+		vitesseY = DEFAULT_VITESSE_Y;
+	}
+
 	public abstract boolean isOnLeft(int x, int y);
 	
 	public abstract boolean isOnRight(int x, int y);
@@ -27,11 +46,11 @@ public abstract class AbstractMove {
 	public abstract boolean isOnTop(int x, int y);
 	
 	public void moveToLeft(Personage perso) {
-		perso.setSpeedX(Math.max(-VITESSE_MAX_X,perso.getSpeedX()-ACCELERATION_X));
+		perso.setSpeedX(Math.max(-vitesseMaxX,perso.getSpeedX()-accelerationX));
 	}
 	
 	public void moveToRight(Personage perso) {
-		perso.setSpeedX(Math.min(VITESSE_MAX_X,perso.getSpeedX()+ACCELERATION_X));
+		perso.setSpeedX(Math.min(vitesseMaxX,perso.getSpeedX()+accelerationX));
 	}
 	
 	public void jump(Personage perso) {
@@ -39,16 +58,16 @@ public abstract class AbstractMove {
 			hasReleasedJump = false;
 			isDescending = false;
 			durationJump = 0;
-			perso.setSpeedY(VITESSE_Y);
+			perso.setSpeedY(vitesseY);
 		}
 		else if (!isDescending) {
 			// if the perso maintain jump
 			durationJump++;
-			if (durationJump < NB_FRAME_JUMP) {
-				perso.setSpeedY(VITESSE_Y);
+			if (durationJump < nbFrameJump) {
+				perso.setSpeedY(vitesseY);
 			}
-			else if (durationJump < NB_FRAME_JUMP_SLOW) {
-				perso.setSpeedY(VITESSE_Y+perso.getGravity()/2);
+			else if (durationJump < nbFrameJumpSlow) {
+				perso.setSpeedY(vitesseY+perso.getGravity()/2);
 			}
 		}
 	}	
@@ -73,14 +92,23 @@ public abstract class AbstractMove {
 		if (vitesseX != 0) {
 			if (vitesseX > 0)
 			{
-				vitesseX = Math.max(0, vitesseX-DECELERATE_X);
+				vitesseX = Math.max(0, vitesseX-decelerateX);
 			}
 			else
 			{
-				vitesseX = Math.min(0, vitesseX+DECELERATE_X);
+				vitesseX = Math.min(0, vitesseX+decelerateX);
 			}
 			perso.setSpeedX(vitesseX);
 		}
+	}
+	
+	public void modifySpeedPlayer(float factor) {
+		nbFrameJump = (int) (DEFAULT_NB_FRAME_JUMP * 1/factor);
+		nbFrameJumpSlow = (int) (DEFAULT_NB_FRAME_JUMP_SLOW * 1/factor);
+		vitesseMaxX = DEFAULT_VITESSE_MAX_X * factor;
+		accelerationX = DEFAULT_ACCELERATION_X * factor;
+		decelerateX = DEFAULT_DECELERATE_X * factor;
+		vitesseY = DEFAULT_VITESSE_Y * factor;
 	}
 	
 }
