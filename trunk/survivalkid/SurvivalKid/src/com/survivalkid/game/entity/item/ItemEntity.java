@@ -93,7 +93,9 @@ public abstract class ItemEntity extends GameEntity {
 	@Override
 	public void draw(Canvas canvas){
 		if(!inBalloon || balloon.isReleaseObject()){
-			super.draw(canvas);
+			if(!dead) {
+				super.draw(canvas);
+			}
 		}
 		if(inBalloon) {
 			balloon.draw(canvas);

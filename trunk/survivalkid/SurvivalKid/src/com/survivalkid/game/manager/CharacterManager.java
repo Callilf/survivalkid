@@ -102,32 +102,24 @@ public class CharacterManager implements IManager {
 		characterList.add(perso);
 		numberOfPlayers++;
 		
-		
+		//Placement of the life bar and the decoration around it *****************
 		if(characterList.get(OWN_PERSO).getPersoType() == PersonageConstants.PERSO_YUGO) {
-			int leftDisp = (int) (SCREEN_WIDTH * 0.33f);
 			lifeDisplayerPart1 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part1);
-			lifeDisplayerRect1 = new Rect(leftDisp, SCREEN_HEIGHT - 40, leftDisp + lifeDisplayerPart1.getWidth(), SCREEN_HEIGHT - 40 + lifeDisplayerPart1.getHeight());
-			lifeDisplayerPart2 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part2);
-			lifeDisplayerRect2 = new Rect(lifeDisplayerRect1.right, SCREEN_HEIGHT - 40, lifeDisplayerRect1.right + lifeDisplayerPart2.getWidth(),  SCREEN_HEIGHT - 40 + lifeDisplayerPart2.getHeight());
-			lifeDisplayerPart3 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part3);
-			lifeDisplayerRect3 = new Rect(lifeDisplayerRect2.right, SCREEN_HEIGHT - 40, lifeDisplayerRect2.right + lifeDisplayerPart3.getWidth(),  SCREEN_HEIGHT - 40 + lifeDisplayerPart3.getHeight());
-			
-			int left = lifeDisplayerRect2.left;
-			int right = lifeDisplayerRect3.right - 5;
-			sizeLifeBar = right - left;
-			life = new Rect(left, (int) (lifeDisplayerRect2.top + lifeDisplayerPart2.getHeight() * 0.1f) , right, (int) (lifeDisplayerRect2.bottom - lifeDisplayerPart2.getHeight() * 0.1f));
-
-			//lifeDisplayer = BitmapUtil.createBitmap(R.drawable.yugo_life_displayer);
-			//lifeDisplayerRect = new Rect(leftDisp, SCREEN_HEIGHT - 40, lifeDisplayer.getWidth(), lifeDisplayer.getHeight());
 		} else if(characterList.get(OWN_PERSO).getPersoType() == PersonageConstants.PERSO_YUNA) {
-			int leftDisp = (int) (SCREEN_WIDTH * 0.33f);
-			lifeDisplayer = BitmapUtil.createBitmap(R.drawable.yuna_life_displayer);
-			lifeDisplayerRect = new Rect(leftDisp, SCREEN_HEIGHT - 40, lifeDisplayer.getWidth(), lifeDisplayer.getHeight());
-			
-			int left = (int) (SCREEN_WIDTH * 0.4f);
-			int right = (int) (SCREEN_WIDTH * 0.7f);
-			sizeLifeBar = right - left;
-			life = new Rect(left, SCREEN_HEIGHT - 25, right, SCREEN_HEIGHT - 10);
+			lifeDisplayerPart1 = BitmapUtil.createBitmap(R.drawable.yuna_life_bar_part1);
 		}
+		
+		int leftDisp = (int) (SCREEN_WIDTH * 0.33f);
+		lifeDisplayerRect1 = new Rect(leftDisp, SCREEN_HEIGHT - 40, leftDisp + lifeDisplayerPart1.getWidth(), SCREEN_HEIGHT - 40 + lifeDisplayerPart1.getHeight());
+		lifeDisplayerPart2 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part2);
+		lifeDisplayerRect2 = new Rect(lifeDisplayerRect1.right, SCREEN_HEIGHT - 40, lifeDisplayerRect1.right + lifeDisplayerPart2.getWidth(),  SCREEN_HEIGHT - 40 + lifeDisplayerPart2.getHeight());
+		lifeDisplayerPart3 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part3);
+		lifeDisplayerRect3 = new Rect(lifeDisplayerRect2.right, SCREEN_HEIGHT - 40, lifeDisplayerRect2.right + lifeDisplayerPart3.getWidth(),  SCREEN_HEIGHT - 40 + lifeDisplayerPart3.getHeight());
+		
+		int left = lifeDisplayerRect2.left;
+		int right = lifeDisplayerRect3.right - 5;
+		sizeLifeBar = right - left;
+		life = new Rect(left, (int) (lifeDisplayerRect2.top + lifeDisplayerPart2.getHeight() * 0.1f) , right, (int) (lifeDisplayerRect2.bottom - lifeDisplayerPart2.getHeight() * 0.1f));
+		//************************************************************************
 	}
 }

@@ -63,7 +63,7 @@ public class StateDisplayer {
 	public void draw(Canvas canvas) {
 		for(StateEnum stateEnum : map.keySet()) {
 			AnimatedSprite currentSprite = map.get(stateEnum).getSprite();
-			if (currentSprite != null) {
+			if (currentSprite != null && !"".equals(map.get(stateEnum).getRemainingTimeStr())) {
 				currentSprite.draw(canvas, DirectionConstants.RIGHT);
 				canvas.drawText(map.get(stateEnum).getRemainingTimeStr(), currentSprite.getX(),
 						currentSprite.getY() + currentSprite.getHeight() + 20, paint);
