@@ -62,7 +62,6 @@ public class EnemyManager extends ObjectManager {
 	}
 
 	public void create() {
-		// TODO Auto-generated method stub
 		enemyList = new ArrayList<EnemyEntity>();
 	}
 
@@ -110,7 +109,6 @@ public class EnemyManager extends ObjectManager {
 	}
 
 	public void draw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		for (EnemyEntity enemy : enemyList) {
 			enemy.drawTimed(canvas);
 		}
@@ -174,7 +172,6 @@ public class EnemyManager extends ObjectManager {
 
 	@Override
 	public void addEntity(GameEntity ge) {
-		// TODO Auto-generated method stub
 		enemyList.add((EnemyEntity) ge);
 	}
 
