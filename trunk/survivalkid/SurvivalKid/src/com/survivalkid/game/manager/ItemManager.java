@@ -25,7 +25,7 @@ public class ItemManager extends ObjectManager {
 	/**
 	 * Generation frequency in ms.
 	 */
-	private long generationFrequency = 2000;
+	private long generationFrequency = 200;
 
 	private static final List<Class<? extends ItemEntity>> itemMap;
 

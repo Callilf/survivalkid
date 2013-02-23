@@ -20,7 +20,7 @@ import com.survivalkid.game.singleton.GameContext;
 
 public class Personage extends GameEntity {
 	private static final String TAG = Personage.class.getSimpleName();
-	
+
 	private static final int DEFAULT_RECOVERYTIME = 700;
 
 	private int playerNumber = -1;
@@ -29,13 +29,16 @@ public class Personage extends GameEntity {
 	private AnimatedSprite deathAnim;
 
 	private boolean dying;
-	
-	//Damages when the player has been hit
+
+	// Damages when the player has been hit
 	private List<LifeChangeDisplayer> damages;
 	List<LifeChangeDisplayer> damagesOver;
 
 	/** Manager of the move of the perso */
 	private MovePersoManager movePersoManager;
+
+	// Display the state alterations on the top right of the screen
+	private StateDisplayer stateDisplayer;
 
 	/**
 	 * Create a personage
@@ -62,10 +65,12 @@ public class Personage extends GameEntity {
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 		dying = false;
 
-		//damages
+		// damages
 		damages = new ArrayList<LifeChangeDisplayer>();
 		damagesOver = new ArrayList<LifeChangeDisplayer>();
-		
+
+		stateDisplayer = new StateDisplayer();
+
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
 			redefineHitBox((sprite.getWidth() * 30) / 100, (sprite.getHeight() * 10) / 100,
@@ -88,7 +93,8 @@ public class Personage extends GameEntity {
 	}
 
 	/**
-	 * @param persoType the persoType to set
+	 * @param persoType
+	 *            the persoType to set
 	 */
 	public void setPersoType(int persoType) {
 		this.persoType = persoType;
@@ -102,9 +108,12 @@ public class Personage extends GameEntity {
 
 	/**
 	 * 
-	 * @param _damage the amount of damages
-	 * @param typeChange TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
-	 * @param recoveryMaxTime duration of the recovery
+	 * @param _damage
+	 *            the amount of damages
+	 * @param typeChange
+	 *            TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
+	 * @param recoveryMaxTime
+	 *            duration of the recovery
 	 */
 	public void takeDamage(int _damage, EnumLife _typeChange, int _recoveryMaxTime) {
 		if (hasState(StateEnum.STATE_RECOVERY)) {
@@ -113,28 +122,34 @@ public class Personage extends GameEntity {
 
 		life.modifyLife(_damage, _typeChange);
 		addState(StateEnum.STATE_RECOVERY, GameContext.getSingleton().gameDuration + _recoveryMaxTime);
-		
-		//Display the damages above the head of the character
-		damages.add(new LifeChangeDisplayer(_damage, _typeChange, sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));		
+
+		// Display the damages above the head of the character
+		damages.add(new LifeChangeDisplayer(_damage, _typeChange, sprite.getX() + sprite.getWidth() / 2 - 20, sprite
+				.getY()));
 	}
-	
+
 	/**
 	 * When the character is hit
-	 * @param _damage the amount of damages
-	 * @param typeChange TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
+	 * 
+	 * @param _damage
+	 *            the amount of damages
+	 * @param typeChange
+	 *            TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
 	 */
 	public void takeDamage(int _damage, EnumLife _typeChange) {
 		takeDamage(_damage, _typeChange, DEFAULT_RECOVERYTIME);
 	}
-	
+
 	/**
 	 * When the character take a bonus
 	 * 
-	 * @param _bonusLife the amount of hp win
+	 * @param _bonusLife
+	 *            the amount of hp win
 	 */
 	public void revoceryLife(int _bonusLife, EnumLife typeChange) {
 		life.modifyLife(_bonusLife, typeChange);
-		damages.add(new LifeChangeDisplayer(_bonusLife, typeChange,	sprite.getX() + sprite.getWidth()/2 - 20, sprite.getY()));
+		damages.add(new LifeChangeDisplayer(_bonusLife, typeChange, sprite.getX() + sprite.getWidth() / 2 - 20, sprite
+				.getY()));
 	}
 
 	@Override
@@ -163,12 +178,11 @@ public class Personage extends GameEntity {
 		movePersoManager.calculNewSpeed(this);
 
 		// Set the direction based on the button pushed
-		if (movePersoManager.isLeftEnabled && 
-				(!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
+		if (movePersoManager.isLeftEnabled && (!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
 			direction = DirectionConstants.LEFT;
 		} else if (movePersoManager.isRightEnabled) {
 			direction = DirectionConstants.RIGHT;
-		}		
+		}
 
 		super.update(gameDuration);
 
@@ -182,49 +196,70 @@ public class Personage extends GameEntity {
 		} else {
 			play(PersonageConstants.ANIM_STAND, false, true);
 		}
-		
-		//Handle the damage displayers
-		for(LifeChangeDisplayer dd : damages) {
+
+		// Handle the damage displayers
+		for (LifeChangeDisplayer dd : damages) {
 			dd.update(gameDuration);
-			if(dd.isOver()) {
+			if (dd.isOver()) {
 				damagesOver.add(dd);
 			}
 		}
-		for(LifeChangeDisplayer dd : damagesOver) {
+		for (LifeChangeDisplayer dd : damagesOver) {
 			damages.remove(dd);
 		}
+
+		stateDisplayer.update(gameDuration);
 	}
 
 	@Override
-	protected void processStartState(StateEnum stateEnum) {
-		switch(stateEnum) {
-		case STATE_LOW_SPEED: 
-			movePersoManager.changeSpeed(0.5f);break;
+	public void addState(StateEnum state, long expiration) {
+		super.addState(state, expiration);
+		
+		switch (state) {
+		case STATE_LOW_SPEED:
+			stateDisplayer.addState(new AnimatedSprite(SpriteEnum.RED_CLOCK, 0, 0), expiration);
+			break;
 		default:
-			super.processStartState(stateEnum);
-		}	
+			break;
+		}
 	}
 	
 	@Override
+	protected void processStartState(StateEnum stateEnum) {
+		switch (stateEnum) {
+		case STATE_LOW_SPEED:
+			movePersoManager.changeSpeed(0.5f);
+			break;
+		default:
+			super.processStartState(stateEnum);
+		}
+		
+		
+	}
+
+	@Override
 	protected void processEndState(StateEnum stateEnum) {
-		switch(stateEnum) {
-		case STATE_LOW_SPEED: 
-			movePersoManager.reinitializeSpeed();break;
+		switch (stateEnum) {
+		case STATE_LOW_SPEED:
+			movePersoManager.reinitializeSpeed();
+			break;
 		default:
 			super.processEndState(stateEnum);
-		}	
+		}
 	}
-	
+
 	@Override
 	public void draw(Canvas canvas) {
 		if (dying) {
 			deathAnim.draw(canvas, direction);
 		} else {
 			super.draw(canvas);
-			//Handle the damage displayers
-			for(LifeChangeDisplayer dd : damages) {
+			// Handle the damage displayers
+			for (LifeChangeDisplayer dd : damages) {
 				dd.draw(canvas);
 			}
+
+			stateDisplayer.draw(canvas);
 		}
 	}
 

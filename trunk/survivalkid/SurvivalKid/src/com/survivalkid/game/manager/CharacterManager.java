@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.entity.personage.StateDisplayer;
 import com.survivalkid.game.util.BitmapUtil;
 
 public class CharacterManager implements IManager {
@@ -23,7 +24,7 @@ public class CharacterManager implements IManager {
 	private int numberOfPlayers;
 	private List<Personage> characterList;
 	private List<Personage> deadCharacters;
-
+	
 	private Bitmap lifeDisplayer;
 	Rect lifeDisplayerRect;
 	Rect life;
