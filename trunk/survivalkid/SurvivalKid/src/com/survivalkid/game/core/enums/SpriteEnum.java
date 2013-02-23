@@ -27,7 +27,10 @@ public enum SpriteEnum {
 			new Animation(PersonageConstants.ANIM_JUMPUP, new int[] { 20, 21, 22 }, 13), 
 			new Animation(PersonageConstants.ANIM_JUMPDOWN, new int[] { 17, 18, 19 }, 13)),
 			
-	YUGO_LIFE(R.drawable.yugo_life_displayer, 1, 1),	
+	YUGO_LIFE(R.drawable.yugo_life_displayer, 1, 1),
+	YUGO_LIFE_BAR_1(R.drawable.yugo_life_bar_part1, 1, 1),
+	YUGO_LIFE_BAR_2(R.drawable.yugo_life_bar_part2, 1, 1),
+	YUGO_LIFE_BAR_3(R.drawable.yugo_life_bar_part3, 1, 1),
 	
 	CIRCULAR_SAW(R.drawable.enemy_circular_saw, 10, 1, new Animation("rotate", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 20)),
 	
