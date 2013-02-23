@@ -215,9 +215,10 @@ public class Personage extends GameEntity {
 	public void addState(StateEnum state, long expiration) {
 		super.addState(state, expiration);
 		
+		//TODO : change this : set the SpriteEnum in the StateEnum
 		switch (state) {
 		case STATE_LOW_SPEED:
-			stateDisplayer.addState(new AnimatedSprite(SpriteEnum.RED_CLOCK, 0, 0), expiration);
+			stateDisplayer.addState(SpriteEnum.RED_CLOCK, expiration);
 			break;
 		default:
 			break;
