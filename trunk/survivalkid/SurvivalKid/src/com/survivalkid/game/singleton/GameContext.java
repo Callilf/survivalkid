@@ -14,7 +14,7 @@ public class GameContext {
 	/** duration of the game */
 	public long gameDuration;
 	
-	/** The time when the game started. */ // TODO : use gameDuration instead of initialTime for all traitment
+	/** The time when the game started. */ // use gameDuration instead of initialTime for all handling
 	public long initialTime;
 	/** The current on-screen difficulty. */
 	public int currentDifficulty;

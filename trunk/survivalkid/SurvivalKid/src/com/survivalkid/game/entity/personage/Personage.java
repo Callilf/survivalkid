@@ -15,8 +15,8 @@ import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.LifeChangeDisplayer;
+import com.survivalkid.game.entity.StateObject;
 import com.survivalkid.game.move.MovePersoManager;
-import com.survivalkid.game.singleton.GameContext;
 
 public class Personage extends GameEntity {
 	private static final String TAG = Personage.class.getSimpleName();
@@ -69,7 +69,7 @@ public class Personage extends GameEntity {
 		damages = new ArrayList<LifeChangeDisplayer>();
 		damagesOver = new ArrayList<LifeChangeDisplayer>();
 
-		stateDisplayer = new StateDisplayer();
+		stateDisplayer = new StateDisplayer(this);
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
@@ -102,8 +102,7 @@ public class Personage extends GameEntity {
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
-		// TODO Auto-generated method stub
-
+		// TODO not used at the moment
 	}
 
 	/**
@@ -121,7 +120,7 @@ public class Personage extends GameEntity {
 		}
 
 		life.modifyLife(_damage, _typeChange);
-		addState(StateEnum.STATE_RECOVERY, GameContext.getSingleton().gameDuration + _recoveryMaxTime);
+		addState(StateEnum.STATE_RECOVERY, _recoveryMaxTime);
 
 		// Display the damages above the head of the character
 		damages.add(new LifeChangeDisplayer(_damage, _typeChange, sprite.getX() + sprite.getWidth() / 2 - 20, sprite
@@ -210,29 +209,15 @@ public class Personage extends GameEntity {
 
 		stateDisplayer.update(gameDuration);
 	}
-
-	@Override
-	public void addState(StateEnum state, long expiration) {
-		super.addState(state, expiration);
-		
-		//TODO : change this : set the SpriteEnum in the StateEnum
-		switch (state) {
-		case STATE_LOW_SPEED:
-			stateDisplayer.addState(SpriteEnum.RED_CLOCK, expiration);
-			break;
-		default:
-			break;
-		}
-	}
 	
 	@Override
-	protected void processStartState(StateEnum stateEnum) {
-		switch (stateEnum) {
+	protected void processStartState(StateObject stateObject) {
+		switch (stateObject.getState()) {
 		case STATE_LOW_SPEED:
 			movePersoManager.changeSpeed(0.5f);
 			break;
 		default:
-			super.processStartState(stateEnum);
+			super.processStartState(stateObject);
 		}
 		
 		

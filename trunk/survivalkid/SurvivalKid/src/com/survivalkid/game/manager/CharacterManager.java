@@ -14,7 +14,6 @@ import android.graphics.Rect;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.entity.personage.StateDisplayer;
 import com.survivalkid.game.util.BitmapUtil;
 
 public class CharacterManager implements IManager {
@@ -43,13 +42,10 @@ public class CharacterManager implements IManager {
 	}
 
 	public void create() {
-		// TODO Auto-generated method stub
 		characterList = new ArrayList<Personage>();
 	}
 
 	public void update(long gameDuration) {
-		// TODO Auto-generated method stub
-
 		for (Personage perso : characterList) {
 			if (perso.isDead()) {
 				deadCharacters.add(perso);
@@ -68,7 +64,6 @@ public class CharacterManager implements IManager {
 	}
 
 	public void draw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		for (Personage perso : characterList) {
 			perso.drawTimed(canvas);
 		}

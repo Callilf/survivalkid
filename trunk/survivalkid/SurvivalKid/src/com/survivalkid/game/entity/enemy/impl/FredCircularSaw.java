@@ -241,7 +241,6 @@ public class FredCircularSaw extends EnemyEntity {
 
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
 		dying = true;
 
 		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);

@@ -5,7 +5,6 @@ import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.singleton.GameContext;
 
 public class PlayerSpeedReducer extends StandardObject {
 	
@@ -38,8 +37,7 @@ public class PlayerSpeedReducer extends StandardObject {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			long expiration = GameContext.getSingleton().gameDuration + PLAYER_SPEED_REDUCING_DURATION;
-			_gameEntity.addState(StateEnum.STATE_LOW_SPEED, expiration);
+			_gameEntity.addState(StateEnum.STATE_LOW_SPEED, PLAYER_SPEED_REDUCING_DURATION);
 			die();
 		}
 	}

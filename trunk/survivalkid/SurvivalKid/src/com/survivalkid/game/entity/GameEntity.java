@@ -63,7 +63,7 @@ public abstract class GameEntity {
 	protected int maxSpeedDown = 20;
 
 	/** States. */
-	protected Map<StateEnum,Long> states;
+	protected Map<StateEnum,StateObject> states;
 	protected boolean dead;
 
 	// for test
@@ -94,7 +94,7 @@ public abstract class GameEntity {
 		hitBox = new Rect(sprite.getX() + offsets.left, sprite.getY() + offsets.top, sprite.getX() + offsets.left
 				+ offsets.right, sprite.getY() + offsets.top + offsets.bottom);
 		direction = DirectionConstants.RIGHT;
-		states = new HashMap<StateEnum,Long>();
+		states = new HashMap<StateEnum,StateObject>();
 
 		isMovingHorizontally = false;
 		isJumpingUp = false;
@@ -129,7 +129,6 @@ public abstract class GameEntity {
 	}
 
 	public GameEntity() {
-		// TODO Auto-generated constructor stub
 	}
 
 	// ----------------------------------------------------
@@ -186,8 +185,8 @@ public abstract class GameEntity {
 		// update states
 		if (!states.isEmpty()) {
 			List<StateEnum> stateToRemove = new ArrayList<StateEnum>();
-			for (Entry<StateEnum, Long> state : states.entrySet()) {
-				long expiration = state.getValue();
+			for (Entry<StateEnum, StateObject> state : states.entrySet()) {
+				long expiration = state.getValue().getExpiration();
 				if (expiration < GameContext.getSingleton().gameDuration)
 				{
 					stateToRemove.add(state.getKey());
@@ -217,11 +216,10 @@ public abstract class GameEntity {
 
 	/**
 	 * Process the action to do when a state is gone.
-	 * 
-	 * @param stateEnum the state
+	 * @param stateObject All information of the state
 	 */
-	protected void processStartState(StateEnum stateEnum) {
-		switch(stateEnum) {
+	protected void processStartState(StateObject stateObject) {
+		switch(stateObject.getState()) {
 		case STATE_RECOVERY: 
 			sprite.setRecovery(true);break;
 		default:
@@ -530,13 +528,19 @@ public abstract class GameEntity {
 		this.dead = dead;
 	}
 	
-	public void addState(StateEnum state, long expiration) {
-		processStartState(state);
-		states.put(state, expiration);
+	public void addState(StateEnum state, long duration) {
+		long expiration = duration + GameContext.getSingleton().gameDuration;
+		StateObject newState = new StateObject(state, expiration);
+		processStartState(newState);
+		states.put(state, newState);
 	}
 	
 	public boolean hasState(StateEnum state) {
 		return states.containsKey(state);
+	}
+
+	public Map<StateEnum, StateObject> getStates() {
+		return states;
 	}
 
 }

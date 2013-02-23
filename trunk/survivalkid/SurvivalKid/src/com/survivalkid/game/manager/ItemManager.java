@@ -41,8 +41,6 @@ public class ItemManager extends ObjectManager {
 	}
 
 	public void create() {
-		// TODO Auto-generated method stub
-
 	}
 
 	
@@ -81,7 +79,6 @@ public class ItemManager extends ObjectManager {
 	// DRAW
 	//*******************	
 	public void draw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		for (ItemEntity item : itemList) {
 			item.drawTimed(canvas);
 		}

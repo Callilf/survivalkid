@@ -45,7 +45,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "Touch pressed : "+keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
@@ -108,6 +107,7 @@ public class MainActivity extends Activity {
 			TimerUtil.logAll();
 			break;
 		case R.id.m_test1:
+			// TimerUtil.reset();
 			// TO CODE, FOR TESTING
 			break;
 		case R.id.m_test2:
