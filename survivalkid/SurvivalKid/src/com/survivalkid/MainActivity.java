@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.StartMenu;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.TimerUtil;
@@ -21,10 +22,12 @@ public class MainActivity extends Activity {
 	/** TAG for the logs. */
 	private static final String TAG = MainActivity.class.getSimpleName();
 
-	private com.survivalkid.game.Menu menu;
+	private StartMenu menu;
 	private GameManager gamePanel;
 	private MediaPlayer backgroundMusic;
-
+	
+	private boolean inMenu;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
@@ -36,20 +39,20 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		menu = new com.survivalkid.game.Menu(this);
+		menu = new StartMenu(this);
 		gamePanel = new GameManager(this);
+		backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
 		
 		setContentView(menu);
-		//setContentView(gamePanel);
-		//backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
-		//backgroundMusic.start();
+		inMenu = true;
 		
 		Log.d(TAG, "View added");
 	}
 	
 	public void launchGame() {
+		inMenu = false;
 		setContentView(gamePanel);
-		backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
+		
 		backgroundMusic.start();
 	}
 
@@ -58,7 +61,8 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Touch pressed : "+keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			gamePanel.stop();
+				gamePanel.stop();
+				menu.stop();
 			break;
 		case KeyEvent.KEYCODE_MENU:
 //			if (!gamePanel.restart()) {
@@ -74,7 +78,9 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		gamePanel.getThread().setPause(true);
+		if(!inMenu) {
+			gamePanel.getThread().setPause(true);
+		}
 		
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.layout.menu, menu);
@@ -83,13 +89,17 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onMenuOpened(int featureId, Menu menu) {
-		gamePanel.getThread().setPause(true);
+		if(!inMenu) {
+			gamePanel.getThread().setPause(true);
+		}
 		return true;
 	}
 	
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
-		gamePanel.getThread().setPause(false);
+		if(!inMenu) {
+			gamePanel.getThread().setPause(false);
+		}
 	}
 	
 	@Override
@@ -147,7 +157,9 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 		Log.d(TAG, "Pausing...");
 		super.onPause();
+		
 		backgroundMusic.release();
+		menu.stop();
 		gamePanel.stop();
 	}
 	
