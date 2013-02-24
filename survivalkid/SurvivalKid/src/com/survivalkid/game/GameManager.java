@@ -47,11 +47,16 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private EnemyManager enemyManager;
 	private ItemManager itemManager;
 	private ChronoDisplayer chrono;
+	
+	private int persoSelected;
 
 	private Bitmap ground;
 
 	public GameManager(Context context) {
 		super(context);
+		
+		Log.d(TAG, "Create the GameManager!");
+		
 		//Initialize the bitmapUtil
 		BitmapUtil.initialize(getResources());
 		
@@ -74,8 +79,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
 		MoveUtil.initializeButton(getResources());
 
-		Log.d(TAG, "Start the game !");
-		create();
+		
 		
 		HandlerUtil.handlerFin = new Handler() {
 				@Override
@@ -88,22 +92,28 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	/**
 	 * Start the game.
 	 * 
-	 * @param context
+	 * @param personage PersonageConstants
 	 */
 	public void create() {
-		
+		Log.d(TAG, "Start the game !");
 		characterManager = new CharacterManager();
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
 		chrono = new ChronoDisplayer(10, 20);
 		
-		
-		// TEST ------------------
-//		Personage character = new Personage(PersonageConstants.PERSO_YUGO, SpriteEnum.YUGO, 300, 250);
-		Personage character = new Personage(PersonageConstants.PERSO_YUNA, SpriteEnum.YUNA, 250, 250);
+		Personage character = null;
+		switch (persoSelected) {
+		case PersonageConstants.PERSO_YUGO :
+			character = new Personage(PersonageConstants.PERSO_YUGO, SpriteEnum.YUGO, 250, 250);
+			break;
+		case PersonageConstants.PERSO_YUNA :
+			character = new Personage(PersonageConstants.PERSO_YUNA, SpriteEnum.YUNA, 250, 250);
+			break;
+			default :
+				break;
+		}
 
 		characterManager.addCharacter(character);
-		// END TESTS --------------
 
 		
 	}
@@ -292,5 +302,19 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public int getNbPlayer() {
 		return characterManager.getCharacterList().size();
+	}
+
+	/**
+	 * @return the persoSelected
+	 */
+	public int getPersoSelected() {
+		return persoSelected;
+	}
+
+	/**
+	 * @param persoSelected the persoSelected to set
+	 */
+	public void setPersoSelected(int persoSelected) {
+		this.persoSelected = persoSelected;
 	}
 }

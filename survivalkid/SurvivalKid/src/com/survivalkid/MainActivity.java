@@ -49,9 +49,12 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "View added");
 	}
 	
-	public void launchGame() {
+	public void launchGame(int persoSelected) {
 		inMenu = false;
+		
+		gamePanel.setPersoSelected(persoSelected);
 		setContentView(gamePanel);
+		gamePanel.create();
 		
 		backgroundMusic.start();
 	}

@@ -13,6 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.MainActivity;
+import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
@@ -24,6 +25,7 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private MainActivity activity;
 	private Paint paint;
+	private Paint paint2;
 	private boolean active;
 	
 	public StartMenu(Context _context) {
@@ -49,6 +51,11 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 		paint.setTextSize(40);
 		paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 		paint.setColor(Color.BLACK);
+		
+		paint2 = new Paint();
+		paint2.setTextSize(30);
+		paint2.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+		paint2.setColor(Color.BLACK);
 		
 		active = true;
 		
@@ -81,6 +88,8 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 			// fills the canvas with black
 			canvas.drawColor(Color.GRAY);
 			canvas.drawText("Touch to start", MoveUtil.SCREEN_WIDTH/3, MoveUtil.SCREEN_HEIGHT/2 - 10, paint);
+			canvas.drawText("Play with Yugo", MoveUtil.SCREEN_WIDTH * 0.1f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);
+			canvas.drawText("Play with Yuna", MoveUtil.SCREEN_WIDTH * 0.7f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);
 		}
 	}
 
@@ -90,12 +99,17 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if(active) {
-			active = false;
-			activity.launchGame();
+		if(!active) {
+			return false;
+		}
+		
+		active = false;
+		if(event.getX() <= MoveUtil.SCREEN_WIDTH/2) {
+			activity.launchGame(PersonageConstants.PERSO_YUGO);
+		} else {
+			activity.launchGame(PersonageConstants.PERSO_YUNA);
 		}
 
-		// if (event.getAction() != MotionEvent.ACTION_MOVE) dumpEvent(event);
 		return true;
 	}
 
