@@ -34,7 +34,7 @@ public class Medkit extends StandardObject {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).revoceryLife(30, EnumLife.RECOVERY_LIFE);
+			((Personage) _gameEntity).revoceryLife(20, EnumLife.RECOVERY_LIFE);
 			die();
 		}
 	}
