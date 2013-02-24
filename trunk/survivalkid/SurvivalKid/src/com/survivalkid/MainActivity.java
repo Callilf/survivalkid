@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
 	/** TAG for the logs. */
 	private static final String TAG = MainActivity.class.getSimpleName();
 
+	private com.survivalkid.game.Menu menu;
 	private GameManager gamePanel;
 	private MediaPlayer backgroundMusic;
 
@@ -35,12 +36,21 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		menu = new com.survivalkid.game.Menu(this);
 		gamePanel = new GameManager(this);
+		
+		setContentView(menu);
+		//setContentView(gamePanel);
+		//backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
+		//backgroundMusic.start();
+		
+		Log.d(TAG, "View added");
+	}
+	
+	public void launchGame() {
 		setContentView(gamePanel);
 		backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
 		backgroundMusic.start();
-		
-		Log.d(TAG, "View added");
 	}
 
 	@Override
