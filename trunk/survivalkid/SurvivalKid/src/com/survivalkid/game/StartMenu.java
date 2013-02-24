@@ -18,14 +18,15 @@ import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 @SuppressLint("HandlerLeak") // TODO DELETE WHEN THE HANDLER WOULDN'T BE USE ANYMORE
-public class Menu extends SurfaceView implements SurfaceHolder.Callback {
+public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 	
-	private static final String TAG = Menu.class.getSimpleName();
+	private static final String TAG = StartMenu.class.getSimpleName();
 	
 	private MainActivity activity;
 	private Paint paint;
+	private boolean active;
 	
-	public Menu(Context _context) {
+	public StartMenu(Context _context) {
 		super(_context);
 		
 		//Initialize the bitmapUtil
@@ -48,6 +49,8 @@ public class Menu extends SurfaceView implements SurfaceHolder.Callback {
 		paint.setTextSize(40);
 		paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 		paint.setColor(Color.BLACK);
+		
+		active = true;
 		
 		Log.d(TAG, "Start the game !");
 		create();
@@ -87,7 +90,10 @@ public class Menu extends SurfaceView implements SurfaceHolder.Callback {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		activity.launchGame();
+		if(active) {
+			active = false;
+			activity.launchGame();
+		}
 
 		// if (event.getAction() != MotionEvent.ACTION_MOVE) dumpEvent(event);
 		return true;
@@ -126,16 +132,16 @@ public class Menu extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-
+		active = true;
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-
+		setWillNotDraw(true);
 	}
 
 	/** Action when clicking on the BACK button. */
 	public void stop() {
-
+		setWillNotDraw(true);
 		((Activity) getContext()).finish();
 	}
 }
