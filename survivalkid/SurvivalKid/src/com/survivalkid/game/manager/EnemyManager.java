@@ -12,6 +12,7 @@ import android.util.Log;
 import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
+import com.survivalkid.game.entity.enemy.impl.Bull;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.FireMeteor;
 import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
@@ -52,6 +53,7 @@ public class EnemyManager extends ObjectManager {
 		enemyDifficultyMap.put(1, oneDiff);
 		ArrayList<Class<? extends EnemyEntity>> twoDiff = new ArrayList<Class<? extends EnemyEntity>>();
 		twoDiff.add(FireMeteor.class);
+		twoDiff.add(Bull.class);
 		enemyDifficultyMap.put(2, twoDiff);
 	}
 
