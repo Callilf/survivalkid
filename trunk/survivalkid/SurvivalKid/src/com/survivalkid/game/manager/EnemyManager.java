@@ -23,6 +23,7 @@ public class EnemyManager extends ObjectManager {
 	private static final String TAG = EnemyManager.class.getSimpleName();
 
 	private List<EnemyEntity> enemyList;
+	private List<EnemyEntity> enemyKillerList; // list the enemy with attack which can kill other enemy
 	private List<EnemyEntity> deadEnemies;
 	private List<EnemyEntity> enemiesToAdd;
 	
@@ -59,6 +60,7 @@ public class EnemyManager extends ObjectManager {
 
 	public EnemyManager() {
 		enemyList = new ArrayList<EnemyEntity>();
+		enemyKillerList = new ArrayList<EnemyEntity>();
 		deadEnemies = new ArrayList<EnemyEntity>();
 		enemiesToAdd = new ArrayList<EnemyEntity>();
 	}
@@ -96,6 +98,9 @@ public class EnemyManager extends ObjectManager {
 		// remove the dead enemies from the list so that they are removed from the game
 		if (!deadEnemies.isEmpty()) {
 			for (EnemyEntity enemy : deadEnemies) {
+				if (enemy.getAttack() > 0) {
+					enemyKillerList.remove(enemy);
+				}
 				enemyList.remove(enemy);
 			}
 			deadEnemies.clear();
@@ -104,7 +109,7 @@ public class EnemyManager extends ObjectManager {
 		// add the enemies create during the update to the game
 		if (!enemiesToAdd.isEmpty()) {
 			for (EnemyEntity enemy : enemiesToAdd) {
-				enemyList.add(enemy);
+				addEnemy(enemy);
 			}
 			enemiesToAdd.clear();
 		}
@@ -133,7 +138,7 @@ public class EnemyManager extends ObjectManager {
 						100));
 		if (newEnemyEntity != null) {
 			newEnemyEntity.setCreator(this);
-			enemyList.add(newEnemyEntity);
+			addEnemy(newEnemyEntity);
 		}
 	}
 	
@@ -154,7 +159,7 @@ public class EnemyManager extends ObjectManager {
 				enemiesToAdd.add(newEnemy);
 			}
 			else {
-				enemyList.add(newEnemy);
+				addEnemy(newEnemy);
 			}
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -172,9 +177,20 @@ public class EnemyManager extends ObjectManager {
 		return enemyList.get(num);
 	}
 
+	public List<EnemyEntity> getEnemyKillerList() {
+		return enemyKillerList;
+	}
+
 	@Override
 	public void addEntity(GameEntity ge) {
 		enemyList.add((EnemyEntity) ge);
+	}
+	
+	private void addEnemy(EnemyEntity ee) {
+		if (ee.getAttack() > 0) {
+			enemyKillerList.add(ee);
+		}
+		enemyList.add(ee);
 	}
 
 }

@@ -173,6 +173,15 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 				}
 			}
 		}
+		
+		for (EnemyEntity enemyKiller : enemyManager.getEnemyKillerList()) {
+			for (EnemyEntity enemy : enemyManager.getEnemyList()) {
+				// also compare the pointer to avoid the enemy to kill itself
+				if (enemy != enemyKiller && CollisionUtil.Overlaps(enemyKiller, enemy)) {
+					enemy.collide(enemyKiller);
+				}
+			}
+		}
 
 		// Change the buttons sprites when they are pressed.
 		if (characterManager.getCharacterList().size() > OWN_PERSO  && characterManager.getCharacterList(OWN_PERSO) != null) {

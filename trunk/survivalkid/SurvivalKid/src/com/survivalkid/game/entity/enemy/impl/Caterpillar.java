@@ -6,7 +6,6 @@ import android.graphics.Point;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
-import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
@@ -51,12 +50,9 @@ public class Caterpillar extends EnemyEntity {
 	}
 
 	@Override
-	public void applyCollision(GameEntity _gameEntity) {
-		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).takeDamage(dammage, EnumLife.TAKE_DAMAGE);
-			die();
-		}
-		// the method die should be called after x touch (or at the first touch)
+	public void applyCollisionCharacter(Personage _personage) {
+		_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE);
+		die();
 	}
 
 	@Override
