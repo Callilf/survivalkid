@@ -13,8 +13,19 @@ import com.survivalkid.game.manager.EnemyManager;
 public abstract class EnemyEntity extends GameEntity {
 	private static final String TAG = EnemyEntity.class.getSimpleName();
 
+	/** Defense by default of all enemy. */
+	protected static final int DEFAULT_DEFENSE = 4;
+	
+	/** damage cause to the player the enemy hit */
 	protected int dammage;
+	
+	/** index of difficulty */
 	protected int difficulty;
+	
+	/** attack against other ennemy. If this value is > 0, it can destroy enemy with less defense */
+	protected int attack;
+	/** defense against other enemy. If this value is > of the attack of the other enemy, it don't die */
+	protected int defense;
 	
 	//For collisions with the character :
 	/** The id of the character colliding. -1 if no one is colliding. */
@@ -44,6 +55,8 @@ public abstract class EnemyEntity extends GameEntity {
 		dying = false;
 		dammage = _dammage;
 		difficulty = _difficulty;
+		attack = 0;
+		defense = DEFAULT_DEFENSE;
 	}
 
 	public EnemyEntity() {
@@ -52,19 +65,24 @@ public abstract class EnemyEntity extends GameEntity {
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
-		if (_gameEntity instanceof Personage && !dying) {
-			if(_gameEntity.getId() == collidingCharacter) {
-				collidingFrames ++;
-			} else {
-				collidingCharacter = _gameEntity.getId();
-				collidingFrames = 1;
+		if (!dying) {
+			if (_gameEntity instanceof Personage) {
+				if(_gameEntity.getId() == collidingCharacter) {
+					collidingFrames ++;
+				} else {
+					collidingCharacter = _gameEntity.getId();
+					collidingFrames = 1;
+				}
+				
+				Log.d(TAG, this.getName() + " colliding with character " + _gameEntity.getId() + " for " + collidingFrames + " frames !");
+				
+				if(collidingFrames >= CollisionConstants.MAX_FRAMES_OF_COLLISION) {
+					Log.i(TAG, this.getName() + " apply collision to character " + _gameEntity.getId());
+					applyCollisionCharacter((Personage) _gameEntity);
+				}
 			}
-			
-			Log.d(TAG, this.getName() + " colliding with character " + _gameEntity.getId() + " for " + collidingFrames + " frames !");
-			
-			if(collidingFrames >= CollisionConstants.MAX_FRAMES_OF_COLLISION) {
-				Log.i(TAG, this.getName() + " apply collision to character " + _gameEntity.getId());
-				applyCollision(_gameEntity);
+			else if (_gameEntity instanceof EnemyEntity) {
+				applyCollisionEnemy((EnemyEntity) _gameEntity);
 			}
 		}
 	}
@@ -74,7 +92,18 @@ public abstract class EnemyEntity extends GameEntity {
 		super.draw(canvas);
 	}
 
-	public abstract void applyCollision(GameEntity _gameEntity);
+	public void applyCollisionEnemy(EnemyEntity _enemyEntity) {
+		// kill the enemy if attack > enemy defense
+		if (attack > _enemyEntity.defense) {
+			_enemyEntity.die();
+		}
+		// die if the enemy attack > defense
+		if (_enemyEntity.attack > defense) {
+			die();
+		}
+	}
+	
+	public abstract void applyCollisionCharacter(Personage _personage);
 	public abstract void initRandomPositionAndSpeed(Point playerPosition);
 
 	/**
@@ -93,6 +122,10 @@ public abstract class EnemyEntity extends GameEntity {
 
 	public void setCreator(EnemyManager creator) {
 		this.creator = creator;
+	}
+
+	public int getAttack() {
+		return attack;
 	}
 
 	
