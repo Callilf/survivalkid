@@ -13,15 +13,15 @@ import com.survivalkid.game.util.MoveUtil;
 
 public class Bull extends EnemyEntity {
 
-	private AnimatedSprite deathAnim;
-	
-	private static final int VITESSE_BULL = 25;
+	private static final int VITESSE_BULL = 15;
 	private static final int SPEED_COLLISION_X = 20;
 	private static final int SPEED_COLLISION_Y = -20;
+
+	private AnimatedSprite deathAnim;
 	
 	/** Default constructor. */
 	public Bull() {
-		super("Bull", SpriteEnum.CATERPILLAR, 0, 0, 30, 0);
+		super("Bull", SpriteEnum.BULL, 0, 0, 30, 0);
 		attack = DEFAULT_DEFENSE + 2;
 		defense = DEFAULT_DEFENSE + 1;
 	};
@@ -31,11 +31,11 @@ public class Bull extends EnemyEntity {
 		gravity = 2;
 		affectedByWalls = false;
 
+		redefineHitBox((sprite.getWidth() * 25) / 100, (sprite.getHeight() * 20) / 100, (sprite.getWidth() * 70) / 100,
+				(sprite.getHeight() * 80) / 100);
+		play("run", true, true);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_SMALL, 0, 0);
-		
-		redefineHitBox((sprite.getWidth() * 18) / 100, (sprite.getHeight() * 65) / 100, (sprite.getWidth() * 74) / 100,
-				(sprite.getHeight() * 35) / 100);
-		play("crawl", true, true);
+
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class Bull extends EnemyEntity {
 			return;
 		}
 
-		if (sprite.getX() < -20 || sprite.getX() > MoveUtil.SCREEN_WIDTH + sprite.getWidth()) {
+		if (sprite.getX() + sprite.getWidth() < 0 || sprite.getX() > MoveUtil.SCREEN_WIDTH) {
 			dead = true;
 		}
 		
@@ -89,12 +89,12 @@ public class Bull extends EnemyEntity {
 		// random spawn position
 		int random = (int) (Math.random() * 100);
 		if (random < 50) {
-			sprite.setX(-20);
+			sprite.setX(-sprite.getWidth());
 			sprite.setY(380);
 			direction = DirectionConstants.RIGHT;
 		} 
 		else {
-			sprite.setX(MoveUtil.SCREEN_WIDTH + 20);
+			sprite.setX(MoveUtil.SCREEN_WIDTH + sprite.getWidth());
 			sprite.setY(380);
 			direction = DirectionConstants.LEFT;
 		}
