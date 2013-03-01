@@ -42,7 +42,7 @@ public class Caterpillar extends EnemyEntity {
 			return;
 		}
 
-		if (sprite.getX() < -20 || sprite.getX() > MoveUtil.SCREEN_WIDTH + sprite.getWidth()) {
+		if (sprite.getX() + sprite.getWidth() < 0 || sprite.getX() > MoveUtil.SCREEN_WIDTH + sprite.getWidth()) {
 			dead = true;
 		}
 		
