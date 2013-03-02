@@ -55,7 +55,7 @@ public class EnemyManager extends ObjectManager {
 		ArrayList<Class<? extends EnemyEntity>> twoDiff = new ArrayList<Class<? extends EnemyEntity>>();
 		twoDiff.add(FireMeteor.class);
 		twoDiff.add(Bull.class);
-		enemyDifficultyMap.put(1, twoDiff);
+		enemyDifficultyMap.put(2, twoDiff);
 	}
 
 	public EnemyManager() {
