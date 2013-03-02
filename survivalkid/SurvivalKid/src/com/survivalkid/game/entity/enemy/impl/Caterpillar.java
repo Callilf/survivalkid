@@ -81,19 +81,19 @@ public class Caterpillar extends EnemyEntity {
 		// random spawn position
 		int random = (int) (Math.random() * 100);
 		if (random < 34) {
-			sprite.setX(-20);
+			sprite.setX(-sprite.getWidth());
 			sprite.setY(380);
 			direction = DirectionConstants.RIGHT;
 		} else if (random < 69) {
-			sprite.setX(MoveUtil.SCREEN_WIDTH + 20);
+			sprite.setX(MoveUtil.SCREEN_WIDTH + sprite.getWidth());
 			sprite.setY(380);
 			direction = DirectionConstants.LEFT;
 		} else if (random < 84) {
-			sprite.setX(0);
+			sprite.setX(-sprite.getWidth());
 			sprite.setY(-20);
 			direction = DirectionConstants.RIGHT;
 		} else {
-			sprite.setX(MoveUtil.SCREEN_WIDTH);
+			sprite.setX(MoveUtil.SCREEN_WIDTH + sprite.getWidth());
 			sprite.setY(-20);
 			direction = DirectionConstants.LEFT;
 		}

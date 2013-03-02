@@ -14,8 +14,8 @@ import com.survivalkid.game.util.MoveUtil;
 public class Bull extends EnemyEntity {
 
 	private static final int VITESSE_BULL = 15;
-	private static final int SPEED_COLLISION_X = 20;
-	private static final int SPEED_COLLISION_Y = -20;
+	private static final int SPEED_COLLISION_X = 30;
+	private static final int SPEED_COLLISION_Y = -30;
 
 	private AnimatedSprite deathAnim;
 	
