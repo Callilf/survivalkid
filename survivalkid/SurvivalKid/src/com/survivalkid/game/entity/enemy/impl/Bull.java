@@ -24,11 +24,9 @@ public class Bull extends EnemyEntity {
 	
 	private static final int WARNING_DURATION = 2000;
 
-	private Bitmap warning;
+	private AnimatedSprite warning;
 	private boolean inWarning;
 	private long warningExpiration;
-	private int warningX;
-	private int warningY;
 	private AnimatedSprite deathAnim;
 	
 	/** Default constructor. */
@@ -43,16 +41,16 @@ public class Bull extends EnemyEntity {
 		gravity = 2;
 		affectedByWalls = false;
 		
-		warning = BitmapUtil.createBitmap(R.drawable.bull_warning);
+		warning = new AnimatedSprite(SpriteEnum.BULL_WARNING, 0, 0);
 		inWarning = true;
 		active = false;
 		warningExpiration = GameContext.getSingleton().gameDuration + WARNING_DURATION;
 		if(direction == DirectionConstants.LEFT) {
-			warningX = MoveUtil.SCREEN_WIDTH - warning.getWidth();
+			warning.setX(MoveUtil.SCREEN_WIDTH - warning.getWidth());
 		} else {
-			warningX = 0;
+			warning.setX(0);
 		}
-		warningY = (int) (MoveUtil.GROUND * 0.75f);
+		warning.setY((int) (MoveUtil.GROUND * 0.75f));
 
 
 		redefineHitBox((sprite.getWidth() * 25) / 100, (sprite.getHeight() * 20) / 100, (sprite.getWidth() * 70) / 100,
@@ -111,7 +109,7 @@ public class Bull extends EnemyEntity {
 			deathAnim.draw(canvas, DirectionConstants.RIGHT);
 		} else {
 			if(inWarning) {
-				canvas.drawBitmap(warning, warningX, warningY, null);
+				warning.draw(canvas, DirectionConstants.RIGHT);
 			} else {
 				super.draw(canvas);
 			}
