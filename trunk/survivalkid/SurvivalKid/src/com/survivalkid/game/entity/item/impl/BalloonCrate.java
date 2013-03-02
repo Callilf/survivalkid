@@ -1,6 +1,8 @@
 package com.survivalkid.game.entity.item.impl;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -9,6 +11,7 @@ import com.survivalkid.game.core.Animation;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
+import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class BalloonCrate extends ItemEntity {
@@ -18,8 +21,8 @@ public class BalloonCrate extends ItemEntity {
 	private AnimatedSprite deathAnim;
 	private boolean dying;
 	private ItemEntity containedItem;
-	
-	//Used to check when the crate leaves the screen
+
+	// Used to check when the crate leaves the screen
 	private boolean wasOnScreen;
 
 	private boolean pierced = false;
@@ -27,6 +30,9 @@ public class BalloonCrate extends ItemEntity {
 	private boolean exploding = false;
 	private boolean falling = false;
 	private boolean releaseObject = false;
+
+	/** Balloon hitbox for debug. */
+	public Paint balloonTouchBoxPainter;
 
 	/** Default constructor. */
 	public BalloonCrate() {
@@ -47,6 +53,10 @@ public class BalloonCrate extends ItemEntity {
 		affectedByFloor = true;
 		affectedByCeiling = false;
 		affectedByWalls = false;
+
+		balloonTouchBoxPainter = new Paint();
+		balloonTouchBoxPainter.setColor(Color.BLUE);
+		balloonTouchBoxPainter.setAlpha(200);
 
 		deathAnim = new AnimatedSprite(SpriteEnum.CRATE_EXPLOSION, 0, 0);
 		dying = false;
@@ -92,17 +102,16 @@ public class BalloonCrate extends ItemEntity {
 			return;
 		}
 
-		setBalloonTouchBox(new Rect(sprite.getX() + (sprite.getWidth() * 30) / 100, sprite.getY()
-				+ (sprite.getHeight() * 5) / 100, sprite.getX() + (sprite.getWidth() * 30) / 100
-				+ (sprite.getWidth() * 36) / 100, sprite.getY() + (sprite.getHeight() * 5) / 100
-				+ (sprite.getHeight() * 45) / 100));
+		setBalloonTouchBox(new Rect(sprite.getX() + (sprite.getWidth() * 20) / 100, sprite.getY() + sprite.getHeight()
+				/ 100, sprite.getX() + (sprite.getWidth() * 20) / 100 + (sprite.getWidth() * 60) / 100, sprite.getY()
+				+ sprite.getHeight() / 100 + (sprite.getHeight() * 50) / 100));
 
 		if (onFloor() && onScreen()) {
 			releaseObject = true;
 			explode();
 		}
-		
-		if(onScreen() && !wasOnScreen) {
+
+		if (onScreen() && !wasOnScreen) {
 			wasOnScreen = true;
 		} else if (wasOnScreen && !onScreen()) {
 			dead = true;
@@ -123,6 +132,9 @@ public class BalloonCrate extends ItemEntity {
 			deathAnim.draw(canvas, direction);
 		} else {
 			super.draw(canvas);
+			if (CollisionUtil.displayHitBoxes) {
+				canvas.drawRect(balloonTouchBox, balloonTouchBoxPainter);
+			}
 		}
 	}
 
@@ -222,7 +234,8 @@ public class BalloonCrate extends ItemEntity {
 	}
 
 	/**
-	 * @param containedItem the containedItem to set
+	 * @param containedItem
+	 *            the containedItem to set
 	 */
 	public void setContainedItem(ItemEntity containedItem) {
 		this.containedItem = containedItem;
