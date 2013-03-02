@@ -174,7 +174,9 @@ public class Personage extends GameEntity {
 			return;
 		}
 
-		movePersoManager.calculNewSpeed(this);
+		if(!getStates().containsKey(StateEnum.STATE_KNOCK_BACK)) {
+			movePersoManager.calculNewSpeed(this);
+		}
 
 		// Set the direction based on the button pushed
 		if (movePersoManager.isLeftEnabled && (!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
