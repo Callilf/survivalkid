@@ -6,6 +6,7 @@ import android.graphics.Point;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
+import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
@@ -14,7 +15,7 @@ import com.survivalkid.game.util.MoveUtil;
 public class Bull extends EnemyEntity {
 
 	private static final int VITESSE_BULL = 15;
-	private static final int SPEED_COLLISION_X = 30;
+	private static final int SPEED_COLLISION_X = 20;
 	private static final int SPEED_COLLISION_Y = -30;
 
 	private AnimatedSprite deathAnim;
@@ -57,10 +58,13 @@ public class Bull extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-		_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE);
-		int newSpeedX = (direction == DirectionConstants.LEFT)? -SPEED_COLLISION_X : SPEED_COLLISION_X;
-		_personage.setSpeedX(newSpeedX);
-		_personage.setSpeedY(SPEED_COLLISION_Y);
+		if(!_personage.hasState(StateEnum.STATE_RECOVERY)) {
+			_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE);
+			int newSpeedX = (direction == DirectionConstants.LEFT)? -SPEED_COLLISION_X : SPEED_COLLISION_X;
+			_personage.setSpeedX(newSpeedX);
+			_personage.setSpeedY(SPEED_COLLISION_Y);
+			_personage.addState(StateEnum.STATE_KNOCK_BACK, 500);
+		}
 	}
 
 	@Override
@@ -94,7 +98,7 @@ public class Bull extends EnemyEntity {
 			direction = DirectionConstants.RIGHT;
 		} 
 		else {
-			sprite.setX(MoveUtil.SCREEN_WIDTH + sprite.getWidth());
+			sprite.setX(MoveUtil.SCREEN_WIDTH);
 			sprite.setY(380);
 			direction = DirectionConstants.LEFT;
 		}

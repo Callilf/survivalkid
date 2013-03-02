@@ -4,7 +4,9 @@ public enum StateEnum {
 	/** Recovery mode : temporary invincibility after a hit! */
 	STATE_RECOVERY,
 	/** Low speed mode */
-	STATE_LOW_SPEED(SpriteEnum.RED_CLOCK);
+	STATE_LOW_SPEED(SpriteEnum.RED_CLOCK),
+	/** Knocked back by an enemy (like the bull). */
+	STATE_KNOCK_BACK;
 	
 	private SpriteEnum sprite;
 	
