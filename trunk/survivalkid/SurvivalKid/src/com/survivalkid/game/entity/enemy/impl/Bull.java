@@ -1,10 +1,8 @@
 package com.survivalkid.game.entity.enemy.impl;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -13,7 +11,6 @@ import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.singleton.GameContext;
-import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Bull extends EnemyEntity {
@@ -42,6 +39,9 @@ public class Bull extends EnemyEntity {
 		affectedByWalls = false;
 		
 		warning = new AnimatedSprite(SpriteEnum.BULL_WARNING, 0, 0);
+		warning.setBlinking(true);
+		warning.setBlinkPeriod(5, 5);
+		
 		inWarning = true;
 		active = false;
 		warningExpiration = GameContext.getSingleton().gameDuration + WARNING_DURATION;
@@ -74,10 +74,15 @@ public class Bull extends EnemyEntity {
 			dead = true;
 		}
 		
-		if(inWarning && warningExpiration < gameDuration) {
-			inWarning = false;
-			active = true;
-			initSpeed();
+		if(inWarning) { 
+			if (warningExpiration < gameDuration) {
+				inWarning = false;
+				active = true;
+				initSpeed();
+			}
+			else if (warningExpiration - WARNING_DURATION/4 < gameDuration) {
+				warning.setBlinkPeriod(2, 2);
+			}
 		}
 		
 		super.update(gameDuration);

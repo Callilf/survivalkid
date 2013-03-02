@@ -174,7 +174,7 @@ public class Personage extends GameEntity {
 			return;
 		}
 
-		if(!getStates().containsKey(StateEnum.STATE_KNOCK_BACK)) {
+		if(!hasState(StateEnum.STATE_KNOCK_BACK)) {
 			movePersoManager.calculNewSpeed(this);
 		}
 

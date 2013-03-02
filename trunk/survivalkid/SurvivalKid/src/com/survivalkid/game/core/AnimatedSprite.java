@@ -51,8 +51,13 @@ public class AnimatedSprite {
 
 	// recovery after hit attributes
 	private boolean recovery;
-	private int blinkPeriod = 2;
+	
+	// Management blink
+	private boolean blinking;
+	private int blinkNbFrameVisible = 2;
+	private int blinkNbFrameInvisible = 1;
 	private int currentBlinkFrame;
+	
 	private boolean visible;
 
 
@@ -175,13 +180,22 @@ public class AnimatedSprite {
 				bitmapToUse = flippedBitmap;
 			}
 
-			if (recovery) {
+			if (blinking) {
 				//In recovery state after a hit
 				currentBlinkFrame++;
-				if (currentBlinkFrame % blinkPeriod == 0) {
-					visible = !visible;
-					currentBlinkFrame = 0;
+				if (visible) {
+					if (currentBlinkFrame % blinkNbFrameVisible == 0) {
+						visible = !visible;
+						currentBlinkFrame = 0;
+					}
 				}
+				else {
+					if (currentBlinkFrame % blinkNbFrameInvisible == 0) {
+						visible = !visible;
+						currentBlinkFrame = 0;
+					}					
+				}
+
 				if (visible) {
 					canvas.drawBitmap(bitmapToUse, sourceRect, destRect, null);
 				}
@@ -344,6 +358,11 @@ public class AnimatedSprite {
 		this.animationFinished = animationFinished;
 	}
 
+	public void setBlinkPeriod(int blinkNbFrameVisible, int blinkNbFrameInvisible) {
+		this.blinkNbFrameVisible = blinkNbFrameVisible;
+		this.blinkNbFrameInvisible = blinkNbFrameInvisible;
+	}
+
 	/**
 	 * @return the recovery
 	 */
@@ -355,7 +374,15 @@ public class AnimatedSprite {
 	 * @param recovery the recovery to set
 	 */
 	public void setRecovery(boolean recovery) {
+		blinking = recovery;
 		this.recovery = recovery;
+	}
+	
+	/**
+	 * @param recovery the recovery to set
+	 */
+	public void setBlinking(boolean blinking) {
+		this.blinking = blinking;
 	}
 
 }
