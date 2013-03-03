@@ -51,7 +51,8 @@ public enum SpriteEnum {
 	
 	FIRE_TRAIL(R.drawable.fire, 6, 1, new Animation("fire", new int[] { 0, 1, 2, 3, 4, 5 }, 15)),
 	
-	FIRE_GROUND(R.drawable.fire_ground, 7, 1,  new Animation("fire", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 15)),
+	FIRE_GROUND(R.drawable.fire_ground, 7, 2,  new Animation("fire", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 15),
+			new Animation("faint", new int[] { 7, 8, 9, 10, 11 }, 10)),
 	
 	SMOKE_WHITE_LARGE(R.drawable.dead_anim, 7, 1,  new Animation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25)),
 	
