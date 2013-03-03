@@ -33,7 +33,7 @@ public enum SpriteEnum {
 	
 	BULL(R.drawable.bull, 4, 2, new Animation("run", new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 20)),
 	
-	BULL_WARNING(R.drawable.bull_warning, 1, 1),
+	BULL_WARNING(R.drawable.bull_warning, 4, 2, new Animation("run", new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 20)),
 	
 	CRATE_EXPLOSION(R.drawable.crate_explosion, 6, 1, new Animation("explode", new int[] { 0, 1, 2, 3, 4, 5 }, 20)),
 	
