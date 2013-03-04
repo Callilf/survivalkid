@@ -1,7 +1,10 @@
 package com.survivalkid.game.entity.enemy.impl;
 
+import android.graphics.Canvas;
 import android.graphics.Point;
 
+import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
@@ -22,12 +25,17 @@ public class FireGround extends EnemyEntity {
 	
 	/** time of the dead of the fire */
 	private long endTime;
+	
+	/** The death anim. */
+	private AnimatedSprite deathAnim;
 		
 	/**
 	 * Constructor
 	 */
 	public FireGround() {
 		super("FireGround", SpriteEnum.FIRE_GROUND, 0, MoveUtil.GROUND, 2, 1);
+		
+		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_GROUND, 0, 0);
 	}
 	
 	public void place(int _x, int _y) {
@@ -57,14 +65,35 @@ public class FireGround extends EnemyEntity {
 
 	@Override
 	public void die() {
-		dead = true;
+		dying = true;
+
+		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);
+		deathAnim.setY((sprite.getY() + sprite.getHeight() / 2) - deathAnim.getHeight() / 2);
+		deathAnim.play("faint", false, true);
 	}
 	
 	@Override
 	public void update(long gameDuration) {
+		if (dying) {
+			deathAnim.update(gameDuration, DirectionConstants.RIGHT);
+			if (deathAnim.isAnimationFinished()) {
+				dead = true;
+			}
+			return;
+		}
+		
 		super.update(gameDuration);
 		if (GameContext.getSingleton().gameDuration > endTime) {
-			dead = true;
+			die();
+		}
+	}
+	
+	@Override
+	public void draw(Canvas canvas) {
+		if (dying) {
+			deathAnim.draw(canvas, DirectionConstants.RIGHT);
+		} else {
+			super.draw(canvas);
 		}
 	}
 
