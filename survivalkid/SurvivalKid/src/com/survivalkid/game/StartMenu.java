@@ -154,8 +154,13 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	/** Action when clicking on the BACK button. */
+	public void unpause() {
+		setWillNotDraw(false);
+	}
+	
+	/** Action when clicking on the BACK button. */
 	public void stop() {
 		setWillNotDraw(true);
-		((Activity) getContext()).finish();
+		//((Activity) getContext()).finish();
 	}
 }

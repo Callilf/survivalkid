@@ -35,9 +35,10 @@ import com.survivalkid.game.util.HandlerUtil;
 import com.survivalkid.game.util.HandlerUtil.HandlerEnum;
 import com.survivalkid.game.util.MoveUtil;
 
-@SuppressLint("HandlerLeak") // TODO DELETE WHEN THE HANDLER WOULDN'T BE USE ANYMORE
+@SuppressLint("HandlerLeak")
+// TODO DELETE WHEN THE HANDLER WOULDN'T BE USE ANYMORE
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
-	
+
 	private static final String TAG = GameManager.class.getSimpleName();
 
 	/** The thread corresponding to the game loop. */
@@ -47,52 +48,53 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private EnemyManager enemyManager;
 	private ItemManager itemManager;
 	private ChronoDisplayer chrono;
-	
+
 	private int persoSelected;
 
 	private Bitmap ground;
 
 	public GameManager(Context context) {
 		super(context);
-		
+
 		Log.d(TAG, "Create the GameManager!");
-		
-		//Initialize the bitmapUtil
+
+		// Initialize the bitmapUtil
 		BitmapUtil.initialize(getResources());
-		
+
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
 		GameContext.getSingleton().initSingleton();
 
 		// initialize multitouch
-		MoveUtil.HAS_MULTITOUCH = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
-		
+		MoveUtil.HAS_MULTITOUCH = context.getPackageManager().hasSystemFeature(
+				PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
+
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
 		// create the game loop thread
 		thread = new MainThread(getHolder(), this);
-		
+
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 
 		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
 		MoveUtil.initializeButton(getResources());
 
-		
-		
 		HandlerUtil.handlerFin = new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-				     Toast.makeText(getContext(), "Survival time : " + msg.arg1/1000f + " seconds", Toast.LENGTH_LONG).show();
-				}
-			};
+			@Override
+			public void handleMessage(Message msg) {
+				Toast.makeText(getContext(), "Survival time : " + msg.arg1 / 1000f + " seconds", Toast.LENGTH_LONG)
+						.show();
+			}
+		};
 	}
 
 	/**
 	 * Start the game.
 	 * 
-	 * @param personage PersonageConstants
+	 * @param personage
+	 *            PersonageConstants
 	 */
 	public void create() {
 		Log.d(TAG, "Start the game !");
@@ -100,24 +102,26 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
 		chrono = new ChronoDisplayer(10, 20);
-		
+
 		Personage character = null;
 		switch (persoSelected) {
-		case PersonageConstants.PERSO_YUGO :
+		case PersonageConstants.PERSO_YUGO:
 			character = new Personage(PersonageConstants.PERSO_YUGO, SpriteEnum.YUGO, 250, 250);
 			break;
-		case PersonageConstants.PERSO_YUNA :
+		case PersonageConstants.PERSO_YUNA:
 			character = new Personage(PersonageConstants.PERSO_YUNA, SpriteEnum.YUNA, 250, 250);
 			break;
-			default :
-				break;
+		default:
+			break;
 		}
 
 		characterManager.addCharacter(character);
-
 		
+		thread.setRunning(true);
+		thread.start();
+
 	}
-	
+
 	/**
 	 * Restart the game
 	 * 
@@ -127,13 +131,13 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		thread.setPause(true);
 
 		Log.d(TAG, "ReStart the game !");
-				
+
 		GameContext.getSingleton().initSingleton();
 		create();
-		
+
 		// Explicit call of the garbage collector before restarting the game
 		System.gc();
-		
+
 		thread.setEndGame(false);
 	}
 
@@ -173,7 +177,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 				}
 			}
 		}
-		
+
 		for (EnemyEntity enemyKiller : enemyManager.getEnemyKillerList()) {
 			for (EnemyEntity enemy : enemyManager.getEnemyList()) {
 				// also compare the pointer to avoid the enemy to kill itself
@@ -184,7 +188,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 
 		// Change the buttons sprites when they are pressed.
-		if (characterManager.getCharacterList().size() > OWN_PERSO  && characterManager.getCharacterList(OWN_PERSO) != null) {
+		if (characterManager.getCharacterList().size() > OWN_PERSO
+				&& characterManager.getCharacterList(OWN_PERSO) != null) {
 			MoveUtil.btn_left.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isLeftEnabled);
 			MoveUtil.btn_right.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isRightEnabled);
 			MoveUtil.btn_up.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isTopEnabled);
@@ -200,11 +205,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		GameContext s = GameContext.getSingleton();
 		long timePassed = s.gameDuration;
 		thread.setEndGame(true);
-		HandlerUtil.sendMessage((int)timePassed, HandlerEnum.HANDLER_FIN);
-		Log.i(TAG, "Time passed : " + timePassed/1000f + ", Score : " + s.score+", end difficulty : " + s.currentDifficulty);
+		HandlerUtil.sendMessage((int) timePassed, HandlerEnum.HANDLER_FIN);
+		Log.i(TAG, "Time passed : " + timePassed / 1000f + ", Score : " + s.score + ", end difficulty : "
+				+ s.currentDifficulty);
 	}
-	
-	
+
 	@Override
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
@@ -223,17 +228,14 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 	}
 
-	
-	
-	
-	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (characterManager.getCharacterList().size() > OWN_PERSO && characterManager.getCharacterList(OWN_PERSO) != null) {
+		if (characterManager.getCharacterList().size() > OWN_PERSO
+				&& characterManager.getCharacterList(OWN_PERSO) != null) {
 			characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
 		}
-		
-		//Check if a balloon has been touched
+
+		// Check if a balloon has been touched
 		if (itemManager.getItemList().size() > 0) {
 			itemManager.checkBalloonTouchBox(event);
 		}
@@ -242,33 +244,26 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		return true;
 	}
 
-	/** Show an event in the LogCat view, for debugging
-	private void dumpEvent(MotionEvent event) {
-		String names[] = { "DOWN", "UP", "MOVE", "CANCEL", "OUTSIDE", "POINTER_DOWN", "POINTER_UP", "7?", "8?", "9?" };
-		StringBuilder sb = new StringBuilder();
-		int action = event.getAction();
-		int actionCode = action & MotionEvent.ACTION_MASK;
-		sb.append("event ACTION_").append(names[actionCode]);
-		if (actionCode == MotionEvent.ACTION_POINTER_DOWN || actionCode == MotionEvent.ACTION_POINTER_UP) {
-			sb.append("(pid ").append(action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT);
-			sb.append(")");
-		}
-		sb.append("[");
-		for (int i = 0; i < event.getPointerCount(); i++) {
-			sb.append("#").append(i);
-			sb.append("(pid ").append(event.getPointerId(i));
-			sb.append(")=").append((int) event.getX(i));
-			sb.append(",").append((int) event.getY(i));
-			if (i + 1 < event.getPointerCount())
-				sb.append(";");
-		}
-		sb.append("]").append(characterManager.getCharacterList(0).getMoveManager().lastEnabledLeft);
-		Log.d(TAG, sb.toString());
-	} */
+	/**
+	 * Show an event in the LogCat view, for debugging private void
+	 * dumpEvent(MotionEvent event) { String names[] = { "DOWN", "UP", "MOVE",
+	 * "CANCEL", "OUTSIDE", "POINTER_DOWN", "POINTER_UP", "7?", "8?", "9?" };
+	 * StringBuilder sb = new StringBuilder(); int action = event.getAction();
+	 * int actionCode = action & MotionEvent.ACTION_MASK;
+	 * sb.append("event ACTION_").append(names[actionCode]); if (actionCode ==
+	 * MotionEvent.ACTION_POINTER_DOWN || actionCode ==
+	 * MotionEvent.ACTION_POINTER_UP) { sb.append("(pid ").append(action >>
+	 * MoveUtil.ACTION_POINTER_INDEX_SHIFT); sb.append(")"); } sb.append("[");
+	 * for (int i = 0; i < event.getPointerCount(); i++) {
+	 * sb.append("#").append(i);
+	 * sb.append("(pid ").append(event.getPointerId(i));
+	 * sb.append(")=").append((int) event.getX(i)); sb.append(",").append((int)
+	 * event.getY(i)); if (i + 1 < event.getPointerCount()) sb.append(";"); }
+	 * sb.
+	 * append("]").append(characterManager.getCharacterList(0).getMoveManager(
+	 * ).lastEnabledLeft); Log.d(TAG, sb.toString()); }
+	 */
 
-	
-	
-	
 	// ------------------------------------------------------------------------
 	// Surface managing
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -277,8 +272,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void surfaceCreated(SurfaceHolder holder) {
 		// at this point the surface is created and
 		// we can safely start the game loop
-		thread.setRunning(true);
-		thread.start();
+
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
@@ -298,17 +292,23 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	/** Action when clicking on the BACK button. */
-	public void stop() {
-		thread.setRunning(false);
+	public void unpause() {
+		thread.setRunning(true);
 		thread.setPause(false);
-		((Activity) getContext()).finish();
 	}
 
-	/// getter & setter
+	/** Action when clicking on the BACK button. */
+	public void stop() {
+		thread.setRunning(false);
+		thread.setPause(true);
+		// ((Activity) getContext()).finish();
+	}
+
+	// / getter & setter
 	public MainThread getThread() {
 		return thread;
 	}
-	
+
 	public int getNbPlayer() {
 		return characterManager.getCharacterList().size();
 	}
@@ -321,7 +321,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	/**
-	 * @param persoSelected the persoSelected to set
+	 * @param persoSelected
+	 *            the persoSelected to set
 	 */
 	public void setPersoSelected(int persoSelected) {
 		this.persoSelected = persoSelected;
