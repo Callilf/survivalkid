@@ -41,6 +41,9 @@ public class MainThread extends Thread {
 
 	public void setRunning(boolean running) {
 		this.running = running;
+		synchronized (this) {
+			notify();
+		}
 	}
 	
 	public boolean isPause() {
