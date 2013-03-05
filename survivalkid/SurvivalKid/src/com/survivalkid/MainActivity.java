@@ -66,8 +66,6 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Touch pressed : " + keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			gamePanel.stop();
-			menu.stop();
 			finish();
 			break;
 		case KeyEvent.KEYCODE_MENU:
