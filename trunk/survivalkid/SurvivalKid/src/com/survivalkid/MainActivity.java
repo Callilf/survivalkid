@@ -151,6 +151,7 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying...");
 		gamePanel.leaveGame();
+		backgroundMusic.release();
 		super.onDestroy();
 	}
 
@@ -165,9 +166,12 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Pausing...");
 		super.onPause();
 
-		backgroundMusic.release();
-		menu.stop();
-		gamePanel.stop();
+		if (inMenu) {
+			menu.stop();
+		} else {
+			gamePanel.stop();
+			backgroundMusic.pause();
+		}
 	}
 
 	@Override
@@ -177,7 +181,10 @@ public class MainActivity extends Activity {
 
 		// menu.unpause();
 		if (!inMenu) {
+			backgroundMusic.start();
 			gamePanel.unpause();
+		} else {
+			menu.unpause();
 		}
 	}
 
