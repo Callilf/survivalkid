@@ -2,7 +2,6 @@ package com.survivalkid.game;
 
 import static com.survivalkid.game.manager.CharacterManager.OWN_PERSO;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -42,7 +41,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String TAG = GameManager.class.getSimpleName();
 
 	/** The thread corresponding to the game loop. */
-	private MainThread thread;
+	public MainThread thread;
 
 	private CharacterManager characterManager;
 	private EnemyManager enemyManager;
@@ -116,10 +115,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 
 		characterManager.addCharacter(character);
-		
-		thread.setRunning(true);
-		thread.start();
-
 	}
 
 	/**
@@ -277,8 +272,13 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.d(TAG, "Surface is being destroyed");
+
+	}
+	
+	public void leaveGame() {
 		// tell the thread to shut down and wait for it to finish
 		// this is a clean shutdown
+		thread.setRunning(false);
 		boolean retry = true;
 		while (retry) {
 			try {
@@ -293,15 +293,12 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	/** Action when clicking on the BACK button. */
 	public void unpause() {
-		thread.setRunning(true);
 		thread.setPause(false);
 	}
 
 	/** Action when clicking on the BACK button. */
 	public void stop() {
-		thread.setRunning(false);
 		thread.setPause(true);
-		// ((Activity) getContext()).finish();
 	}
 
 	// / getter & setter
