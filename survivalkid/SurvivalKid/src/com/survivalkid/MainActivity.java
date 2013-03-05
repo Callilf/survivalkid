@@ -55,6 +55,9 @@ public class MainActivity extends Activity {
 		setContentView(gamePanel);
 		gamePanel.create();
 
+		gamePanel.thread.setRunning(true);
+		gamePanel.thread.start();
+
 		backgroundMusic.start();
 	}
 
@@ -111,7 +114,7 @@ public class MainActivity extends Activity {
 		case R.id.m_option:
 			return true;
 		case R.id.m_left:
-			gamePanel.stop();
+			finish();
 			break;
 		case R.id.m_hitbox:
 			CollisionUtil.hideShowDisplayHitBoxes();
@@ -147,6 +150,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		Log.d(TAG, "Destroying...");
+		gamePanel.leaveGame();
 		super.onDestroy();
 	}
 
