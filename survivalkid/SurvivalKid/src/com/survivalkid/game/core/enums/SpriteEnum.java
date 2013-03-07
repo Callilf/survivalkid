@@ -31,6 +31,8 @@ public enum SpriteEnum {
 	
 	CATERPILLAR(R.drawable.caterpillar, 4, 1, new Animation("crawl", new int[] { 0, 1, 2, 3, 2, 1 }, 13)),
 	
+	CATERPILLAR_PURPLE(R.drawable.caterpillar_purple, 4, 1, new Animation("crawl", new int[] { 0, 1, 2, 3, 2, 1 }, 13)),
+	
 	BULL(R.drawable.bull, 4, 2, new Animation("run", new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 30)),
 	
 	BULL_WARNING(R.drawable.bull_warning, 4, 2, new Animation("run", new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 30)),

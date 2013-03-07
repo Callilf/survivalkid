@@ -90,6 +90,19 @@ public class AnimatedSprite {
 		x = 0;
 		y = 0;
 	}
+	
+	public AnimatedSprite(SpriteEnum spriteEnum) {
+		this.bitmap = spriteEnum.getBitmap();
+		this.flippedBitmap = spriteEnum.getFlippedBitmap();
+		currentFrame = 0;
+		framePerRow = spriteEnum.getNbColumn();
+		width = bitmap.getWidth() / spriteEnum.getNbColumn();
+		height = bitmap.getHeight() / spriteEnum.getNbRows();
+		sourceRect = new Rect(0, 0, width, height);
+		frameTicker = 0l;
+
+		animations = spriteEnum.getAnimations();
+	}
 
 	/**
 	 * Update.
