@@ -13,6 +13,9 @@ import com.survivalkid.game.util.MoveUtil;
 
 public class Caterpillar extends EnemyEntity {
 
+	private static final float CATERPILLAR_LOWEST_SPEED = 1.8f;
+	private static final float CATERPILLAR_HIGHEST_SPEED = 2.8f;
+	
 	private AnimatedSprite deathAnim;
 	
 	/** Default constructor. */
@@ -78,6 +81,12 @@ public class Caterpillar extends EnemyEntity {
 	 */
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
+		float speed = (float) (Math.random() * (CATERPILLAR_HIGHEST_SPEED - CATERPILLAR_LOWEST_SPEED) + CATERPILLAR_LOWEST_SPEED);
+		if(speed >= 2.5f) {
+			sprite = new AnimatedSprite(SpriteEnum.CATERPILLAR_PURPLE);
+			dammage = 10;
+		}
+		
 		// random spawn position
 		int random = (int) (Math.random() * 100);
 		if (random < 34) {
@@ -101,9 +110,9 @@ public class Caterpillar extends EnemyEntity {
 		// init speed
 		setSpeedY(0);
 		if (direction == DirectionConstants.LEFT) {
-			setSpeedX(-2);
+			setSpeedX(-speed);
 		} else {
-			setSpeedX(2);
+			setSpeedX(speed);
 		}
 
 		init();
