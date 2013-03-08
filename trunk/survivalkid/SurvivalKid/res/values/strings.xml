@@ -2,7 +2,8 @@
 
     <string name="app_name">SurvivalKid</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">Survival Kid</string>
+    <string name="title_activity_menu">Survival Kid</string>
+    <string name="title_activity_game">Survival Kid</string>
     <string name="hitbox">Hitbox</string>
     <string name="leave">Leave game</string>
     <string name="switchar">Switch</string>
@@ -10,5 +11,7 @@
     <string name="timer">Timer</string>
     <string name="test1">Test 1</string>
     <string name="test2">Test 2</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_fred">FredActivity</string>
 
 </resources>

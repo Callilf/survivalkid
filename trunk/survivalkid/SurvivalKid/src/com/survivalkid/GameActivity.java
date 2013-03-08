@@ -12,25 +12,25 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.GameManager;
-import com.survivalkid.game.StartMenu;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.TimerUtil;
 
-public class MainActivity extends Activity {
+public class GameActivity extends Activity {
 
 	/** TAG for the logs. */
-	private static final String TAG = MainActivity.class.getSimpleName();
+	private static final String TAG = GameActivity.class.getSimpleName();
 
-	private StartMenu menu;
 	private GameManager gamePanel;
 	private MediaPlayer backgroundMusic;
-
-	private boolean inMenu;
-
+	private int selectedCharacter;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+		Bundle b = getIntent().getExtras();
+		selectedCharacter = b.getInt("selectedCharacter");
 
 		super.onCreate(savedInstanceState);
 		// Set fullscreen and remove the title bar
@@ -39,18 +39,15 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		menu = new StartMenu(this);
 		gamePanel = new GameManager(this);
 		backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
 
-		setContentView(menu);
-		inMenu = true;
-        
+		launchGame(selectedCharacter);
+
 		Log.d(TAG, "View added");
 	}
 
 	public void launchGame(int persoSelected) {
-		inMenu = false;
 
 		gamePanel.setPersoSelected(persoSelected);
 		setContentView(gamePanel);
@@ -83,9 +80,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!inMenu) {
-			gamePanel.getThread().setPause(true);
-		}
+		gamePanel.getThread().setPause(true);
 
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.layout.menu, menu);
@@ -94,17 +89,13 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onMenuOpened(int featureId, Menu menu) {
-		if (!inMenu) {
-			gamePanel.getThread().setPause(true);
-		}
+		gamePanel.getThread().setPause(true);
 		return true;
 	}
 
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
-		if (!inMenu) {
-			gamePanel.getThread().setPause(false);
-		}
+		gamePanel.getThread().setPause(false);
 	}
 
 	@Override
@@ -164,12 +155,8 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Pausing...");
 		super.onPause();
 
-		if (inMenu) {
-			menu.stop();
-		} else {
-			gamePanel.stop();
-			backgroundMusic.pause();
-		}
+		gamePanel.stop();
+		backgroundMusic.pause();
 	}
 
 	@Override
@@ -177,13 +164,8 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Resuming...");
 		super.onResume();
 
-		// menu.unpause();
-		if (!inMenu) {
-			backgroundMusic.start();
-			gamePanel.unpause();
-		} else {
-			menu.unpause();
-		}
+		backgroundMusic.start();
+		gamePanel.unpause();
 	}
 
 	@Override
