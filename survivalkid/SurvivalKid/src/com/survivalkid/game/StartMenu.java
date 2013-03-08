@@ -12,7 +12,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.survivalkid.MainActivity;
+import com.survivalkid.GameActivity;
+import com.survivalkid.MenuActivity;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.BitmapUtil;
@@ -23,7 +24,7 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private static final String TAG = StartMenu.class.getSimpleName();
 	
-	private MainActivity activity;
+	private MenuActivity activity;
 	private Paint paint;
 	private Paint paint2;
 	private boolean active;
@@ -44,7 +45,7 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 		
-		activity = (MainActivity) _context;
+		activity = (MenuActivity) _context;
 		setWillNotDraw(false);
 		
 		paint = new Paint();
