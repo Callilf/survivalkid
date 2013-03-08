@@ -23,11 +23,12 @@ public class DataSave extends Activity implements Serializable {
 	private static final String TAG = DataSave.class.getSimpleName();
 	
 	private static final String SAVE_FILE = "survival-game-save";
+	// could make a second file in case of the first become corrupt
+	//private static final String SAVE_FILE_BACKUP = "survival-game-save-backup";
 
-	
 	TreeSet<Long> highScore;
 	
-	private static final int NB_HIGHSCORE = 3;
+	private static final int NB_HIGHSCORE = 10;
 	
 	public DataSave() {
 		highScore = new TreeSet<Long>();
