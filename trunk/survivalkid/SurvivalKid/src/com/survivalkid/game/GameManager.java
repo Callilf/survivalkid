@@ -216,6 +216,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			// if it's a new highscore, store the file
 			if (data.addScore(timePassed)) {
 				data.saveData(getContext());
+				// TODO tell the people it's a new highscore
 			}
 		}
 	}

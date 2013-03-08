@@ -15,6 +15,9 @@ import com.survivalkid.game.util.MoveUtil;
 
 public class Bull extends EnemyEntity {
 
+	// avoid to get hit 2 time by the same bull
+	private static final int RECOVERY_TIME = 900;
+	
 	private static final int VITESSE_BULL = 15;
 	private static final int SPEED_COLLISION_X = 20;
 	private static final int SPEED_COLLISION_Y = -30;
@@ -93,7 +96,7 @@ public class Bull extends EnemyEntity {
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
 		if (!_personage.hasState(StateEnum.STATE_RECOVERY)) {
-			_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE);
+			_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME);
 			int newSpeedX = (direction == DirectionConstants.LEFT) ? -SPEED_COLLISION_X : SPEED_COLLISION_X;
 			_personage.setSpeedX(newSpeedX);
 			_personage.setSpeedY(SPEED_COLLISION_Y);
