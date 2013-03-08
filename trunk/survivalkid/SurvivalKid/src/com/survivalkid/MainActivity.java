@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import com.survivalkid.game.GameManager;
 import com.survivalkid.game.StartMenu;
 import com.survivalkid.game.manager.CharacterManager;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.TimerUtil;
 
@@ -44,7 +45,7 @@ public class MainActivity extends Activity {
 
 		setContentView(menu);
 		inMenu = true;
-
+        
 		Log.d(TAG, "View added");
 	}
 
@@ -131,8 +132,7 @@ public class MainActivity extends Activity {
 			TimerUtil.logAll();
 			break;
 		case R.id.m_test1:
-			// TimerUtil.reset();
-			// TO CODE, FOR TESTING
+			Log.d(TAG, "HighScore : " + GameContext.getSingleton().getDataSave().toString());
 			break;
 		case R.id.m_test2:
 			// TO CODE, FOR TESTING
@@ -197,5 +197,11 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "User leaving hint...");
 		super.onUserLeaveHint();
 	}
+	
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+    	Log.d(TAG, "SavingInstanceState...");
+    	super.onSaveInstanceState(outState);
+    }
 
 }

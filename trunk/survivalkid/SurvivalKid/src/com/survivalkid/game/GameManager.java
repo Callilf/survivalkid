@@ -16,6 +16,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import com.survivalkid.DataSave;
 import com.survivalkid.R;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants.PersonageConstants;
@@ -39,7 +40,7 @@ import com.survivalkid.game.util.MoveUtil;
 public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final String TAG = GameManager.class.getSimpleName();
-
+	
 	/** The thread corresponding to the game loop. */
 	public MainThread thread;
 
@@ -63,6 +64,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
 		GameContext.getSingleton().initSingleton();
+		
+//		SharedPreferences prefs = getContext().getSharedPreferences("SURVIVAL-KID-PREF", Context.MODE_PRIVATE);
+//		if (prefs == null) {
+//			// todo
+//		}
 
 		// initialize multitouch
 		MoveUtil.HAS_MULTITOUCH = context.getPackageManager().hasSystemFeature(
@@ -203,6 +209,15 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		HandlerUtil.sendMessage((int) timePassed, HandlerEnum.HANDLER_FIN);
 		Log.i(TAG, "Time passed : " + timePassed / 1000f + ", Score : " + s.score + ", end difficulty : "
 				+ s.currentDifficulty);
+		
+		// save the score
+		DataSave data = s.getDataSave();
+		if (data != null) {
+			// if it's a new highscore, store the file
+			if (data.addScore(timePassed)) {
+				data.saveData(getContext());
+			}
+		}
 	}
 
 	@Override
