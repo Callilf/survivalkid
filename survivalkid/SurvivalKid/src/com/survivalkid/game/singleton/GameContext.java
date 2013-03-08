@@ -4,13 +4,19 @@ import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.survivalkid.DataSave;
+
 public class GameContext {
+
 	/** The instance. */
 	private static GameContext instance;
 	
 	/** the context */
-	Context context;	
+	private Context context;	
 
+	/** save date */
+	private DataSave dataSave = null;
+	
 	/** duration of the game */
 	public long gameDuration;
 	
@@ -27,7 +33,7 @@ public class GameContext {
 	/** Get the singleton. */
 	public static GameContext getSingleton() {
 		if (instance == null) {
-			instance = new GameContext();		
+			instance = new GameContext();
 		}
 		return instance;
 	}
@@ -40,6 +46,9 @@ public class GameContext {
 		currentDifficulty = 0;
 		gameDuration = 0;
 		score = 0;
+		if (dataSave == null) {
+			dataSave = DataSave.getSaveData(context);
+		}
 	}
 
 	/**
@@ -52,6 +61,11 @@ public class GameContext {
 	public Context getContext() {
 		return context;
 	}
+	
+	public DataSave getDataSave() {
+		return dataSave;
+	}
+
 	/**
 	 * @return the display
 	 */
@@ -74,7 +88,5 @@ public class GameContext {
 	public void setCurrentTimeMillis(long currentTimeMillis) {
 		this.currentTimeMillis = currentTimeMillis;
 	}
-	
-	
 	
 }
