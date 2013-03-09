@@ -64,7 +64,7 @@ public class GameActivity extends Activity {
 		Log.d(TAG, "Touch pressed : " + keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			finish();
+			exitApplication();
 			break;
 		case KeyEvent.KEYCODE_MENU:
 			// if (!gamePanel.restart()) {
@@ -104,7 +104,7 @@ public class GameActivity extends Activity {
 		case R.id.m_option:
 			return true;
 		case R.id.m_left:
-			finish();
+			exitApplication();
 			break;
 		case R.id.m_hitbox:
 			CollisionUtil.hideShowDisplayHitBoxes();
@@ -134,6 +134,12 @@ public class GameActivity extends Activity {
 
 		gamePanel.getThread().setPause(false);
 		return true;
+	}
+	
+	private void exitApplication() {
+		finish();
+		System.gc();
+		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 	@Override
