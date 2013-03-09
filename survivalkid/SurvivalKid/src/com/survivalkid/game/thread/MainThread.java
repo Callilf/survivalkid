@@ -29,7 +29,7 @@ public class MainThread extends Thread {
 	private boolean endGame = false;
 	private SurfaceHolder surfaceHolder;
 	private GameManager gameManager;
-	public Canvas canvas;
+	private Canvas canvas;
 
 	public MainThread(SurfaceHolder surfaceHolder, GameManager gamePanel) {
 		super();
