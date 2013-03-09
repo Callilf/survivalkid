@@ -1,7 +1,6 @@
 package com.survivalkid.game;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,10 +11,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.survivalkid.GameActivity;
 import com.survivalkid.MenuActivity;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -62,7 +61,10 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 		paint2.setColor(Color.BLACK);
 
 		active = true;
-
+		
+		ActiveLoadingThread threadLoader = new ActiveLoadingThread();
+		threadLoader.start();
+		
 		Log.d(TAG, "Start the game !");
 		create();
 	}
