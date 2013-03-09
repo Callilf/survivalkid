@@ -16,6 +16,7 @@ import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.StateObject;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
 
 public class StateDisplayer {
@@ -38,7 +39,7 @@ public class StateDisplayer {
 		// Text
 		paint = new Paint();
 		paint.setTextSize(20);
-		paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+		paint.setTypeface(GameContext.getSingleton().getFont());
 		paint.setColor(Color.WHITE);
 
 		Log.d(TAG, "State Displayer created");

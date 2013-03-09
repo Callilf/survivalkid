@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -64,6 +65,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
 		GameContext.getSingleton().initSingleton();
+		GameContext.getSingleton().setFont(Typeface.createFromAsset(context.getAssets(), "fonts/MELODBO.TTF"));
 		
 //		SharedPreferences prefs = getContext().getSharedPreferences("SURVIVAL-KID-PREF", Context.MODE_PRIVATE);
 //		if (prefs == null) {

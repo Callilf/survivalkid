@@ -1,6 +1,7 @@
 package com.survivalkid.game.singleton;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -13,6 +14,9 @@ public class GameContext {
 	
 	/** the context */
 	private Context context;	
+	
+	/** The mail font of the texts in the game. */
+	private Typeface font;
 
 	/** save date */
 	private DataSave dataSave = null;
@@ -87,6 +91,20 @@ public class GameContext {
 	 */
 	public void setCurrentTimeMillis(long currentTimeMillis) {
 		this.currentTimeMillis = currentTimeMillis;
+	}
+
+	/**
+	 * @return the font
+	 */
+	public Typeface getFont() {
+		return font;
+	}
+
+	/**
+	 * @param font the font to set
+	 */
+	public void setFont(Typeface font) {
+		this.font = font;
 	}
 	
 }

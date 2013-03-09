@@ -24,7 +24,7 @@ public class LifeChangeDisplayer {
 		//Text
 		paint = new Paint(); 
 		paint.setTextSize(20);
-		paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+		paint.setTypeface(GameContext.getSingleton().getFont());
 		
 		typeChange = _typeChange;
 		displayDamagesBeginTime = GameContext.getSingleton().gameDuration;
