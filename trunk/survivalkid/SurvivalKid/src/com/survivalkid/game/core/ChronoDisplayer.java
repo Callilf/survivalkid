@@ -8,7 +8,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Typeface;
+
+import com.survivalkid.game.singleton.GameContext;
 
 public class ChronoDisplayer {
 
@@ -20,7 +21,7 @@ public class ChronoDisplayer {
 		//Text
 		paint = new Paint(); 
 		paint.setTextSize(20);
-		paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
+		paint.setTypeface(GameContext.getSingleton().getFont());
 		paint.setColor(Color.WHITE);
 
 		position = new Point(_x,_y);
