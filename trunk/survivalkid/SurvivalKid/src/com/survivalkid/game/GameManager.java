@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -81,13 +80,13 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 		// create the game loop thread
 		thread = new MainThread(getHolder(), this);
-
+		
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 
-		ground = BitmapFactory.decodeResource(getResources(), R.drawable.ground);
+		ground = BitmapUtil.createBitmap(R.drawable.ground);
 		MoveUtil.initializeButton(getResources());
-
+		
 		HandlerUtil.handlerFin = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
