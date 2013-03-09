@@ -48,6 +48,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private EnemyManager enemyManager;
 	private ItemManager itemManager;
 	private ChronoDisplayer chrono;
+	
+	private boolean surfaceActive;
 
 	private int persoSelected;
 
@@ -55,7 +57,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	public GameManager(Context context) {
 		super(context);
-
+		
+		surfaceActive = false;
 		Log.d(TAG, "Create the GameManager!");
 
 		// Initialize the bitmapUtil
@@ -282,6 +285,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
+		Log.d(TAG, "Surface is being created");
+		surfaceActive = true;
 		// at this point the surface is created and
 		// we can safely start the game loop
 
@@ -289,7 +294,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.d(TAG, "Surface is being destroyed");
-
+		surfaceActive = false;
 	}
 	
 	public void leaveGame() {
@@ -313,9 +318,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		thread.setPause(false);
 	}
 
-	/** Action when clicking on the BACK button. */
+	/** Pause the game and prepare the restoration. */
 	public void stop() {
-		thread.setPause(true);
+		thread.setRestoring();
 	}
 
 	// / getter & setter
@@ -340,5 +345,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public void setPersoSelected(int persoSelected) {
 		this.persoSelected = persoSelected;
+	}
+
+	public boolean isSurfaceActive() {
+		return surfaceActive;
 	}
 }
