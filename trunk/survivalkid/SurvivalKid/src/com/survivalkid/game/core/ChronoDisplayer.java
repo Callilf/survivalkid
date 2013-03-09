@@ -36,5 +36,9 @@ public class ChronoDisplayer {
 	public void draw(Canvas canvas) {
 		canvas.drawText( stringToDisplay, position.x, position.y, paint);
 	}
+	
+	public void setSize(float size) {
+		paint.setTextSize(size);
+	}
 
 }
