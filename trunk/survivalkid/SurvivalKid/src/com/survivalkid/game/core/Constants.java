@@ -19,6 +19,7 @@ public final class Constants {
 		public static final String ANIM_RUN = "run";
 		public static final String ANIM_JUMPUP = "jumpup";
 		public static final String ANIM_JUMPDOWN = "jumpdown";
+		public static final String ANIM_KNOCK_BACK = "knockback";
 		public static final int PERSO_SEPTH = 2;
 	}
 

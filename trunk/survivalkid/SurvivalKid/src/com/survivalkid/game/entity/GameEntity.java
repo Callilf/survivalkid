@@ -543,4 +543,19 @@ public abstract class GameEntity {
 		return states;
 	}
 
+	/**
+	 * @return the direction
+	 */
+	public int getDirection() {
+		return direction;
+	}
+
+	/**
+	 * @param direction the direction to set
+	 */
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
+	
 }
