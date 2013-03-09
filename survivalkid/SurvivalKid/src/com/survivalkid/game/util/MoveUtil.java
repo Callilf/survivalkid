@@ -74,8 +74,8 @@ public final class MoveUtil {
 		btn_left = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_left), BitmapUtil.createBitmap(R.drawable.arrow_left_pressed));
 		btn_right = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_right), BitmapUtil.createBitmap(R.drawable.arrow_right_pressed));
 		btn_up = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_up), BitmapUtil.createBitmap(R.drawable.arrow_up_pressed));
-		int LEFT_X = (int) (SCREEN_WIDTH*0.03);
 		if (HAS_MULTITOUCH) {
+			int LEFT_X = (int) (SCREEN_WIDTH*0.03);
 			btn_left.setPosition(LEFT_X, SCREEN_HEIGHT - btn_left.getHeight());
 			btn_right.setPosition(LEFT_X + btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
 			btn_up.setPosition(SCREEN_WIDTH - btn_up.getWidth() - btn_up.getWidth()/2, SCREEN_HEIGHT - btn_up.getHeight());		
@@ -85,14 +85,17 @@ public final class MoveUtil {
 			int heightHo = btn_left.getHeight();
 			int widthUp = btn_up.getWidth();
 			int widthHo = btn_left.getWidth();
+			int LEFT_X = (int) (0.98f*SCREEN_WIDTH - widthHo*3);
+			int POS_Y = SCREEN_HEIGHT - (int)(heightHo*1.3f);
+			
 			btn_left.setMarginVertical(heightHo);
 			btn_right.setMarginVertical(heightHo);
 			btn_up.setMarginHorizontal(widthUp + btn_left.getMarginHorizontal());
 			btn_up.setMarginVertical(heightHo);
-			btn_left.setPosition(LEFT_X, SCREEN_HEIGHT - heightHo);
-			btn_right.setPosition(LEFT_X + widthHo*2, SCREEN_HEIGHT - heightHo);
+			btn_left.setPosition(LEFT_X, POS_Y);
+			btn_right.setPosition(LEFT_X + widthHo*2, POS_Y);
 			btn_up.setPosition(LEFT_X + widthHo + btn_left.getMarginHorizontal() - widthUp/2,
-					SCREEN_HEIGHT - 2*heightHo - btn_up.getHeight());
+					SCREEN_HEIGHT - (int)(2.2f*heightHo) - btn_up.getHeight());
 		}
 	}
 	
