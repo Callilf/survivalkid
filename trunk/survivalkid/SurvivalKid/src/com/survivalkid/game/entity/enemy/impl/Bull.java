@@ -59,7 +59,7 @@ public class Bull extends EnemyEntity {
 		redefineHitBox((sprite.getWidth() * 25) / 100, (sprite.getHeight() * 20) / 100, (sprite.getWidth() * 70) / 100,
 				(sprite.getHeight() * 80) / 100);
 		play("run", true, true);
-		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_SMALL, 0, 0);
+		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 
 	}
 
