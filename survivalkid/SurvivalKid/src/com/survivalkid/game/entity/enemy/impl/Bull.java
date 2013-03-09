@@ -98,6 +98,7 @@ public class Bull extends EnemyEntity {
 		if (!_personage.hasState(StateEnum.STATE_RECOVERY)) {
 			_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME);
 			int newSpeedX = (direction == DirectionConstants.LEFT) ? -SPEED_COLLISION_X : SPEED_COLLISION_X;
+			_personage.setDirection((direction == DirectionConstants.LEFT) ? DirectionConstants.RIGHT : DirectionConstants.LEFT);
 			_personage.setSpeedX(newSpeedX);
 			_personage.setSpeedY(SPEED_COLLISION_Y);
 			_personage.addState(StateEnum.STATE_KNOCK_BACK, 500);

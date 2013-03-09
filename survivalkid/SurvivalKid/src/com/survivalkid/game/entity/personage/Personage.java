@@ -176,27 +176,19 @@ public class Personage extends GameEntity {
 
 		if(!hasState(StateEnum.STATE_KNOCK_BACK)) {
 			movePersoManager.calculNewSpeed(this);
-		}
 
-		// Set the direction based on the button pushed
-		if (movePersoManager.isLeftEnabled && (!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
-			direction = DirectionConstants.LEFT;
-		} else if (movePersoManager.isRightEnabled) {
-			direction = DirectionConstants.RIGHT;
+			// Set the direction based on the button pushed
+			if (movePersoManager.isLeftEnabled && (!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
+				direction = DirectionConstants.LEFT;
+			} else if (movePersoManager.isRightEnabled) {
+				direction = DirectionConstants.RIGHT;
+			}
 		}
-
+		
 		super.update(gameDuration);
 
 		// Play the correct animation
-		if (isJumpingUp) {
-			play(PersonageConstants.ANIM_JUMPUP, false, true);
-		} else if (isJumpingDown) {
-			play(PersonageConstants.ANIM_JUMPDOWN, false, true);
-		} else if (movePersoManager.isLeftEnabled || movePersoManager.isRightEnabled) {
-			play(PersonageConstants.ANIM_RUN, true, true);
-		} else {
-			play(PersonageConstants.ANIM_STAND, false, true);
-		}
+		selectAnimation();
 
 		// Handle the damage displayers
 		for (LifeChangeDisplayer dd : damages) {
@@ -210,6 +202,27 @@ public class Personage extends GameEntity {
 		}
 
 		stateDisplayer.update(gameDuration);
+	}
+	
+	
+	/**
+	 * Handle the animations of the character.
+	 */
+	private void selectAnimation() {
+		if(hasState(StateEnum.STATE_KNOCK_BACK) && !isOnFloor) {
+			play(PersonageConstants.ANIM_KNOCK_BACK, false, true);
+			return;
+		} 
+		
+		if (isJumpingUp) {
+			play(PersonageConstants.ANIM_JUMPUP, false, true);
+		} else if (isJumpingDown) {
+			play(PersonageConstants.ANIM_JUMPDOWN, false, true);
+		} else if (movePersoManager.isLeftEnabled || movePersoManager.isRightEnabled) {
+			play(PersonageConstants.ANIM_RUN, true, true);
+		} else {
+			play(PersonageConstants.ANIM_STAND, false, true);
+		}
 	}
 	
 	@Override
