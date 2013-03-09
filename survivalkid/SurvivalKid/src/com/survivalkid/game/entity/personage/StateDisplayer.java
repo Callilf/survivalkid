@@ -8,7 +8,6 @@ import java.util.Map;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
@@ -52,7 +51,11 @@ public class StateDisplayer {
 			AnimatedSprite as = objectState.getSprite();
 			if (as != null) {
 				Date date = new Date(objectState.getExpiration() - gameDuration);
-				map.get(stateEnum).setRemainingTimeStr(formatter.format(date));
+				String timeInString = formatter.format(date);
+				if(timeInString.startsWith("0")) {
+					timeInString = timeInString.substring(1);
+				}
+				map.get(stateEnum).setRemainingTimeStr(timeInString.substring(0, timeInString.length() - 2));
 				
 				as.setX(MoveUtil.SCREEN_WIDTH - offsetX - as.getWidth());
 				as.setY(GAP_SIZE_Y);
@@ -66,7 +69,7 @@ public class StateDisplayer {
 			AnimatedSprite currentSprite = map.get(stateEnum).getSprite();
 			if (currentSprite != null && !"".equals(map.get(stateEnum).getRemainingTimeStr())) {
 				currentSprite.draw(canvas, DirectionConstants.RIGHT);
-				canvas.drawText(map.get(stateEnum).getRemainingTimeStr(), currentSprite.getX(),
+				canvas.drawText(map.get(stateEnum).getRemainingTimeStr(), currentSprite.getX() + 5,
 						currentSprite.getY() + currentSprite.getHeight() + 20, paint);
 			}
 		}
