@@ -6,21 +6,21 @@ import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
 
-public class Medkit extends StandardObject {
+public class SuperMedkit extends StandardObject {
 	
 	/** Default constructor. */
-	public Medkit() {
+	public SuperMedkit() {
 		this(0, 0);
 	}
 	
 	/** Default constructor. */
-	public Medkit(int _x, int _y) {
-		super("Medkit", SpriteEnum.MEDKIT, _x, _y, 0);
+	public SuperMedkit(int _x, int _y) {
+		super("SuperMedkit", SpriteEnum.SUPER_MEDKIT, _x, _y, 0);
 	}
 
 	@Override
 	protected void init() {
-		timeToLive = 5000;
+		timeToLive = 4000;
 		setInBalloon(true);
 		
 		gravity = 1;
@@ -33,7 +33,7 @@ public class Medkit extends StandardObject {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).revoceryLife(15, EnumLife.RECOVERY_LIFE);
+			((Personage) _gameEntity).revoceryLife(25, EnumLife.RECOVERY_LIFE);
 			die();
 		}
 	}

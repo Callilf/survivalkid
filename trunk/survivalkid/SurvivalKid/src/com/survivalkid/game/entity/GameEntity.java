@@ -209,6 +209,10 @@ public abstract class GameEntity {
 		switch(stateEnum) {
 		case STATE_RECOVERY: 
 			sprite.setRecovery(false);break;
+		case STATE_HIGH_SPEED_ENEMIES:
+		case STATE_LOW_SPEED_ENEMIES:
+			GameContext.getSingleton().setAlterationSpeedEnemy(1f);
+			break;
 		default:
 			break;
 		}
@@ -222,6 +226,14 @@ public abstract class GameEntity {
 		switch(stateObject.getState()) {
 		case STATE_RECOVERY: 
 			sprite.setRecovery(true);break;
+		case STATE_LOW_SPEED_ENEMIES:
+			states.remove(StateEnum.STATE_HIGH_SPEED_ENEMIES);
+			GameContext.getSingleton().setAlterationSpeedEnemy(0.51f);
+			break;
+		case STATE_HIGH_SPEED_ENEMIES:
+			states.remove(StateEnum.STATE_LOW_SPEED_ENEMIES);
+			GameContext.getSingleton().setAlterationSpeedEnemy(2f);
+			break;
 		default:
 			break;
 		}
