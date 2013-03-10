@@ -50,13 +50,13 @@ public enum SpriteEnum {
 	
 	MEDKIT(R.drawable.medkit, 1, 1),
 	
-	SUPER_MEDKIT(R.drawable.super_medkit, 1, 1),
+	MEDKIT_SMALL(R.drawable.medkit_small, 1, 1),
 	
 	RED_CLOCK(R.drawable.item_red_clock, 1, 1),
 	
-	BLUE_CLOCK(R.drawable.item_blue_clock, 1, 1),
+	HOURGLASS_RED(R.drawable.hourglass_red, 1, 1),
 	
-	ORANGE_CLOCK(R.drawable.item_orange_clock, 1, 1),
+	HOURGLASS_GREEN(R.drawable.hourglass_green, 1, 1),
 	
 	FIRE_TRAIL(R.drawable.fire, 6, 1, new Animation("fire", new int[] { 0, 1, 2, 3, 4, 5 }, 15)),
 	

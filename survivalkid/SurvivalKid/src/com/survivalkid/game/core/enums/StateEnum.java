@@ -6,9 +6,9 @@ public enum StateEnum {
 	/** Low speed mode */
 	STATE_LOW_SPEED(SpriteEnum.RED_CLOCK),
 	/** High speed enemy mode */
-	STATE_HIGH_SPEED_ENEMIES(SpriteEnum.BLUE_CLOCK),
+	STATE_HIGH_SPEED_ENEMIES(SpriteEnum.HOURGLASS_RED),
 	/** Low speed enemy mode */
-	STATE_LOW_SPEED_ENEMIES(SpriteEnum.ORANGE_CLOCK),
+	STATE_LOW_SPEED_ENEMIES(SpriteEnum.HOURGLASS_GREEN),
 	/** Knocked back by an enemy (like the bull). */
 	STATE_KNOCK_BACK;
 	
