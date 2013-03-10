@@ -15,7 +15,7 @@ public class SuperMedkit extends StandardObject {
 	
 	/** Default constructor. */
 	public SuperMedkit(int _x, int _y) {
-		super("SuperMedkit", SpriteEnum.SUPER_MEDKIT, _x, _y, 0);
+		super("SuperMedkit", SpriteEnum.MEDKIT, _x, _y, 0);
 	}
 
 	@Override

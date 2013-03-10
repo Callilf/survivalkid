@@ -18,7 +18,7 @@ public class EnemySpeedReducer extends StandardObject {
 	
 	/** Default constructor. */
 	public EnemySpeedReducer(int _x, int _y) {
-		super("EnemySpeedReducer", SpriteEnum.ORANGE_CLOCK, _x, _y, 0);
+		super("EnemySpeedReducer", SpriteEnum.HOURGLASS_GREEN, _x, _y, 0);
 	};
 
 	@Override
