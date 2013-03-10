@@ -168,9 +168,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		for (Personage perso : characterManager.getCharacterList()) {
 			for (ItemEntity item : itemManager.getItemList()) {
-				if (CollisionUtil.Overlaps(perso, item)) {
-					perso.setOverlaping(true);
-					item.collide(perso);
+				if (!item.isInBalloon()) {
+					if (CollisionUtil.Overlaps(perso, item)) {
+						perso.setOverlaping(true);
+						item.collide(perso);
+					}
 				}
 			}
 			for (EnemyEntity enemy : enemyManager.getEnemyList()) {

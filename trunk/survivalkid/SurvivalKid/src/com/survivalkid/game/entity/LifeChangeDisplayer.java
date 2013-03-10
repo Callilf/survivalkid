@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Typeface;
 
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.singleton.GameContext;
