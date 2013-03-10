@@ -34,6 +34,9 @@ public class GameContext {
 	/** The current time in milliseconds - do not be use anymore or for statistic only */
 	private long currentTimeMillis;
 	
+	// alteration of the game
+	private float alterationSpeedEnemy = 1f;
+	
 	/** Get the singleton. */
 	public static GameContext getSingleton() {
 		if (instance == null) {
@@ -105,6 +108,14 @@ public class GameContext {
 	 */
 	public void setFont(Typeface font) {
 		this.font = font;
+	}
+
+	public float getAlterationSpeedEnemy() {
+		return alterationSpeedEnemy;
+	}
+
+	public void setAlterationSpeedEnemy(float alterationSpeedEnemy) {
+		this.alterationSpeedEnemy = alterationSpeedEnemy;
 	}
 	
 }

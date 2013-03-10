@@ -17,6 +17,7 @@ import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.FireMeteor;
 import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 import com.survivalkid.game.entity.enemy.impl.Meteore;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.TimerUtil;
 
 public class EnemyManager extends ObjectManager {
@@ -40,6 +41,10 @@ public class EnemyManager extends ObjectManager {
 	 */
 	private long generationFrequency = 1500;
 	private long difficultyIncreasingPeriod = 3000;
+	
+	// change of the speed
+	private float alterationSpeed = 1f;
+	private float counterAlterationSpeed = 1f;
 
 	private static final Map<Integer, List<Class<? extends EnemyEntity>>> enemyDifficultyMap;
 
@@ -86,14 +91,7 @@ public class EnemyManager extends ObjectManager {
 			}
 		}
 		
-		// update the existing enemies
-		for (EnemyEntity enemy : enemyList) {
-			if (enemy.isDead()) {
-				deadEnemies.add(enemy);
-			} else {
-				enemy.updateTimed(gameDuration);
-			}
-		}
+		updateEnemiesWithSpeedAlteration(gameDuration);
 
 		// remove the dead enemies from the list so that they are removed from the game
 		if (!deadEnemies.isEmpty()) {
@@ -112,6 +110,59 @@ public class EnemyManager extends ObjectManager {
 				addEnemy(enemy);
 			}
 			enemiesToAdd.clear();
+		}
+	}
+	
+	/**
+	 * do the update of all enemy with potential multiple update
+	 * 
+	 * @param gameDuration the game duration
+	 */
+	private void updateEnemiesWithSpeedAlteration(long gameDuration) {
+		// test the change of speed
+		if (alterationSpeed != GameContext.getSingleton().getAlterationSpeedEnemy()) {
+			alterationSpeed = GameContext.getSingleton().getAlterationSpeedEnemy();
+			counterAlterationSpeed = 1f;
+		}
+		
+		// depend of the alterationSpeed, do zero, one, or multiple update
+		
+		// case where the speed is normal
+		if (alterationSpeed == 1) {
+			updateEnemies(gameDuration);
+		}
+		// case where alterationSpeed < 1
+		else if (alterationSpeed < 1) {
+			if (counterAlterationSpeed >= 1) {
+				updateEnemies(gameDuration);
+				counterAlterationSpeed = alterationSpeed;
+			}
+			else {
+				counterAlterationSpeed += alterationSpeed;
+			}
+		}
+		// case where alterationSpeed > 1
+		else {
+			while(counterAlterationSpeed >= 1) {
+				updateEnemies(gameDuration);
+				counterAlterationSpeed -= 1;
+			}
+			counterAlterationSpeed = alterationSpeed;
+		}
+	}
+	
+	/**
+	 * do one update of all enemy
+	 * 
+	 * @param gameDuration the game duration
+	 */
+	private void updateEnemies(long gameDuration) {
+		for (EnemyEntity enemy : enemyList) {
+			if (enemy.isDead()) {
+				deadEnemies.add(enemy);
+			} else {
+				enemy.update(gameDuration);
+			}
 		}
 	}
 

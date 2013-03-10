@@ -9,17 +9,16 @@ import com.survivalkid.game.entity.personage.Personage;
 public class PlayerSpeedReducer extends StandardObject {
 	
 	/** Duration of the effect */
-	private static final long PLAYER_SPEED_REDUCING_DURATION = 4000;
+	private static final long ALTER_GAME_DURATION = 4000;
 	
 	/** Default constructor. */
 	public PlayerSpeedReducer() {
-		super("PlayerSpeedReducer", SpriteEnum.RED_CLOCK, 0, 0, 0);
+		this(0, 0);
 	};
 	
 	/** Default constructor. */
 	public PlayerSpeedReducer(int _x, int _y) {
 		super("PlayerSpeedReducer", SpriteEnum.RED_CLOCK, _x, _y, 0);
-		init();
 	};
 
 	@Override
@@ -37,7 +36,7 @@ public class PlayerSpeedReducer extends StandardObject {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			_gameEntity.addState(StateEnum.STATE_LOW_SPEED, PLAYER_SPEED_REDUCING_DURATION);
+			_gameEntity.addState(StateEnum.STATE_LOW_SPEED, ALTER_GAME_DURATION);
 			die();
 		}
 	}
