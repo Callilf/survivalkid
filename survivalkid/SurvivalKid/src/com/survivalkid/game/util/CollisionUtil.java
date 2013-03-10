@@ -2,6 +2,7 @@ package com.survivalkid.game.util;
 
 import android.graphics.Rect;
 
+import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.entity.GameEntity;
 
 public final class CollisionUtil {
@@ -9,7 +10,7 @@ public final class CollisionUtil {
 	private CollisionUtil(){};
 	
 	// USE FOR DEBUGGING
-	public static boolean displayHitBoxes = false;
+	public static boolean displayHitBoxes = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.DISPLAY_HITBOX, false);
 	
 	public static boolean Overlaps(GameEntity ge1, GameEntity ge2) {
 		ge1.getHitBox();
@@ -19,7 +20,9 @@ public final class CollisionUtil {
 
 	/** Hide or show the hit boxes */
 	public static boolean hideShowDisplayHitBoxes() {
-		return (displayHitBoxes = !displayHitBoxes);
+		displayHitBoxes = !displayHitBoxes;
+		PrefsUtil.setPrefs(boolean.class, PreferencesConstants.DISPLAY_HITBOX, displayHitBoxes);
+		return displayHitBoxes;
 	}
 	
 }
