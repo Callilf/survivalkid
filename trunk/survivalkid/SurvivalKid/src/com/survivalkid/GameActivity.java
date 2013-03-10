@@ -15,6 +15,7 @@ import com.survivalkid.game.GameManager;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.PrefsUtil;
 import com.survivalkid.game.util.TimerUtil;
 
 public class GameActivity extends Activity {
@@ -39,6 +40,7 @@ public class GameActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		PrefsUtil.initPreferences(this);
 		gamePanel = new GameManager(this);
 		backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
 

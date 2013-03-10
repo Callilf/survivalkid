@@ -42,4 +42,8 @@ public final class Constants {
 	public class CollisionConstants {
 		public static final int MAX_FRAMES_OF_COLLISION = 2;
 	}
+	
+	public class PreferencesConstants {
+		public static final String DISPLAY_HITBOX = "displayHitbox";
+	}
 }

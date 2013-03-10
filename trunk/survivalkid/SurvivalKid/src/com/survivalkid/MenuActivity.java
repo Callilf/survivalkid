@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.StartMenu;
+import com.survivalkid.game.util.PrefsUtil;
 
 public class MenuActivity extends Activity {
 
@@ -27,6 +28,7 @@ public class MenuActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		PrefsUtil.initPreferences(this);
 		menu = new StartMenu(this);
 		setContentView(menu);
 		
