@@ -77,7 +77,7 @@ public class EnemyManager extends ObjectManager {
 	public void update(long gameDuration) {
 		
 		// Do we have to generate?
-		if (gameDuration - generationCounter >= generationFrequency) {
+		if (gameDuration - generationCounter >= generationFrequency/alterationSpeed) {
 			generationCounter = gameDuration;
 			generateTimed();
 		}
