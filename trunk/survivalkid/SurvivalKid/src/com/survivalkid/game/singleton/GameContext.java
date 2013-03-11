@@ -35,7 +35,7 @@ public class GameContext {
 	private long currentTimeMillis;
 	
 	// alteration of the game
-	private float alterationSpeedEnemy = 1f;
+	private float alterationSpeedEnemy;
 	
 	/** Get the singleton. */
 	public static GameContext getSingleton() {
@@ -53,6 +53,7 @@ public class GameContext {
 		currentDifficulty = 0;
 		gameDuration = 0;
 		score = 0;
+		alterationSpeedEnemy = 1f;
 		if (dataSave == null) {
 			dataSave = DataSave.getSaveData(context);
 		}
