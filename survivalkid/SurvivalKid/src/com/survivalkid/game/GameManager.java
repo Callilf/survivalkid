@@ -28,6 +28,7 @@ import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.thread.MainThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
@@ -68,6 +69,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		GameContext.getSingleton().setContext(context);
 		GameContext.getSingleton().initSingleton();
 		GameContext.getSingleton().setFont(Typeface.createFromAsset(context.getAssets(), "fonts/MELODBO.TTF"));
+		
+		SharedVars.getSingleton().initSingleton();
 		
 //		SharedPreferences prefs = getContext().getSharedPreferences("SURVIVAL-KID-PREF", Context.MODE_PRIVATE);
 //		if (prefs == null) {

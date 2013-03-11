@@ -11,6 +11,7 @@ import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Bull extends EnemyEntity {
@@ -87,6 +88,12 @@ public class Bull extends EnemyEntity {
 					warning.setBlinkPeriod(2, 2);
 				}
 				warning.update(gameDuration, direction);
+				
+				if(direction == DirectionConstants.LEFT) {
+					SharedVars.getSingleton().getBullWarningRightList().add(warning);
+				} else {
+					SharedVars.getSingleton().getBullWarningLeftList().add(warning);
+				}
 			}
 		}
 

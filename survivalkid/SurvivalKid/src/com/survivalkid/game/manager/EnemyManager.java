@@ -6,10 +6,13 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.Log;
 
 import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Bull;
@@ -18,6 +21,7 @@ import com.survivalkid.game.entity.enemy.impl.FireMeteor;
 import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 import com.survivalkid.game.entity.enemy.impl.Meteore;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.TimerUtil;
 
 public class EnemyManager extends ObjectManager {
@@ -27,9 +31,6 @@ public class EnemyManager extends ObjectManager {
 	private List<EnemyEntity> enemyKillerList; // list the enemy with attack which can kill other enemy
 	private List<EnemyEntity> deadEnemies;
 	private List<EnemyEntity> enemiesToAdd;
-	
-	/* Save the last time a enemy was created */
-	//private long lastEnemy; TODO to use or to deleted
 	
 	/**
 	 * Counter used to see when to generate.
@@ -47,6 +48,9 @@ public class EnemyManager extends ObjectManager {
 	private float counterAlterationSpeed = 1f;
 
 	private static final Map<Integer, List<Class<? extends EnemyEntity>>> enemyDifficultyMap;
+	
+	//TEMP
+	private Paint paint;
 
 	static {
 		enemyDifficultyMap = new TreeMap<Integer, List<Class<? extends EnemyEntity>>>();
@@ -68,6 +72,12 @@ public class EnemyManager extends ObjectManager {
 		enemyKillerList = new ArrayList<EnemyEntity>();
 		deadEnemies = new ArrayList<EnemyEntity>();
 		enemiesToAdd = new ArrayList<EnemyEntity>();
+		
+		//Text
+		paint = new Paint(); 
+		paint.setTextSize(30);
+		paint.setTypeface(GameContext.getSingleton().getFont());
+		paint.setColor(Color.BLACK);
 	}
 
 	public void create() {
@@ -75,6 +85,9 @@ public class EnemyManager extends ObjectManager {
 	}
 
 	public void update(long gameDuration) {
+		//Reinit the list of bull warnings
+		SharedVars.getSingleton().getBullWarningLeftList().clear();
+		SharedVars.getSingleton().getBullWarningRightList().clear();
 		
 		// Do we have to generate?
 		if (gameDuration - generationCounter >= generationFrequency/alterationSpeed) {
@@ -169,6 +182,15 @@ public class EnemyManager extends ObjectManager {
 	public void draw(Canvas canvas) {
 		for (EnemyEntity enemy : enemyList) {
 			enemy.drawTimed(canvas);
+		}
+		
+		if(SharedVars.getSingleton().getBullWarningLeftList().size() > 1) {
+			AnimatedSprite temp = SharedVars.getSingleton().getBullWarningLeftList().get(0);
+			canvas.drawText(String.valueOf(SharedVars.getSingleton().getBullWarningLeftList().size()), temp.getX() + temp.getWidth()/3, temp.getY() + temp.getHeight()/2.5f, paint);
+		}
+		if(SharedVars.getSingleton().getBullWarningRightList().size() > 1) {
+			AnimatedSprite temp = SharedVars.getSingleton().getBullWarningRightList().get(0);
+			canvas.drawText(String.valueOf(SharedVars.getSingleton().getBullWarningRightList().size()), temp.getX() + temp.getWidth()/3, temp.getY() + temp.getHeight()/2.5f, paint);
 		}
 	}
 
