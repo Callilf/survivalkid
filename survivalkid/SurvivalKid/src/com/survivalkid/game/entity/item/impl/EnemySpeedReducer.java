@@ -9,7 +9,7 @@ import com.survivalkid.game.entity.personage.Personage;
 public class EnemySpeedReducer extends StandardObject {
 	
 	/** Duration of the effect */
-	private static final long ALTER_GAME_DURATION = 4000;
+	private static final long ALTER_GAME_DURATION = 10000;
 	
 	/** Default constructor. */
 	public EnemySpeedReducer() {
