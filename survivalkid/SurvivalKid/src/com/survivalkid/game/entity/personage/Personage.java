@@ -155,6 +155,12 @@ public class Personage extends GameEntity {
 	public void die() {
 		Log.d(TAG, "Perso DEAD !");
 		dying = true;
+		
+		// Suppress status of the player
+		for (StateEnum state : states.keySet()) {
+			processEndState(state);
+		}
+		states.clear();
 
 		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);
 		deathAnim.setY((sprite.getY() + sprite.getHeight() / 2) - deathAnim.getHeight() / 2);
