@@ -185,11 +185,11 @@ public class EnemyManager extends ObjectManager {
 		}
 		
 		if(SharedVars.getSingleton().getBullWarningLeftList().size() > 1) {
-			AnimatedSprite temp = SharedVars.getSingleton().getBullWarningLeftList().get(0);
+			AnimatedSprite temp = SharedVars.getSingleton().getBullWarningLeftList().iterator().next();
 			canvas.drawText(String.valueOf(SharedVars.getSingleton().getBullWarningLeftList().size()), temp.getX() + temp.getWidth()/3, temp.getY() + temp.getHeight()/2.5f, paint);
 		}
 		if(SharedVars.getSingleton().getBullWarningRightList().size() > 1) {
-			AnimatedSprite temp = SharedVars.getSingleton().getBullWarningRightList().get(0);
+			AnimatedSprite temp = SharedVars.getSingleton().getBullWarningRightList().iterator().next();
 			canvas.drawText(String.valueOf(SharedVars.getSingleton().getBullWarningRightList().size()), temp.getX() + temp.getWidth()/3, temp.getY() + temp.getHeight()/2.5f, paint);
 		}
 	}
