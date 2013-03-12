@@ -27,6 +27,9 @@ public class Personage extends GameEntity {
 	private int persoType;
 	private Life life;
 	private AnimatedSprite deathAnim;
+	
+	//The bag that allows to store items
+	private Bag bag;
 
 	private boolean dying;
 
@@ -70,6 +73,8 @@ public class Personage extends GameEntity {
 		damagesOver = new ArrayList<LifeChangeDisplayer>();
 
 		stateDisplayer = new StateDisplayer(this);
+		
+		setBag(new Bag());
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
@@ -208,6 +213,7 @@ public class Personage extends GameEntity {
 		}
 
 		stateDisplayer.update(gameDuration);
+		bag.update(gameDuration);
 	}
 	
 	
@@ -268,6 +274,8 @@ public class Personage extends GameEntity {
 
 			stateDisplayer.draw(canvas);
 		}
+		
+		bag.draw(canvas);
 	}
 
 	public void setOverlaping(boolean b) {
@@ -295,6 +303,20 @@ public class Personage extends GameEntity {
 
 	public Life getLife() {
 		return life;
+	}
+
+	/**
+	 * @return the bag
+	 */
+	public Bag getBag() {
+		return bag;
+	}
+
+	/**
+	 * @param bag the bag to set
+	 */
+	public void setBag(Bag bag) {
+		this.bag = bag;
 	}
 
 }
