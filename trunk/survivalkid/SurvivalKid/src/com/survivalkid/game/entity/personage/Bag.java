@@ -56,9 +56,12 @@ public class Bag {
 	}
 
 	public void checkTouched(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		int action =  event.getAction();
+		int actionCode = action & MotionEvent.ACTION_MASK;
+		if (actionCode == MotionEvent.ACTION_DOWN || actionCode == MotionEvent.ACTION_POINTER_DOWN) {
+			int pid = action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT;
 			if (freezeExctinction < GameContext.getSingleton().getCurrentTimeMillis()
-					&& touchBox.contains((int) event.getX(), (int) event.getY())) {
+					&& touchBox.contains((int) event.getX(pid), (int) event.getY(pid))) {
 				if(slot == null) {
 					toggleLocked();
 					freezeExctinction = GameContext.getSingleton().getCurrentTimeMillis() + FREEZE_TIME_DURATION;
