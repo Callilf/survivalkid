@@ -21,7 +21,7 @@ import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.TimerUtil;
 
-public abstract class GameEntity {
+public abstract class GameEntity implements Cloneable {
 
 	/** TAG for the logs. */
 	private static final String TAG = GameEntity.class.getSimpleName();
