@@ -2,8 +2,6 @@ package com.survivalkid.game.entity.item.impl;
 
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
-import com.survivalkid.game.entity.GameEntity;
-import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
 
@@ -35,21 +33,8 @@ public class EnemySpeedIncrease extends StandardObject {
 	}
 
 	@Override
-	public void collide(GameEntity _gameEntity) {
-		if (_gameEntity instanceof Personage) {
-			Personage perso = (Personage) _gameEntity;
-			if (!perso.getBag().isLocked() && perso.getBag().getSlot() == null) {
-				try {
-					perso.getBag().addItem((ItemEntity)this.clone());
-				} catch (CloneNotSupportedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} else {
-				_gameEntity.addState(StateEnum.STATE_HIGH_SPEED_ENEMIES, ALTER_GAME_DURATION);
-			}
-			die();
-		}
+	public void collideWithPerso(Personage _perso) {
+		_perso.addState(StateEnum.STATE_HIGH_SPEED_ENEMIES, ALTER_GAME_DURATION);
 	}
 
 }

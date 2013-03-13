@@ -1,9 +1,7 @@
 package com.survivalkid.game.entity.item.impl;
 
 import com.survivalkid.game.core.enums.SpriteEnum;
-import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
-import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
 
@@ -32,21 +30,8 @@ public class Medkit extends StandardObject {
 	}
 
 	@Override
-	public void collide(GameEntity _gameEntity) {
-		if (_gameEntity instanceof Personage) {
-			Personage perso = (Personage) _gameEntity;
-			if(!perso.getBag().isLocked() && perso.getBag().getSlot() == null) {
-				try {
-					perso.getBag().addItem((ItemEntity)this.clone());
-				} catch (CloneNotSupportedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} else {
-				((Personage) _gameEntity).revoceryLife(15, EnumLife.RECOVERY_LIFE);
-			}
-			die();
-		}
+	public void collideWithPerso(Personage _perso) {
+		_perso.revoceryLife(15, EnumLife.RECOVERY_LIFE);
 	}
 
 }
