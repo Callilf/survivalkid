@@ -21,13 +21,15 @@ public class Bag {
 	private boolean locked;
 	private AnimatedSprite sprite;
 	private Rect touchBox;
+	private Personage perso;
 
 	private long freezeExctinction;
 
 	/** Balloon hitbox for debug. */
 	public Paint touchBoxPainter;
 
-	public Bag() {
+	public Bag(Personage _perso) {
+		perso = _perso;
 		sprite = new AnimatedSprite(SpriteEnum.BAG_SLOT);
 		sprite.setX(MoveUtil.myBag.x);
 		sprite.setY(MoveUtil.myBag.y);
@@ -48,15 +50,22 @@ public class Bag {
 	public void addItem(ItemEntity item) {
 		if (slot == null) {
 			slot = item;
+			this.slot.setX(sprite.getX() + sprite.getWidth()/5);
+			this.slot.setY(sprite.getY() + sprite.getHeight()/10);
 		}
 	}
 
 	public void checkTouched(MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_UP) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			if (freezeExctinction < GameContext.getSingleton().getCurrentTimeMillis()
 					&& touchBox.contains((int) event.getX(), (int) event.getY())) {
-				toggleLocked();
-				freezeExctinction = GameContext.getSingleton().getCurrentTimeMillis() + FREEZE_TIME_DURATION;
+				if(slot == null) {
+					toggleLocked();
+					freezeExctinction = GameContext.getSingleton().getCurrentTimeMillis() + FREEZE_TIME_DURATION;
+				} else {
+					slot.collide(perso);
+					slot = null;
+				}
 			}
 		}
 	}
@@ -67,6 +76,11 @@ public class Bag {
 
 	public void draw(Canvas canvas) {
 		sprite.draw(canvas, DirectionConstants.RIGHT);
+		
+		if(slot != null) {
+			slot.draw(canvas);
+		}
+		
 		if (CollisionUtil.displayHitBoxes) {
 			canvas.drawRect(touchBox, touchBoxPainter);
 		}
@@ -106,5 +120,22 @@ public class Bag {
 	public void setSprite(AnimatedSprite sprite) {
 		this.sprite = sprite;
 	}
+
+	/**
+	 * @return the slot
+	 */
+	public ItemEntity getSlot() {
+		return slot;
+	}
+
+	/**
+	 * @param slot the slot to set
+	 */
+	public void setSlot(ItemEntity slot) {
+		this.slot = slot;
+
+	}
+	
+	
 
 }

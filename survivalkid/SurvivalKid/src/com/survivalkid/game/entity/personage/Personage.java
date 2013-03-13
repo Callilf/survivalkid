@@ -74,7 +74,7 @@ public class Personage extends GameEntity {
 
 		stateDisplayer = new StateDisplayer(this);
 		
-		setBag(new Bag());
+		setBag(new Bag(this));
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:

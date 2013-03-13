@@ -3,16 +3,17 @@ package com.survivalkid.game.entity.item.impl;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
 
 public class SuperMedkit extends StandardObject {
-	
+
 	/** Default constructor. */
 	public SuperMedkit() {
 		this(0, 0);
 	}
-	
+
 	/** Default constructor. */
 	public SuperMedkit(int _x, int _y) {
 		super("SuperMedkit", SpriteEnum.MEDKIT, _x, _y, 0);
@@ -22,7 +23,7 @@ public class SuperMedkit extends StandardObject {
 	protected void init() {
 		timeToLive = 4000;
 		setInBalloon(true);
-		
+
 		gravity = 1;
 		affectedByFloor = true;
 		affectedByCeiling = false;
@@ -33,7 +34,17 @@ public class SuperMedkit extends StandardObject {
 	@Override
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
-			((Personage) _gameEntity).revoceryLife(25, EnumLife.RECOVERY_LIFE);
+			Personage perso = (Personage) _gameEntity;
+			if (!perso.getBag().isLocked() && perso.getBag().getSlot() == null) {
+				try {
+					perso.getBag().addItem((ItemEntity)this.clone());
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				((Personage) _gameEntity).revoceryLife(25, EnumLife.RECOVERY_LIFE);
+			}
 			die();
 		}
 	}
