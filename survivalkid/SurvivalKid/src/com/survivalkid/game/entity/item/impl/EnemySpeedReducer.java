@@ -47,8 +47,8 @@ public class EnemySpeedReducer extends StandardObject {
 				}
 			} else {
 				_gameEntity.addState(StateEnum.STATE_LOW_SPEED_ENEMIES, ALTER_GAME_DURATION);
-				die();
 			}
+			die();
 		}
 	}
 

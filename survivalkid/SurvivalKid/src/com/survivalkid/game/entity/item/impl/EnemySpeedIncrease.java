@@ -47,8 +47,8 @@ public class EnemySpeedIncrease extends StandardObject {
 				}
 			} else {
 				_gameEntity.addState(StateEnum.STATE_HIGH_SPEED_ENEMIES, ALTER_GAME_DURATION);
-				die();
 			}
+			die();
 		}
 	}
 

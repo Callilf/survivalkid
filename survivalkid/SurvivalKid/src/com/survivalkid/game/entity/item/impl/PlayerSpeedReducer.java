@@ -47,8 +47,8 @@ public class PlayerSpeedReducer extends StandardObject {
 				}
 			} else {
 				_gameEntity.addState(StateEnum.STATE_LOW_SPEED, ALTER_GAME_DURATION);
-				die();
 			}
+			die();
 		}
 	}
 
