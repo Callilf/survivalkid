@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.survivalkid.DataSave;
+import com.survivalkid.game.data.DataSave;
 
 public class GameContext {
 

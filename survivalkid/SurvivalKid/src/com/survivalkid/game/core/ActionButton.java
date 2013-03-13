@@ -5,6 +5,7 @@ import static java.lang.Math.min;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -65,6 +66,14 @@ public class ActionButton {
 				min(MoveUtil.SCREEN_HEIGHT, y + sprite.getHeight() + marginVertical));
 		// log the initial position of the hitbox
 		Log.d(TAG, "Hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
+	}
+	
+	/**
+	 * Set the positions of the button and initialize the hitbox
+	 * @param p point
+	 */
+	public void setPosition(Point p) {
+		setPosition(p.x, p.y);
 	}
 
 	/**

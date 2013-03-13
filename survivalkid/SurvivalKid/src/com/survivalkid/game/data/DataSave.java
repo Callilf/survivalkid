@@ -1,4 +1,4 @@
-package com.survivalkid;
+package com.survivalkid.game.data;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,12 +12,15 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.TreeSet;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-@Deprecated
-public class DataSave extends Activity implements Serializable {
+/**
+ * Store data when the application is shutdown
+ * 
+ * @author Thomas
+ */
+public final class DataSave implements Serializable {
 
 	private static final long serialVersionUID = 7312795216510753348L;
 
@@ -27,7 +30,7 @@ public class DataSave extends Activity implements Serializable {
 	// could make a second file in case of the first become corrupt
 	//private static final String SAVE_FILE_BACKUP = "survival-game-save-backup";
 
-	TreeSet<Long> highScore;
+	private TreeSet<Long> highScore;
 	
 	private static final int NB_HIGHSCORE = 10;
 	
@@ -82,10 +85,22 @@ public class DataSave extends Activity implements Serializable {
 		FileInputStream fis = null;
 		ObjectInputStream is = null;
 		DataSave data = null;
+		
 		try {
 			fis = context.openFileInput(SAVE_FILE);
 			is = new ObjectInputStream(fis);
-			data = (DataSave) is.readObject();
+			Object tmp = is.readObject();
+			
+			// to delete
+			if (tmp instanceof com.survivalkid.DataSave) {
+				data = new DataSave();
+				data.highScore = ((com.survivalkid.DataSave) tmp).getHighScore();
+				data.saveData(context);
+			}
+			else {
+				data = (DataSave) tmp;
+			}
+			//data = (DataSave) is.readObject(); // to uncomment when the other part will be delete
 			is.close();
 		}
 		catch(FileNotFoundException e) {
@@ -104,6 +119,7 @@ public class DataSave extends Activity implements Serializable {
 				closeInputStreamSecure(is, "is");
 			}
 		}
+		
 		return data;
 	}
 

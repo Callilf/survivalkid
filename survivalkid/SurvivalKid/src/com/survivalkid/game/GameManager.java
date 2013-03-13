@@ -16,11 +16,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
-import com.survivalkid.DataSave;
 import com.survivalkid.R;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
+import com.survivalkid.game.data.DataSave;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.personage.Personage;
