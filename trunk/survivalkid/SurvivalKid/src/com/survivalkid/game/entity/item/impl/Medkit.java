@@ -44,8 +44,8 @@ public class Medkit extends StandardObject {
 				}
 			} else {
 				((Personage) _gameEntity).revoceryLife(15, EnumLife.RECOVERY_LIFE);
-				die();
 			}
+			die();
 		}
 	}
 
