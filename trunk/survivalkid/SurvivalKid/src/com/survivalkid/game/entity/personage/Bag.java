@@ -23,10 +23,14 @@ public class Bag {
 
 	public Bag() {
 		sprite = new AnimatedSprite(SpriteEnum.BAG_SLOT);
-		sprite.setX(MoveUtil.SCREEN_WIDTH - MoveUtil.btn_up.getWidth() - MoveUtil.btn_up.getWidth()/2 - sprite.getWidth()*2);
-		sprite.setY(MoveUtil.SCREEN_HEIGHT - sprite.getHeight() - sprite.getHeight()/10);
+		sprite.setX(MoveUtil.myBag.x);
+		sprite.setY(MoveUtil.myBag.y);
 		sprite.play("unlocked", false, true);
 		
+		initTouchBox();
+	}
+	
+	public void initTouchBox() {
 		touchBox = new Rect(sprite.getX(), sprite.getY(), sprite.getX()+sprite.getWidth(), sprite.getY()+sprite.getHeight());
 	}
 
