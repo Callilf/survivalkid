@@ -7,6 +7,7 @@ import android.util.Log;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.impl.BalloonCrate;
+import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -93,15 +94,28 @@ public abstract class ItemEntity extends GameEntity {
 	@Override
 	public void draw(Canvas canvas){
 		if(!inBalloon || balloon.isReleaseObject()){
-			if(!dead) {
-				super.draw(canvas);
-			}
+			super.draw(canvas);
 		}
 		if(inBalloon) {
 			balloon.draw(canvas);
 		}
 	}
 	
+	
+	@Override
+	public void collide(GameEntity _gameEntity) {
+		if (_gameEntity instanceof Personage) {
+			Personage perso = (Personage) _gameEntity;
+			if (!perso.getBag().isLocked() && perso.getBag().getSlot() == null) {
+				perso.getBag().addItem(this);
+			} else {
+				collideWithPerso(perso);
+			}
+			die();
+		}
+	}
+	
+	protected abstract void collideWithPerso(Personage perso) ;
 
 	public abstract void initRandomPositionAndSpeed(Point playerPosition);
 

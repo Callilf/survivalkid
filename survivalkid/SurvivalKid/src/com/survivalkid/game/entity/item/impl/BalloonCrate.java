@@ -11,6 +11,7 @@ import com.survivalkid.game.core.Animation;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
+import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -191,10 +192,12 @@ public class BalloonCrate extends ItemEntity {
 
 	@Override
 	public void collide(GameEntity _gameEntity) {
-		// if (_gameEntity instanceof Personage) {
-		// ((Personage) _gameEntity).revoceryLife(30, EnumLife.RECOVERY_LIFE);
-		// die();
-		// }
+		// Nothing
+	}
+	
+	@Override
+	public void collideWithPerso(Personage _perso) {
+		// Nothing
 	}
 
 	/**
