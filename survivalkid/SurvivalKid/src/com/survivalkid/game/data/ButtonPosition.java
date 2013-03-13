@@ -66,7 +66,7 @@ public class ButtonPosition {
 			upButton = new Point(SCREEN_WIDTH - widthUp - widthUp/2, SCREEN_HEIGHT - btn_up.getHeight());
 			
 			Bitmap bagImg = SpriteEnum.BAG_SLOT.getBitmap();
-			bagButton = new Point(SCREEN_WIDTH - widthUp - widthUp/2 - (int)(bagImg.getWidth()*1.5f), SCREEN_HEIGHT - bagImg.getHeight());
+			bagButton = new Point(SCREEN_WIDTH - widthUp - widthUp/2 - (int)(bagImg.getWidth()), SCREEN_HEIGHT - bagImg.getHeight());
 		}
 		else {
 			// not multitouch, the button are superposed so the player can jump and move un the same time
