@@ -22,7 +22,7 @@ public class BasicItemGenerator {
 		
 		//1 chance out of 10 to generate an item
 		int randomValue = (int) (Math.random()*100);
-		if(randomValue < 82) {
+		if(randomValue < 85) {
 			return null;
 		}
 		
