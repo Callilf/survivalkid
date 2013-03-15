@@ -50,8 +50,9 @@ public class Bag {
 	public void addItem(ItemEntity item) {
 		if (slot == null) {
 			slot = item;
-			this.slot.setX(sprite.getX() + sprite.getWidth()/5);
-			this.slot.setY(sprite.getY() + sprite.getHeight()/10);
+			slot.setX(sprite.getX() + sprite.getWidth()/2 - slot.getSprite().getWidth()/2);
+			slot.setY(sprite.getY() + sprite.getHeight()/2 - slot.getSprite().getHeight()/2);
+			slot.getSprite().setBlinking(false);
 		}
 	}
 
