@@ -119,7 +119,7 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		if (buttonLeaveRect.contains((int)event.getX(), (int)event.getY())) {
 			activity.returnResult("leave");
 		} else if (buttonMenuRect.contains((int)event.getX(), (int)event.getY())) {
-			//activity.returnResult("menu");
+			activity.returnResult("menu");
 		} else if (buttonRestartRect.contains((int)event.getX(), (int)event.getY())) {
 			activity.returnResult("restart");
 		}

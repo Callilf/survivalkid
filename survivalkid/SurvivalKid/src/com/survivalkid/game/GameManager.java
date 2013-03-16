@@ -220,9 +220,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		GameContext s = GameContext.getSingleton();
 		long timePassed = s.gameDuration;
 		thread.setEndGame(true);
-		HandlerUtil.sendMessage((int) timePassed, HandlerEnum.HANDLER_FIN);
-		Log.i(TAG, "Time passed : " + timePassed / 1000f + ", Score : " + s.score + ", end difficulty : "
-				+ s.currentDifficulty);
+//		HandlerUtil.sendMessage((int) timePassed, HandlerEnum.HANDLER_FIN);
+//		Log.i(TAG, "Time passed : " + timePassed / 1000f + ", Score : " + s.score + ", end difficulty : "
+//				+ s.currentDifficulty);
 		
 		// save the score
 		DataSave data = s.getDataSave();

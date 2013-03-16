@@ -141,7 +141,9 @@ public class MainThread extends Thread {
 				}
 			}
 			//Log.d("DURATIONFRAME", ""+timePassed);
-			GameContext.getSingleton().gameDuration += FRAME_DURATION;
+			if(!endGame) {
+				GameContext.getSingleton().gameDuration += FRAME_DURATION;
+			}
 		}
 		catch (IllegalMonitorStateException e) {
 			Log.d(TAG, e.getMessage());
