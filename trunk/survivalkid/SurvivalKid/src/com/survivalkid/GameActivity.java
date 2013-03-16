@@ -1,6 +1,7 @@
 package com.survivalkid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +60,17 @@ public class GameActivity extends Activity {
 		gamePanel.thread.start();
 
 		backgroundMusic.start();
+	}
+	
+	public void displayEndMenu() {
+		Intent intent = new Intent(GameActivity.this
+				.getBaseContext(), EndActivity.class);
+		
+//		Bundle b = new Bundle();
+//		b.putInt("selectedCharacter", persoSelected);
+//		intent.putExtras(b);
+		startActivity(intent);
+//		finish();
 	}
 
 	@Override
