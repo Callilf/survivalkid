@@ -11,9 +11,15 @@
 			<item android:id="@+id/m_timer"
 			      android:title="@string/timer"  />
 		
-			 <item android:id="@+id/m_switchchar" 
+			<item android:id="@+id/m_switchchar" 
 		     	android:title="@string/switchar"/>
+	     	 
+			<item android:id="@+id/m_test2" 
+			     android:title="@string/test2"/>
 
+			<item android:id="@+id/m_resetbutton"
+				android:title="@string/resetbutton"  />	
+	      
 	     </menu>
 	</item>
 	
@@ -21,13 +27,13 @@
 	      android:title="@string/hitbox"   />	
 			       	
 	<item android:id="@+id/m_restart"
-	      android:title="@string/restart"  />	
+	      android:title="@string/restart"  />
+   	
+	<item android:id="@+id/m_movebutton"
+	      android:title="@string/movebutton"  />	
 		 
 	<item android:id="@+id/m_test1" 
 	     android:title="@string/test1"/>	
-	     	 
-	<item android:id="@+id/m_test2" 
-	     android:title="@string/test2"/>
 		 
 	<item android:id="@+id/m_left" 
 	     android:title="@string/leave"/>

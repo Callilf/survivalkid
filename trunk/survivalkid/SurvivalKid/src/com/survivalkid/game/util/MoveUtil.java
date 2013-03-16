@@ -2,7 +2,6 @@ package com.survivalkid.game.util;
 
 import static com.survivalkid.game.thread.MainThread.FPS_RATIO;
 import static java.lang.Math.round;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -75,15 +74,19 @@ public final class MoveUtil {
 	public static ActionButton btn_up;
 	public static Point myBag;
 	
-	public static void initializeButton(Resources resources) {
+	public static void initializeButton() {
 		btn_left = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_left), BitmapUtil.createBitmap(R.drawable.arrow_left_pressed));
 		btn_right = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_right), BitmapUtil.createBitmap(R.drawable.arrow_right_pressed));
 		btn_up = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_up), BitmapUtil.createBitmap(R.drawable.arrow_up_pressed));
+		initializePositionButton();
+	}
+	
+	public static void initializePositionButton() {
 		buttonPosition.init(); // do AFTER initialized the other button
 		myBag = buttonPosition.getBag();
 		btn_left.setPosition(buttonPosition.getLeftButton());
 		btn_right.setPosition(buttonPosition.getRightButton());
-		btn_up.setPosition(buttonPosition.getUpButton());
+		btn_up.setPosition(buttonPosition.getUpButton());		
 	}
 	
 	public static int normX(int x) {

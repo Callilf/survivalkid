@@ -43,7 +43,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String TAG = GameManager.class.getSimpleName();
 	
 	/** The thread corresponding to the game loop. */
-	public MainThread thread;
+	private MainThread thread;
 
 	private CharacterManager characterManager;
 	private EnemyManager enemyManager;
@@ -53,6 +53,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private boolean surfaceActive;
 
 	private int persoSelected;
+	private boolean modeEditLocationButton;
 
 	private Bitmap ground;
 	
@@ -61,6 +62,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public GameManager(Context context) {
 		super(context);
 		
+		modeEditLocationButton = false;
 		surfaceActive = false;
 		Log.d(TAG, "Create the GameManager!");
 
@@ -95,7 +97,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		setFocusable(true);
 
 		ground = BitmapUtil.createBitmap(R.drawable.ground);
-		MoveUtil.initializeButton(getResources());
+		MoveUtil.initializeButton();
 		
 		HandlerUtil.handlerFin = new Handler() {
 			@Override
@@ -241,31 +243,67 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			// fills the canvas with black
-			canvas.drawColor(Color.BLUE);
-			canvas.drawBitmap(ground, 0, 0, null);
+			drawBackground(canvas);
 
 			chrono.draw(canvas);
 			enemyManager.draw(canvas);
 			itemManager.draw(canvas);
 			characterManager.draw(canvas);
 
-			MoveUtil.btn_left.draw(canvas);
-			MoveUtil.btn_right.draw(canvas);
-			MoveUtil.btn_up.draw(canvas);
+			drawButton(canvas);
 		}
+	}
+	
+	public void drawBackgroundAndButton() {
+		SurfaceHolder surfaceHolder = getHolder();
+		Canvas canvas = null;
+		try {
+			canvas = surfaceHolder.lockCanvas();
+			if (canvas != null) {
+				synchronized (surfaceHolder) {
+					drawBackground(canvas);
+					drawButton(canvas);
+				}
+			}
+		}
+		finally {
+			// in case of an exception the surface is not left in
+			// an inconsistent state
+			if (canvas != null) {
+				surfaceHolder.unlockCanvasAndPost(canvas);
+			}
+		}	// end finally			
+	}
+	
+	private void drawBackground(Canvas canvas) {
+		canvas.drawColor(Color.BLUE);
+		canvas.drawBitmap(ground, 0, 0, null);		
+	}
+	
+	private void drawButton(Canvas canvas) {
+		MoveUtil.btn_left.draw(canvas);
+		MoveUtil.btn_right.draw(canvas);
+		MoveUtil.btn_up.draw(canvas);		
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (characterManager.getCharacterList().size() > OWN_PERSO
-				&& characterManager.getCharacterList(OWN_PERSO) != null) {
-			characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
-			characterManager.getCharacterList(OWN_PERSO).getBag().checkTouched(event);
+		if (!modeEditLocationButton) {
+			if (characterManager.getCharacterList().size() > OWN_PERSO
+					&& characterManager.getCharacterList(OWN_PERSO) != null) {
+				characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
+				characterManager.getCharacterList(OWN_PERSO).getBag().checkTouched(event);
+			}
+	
+			// Check if a balloon has been touched
+			if (itemManager.getItemList().size() > 0) {
+				itemManager.checkBalloonTouchBox(event);
+			}
 		}
-
-		// Check if a balloon has been touched
-		if (itemManager.getItemList().size() > 0) {
-			itemManager.checkBalloonTouchBox(event);
+		else {
+			if (MoveUtil.buttonPosition.manageEventChangePosition(event)) {
+				drawBackgroundAndButton();
+			}
 		}
 
 		// if (event.getAction() != MotionEvent.ACTION_MOVE) dumpEvent(event);
@@ -335,6 +373,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void stop() {
 		thread.setRestoring();
 	}
+	
+	public void changeLocationButton() {
+		modeEditLocationButton = !modeEditLocationButton;
+		if (modeEditLocationButton) {
+			CollisionUtil.displayHitBoxes = true;
+			drawBackgroundAndButton();
+		}
+		else {
+			CollisionUtil.displayHitBoxes = false;
+			MoveUtil.buttonPosition.savePosition();
+		}
+	}
 
 	// / getter & setter
 	public MainThread getThread() {
@@ -362,5 +412,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	public boolean isSurfaceActive() {
 		return surfaceActive;
+	}
+
+	public boolean isModeEditLocationButton() {
+		return modeEditLocationButton;
 	}
 }

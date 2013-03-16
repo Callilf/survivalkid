@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="menu_settings">Options</string>
+    <string name="leave">Quitter le jeu</string>
+    <string name="switchar">Inverser perso</string>
+    <string name="restart">Redémarrer</string>
+    <string name="movebutton">Déplacer boutons</string>
+    <string name="resetbutton">Reset bouton</string>
+
+</resources>

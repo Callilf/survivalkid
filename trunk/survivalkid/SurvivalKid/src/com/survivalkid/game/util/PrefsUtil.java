@@ -73,5 +73,16 @@ public final class PrefsUtil {
 		editor.commit();
 	}
 	
+	/**
+	 * Remove a preference
+	 * 
+	 * @param key the preference
+	 */
+	public static void removePref(String key) {
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.remove(key);
+		editor.commit();
+	}
+	
 }
 
