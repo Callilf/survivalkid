@@ -16,6 +16,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import com.survivalkid.GameActivity;
 import com.survivalkid.R;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants.PersonageConstants;
@@ -55,6 +56,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private int persoSelected;
 
 	private Bitmap ground;
+	
+	private GameActivity activity;
 
 	public GameManager(Context context) {
 		super(context);
@@ -62,6 +65,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		surfaceActive = false;
 		Log.d(TAG, "Create the GameManager!");
 
+		activity = (GameActivity) context;
+		
 		// Initialize the bitmapUtil
 		BitmapUtil.initialize(getResources());
 
@@ -228,6 +233,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 				// TODO tell the people it's a new highscore
 			}
 		}
+		
+		Log.i(TAG, "DISPLAY END MENU");
+		activity.displayEndMenu();
 	}
 
 	@Override
