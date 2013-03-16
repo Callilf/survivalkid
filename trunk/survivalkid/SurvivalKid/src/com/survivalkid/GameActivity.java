@@ -71,6 +71,12 @@ public class GameActivity extends Activity {
 		startActivityForResult(intent, 1);
 		// finish();
 	}
+	
+	public void backToMainMenu() {
+		Intent intent = new Intent(GameActivity.this.getBaseContext(), MenuActivity.class);
+		startActivity(intent);
+		finish();
+	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
@@ -82,7 +88,7 @@ public class GameActivity extends Activity {
 					exitApplication();
 				} else if ("menu".equals(result)) {
 					//back to main menu
-					//TODO : go back to the main menu (maybe we shouldn't finish the main menu activity ?
+					backToMainMenu();
 				} else if ("restart".equals(result)) {
 					//restart
 					gamePanel.restart();
