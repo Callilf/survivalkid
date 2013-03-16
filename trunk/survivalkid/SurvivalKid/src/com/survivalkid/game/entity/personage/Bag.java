@@ -19,7 +19,8 @@ public class Bag {
 	private static final int FREEZE_TIME_DURATION = 50;
 	private ItemEntity slot;
 	private boolean locked;
-	private AnimatedSprite sprite;
+	private AnimatedSprite slotSprite;
+	private AnimatedSprite bagSprite;
 	private Rect touchBox;
 	private Personage perso;
 
@@ -30,10 +31,14 @@ public class Bag {
 
 	public Bag(Personage _perso) {
 		perso = _perso;
-		sprite = new AnimatedSprite(SpriteEnum.BAG_SLOT);
-		sprite.setX(MoveUtil.myBag.x);
-		sprite.setY(MoveUtil.myBag.y);
-		sprite.play("unlocked", false, true);
+		slotSprite = new AnimatedSprite(SpriteEnum.BAG_SLOT);
+		slotSprite.setX(MoveUtil.myBag.x);
+		slotSprite.setY(MoveUtil.myBag.y);
+		slotSprite.play("unlocked", false, true);
+		
+		bagSprite = new AnimatedSprite(SpriteEnum.BAG);
+		bagSprite.setX((int) (MoveUtil.myBag.x - bagSprite.getWidth() * 0.6f));
+		bagSprite.setY(MoveUtil.myBag.y  + slotSprite.getHeight() - bagSprite.getHeight());
 
 		touchBoxPainter = new Paint();
 		touchBoxPainter.setColor(Color.MAGENTA);
@@ -43,15 +48,15 @@ public class Bag {
 	}
 
 	public void initTouchBox() {
-		touchBox = new Rect(sprite.getX() - sprite.getWidth() / 3, sprite.getY() - sprite.getHeight()/3, sprite.getX() + sprite.getWidth()
-				+ sprite.getWidth() / 3, sprite.getY() + sprite.getHeight());
+		touchBox = new Rect(slotSprite.getX() - slotSprite.getWidth() / 3, slotSprite.getY() - slotSprite.getHeight()/3, slotSprite.getX() + slotSprite.getWidth()
+				+ slotSprite.getWidth() / 3, slotSprite.getY() + slotSprite.getHeight());
 	}
 
 	public void addItem(ItemEntity item) {
 		if (slot == null) {
 			slot = item;
-			slot.setX(sprite.getX() + sprite.getWidth()/2 - slot.getSprite().getWidth()/2);
-			slot.setY(sprite.getY() + sprite.getHeight()/2 - slot.getSprite().getHeight()/2);
+			slot.setX(slotSprite.getX() + slotSprite.getWidth()/2 - slot.getSprite().getWidth()/2);
+			slot.setY(slotSprite.getY() + slotSprite.getHeight()/2 - slot.getSprite().getHeight()/2);
 			slot.getSprite().setBlinking(false);
 		}
 	}
@@ -75,11 +80,12 @@ public class Bag {
 	}
 
 	public void update(long gameDuration) {
-		sprite.update(gameDuration, DirectionConstants.RIGHT);
+		slotSprite.update(gameDuration, DirectionConstants.RIGHT);
 	}
 
 	public void draw(Canvas canvas) {
-		sprite.draw(canvas, DirectionConstants.RIGHT);
+		bagSprite.draw(canvas, DirectionConstants.RIGHT);
+		slotSprite.draw(canvas, DirectionConstants.RIGHT);
 		
 		if(slot != null) {
 			slot.draw(canvas);
@@ -104,9 +110,9 @@ public class Bag {
 	public void toggleLocked() {
 		this.locked = !this.locked;
 		if (this.locked) {
-			sprite.play("locked", false, true);
+			slotSprite.play("locked", false, true);
 		} else {
-			sprite.play("unlocked", false, true);
+			slotSprite.play("unlocked", false, true);
 		}
 	}
 
@@ -114,7 +120,7 @@ public class Bag {
 	 * @return the sprite
 	 */
 	public AnimatedSprite getSprite() {
-		return sprite;
+		return slotSprite;
 	}
 
 	/**
@@ -122,7 +128,7 @@ public class Bag {
 	 *            the sprite to set
 	 */
 	public void setSprite(AnimatedSprite sprite) {
-		this.sprite = sprite;
+		this.slotSprite = sprite;
 	}
 
 	/**
