@@ -26,6 +26,7 @@ public class Bag {
 
 	private long freezeExctinction;
 
+	public Paint slotPainter;
 	/** Balloon hitbox for debug. */
 	public Paint touchBoxPainter;
 
@@ -44,6 +45,9 @@ public class Bag {
 		touchBoxPainter.setColor(Color.MAGENTA);
 		touchBoxPainter.setAlpha(200);
 
+		slotPainter = new Paint();
+		slotPainter.setAlpha(180);
+		
 		initTouchBox();
 	}
 
@@ -85,7 +89,7 @@ public class Bag {
 
 	public void draw(Canvas canvas) {
 		bagSprite.draw(canvas, DirectionConstants.RIGHT);
-		slotSprite.draw(canvas, DirectionConstants.RIGHT);
+		slotSprite.draw(canvas, DirectionConstants.RIGHT, slotPainter);
 		
 		if(slot != null) {
 			slot.draw(canvas);

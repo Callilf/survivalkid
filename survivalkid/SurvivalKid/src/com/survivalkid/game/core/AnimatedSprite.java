@@ -4,6 +4,7 @@ import java.util.Map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -184,6 +185,15 @@ public class AnimatedSprite {
 	 * @param canvas
 	 */
 	public void draw(Canvas canvas, int direction) {
+		draw(canvas, direction, null);
+	}
+	
+	/**
+	 * Draw.
+	 * 
+	 * @param canvas
+	 */
+	public void draw(Canvas canvas, int direction, Paint paint) {
 		if (bitmap != null && sourceRect != null) {
 			Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
 			Bitmap bitmapToUse = null;
@@ -210,10 +220,10 @@ public class AnimatedSprite {
 				}
 
 				if (visible) {
-					canvas.drawBitmap(bitmapToUse, sourceRect, destRect, null);
+					canvas.drawBitmap(bitmapToUse, sourceRect, destRect, paint);
 				}
 			} else {
-				canvas.drawBitmap(bitmapToUse, sourceRect, destRect, null);
+				canvas.drawBitmap(bitmapToUse, sourceRect, destRect, paint);
 
 			}
 		}
