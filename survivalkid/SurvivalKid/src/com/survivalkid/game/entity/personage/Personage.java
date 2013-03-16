@@ -64,7 +64,7 @@ public class Personage extends GameEntity {
 		gravity = 2;
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
-		life = new Life(100);
+		life = new Life(1);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 		dying = false;
 

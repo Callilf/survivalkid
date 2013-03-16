@@ -1,6 +1,10 @@
 package com.survivalkid;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,6 +41,13 @@ public class EndActivity extends Activity {
 //		params.y = MoveUtil.SCREEN_HEIGHT/2 - params.height/2;
 
 		this.getWindow().setAttributes(params); 
+	}
+	
+	public void returnResult(String result) {
+		 Intent returnIntent = new Intent();
+		 returnIntent.putExtra("result", result);
+		 setResult(RESULT_OK,returnIntent);
+		 finish();
 	}
 
 	@Override

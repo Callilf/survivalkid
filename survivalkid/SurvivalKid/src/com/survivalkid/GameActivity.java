@@ -27,10 +27,10 @@ public class GameActivity extends Activity {
 	private GameManager gamePanel;
 	private MediaPlayer backgroundMusic;
 	private int selectedCharacter;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		Bundle b = getIntent().getExtras();
 		selectedCharacter = b.getInt("selectedCharacter");
 
@@ -61,16 +61,40 @@ public class GameActivity extends Activity {
 
 		backgroundMusic.start();
 	}
-	
+
 	public void displayEndMenu() {
-		Intent intent = new Intent(GameActivity.this
-				.getBaseContext(), EndActivity.class);
-		
-//		Bundle b = new Bundle();
-//		b.putInt("selectedCharacter", persoSelected);
-//		intent.putExtras(b);
-		startActivity(intent);
-//		finish();
+		Intent intent = new Intent(GameActivity.this.getBaseContext(), EndActivity.class);
+
+		// Bundle b = new Bundle();
+		// b.putInt("selectedCharacter", persoSelected);
+		// intent.putExtras(b);
+		startActivityForResult(intent, 1);
+		// finish();
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			if (resultCode == RESULT_OK) {
+				String result = data.getStringExtra("result");
+				
+				if ("leave".equals(result)) {
+					//Leave game
+					exitApplication();
+				} else if ("menu".equals(result)) {
+					//back to main menu
+					//TODO : go back to the main menu (maybe we shouldn't finish the main menu activity ?
+				} else if ("restart".equals(result)) {
+					//restart
+					gamePanel.restart();
+				} else {
+					Log.e(TAG, "Wrong return code.");
+				}
+			}
+			if (resultCode == RESULT_CANCELED) {
+				// Write your code on no result return
+				// Not used
+			}
+		}
 	}
 
 	@Override
@@ -149,7 +173,7 @@ public class GameActivity extends Activity {
 		gamePanel.getThread().setPause(false);
 		return true;
 	}
-	
+
 	private void exitApplication() {
 		finish();
 		System.gc();
@@ -199,11 +223,11 @@ public class GameActivity extends Activity {
 		Log.d(TAG, "User leaving hint...");
 		super.onUserLeaveHint();
 	}
-	
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-    	Log.d(TAG, "SavingInstanceState...");
-    	super.onSaveInstanceState(outState);
-    }
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		Log.d(TAG, "SavingInstanceState...");
+		super.onSaveInstanceState(outState);
+	}
 
 }
