@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -22,8 +21,6 @@ import com.survivalkid.R;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.BitmapUtil;
 
-@SuppressLint("HandlerLeak")
-// TODO DELETE WHEN THE HANDLER WOULDN'T BE USE ANYMORE
 public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final String TAG = EndMenu.class.getSimpleName();

@@ -1,9 +1,5 @@
 package com.survivalkid;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +9,7 @@ import android.view.WindowManager;
 
 import com.survivalkid.game.EndMenu;
 
-public class EndActivity extends Activity {
+public class EndActivity extends AbstractActivity {
 
 	/** TAG for the logs. */
 	private static final String TAG = EndActivity.class.getSimpleName();
@@ -23,7 +19,9 @@ public class EndActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
+		setTagParent("End");
 		super.onCreate(savedInstanceState);
+		
 		// Set fullscreen and remove the title bar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -64,45 +62,17 @@ public class EndActivity extends Activity {
 		}
 		return false;
 	}
-
-	@Override
-	protected void onDestroy() {
-		Log.d(TAG, "Destroying...");
-		super.onDestroy();
-	}
-
-	@Override
-	protected void onStop() {
-		Log.d(TAG, "Stopping...");
-		super.onStop();
-	}
-
+	
 	@Override
 	protected void onPause() {
-		Log.d(TAG, "Pausing...");
 		super.onPause();
-
 		menu.stop();
 	}
-
+	
 	@Override
 	protected void onResume() {
-		Log.d(TAG, "Resuming...");
 		super.onResume();
-
 		menu.unpause();
-	}
-
-	@Override
-	protected void onRestart() {
-		Log.d(TAG, "Restarting...");
-		super.onResume();
-	}
-
-	@Override
-	protected void onUserLeaveHint() {
-		Log.d(TAG, "User leaving hint...");
-		super.onUserLeaveHint();
 	}
 
 }

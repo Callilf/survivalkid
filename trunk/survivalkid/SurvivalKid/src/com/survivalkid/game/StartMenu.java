@@ -1,6 +1,5 @@
 package com.survivalkid.game;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,8 +17,6 @@ import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
 
-@SuppressLint("HandlerLeak")
-// TODO DELETE WHEN THE HANDLER WOULDN'T BE USE ANYMORE
 public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final String TAG = StartMenu.class.getSimpleName();
@@ -113,26 +110,6 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 		return true;
 	}
-
-	/**
-	 * Show an event in the LogCat view, for debugging private void
-	 * dumpEvent(MotionEvent event) { String names[] = { "DOWN", "UP", "MOVE",
-	 * "CANCEL", "OUTSIDE", "POINTER_DOWN", "POINTER_UP", "7?", "8?", "9?" };
-	 * StringBuilder sb = new StringBuilder(); int action = event.getAction();
-	 * int actionCode = action & MotionEvent.ACTION_MASK;
-	 * sb.append("event ACTION_").append(names[actionCode]); if (actionCode ==
-	 * MotionEvent.ACTION_POINTER_DOWN || actionCode ==
-	 * MotionEvent.ACTION_POINTER_UP) { sb.append("(pid ").append(action >>
-	 * MoveUtil.ACTION_POINTER_INDEX_SHIFT); sb.append(")"); } sb.append("[");
-	 * for (int i = 0; i < event.getPointerCount(); i++) {
-	 * sb.append("#").append(i);
-	 * sb.append("(pid ").append(event.getPointerId(i));
-	 * sb.append(")=").append((int) event.getX(i)); sb.append(",").append((int)
-	 * event.getY(i)); if (i + 1 < event.getPointerCount()) sb.append(";"); }
-	 * sb.
-	 * append("]").append(characterManager.getCharacterList(0).getMoveManager(
-	 * ).lastEnabledLeft); Log.d(TAG, sb.toString()); }
-	 */
 
 	// ------------------------------------------------------------------------
 	// Surface managing
