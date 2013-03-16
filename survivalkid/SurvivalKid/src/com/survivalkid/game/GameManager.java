@@ -34,7 +34,6 @@ import com.survivalkid.game.thread.MainThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.HandlerUtil;
-import com.survivalkid.game.util.HandlerUtil.HandlerEnum;
 import com.survivalkid.game.util.MoveUtil;
 
 @SuppressLint("HandlerLeak")
