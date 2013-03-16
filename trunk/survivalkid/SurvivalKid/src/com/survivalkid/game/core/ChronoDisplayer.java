@@ -12,6 +12,7 @@ import android.graphics.Point;
 import com.survivalkid.game.singleton.GameContext;
 
 public class ChronoDisplayer {
+	private static final DateFormat formatter = new SimpleDateFormat("mm:ss,SSS");
 
 	private Paint paint;
 	private String stringToDisplay;
@@ -29,7 +30,6 @@ public class ChronoDisplayer {
 
 	public void setTime(long timeInMillis) {
 		Date date = new Date(timeInMillis);
-		DateFormat formatter = new SimpleDateFormat("mm:ss,SSS");
 		stringToDisplay = formatter.format(date);
 	}
 	
