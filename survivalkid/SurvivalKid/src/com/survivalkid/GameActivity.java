@@ -15,6 +15,7 @@ import com.survivalkid.game.GameManager;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.PrefsUtil;
 import com.survivalkid.game.util.TimerUtil;
 
@@ -56,8 +57,8 @@ public class GameActivity extends AbstractActivity {
 		setContentView(gamePanel);
 		gamePanel.create();
 
-		gamePanel.thread.setRunning(true);
-		gamePanel.thread.start();
+		gamePanel.getThread().setRunning(true);
+		gamePanel.getThread().start();
 
 		backgroundMusic.start();
 	}
@@ -140,7 +141,9 @@ public class GameActivity extends AbstractActivity {
 
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
-		gamePanel.getThread().setPause(false);
+		if (!gamePanel.isModeEditLocationButton()) {
+			gamePanel.getThread().setPause(false);
+		}
 	}
 
 	@Override
@@ -167,6 +170,12 @@ public class GameActivity extends AbstractActivity {
 		case R.id.m_timer:
 			TimerUtil.logAll();
 			break;
+		case R.id.m_movebutton:
+			gamePanel.changeLocationButton();
+			break;
+		case R.id.m_resetbutton:
+			MoveUtil.buttonPosition.resetPosition();
+			break;
 		case R.id.m_test1:
 			Log.d(TAG, "HighScore : " + GameContext.getSingleton().getDataSave().toString());
 			break;
@@ -177,7 +186,9 @@ public class GameActivity extends AbstractActivity {
 			// return false;
 		}
 
-		gamePanel.getThread().setPause(false);
+		if (!gamePanel.isModeEditLocationButton()) {
+			gamePanel.getThread().setPause(false);
+		}
 		return true;
 	}
 
