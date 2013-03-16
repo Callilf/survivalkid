@@ -1,6 +1,5 @@
 package com.survivalkid;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.PrefsUtil;
 import com.survivalkid.game.util.TimerUtil;
 
-public class GameActivity extends Activity {
+public class GameActivity extends AbstractActivity {
 
 	/** TAG for the logs. */
 	private static final String TAG = GameActivity.class.getSimpleName();
@@ -33,6 +32,7 @@ public class GameActivity extends Activity {
 
 		Bundle b = getIntent().getExtras();
 		selectedCharacter = b.getInt("selectedCharacter");
+		setTagParent("Game");
 
 		super.onCreate(savedInstanceState);
 		// Set fullscreen and remove the title bar
@@ -181,60 +181,25 @@ public class GameActivity extends Activity {
 		return true;
 	}
 
-	private void exitApplication() {
-		finish();
-		System.gc();
-		android.os.Process.killProcess(android.os.Process.myPid());
-	}
-
 	@Override
 	protected void onDestroy() {
-		Log.d(TAG, "Destroying...");
+		super.onDestroy();
 		gamePanel.leaveGame();
 		backgroundMusic.release();
-		super.onDestroy();
-	}
-
-	@Override
-	protected void onStop() {
-		Log.d(TAG, "Stopping...");
-		super.onStop();
 	}
 
 	@Override
 	protected void onPause() {
-		Log.d(TAG, "Pausing...");
 		super.onPause();
-
 		gamePanel.stop();
 		backgroundMusic.pause();
 	}
 
 	@Override
 	protected void onResume() {
-		Log.d(TAG, "Resuming...");
 		super.onResume();
-
 		backgroundMusic.start();
 		gamePanel.unpause();
-	}
-
-	@Override
-	protected void onRestart() {
-		Log.d(TAG, "Restarting...");
-		super.onResume();
-	}
-
-	@Override
-	protected void onUserLeaveHint() {
-		Log.d(TAG, "User leaving hint...");
-		super.onUserLeaveHint();
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		Log.d(TAG, "SavingInstanceState...");
-		super.onSaveInstanceState(outState);
 	}
 
 }

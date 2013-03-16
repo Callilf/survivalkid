@@ -1,6 +1,5 @@
 package com.survivalkid;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,7 @@ import android.view.WindowManager;
 import com.survivalkid.game.StartMenu;
 import com.survivalkid.game.util.PrefsUtil;
 
-public class MenuActivity extends Activity {
+public class MenuActivity extends AbstractActivity {
 
 	/** TAG for the logs. */
 	private static final String TAG = MenuActivity.class.getSimpleName();
@@ -21,6 +20,7 @@ public class MenuActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
+		setTagParent("Menu");
 		super.onCreate(savedInstanceState);
 		// Set fullscreen and remove the title bar
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -61,45 +61,16 @@ public class MenuActivity extends Activity {
 		return false;
 	}
 
-
-	@Override
-	protected void onDestroy() {
-		Log.d(TAG, "Destroying...");
-		super.onDestroy();
-	}
-
-	@Override
-	protected void onStop() {
-		Log.d(TAG, "Stopping...");
-		super.onStop();
-	}
-
 	@Override
 	protected void onPause() {
-		Log.d(TAG, "Pausing...");
 		super.onPause();
-
 		menu.stop();
 	}
 
 	@Override
 	protected void onResume() {
-		Log.d(TAG, "Resuming...");
 		super.onResume();
-
 		menu.unpause();
-	}
-
-	@Override
-	protected void onRestart() {
-		Log.d(TAG, "Restarting...");
-		super.onResume();
-	}
-
-	@Override
-	protected void onUserLeaveHint() {
-		Log.d(TAG, "User leaving hint...");
-		super.onUserLeaveHint();
 	}
 
 }
