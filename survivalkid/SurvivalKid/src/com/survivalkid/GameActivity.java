@@ -23,7 +23,7 @@ public class GameActivity extends Activity {
 
 	/** TAG for the logs. */
 	private static final String TAG = GameActivity.class.getSimpleName();
-
+	
 	private GameManager gamePanel;
 	private MediaPlayer backgroundMusic;
 	private int selectedCharacter;
@@ -79,6 +79,7 @@ public class GameActivity extends Activity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
 				String result = data.getStringExtra("result");

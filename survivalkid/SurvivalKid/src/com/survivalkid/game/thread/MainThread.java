@@ -77,7 +77,9 @@ public class MainThread extends Thread {
 	 */
 	public void setRestoring() {
 		setPause(true);
-		restoring = true;
+		if (!endGame) {
+			restoring = true;
+		}
 	}
 
 
@@ -107,6 +109,7 @@ public class MainThread extends Thread {
 					restoring = false;
 					// wait for surface to be created before restarting the game
 					if (waitAndTestForSurfaceActive()) {
+						Log.d(TAG, "Start countdown");
 						long endTime = System.currentTimeMillis() + COUNTDOWN_RESTORING;
 						while(running) {
 							long timeRemain = endTime - System.currentTimeMillis();

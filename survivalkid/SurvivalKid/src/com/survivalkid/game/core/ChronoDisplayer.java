@@ -24,6 +24,7 @@ public class ChronoDisplayer {
 		paint.setTextSize(20);
 		paint.setTypeface(GameContext.getSingleton().getFont());
 		paint.setColor(Color.WHITE);
+		stringToDisplay = "";
 
 		position = new Point(_x,_y);
 	}
@@ -34,7 +35,7 @@ public class ChronoDisplayer {
 	}
 	
 	public void draw(Canvas canvas) {
-		canvas.drawText( stringToDisplay, position.x, position.y, paint);
+		canvas.drawText(stringToDisplay, position.x, position.y, paint);
 	}
 	
 	public void setSize(float size) {
