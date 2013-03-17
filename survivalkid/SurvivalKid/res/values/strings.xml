@@ -10,6 +10,7 @@
     <string name="restart">Restart</string>
     <string name="movebutton">Move button</string>
     <string name="resetbutton">Reset button</string>
+    <string name="resetscore">Reset scores</string>
     <string name="timer">Timer</string>
     <string name="test1">Test 1</string>
     <string name="test2">Test 2</string>

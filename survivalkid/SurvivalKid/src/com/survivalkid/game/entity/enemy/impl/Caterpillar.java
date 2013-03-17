@@ -16,6 +16,10 @@ public class Caterpillar extends EnemyEntity {
 	private static final float CATERPILLAR_LOWEST_SPEED = 1.8f;
 	private static final float CATERPILLAR_HIGHEST_SPEED = 2.8f;
 	
+	/** duration of the recovery when the player is hit */
+	private static final int RECOVERY_TIME_NORMAL = 300;
+	private static final int RECOVERY_TIME_PURPLE = 500;
+	
 	private AnimatedSprite deathAnim;
 	
 	/** Default constructor. */
@@ -54,8 +58,10 @@ public class Caterpillar extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-		_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE);
-		die();
+		int recovery = (dammage > 5)? RECOVERY_TIME_PURPLE : RECOVERY_TIME_NORMAL;
+		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, recovery)) {
+			die();
+		}
 	}
 
 	@Override

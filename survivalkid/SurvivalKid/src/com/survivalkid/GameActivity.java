@@ -177,6 +177,9 @@ public class GameActivity extends AbstractActivity {
 			Log.d(TAG, "Test");
 			gamePanel.restart();
 			break;
+		case R.id.m_resetscore:
+			GameContext.getSingleton().getDataSave().resetScores(this);
+			break;
 		case R.id.m_timer:
 			TimerUtil.logAll();
 			break;

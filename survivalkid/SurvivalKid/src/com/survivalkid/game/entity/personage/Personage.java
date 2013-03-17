@@ -118,10 +118,11 @@ public class Personage extends GameEntity {
 	 *            TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
 	 * @param recoveryMaxTime
 	 *            duration of the recovery
+	 * @return true if the perso has taken the damages, false otherwise 
 	 */
-	public void takeDamage(int _damage, EnumLife _typeChange, int _recoveryMaxTime) {
+	public boolean takeDamage(int _damage, EnumLife _typeChange, int _recoveryMaxTime) {
 		if (hasState(StateEnum.STATE_RECOVERY)) {
-			return;
+			return false;
 		}
 
 		life.modifyLife(_damage, _typeChange);
@@ -130,6 +131,7 @@ public class Personage extends GameEntity {
 		// Display the damages above the head of the character
 		damages.add(new LifeChangeDisplayer(_damage, _typeChange, sprite.getX() + sprite.getWidth() / 2 - 20, sprite
 				.getY()));
+		return true;
 	}
 
 	/**
@@ -139,9 +141,10 @@ public class Personage extends GameEntity {
 	 *            the amount of damages
 	 * @param typeChange
 	 *            TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
+	  * @return true if the perso has taken the damages, false otherwise 
 	 */
-	public void takeDamage(int _damage, EnumLife _typeChange) {
-		takeDamage(_damage, _typeChange, DEFAULT_RECOVERYTIME);
+	public boolean takeDamage(int _damage, EnumLife _typeChange) {
+		return takeDamage(_damage, _typeChange, DEFAULT_RECOVERYTIME);
 	}
 
 	/**
