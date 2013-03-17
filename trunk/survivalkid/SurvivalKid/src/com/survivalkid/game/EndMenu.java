@@ -177,7 +177,7 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 		canvas.drawText(survivalTime, survivalTimeRect.left, survivalTimeRect.top, paint);
 
-		for (int i = Math.min(2, survivalTimeHighScore.size()) ; i >= 0 ; i--) {
+		for (int i = 0 ; i < Math.min(3, survivalTimeHighScore.size()) ; i++) {
 			canvas.drawText((i+1)+". "+survivalTimeHighScore.get(i), survivalTimeHighScoreRect.get(i).left, survivalTimeHighScoreRect.get(i).top, paintHighScore);
 		}
 	}
