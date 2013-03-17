@@ -175,6 +175,7 @@ public class GameActivity extends AbstractActivity {
 			break;
 		case R.id.m_resetbutton:
 			MoveUtil.buttonPosition.resetPosition();
+			gamePanel.afterChangeLocationButton();
 			break;
 		case R.id.m_test1:
 			Log.d(TAG, "HighScore : " + GameContext.getSingleton().getDataSave().toString());

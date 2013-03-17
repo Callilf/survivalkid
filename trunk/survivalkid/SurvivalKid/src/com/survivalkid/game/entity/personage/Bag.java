@@ -3,6 +3,7 @@ package com.survivalkid.game.entity.personage;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
@@ -23,6 +24,7 @@ public class Bag {
 	private AnimatedSprite bagSprite;
 	private Rect touchBox;
 	private Personage perso;
+	private Point position;
 
 	private long freezeExctinction;
 
@@ -33,13 +35,10 @@ public class Bag {
 	public Bag(Personage _perso) {
 		perso = _perso;
 		slotSprite = new AnimatedSprite(SpriteEnum.BAG_SLOT);
-		slotSprite.setX(MoveUtil.myBag.x);
-		slotSprite.setY(MoveUtil.myBag.y);
 		slotSprite.play("unlocked", false, true);
 		
 		bagSprite = new AnimatedSprite(SpriteEnum.BAG);
-		bagSprite.setX((int) (MoveUtil.myBag.x - bagSprite.getWidth() * 0.6f));
-		bagSprite.setY(MoveUtil.myBag.y  + slotSprite.getHeight() - bagSprite.getHeight());
+
 
 		touchBoxPainter = new Paint();
 		touchBoxPainter.setColor(Color.MAGENTA);
@@ -48,10 +47,15 @@ public class Bag {
 		slotPainter = new Paint();
 		slotPainter.setAlpha(180);
 		
-		initTouchBox();
+		initPosition();
 	}
-
-	public void initTouchBox() {
+	
+	public void initPosition() {
+		position = MoveUtil.buttonPosition.getBag();
+		slotSprite.setX(position.x);
+		slotSprite.setY(position.y);
+		bagSprite.setX((int) (position.x - bagSprite.getWidth() * 0.6f));
+		bagSprite.setY(position.y  + slotSprite.getHeight() - bagSprite.getHeight());
 		touchBox = new Rect(slotSprite.getX() - slotSprite.getWidth() / 3, slotSprite.getY() - slotSprite.getHeight()/3, slotSprite.getX() + slotSprite.getWidth()
 				+ slotSprite.getWidth() / 3, slotSprite.getY() + slotSprite.getHeight());
 	}
@@ -150,6 +154,11 @@ public class Bag {
 
 	}
 	
+	/**
+	 * @return the touchBox
+	 */
+	public Rect getTouchBox() {
+		return touchBox;
+	}
 	
-
 }
