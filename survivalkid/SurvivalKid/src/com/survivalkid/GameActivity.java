@@ -27,6 +27,9 @@ public class GameActivity extends AbstractActivity {
 	private GameManager gamePanel;
 	private MediaPlayer backgroundMusic;
 	private int selectedCharacter;
+	
+	/** Used to know if the user is closing the app or going to the main menu. */
+	private boolean goingBackToMainMenu = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,7 @@ public class GameActivity extends AbstractActivity {
 
 		Bundle b = new Bundle();
 		b.putBoolean("endMode", true);
+		b.putInt("selectedCharacter", selectedCharacter);
 		intent.putExtras(b);
 		startActivityForResult(intent, 1);
 	}
@@ -76,11 +80,13 @@ public class GameActivity extends AbstractActivity {
 		Intent intent = new Intent(GameActivity.this.getBaseContext(), EndActivity.class);
 		Bundle b = new Bundle();
 		b.putBoolean("endMode", false);
+		b.putInt("selectedCharacter", selectedCharacter);
 		intent.putExtras(b);
 		startActivityForResult(intent, 1);
 	}
 	
 	public void backToMainMenu() {
+		goingBackToMainMenu = true;
 		Intent intent = new Intent(GameActivity.this.getBaseContext(), MenuActivity.class);
 		startActivity(intent);
 		finish();
@@ -220,7 +226,9 @@ public class GameActivity extends AbstractActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		displayPauseMenu();
+		if(!goingBackToMainMenu) {
+			displayPauseMenu();
+		}
 	}
 
 	@Override
