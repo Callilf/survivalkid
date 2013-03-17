@@ -22,6 +22,7 @@ public class EndActivity extends AbstractActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		Bundle b = getIntent().getExtras();
 		endMode = b.getBoolean("endMode");
+		int selectedCharacter = b.getInt("selectedCharacter");
 
 		setTagParent("End");
 		super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class EndActivity extends AbstractActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		menu = new EndMenu(this, endMode);
+		menu = new EndMenu(this, endMode, selectedCharacter);
 		setContentView(menu);
 		
 		WindowManager.LayoutParams params = getWindow().getAttributes();  
