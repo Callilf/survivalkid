@@ -27,15 +27,21 @@ public final class DataSave implements Serializable {
 	private static final String TAG = DataSave.class.getSimpleName();
 	
 	private static final String SAVE_FILE = "survival-game-save";
+
 	// could make a second file in case of the first become corrupt
 	//private static final String SAVE_FILE_BACKUP = "survival-game-save-backup";
-
-	private TreeSet<Long> highScore;
 	
 	private static final int NB_HIGHSCORE = 10;
 	
+	/** count the number of highscore. In case of two identical highscore, the first remains the best */
+	private long nbHighScore; 
+	
+	/** The highscore */
+	private TreeSet<Score> highScore;
+	
 	public DataSave() {
-		highScore = new TreeSet<Long>();
+		highScore = new TreeSet<Score>();
+		nbHighScore = 0;
 	}
 	
 	/**
@@ -48,18 +54,20 @@ public final class DataSave implements Serializable {
 		
 		// if the number of highscore is not reached
 		if (highScore.size() < NB_HIGHSCORE) {
-			highScore.add(timePassed);
+			
+			highScore.add(new Score(++nbHighScore, "Anonymous", timePassed));
 			return true;
 		}
 		
 		// else compare if the score is better than the lowest score
-		Long low = highScore.first();
-		if (low >= timePassed) {
+		Score first = highScore.first();
+		if (first.getTimeScore() >= timePassed) {
+			// it's not a new highscore
 			return false;
 		}
 		else {
-			highScore.remove(low);
-			highScore.add(timePassed);
+			highScore.remove(first);
+			highScore.add(new Score(++nbHighScore, "Anonymous", timePassed));
 			return true;
 		}
 	}
@@ -71,11 +79,11 @@ public final class DataSave implements Serializable {
 	
 	// getter et setter
 	
-	public TreeSet<Long> getHighScore() {
+	public TreeSet<Score> getHighScore() {
 		return highScore;
 	}
 
-	public void setHighScore(TreeSet<Long> highScore) {
+	public void setHighScore(TreeSet<Score> highScore) {
 		this.highScore = highScore;
 	}
 
@@ -89,23 +97,27 @@ public final class DataSave implements Serializable {
 		try {
 			fis = context.openFileInput(SAVE_FILE);
 			is = new ObjectInputStream(fis);
-			Object tmp = is.readObject();
 			
-			// to delete
-			if (tmp instanceof com.survivalkid.DataSave) {
-				data = new DataSave();
-				data.highScore = ((com.survivalkid.DataSave) tmp).getHighScore();
-				data.saveData(context);
+//			//exemple to keep compatibility
+//			Object tmp = is.readObject();
+//			if (tmp instanceof com.survivalkid.DataSave) {
+//				data = new DataSave();
+//				data.highScore = ((com.survivalkid.DataSave) tmp).getHighScore();
+//				data.saveData(context);
+//			}
+//			else {
+//				data = (DataSave) tmp;
+//			}
+			data = (DataSave) is.readObject();
+			// TODO to delete after conversion done
+			if (!data.highScore.isEmpty() && (Object)data.highScore.first() instanceof Long) {
+				data = null;
 			}
-			else {
-				data = (DataSave) tmp;
-			}
-			//data = (DataSave) is.readObject(); // to uncomment when the other part will be delete
 			is.close();
 		}
 		catch(FileNotFoundException e) {
 			Log.d(TAG, "File not found");
-			return data = new DataSave();
+			data = new DataSave();
 		} catch (StreamCorruptedException e) {
 			Log.w(TAG, "Incorrect inputstream stream", e);
 		} catch (IOException e) {
@@ -117,6 +129,15 @@ public final class DataSave implements Serializable {
 			if (fis != null) {
 				closeInputStreamSecure(fis, "fis");
 				closeInputStreamSecure(is, "is");
+			}
+			// ignore all problem in deserialization 
+			// TODO : to delete when the format will be fixed to avoid overwrite the score if there is a minor problem
+			if (data == null) {
+				Log.w(TAG, "Old highscore will be erased because of problem of deserialization");
+				data = new DataSave();
+			}
+			else {
+				Log.d(TAG, "Scores has been loaded. Nb score : " + data.highScore.size());
 			}
 		}
 		

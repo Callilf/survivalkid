@@ -2,7 +2,10 @@ package com.survivalkid.game;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,6 +22,7 @@ import android.view.SurfaceView;
 import com.survivalkid.EndActivity;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
+import com.survivalkid.game.data.Score;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.BitmapUtil;
 
@@ -52,8 +56,12 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 	private Rect persoArtworkRect;
 
 	private Paint paint;
+	private Paint paintHighScore;
 	private String survivalTime;
 	private Rect survivalTimeRect;
+	
+	private List<String> survivalTimeHighScore;
+	private List<Rect> survivalTimeHighScoreRect;
 
 	public EndMenu(Context _context, boolean _endMode, int _selectedCharacter) {
 		super(_context);
@@ -69,9 +77,11 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 		Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/MELODBO.TTF");
 		paint = new Paint();
-		paint.setTextSize(50);
 		paint.setTypeface(tf);
 		paint.setColor(Color.WHITE);
+		paintHighScore = new Paint(paint);
+		paint.setTextSize(50);
+		paintHighScore.setTextSize(40);
 
 		panel = BitmapUtil.createBitmap(R.drawable.panel_back);
 		buttonRestart = BitmapUtil.createBitmap(R.drawable.button_restart);
@@ -103,8 +113,29 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		survivalTimeRect = new Rect(panel.getWidth() / 2 - textSurvivalTime.getWidth() / 2 + 10,
 				textSurvivalTimeRect.bottom + panel.getWidth() / 10, 0, 0);
 
+		initHighScore();
 		Log.d(TAG, "End menu displayed !");
 		create();
+	}
+
+	private void initHighScore() {
+		survivalTimeHighScore = new ArrayList<String>();
+		survivalTimeHighScoreRect = new ArrayList<Rect>();
+		int i = 0;
+		int espace = (int) (panel.getWidth()/9f);
+		int top = textSurvivalTimeRect.top + (int)(panel.getHeight()/1.95f);
+		int left = textSurvivalTimeRect.left + panel.getWidth()/30;
+		List<Score> scores = new ArrayList<Score>(GameContext.getSingleton().getDataSave().getHighScore());
+		// reverse the list to have the highest score first
+		Collections.reverse(scores);
+		for (Score score : scores) {
+			survivalTimeHighScore.add(formatter.format(new Date(score.getTimeScore())));
+			survivalTimeHighScoreRect.add(new Rect(left, top + i*espace,  left + (int) (panel.getWidth()/2f), top + espace*(i-1)));
+			// keep only 3 scores
+			if (++i == 3) {
+				break;
+			}
+		}
 	}
 
 	private Rect buildRect(Bitmap bitmap, int left, int top) {
@@ -146,6 +177,9 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 		canvas.drawText(survivalTime, survivalTimeRect.left, survivalTimeRect.top, paint);
 
+		for (int i = Math.min(2, survivalTimeHighScore.size()) ; i >= 0 ; i--) {
+			canvas.drawText((i+1)+". "+survivalTimeHighScore.get(i), survivalTimeHighScoreRect.get(i).left, survivalTimeHighScoreRect.get(i).top, paintHighScore);
+		}
 	}
 
 	@Override
