@@ -220,7 +220,6 @@ public class GameActivity extends AbstractActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		//Afficher le fond ???
 	}
 	
 	@Override
@@ -238,4 +237,20 @@ public class GameActivity extends AbstractActivity {
 		gamePanel.unpause();
 	}
 
+	/**
+	 * @return the gamePanel
+	 */
+	public GameManager getGamePanel() {
+		return gamePanel;
+	}
+
+	/**
+	 * @param gamePanel the gamePanel to set
+	 */
+	public void setGamePanel(GameManager gamePanel) {
+		this.gamePanel = gamePanel;
+	}
+
+	
+	
 }

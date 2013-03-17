@@ -42,6 +42,8 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 	private EndActivity activity;
 	private Bitmap panel;
+	private Bitmap buttonContinue;
+	private Rect buttonContinueRect;
 	private Bitmap buttonRestart;
 	private Rect buttonRestartRect;
 	private Bitmap buttonMenu;
@@ -84,7 +86,12 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		paintHighScore.setTextSize(40);
 
 		panel = BitmapUtil.createBitmap(R.drawable.panel_back);
-		buttonRestart = BitmapUtil.createBitmap(R.drawable.button_restart);
+		
+		if(endMode) {
+			buttonRestart = BitmapUtil.createBitmap(R.drawable.button_restart);
+		} else {
+			buttonContinue = BitmapUtil.createBitmap(R.drawable.button_continue);
+		}
 		buttonMenu = BitmapUtil.createBitmap(R.drawable.button_menu);
 		buttonLeave = BitmapUtil.createBitmap(R.drawable.button_leave);
 		textSurvivalTime = BitmapUtil.createBitmap(R.drawable.text_survival_time);
@@ -95,11 +102,23 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 			persoArtwork = BitmapUtil.createBitmap(R.drawable.yuna_artwork_1);
 		}
 
-		buttonRestartRect = buildRect(buttonRestart,
+		Rect firstButtonRect = null;
+		Bitmap firstButton = null;
+		if(endMode) {
+			buttonRestartRect = buildRect(buttonRestart,
 				panel.getWidth() - buttonRestart.getWidth() - buttonRestart.getWidth() / 5,
 				buttonRestart.getHeight() / 3);
+			firstButton = buttonRestart;
+			firstButtonRect = buttonRestartRect;
+		} else {
+			buttonContinueRect = buildRect(buttonContinue,
+					panel.getWidth() - buttonContinue.getWidth() - buttonContinue.getWidth() / 5,
+					buttonContinue.getHeight() / 3);
+			firstButton = buttonContinue;
+			firstButtonRect = buttonContinueRect;
+		}
 		buttonMenuRect = buildRect(buttonMenu, panel.getWidth() - buttonMenu.getWidth() - buttonMenu.getWidth() / 5,
-				buttonRestartRect.top + buttonRestart.getHeight() + panel.getHeight() / 7);
+				firstButtonRect.top + firstButton.getHeight() + panel.getHeight() / 7);
 		buttonLeaveRect = buildRect(buttonLeave,
 				panel.getWidth() - buttonLeave.getWidth() - buttonLeave.getWidth() / 5,
 				buttonMenuRect.top + buttonMenu.getHeight() + panel.getHeight() / 7);
@@ -163,7 +182,13 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public void onDraw(Canvas canvas) {
 		canvas.drawBitmap(panel, 0, 0, null);
-		canvas.drawBitmap(buttonRestart, buttonRestartRect.left, buttonRestartRect.top, null);
+		
+		if(endMode) {
+			canvas.drawBitmap(buttonRestart, buttonRestartRect.left, buttonRestartRect.top, null);
+		} else {
+			canvas.drawBitmap(buttonContinue, buttonContinueRect.left, buttonContinueRect.top, null);
+		}
+		
 		canvas.drawBitmap(buttonMenu, buttonMenuRect.left, buttonMenuRect.top, null);
 		canvas.drawBitmap(buttonLeave, buttonLeaveRect.left, buttonLeaveRect.top, null);
 
@@ -184,16 +209,20 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-
+		
 		if (buttonLeaveRect.contains((int) event.getX(), (int) event.getY())) {
 			activity.returnResult("leave");
 		} else if (buttonMenuRect.contains((int) event.getX(), (int) event.getY())) {
 			activity.returnResult("menu");
-		} else if (buttonRestartRect.contains((int) event.getX(), (int) event.getY())) {
+		} else {
 			if (endMode) {
-				activity.returnResult("restart");
+				if (buttonRestartRect.contains((int) event.getX(), (int) event.getY())) {
+					activity.returnResult("restart");
+				}
 			} else {
-				activity.returnResult(null);
+				if (buttonContinueRect.contains((int) event.getX(), (int) event.getY())) {
+					activity.returnResult(null);
+				}
 			}
 		}
 
