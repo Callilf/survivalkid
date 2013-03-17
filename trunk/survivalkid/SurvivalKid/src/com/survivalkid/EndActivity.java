@@ -8,12 +8,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.EndMenu;
+import com.survivalkid.game.singleton.GameContext;
 
 public class EndActivity extends AbstractActivity {
 
 	/** TAG for the logs. */
 	private static final String TAG = EndActivity.class.getSimpleName();
 
+	private GameActivity parent;
 	private EndMenu menu;
 	
 	/** Whether this menu is open because the game is over (true) or just paused (false). */
@@ -24,6 +26,8 @@ public class EndActivity extends AbstractActivity {
 		Bundle b = getIntent().getExtras();
 		endMode = b.getBoolean("endMode");
 		int selectedCharacter = b.getInt("selectedCharacter");
+		
+		parent = (GameActivity) GameContext.getSingleton().getContext();
 
 		setTagParent("End");
 		super.onCreate(savedInstanceState);
@@ -87,6 +91,18 @@ public class EndActivity extends AbstractActivity {
 	protected void onResume() {
 		super.onResume();
 		menu.unpause();
+	}
+	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		parent.getGamePanel().drawBackgroundAndButton();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
 	}
 
 }
