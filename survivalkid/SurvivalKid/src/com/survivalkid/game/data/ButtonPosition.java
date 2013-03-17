@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 
 import com.survivalkid.game.core.ActionButton;
 import com.survivalkid.game.core.enums.SpriteEnum;
+import com.survivalkid.game.entity.personage.Bag;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.PrefsUtil;
 
@@ -40,7 +41,11 @@ public class ButtonPosition {
 	TypeButton buttonSelect = TypeButton.NONE;
 	
 	public ButtonPosition() {
-		// do nothing when creating
+		// to keep the same pointer, use the method set after instead of creating new Point
+		leftButton = new Point(); 
+		rightButton = new Point(); 
+		upButton = new Point(); 
+		bagButton = new Point(); 
 	}
 	
 	public void init() {
@@ -50,12 +55,13 @@ public class ButtonPosition {
 		}
 		else {
 			initStorePosition(buttonPosition);
-		}		
+		}
 	}
 	
 	public void resetPosition() {
 		PrefsUtil.removePref(KEY_POSITION);
 		MoveUtil.initializePositionButton();
+		MoveUtil.virtualBag.initPosition();
 		Log.d(TAG, "Button position has been reseted");
 	}
 
@@ -68,10 +74,10 @@ public class ButtonPosition {
 		else {
 			try {
 				// load the save configuration
-				leftButton = new Point(Integer.parseInt(listePosition[0]), Integer.parseInt(listePosition[1]));
-				rightButton = new Point(Integer.parseInt(listePosition[2]), Integer.parseInt(listePosition[3]));
-				upButton = new Point(Integer.parseInt(listePosition[4]), Integer.parseInt(listePosition[5]));
-				bagButton = new Point(Integer.parseInt(listePosition[6]), Integer.parseInt(listePosition[7]));
+				leftButton.set(Integer.parseInt(listePosition[0]), Integer.parseInt(listePosition[1]));
+				rightButton.set(Integer.parseInt(listePosition[2]), Integer.parseInt(listePosition[3]));
+				upButton.set(Integer.parseInt(listePosition[4]), Integer.parseInt(listePosition[5]));
+				bagButton.set(Integer.parseInt(listePosition[6]), Integer.parseInt(listePosition[7]));
 			}
 			catch(Exception e) {
 				Log.e(TAG, "Erreur lors du rechargement de la position des boutons : " + buttonPosition, e);
@@ -85,12 +91,12 @@ public class ButtonPosition {
 		if (HAS_MULTITOUCH) {
 			int leftX = (int) (SCREEN_WIDTH*0.03);
 			int widthUp = btn_up.getWidth();
-			leftButton = new Point(leftX, SCREEN_HEIGHT - btn_left.getHeight());
-			rightButton = new Point(leftX + btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
-			upButton = new Point(SCREEN_WIDTH - widthUp - widthUp/2, SCREEN_HEIGHT - btn_up.getHeight());
+			leftButton.set(leftX, SCREEN_HEIGHT - btn_left.getHeight());
+			rightButton.set(leftX + btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
+			upButton.set(SCREEN_WIDTH - widthUp - widthUp/2, SCREEN_HEIGHT - btn_up.getHeight());
 			
 			Bitmap bagImg = SpriteEnum.BAG_SLOT.getBitmap();
-			bagButton = new Point(SCREEN_WIDTH - widthUp - widthUp/3 - (int)(bagImg.getWidth()), SCREEN_HEIGHT - bagImg.getHeight());
+			bagButton.set(SCREEN_WIDTH - widthUp - widthUp/3 - (int)(bagImg.getWidth()), SCREEN_HEIGHT - bagImg.getHeight());
 		}
 		else {
 			// not multitouch, the button are superposed so the player can jump and move un the same time
@@ -104,13 +110,13 @@ public class ButtonPosition {
 			btn_right.setMarginVertical(heightHo);
 			btn_up.setMarginHorizontal(widthUp + btn_left.getMarginHorizontal());
 			btn_up.setMarginVertical(heightHo);
-			leftButton = new Point(leftX, posY);
-			rightButton = new Point(leftX + widthHo*2, posY);
-			upButton = new Point(leftX + widthHo + btn_left.getMarginHorizontal() - widthUp/2,
+			leftButton.set(leftX, posY);
+			rightButton.set(leftX + widthHo*2, posY);
+			upButton.set(leftX + widthHo + btn_left.getMarginHorizontal() - widthUp/2,
 					SCREEN_HEIGHT - (int)(2.2f*heightHo) - btn_up.getHeight());
 			
 			Bitmap bagImg = SpriteEnum.BAG_SLOT.getBitmap();
-			bagButton = new Point(SCREEN_WIDTH - widthUp - widthUp/2 - bagImg.getWidth()*2, SCREEN_HEIGHT - bagImg.getHeight());
+			bagButton.set(SCREEN_WIDTH - widthUp - widthUp/2 - bagImg.getWidth()*2, SCREEN_HEIGHT - bagImg.getHeight());
 		}		
 	}
 	
@@ -147,6 +153,9 @@ public class ButtonPosition {
 			else if (MoveUtil.btn_up.isOnButton(x, y)) {
 				buttonSelect = TypeButton.UP;
 			}
+			else if (MoveUtil.virtualBag.getTouchBox().contains(x, y)) {
+				buttonSelect = TypeButton.BAG;
+			}
 			else {
 				buttonSelect = TypeButton.NONE;
 			}
@@ -162,21 +171,27 @@ public class ButtonPosition {
 				case LEFT:manageMoveButton(leftButton, btn_left, x, y);break;
 				case RIGHT:manageMoveButton(rightButton, btn_right, x, y);break;
 				case UP:manageMoveButton(upButton, btn_up, x, y);break;
-				case BAG:Log.d(TAG, "TODO : bah not manage");
+				case BAG:manageBag(bagButton, MoveUtil.virtualBag, x, y);break;
 				default:return false;
 			}
 			return true;
 		}
 		return false;
 	}
-	
+
 	private void manageMoveButton(Point point, ActionButton actionButton, int x, int y) {
 		point.x = x - actionButton.getWidth()/2;
 		point.y = y - actionButton.getHeight()/2;
-		actionButton.setPosition(point);
+		actionButton.setPosition(point); // because the actionButton don't keep a pointer of the position
+	}
+	
+	private void manageBag(Point point, Bag bag, int x, int y) {
+		point.x = x - bag.getTouchBox().width()/2;
+		point.y = y - bag.getTouchBox().height()/2;
+		bag.initPosition();
 	}
 
-	// GETTER et SETTER
+	// GETTER and SETTER
 	public Point getLeftButton() {
 		return leftButton;
 	}

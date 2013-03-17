@@ -262,6 +262,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			if (canvas != null) {
 				synchronized (surfaceHolder) {
 					drawBackground(canvas);
+					MoveUtil.virtualBag.draw(canvas);
 					drawButton(canvas);
 				}
 			}
@@ -382,8 +383,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		else {
 			CollisionUtil.displayHitBoxes = false;
-			MoveUtil.buttonPosition.savePosition();
+			afterChangeLocationButton();
 		}
+	}
+	
+	public void afterChangeLocationButton() {
+		if (characterManager.getCharacterList().size() > OWN_PERSO) {
+			characterManager.getCharacterList(OWN_PERSO).getBag().initPosition();
+		}
+		if (modeEditLocationButton) {
+			drawBackgroundAndButton();
+		}
+		MoveUtil.buttonPosition.savePosition();		
 	}
 
 	// / getter & setter
