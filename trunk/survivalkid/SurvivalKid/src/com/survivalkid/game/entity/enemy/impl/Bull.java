@@ -102,8 +102,7 @@ public class Bull extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-		if (!_personage.hasState(StateEnum.STATE_RECOVERY)) {
-			_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME);
+		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
 			int newSpeedX = (direction == DirectionConstants.LEFT) ? -SPEED_COLLISION_X : SPEED_COLLISION_X;
 			_personage.setDirection((direction == DirectionConstants.LEFT) ? DirectionConstants.RIGHT : DirectionConstants.LEFT);
 			_personage.setSpeedX(newSpeedX);

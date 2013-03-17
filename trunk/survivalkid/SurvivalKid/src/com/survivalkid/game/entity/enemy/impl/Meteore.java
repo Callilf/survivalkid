@@ -22,6 +22,9 @@ public class Meteore extends EnemyEntity {
 	
 	private int directionFire;
 	
+	/** duration of the recovery when the player is hit */
+	private static final int RECOVERY_TIME = 500;
+	
 	public Meteore() {
 		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
 	}
@@ -90,8 +93,9 @@ public class Meteore extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-		_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE);
-		die();
+		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
+			die();
+		}
 	}
 
 	@Override

@@ -43,6 +43,15 @@ public final class DataSave implements Serializable {
 		highScore = new TreeSet<Score>();
 		nbHighScore = 0;
 	}
+
+	/**
+	 * Reset the scores
+	 */
+	public void resetScores(Context context) {
+		highScore.clear();
+		nbHighScore = 0;
+		saveData(context);
+	}
 	
 	/**
 	 * Add a new score. Return true if the score is a highscore, false otherwise

@@ -45,10 +45,12 @@ public class Score implements Comparable<Score>, Serializable {
 	 * @param another
 	 */
 	public int compareTo(Score another) {
-		if (timeScore < another.timeScore) return -1;
-		if (timeScore > another.timeScore || scoreId < another.scoreId) return 1;
+		if (timeScore < another.timeScore) return -1; // lower
+		if (timeScore > another.timeScore || scoreId < another.scoreId) return 1; // higher 
+		if (scoreId == another.scoreId) return 0; // the score itself
+		
 		// else timeScore == another.timeScore && numberId > another.numberId
-		return -1;
+		return -1; // lower
 	}
 	
 	@Override

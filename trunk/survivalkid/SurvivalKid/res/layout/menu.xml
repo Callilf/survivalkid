@@ -19,6 +19,9 @@
 
 			<item android:id="@+id/m_resetbutton"
 				android:title="@string/resetbutton"  />	
+
+			<item android:id="@+id/m_resetscore"
+				android:title="@string/resetscore"  />	
 	      
 	     </menu>
 	</item>
