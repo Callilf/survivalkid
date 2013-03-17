@@ -2,6 +2,7 @@ package com.survivalkid;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,6 +45,8 @@ public class EndActivity extends AbstractActivity {
 //		params.y = MoveUtil.SCREEN_HEIGHT/2 - params.height/2;
 
 		this.getWindow().setAttributes(params); 
+		
+		Log.d(TAG, "EndActivity created");
 	}
 	
 	public void returnResult(String result) {
