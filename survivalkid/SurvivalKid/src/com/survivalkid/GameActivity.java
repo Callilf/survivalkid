@@ -66,11 +66,18 @@ public class GameActivity extends AbstractActivity {
 	public void displayEndMenu() {
 		Intent intent = new Intent(GameActivity.this.getBaseContext(), EndActivity.class);
 
-		// Bundle b = new Bundle();
-		// b.putInt("selectedCharacter", persoSelected);
-		// intent.putExtras(b);
+		Bundle b = new Bundle();
+		b.putBoolean("endMode", true);
+		intent.putExtras(b);
 		startActivityForResult(intent, 1);
-		// finish();
+	}
+	
+	public void displayPauseMenu() {
+		Intent intent = new Intent(GameActivity.this.getBaseContext(), EndActivity.class);
+		Bundle b = new Bundle();
+		b.putBoolean("endMode", false);
+		intent.putExtras(b);
+		startActivityForResult(intent, 1);
 	}
 	
 	public void backToMainMenu() {
@@ -110,14 +117,11 @@ public class GameActivity extends AbstractActivity {
 		Log.d(TAG, "Touch pressed : " + keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			exitApplication();
+			displayPauseMenu();
+			//exitApplication();
 			break;
 		case KeyEvent.KEYCODE_MENU:
-			// if (!gamePanel.restart()) {
-			// if (CollisionUtil.hideShowDisplayHitBoxes()) {
-			// CharacterManager.OWN_PERSO = (CharacterManager.OWN_PERSO+1)%2;
-			// }
-			// }
+			//Menu button
 		default:
 			break;
 		}
@@ -205,6 +209,18 @@ public class GameActivity extends AbstractActivity {
 		super.onPause();
 		gamePanel.stop();
 		backgroundMusic.pause();
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		//Afficher le fond ???
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		displayPauseMenu();
 	}
 
 	@Override
