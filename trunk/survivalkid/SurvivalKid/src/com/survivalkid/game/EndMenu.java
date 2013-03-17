@@ -26,6 +26,9 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String TAG = EndMenu.class.getSimpleName();
 	
 	private static final DateFormat formatter = new SimpleDateFormat("mm:ss,SSS");
+	
+	/** Whether this menu is open because the game is over (true) or just paused (false). */
+	private boolean endMode;
 
 	private EndActivity activity;
 	private Bitmap panel;
@@ -37,13 +40,17 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 	private Rect buttonLeaveRect;
 	private Bitmap textSurvivalTime;
 	private Rect textSurvivalTimeRect;
+	private Bitmap textGamePaused;
+	private Rect textGamePausedRect;
 	
 	private Paint paint;
 	private String survivalTime;
 	private Rect survivalTimeRect;
 
-	public EndMenu(Context _context) {
+	public EndMenu(Context _context, boolean _endMode) {
 		super(_context);
+		
+		endMode = _endMode;
 
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
@@ -62,13 +69,15 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		buttonMenu = BitmapUtil.createBitmap(R.drawable.button_menu);
 	    buttonLeave = BitmapUtil.createBitmap(R.drawable.button_leave);
 	    textSurvivalTime = BitmapUtil.createBitmap(R.drawable.text_survival_time);
+	    textGamePaused = BitmapUtil.createBitmap(R.drawable.text_game_paused);
 	    
 
-	    buttonRestartRect = buildRect(buttonRestart, panel.getWidth() - buttonRestart.getWidth() - buttonRestart.getWidth()/4, buttonRestart.getHeight()/3);
-	    buttonMenuRect = buildRect(buttonMenu, panel.getWidth() - buttonMenu.getWidth() - buttonMenu.getWidth()/4, buttonRestartRect.top + buttonRestart.getHeight() + panel.getHeight()/7);
-	    buttonLeaveRect = buildRect(buttonLeave, panel.getWidth() - buttonLeave.getWidth() - buttonLeave.getWidth()/4, buttonMenuRect.top + buttonMenu.getHeight() + panel.getHeight()/7);
+	    buttonRestartRect = buildRect(buttonRestart, panel.getWidth() - buttonRestart.getWidth() - buttonRestart.getWidth()/5, buttonRestart.getHeight()/3);
+	    buttonMenuRect = buildRect(buttonMenu, panel.getWidth() - buttonMenu.getWidth() - buttonMenu.getWidth()/5, buttonRestartRect.top + buttonRestart.getHeight() + panel.getHeight()/7);
+	    buttonLeaveRect = buildRect(buttonLeave, panel.getWidth() - buttonLeave.getWidth() - buttonLeave.getWidth()/5, buttonMenuRect.top + buttonMenu.getHeight() + panel.getHeight()/7);
 	    textSurvivalTimeRect = buildRect(textSurvivalTime, panel.getWidth()/2 - textSurvivalTime.getWidth()/2, panel.getWidth()/15);
-		
+	    textGamePausedRect = buildRect(textGamePaused, panel.getWidth()/2 - textSurvivalTime.getWidth()/2 - textSurvivalTime.getWidth()/10, panel.getWidth()/20);
+
 	    Date date = new Date(GameContext.getSingleton().gameDuration);
 	    survivalTime = formatter.format(date);
 	    survivalTimeRect = new Rect(panel.getWidth()/2 - textSurvivalTime.getWidth()/2 + 10, textSurvivalTimeRect.bottom + panel.getWidth()/10, 0, 0);
@@ -105,9 +114,15 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawBitmap(buttonRestart, buttonRestartRect.left, buttonRestartRect.top, null);
 		canvas.drawBitmap(buttonMenu, buttonMenuRect.left, buttonMenuRect.top, null);
 		canvas.drawBitmap(buttonLeave, buttonLeaveRect.left, buttonLeaveRect.top, null);
-		canvas.drawBitmap(textSurvivalTime, textSurvivalTimeRect.left, textSurvivalTimeRect.top, null);
+		
+		if(endMode) {
+			canvas.drawBitmap(textSurvivalTime, textSurvivalTimeRect.left, textSurvivalTimeRect.top, null);
+		} else {
+			canvas.drawBitmap(textGamePaused, textGamePausedRect.left, textGamePausedRect.top, null);
+		}
 		
 		canvas.drawText(survivalTime, survivalTimeRect.left, survivalTimeRect.top, paint);
+		
 	}
 
 	@Override
@@ -118,7 +133,11 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		} else if (buttonMenuRect.contains((int)event.getX(), (int)event.getY())) {
 			activity.returnResult("menu");
 		} else if (buttonRestartRect.contains((int)event.getX(), (int)event.getY())) {
-			activity.returnResult("restart");
+			if(endMode) {
+				activity.returnResult("restart");
+			} else {
+				activity.returnResult(null);
+			}
 		}
 		
 		return true;

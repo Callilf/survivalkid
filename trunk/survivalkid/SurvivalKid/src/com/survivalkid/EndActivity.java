@@ -2,7 +2,6 @@ package com.survivalkid;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,9 +14,14 @@ public class EndActivity extends AbstractActivity {
 	private static final String TAG = EndActivity.class.getSimpleName();
 
 	private EndMenu menu;
+	
+	/** Whether this menu is open because the game is over (true) or just paused (false). */
+	private boolean endMode;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Bundle b = getIntent().getExtras();
+		endMode = b.getBoolean("endMode");
 
 		setTagParent("End");
 		super.onCreate(savedInstanceState);
@@ -28,7 +32,7 @@ public class EndActivity extends AbstractActivity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-		menu = new EndMenu(this);
+		menu = new EndMenu(this, endMode);
 		setContentView(menu);
 		
 		WindowManager.LayoutParams params = getWindow().getAttributes();  
@@ -43,20 +47,26 @@ public class EndActivity extends AbstractActivity {
 	
 	public void returnResult(String result) {
 		 Intent returnIntent = new Intent();
-		 returnIntent.putExtra("result", result);
-		 setResult(RESULT_OK,returnIntent);
+		 if(result != null) {
+			 returnIntent.putExtra("result", result);
+			 setResult(RESULT_OK,returnIntent);
+		 } else {
+			 setResult(RESULT_CANCELED,returnIntent);
+		 }
 		 finish();
 	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.d(TAG, "Touch pressed : " + keyCode);
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			finish();
-			break;
+			if(!endMode) {
+				//If the game is just pause, unpause if by touching "BACK"
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED, returnIntent);
+				finish();
+			}
 		case KeyEvent.KEYCODE_MENU:
-
 		default:
 			break;
 		}
