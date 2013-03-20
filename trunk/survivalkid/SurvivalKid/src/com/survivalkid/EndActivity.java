@@ -45,8 +45,8 @@ public class EndActivity extends AbstractActivity {
 		
 		params.height = menu.getPanel().getHeight();  
 		params.width = menu.getPanel().getWidth();
-//		params.x = MoveUtil.SCREEN_WIDTH/2 - params.width/2;
-//		params.y = MoveUtil.SCREEN_HEIGHT/2 - params.height/2;
+//		params.x = MoveUtil.BACKGROUND_WIDTH/2 - params.width/2;
+//		params.y = MoveUtil.BACKGROUND_HEIGHT/2 - params.height/2;
 
 		this.getWindow().setAttributes(params); 
 		

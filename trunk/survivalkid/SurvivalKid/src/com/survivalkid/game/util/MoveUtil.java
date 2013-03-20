@@ -28,9 +28,18 @@ public final class MoveUtil {
 			MotionEvent.ACTION_POINTER_INDEX_SHIFT:MotionEvent.ACTION_POINTER_ID_SHIFT;
 	
 	public static boolean HAS_MULTITOUCH;
-	
+
 	public static int SCREEN_WIDTH;
 	public static int SCREEN_HEIGHT;
+	
+	public static int BACKGROUND_WIDTH;
+	public static int BACKGROUND_HEIGHT;
+
+	public static int BACKGROUND_LEFT;
+	public static int BACKGROUND_RIGHT;
+	public static int BACKGROUND_TOP;
+	public static int BACKGROUND_BOTTOM;
+	
 	public static int GROUND;
 	
 	public static float RATIO_WIDTH;
@@ -46,23 +55,36 @@ public final class MoveUtil {
 		SCREEN_WIDTH = metrics.widthPixels;
 		SCREEN_HEIGHT = metrics.heightPixels;
 		
+		//Bitmap ground = BitmapUtil.createBitmap(R.drawable.ground);
+		//BACKGROUND_WIDTH = ground.getWidth();
+		//BACKGROUND_HEIGHT = ground.getHeight();		
+		BACKGROUND_WIDTH = SCREEN_WIDTH;
+		BACKGROUND_HEIGHT = SCREEN_HEIGHT;
+		
+		BACKGROUND_LEFT = (SCREEN_WIDTH - BACKGROUND_WIDTH)/2;
+		BACKGROUND_RIGHT = BACKGROUND_LEFT + BACKGROUND_WIDTH;
+		BACKGROUND_TOP = (SCREEN_HEIGHT - BACKGROUND_HEIGHT)/2;
+		BACKGROUND_BOTTOM = BACKGROUND_TOP + BACKGROUND_HEIGHT;
+		
+		
+		
 		// in case of the width and height are exchanged
-		if (SCREEN_WIDTH < SCREEN_HEIGHT) {
-			int tmp = SCREEN_WIDTH;
-			SCREEN_WIDTH = SCREEN_HEIGHT;
-			SCREEN_HEIGHT = tmp;
+		if (BACKGROUND_WIDTH < BACKGROUND_HEIGHT) {
+			int tmp = BACKGROUND_WIDTH;
+			BACKGROUND_WIDTH = BACKGROUND_HEIGHT;
+			BACKGROUND_HEIGHT = tmp;
 		}
 		
-		RATIO_WIDTH = SCREEN_WIDTH/(float)NORMALIZE_WIDTH;
-		RATIO_HEIGHT = SCREEN_HEIGHT/(float)NORMALIZE_HEIGHT;
+		RATIO_WIDTH = BACKGROUND_WIDTH/(float)NORMALIZE_WIDTH;
+		RATIO_HEIGHT = BACKGROUND_HEIGHT/(float)NORMALIZE_HEIGHT;
 		
-		GROUND = (int) (SCREEN_HEIGHT - 40*RATIO_HEIGHT);
+		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT);
 		
 		/* new API not used
 		Point size = new Point();
 		display.getSize(size);
-		SCREEN_WIDTH = size.x;
-		SCREEN_HEIGHT = size.y;
+		BACKGROUND_WIDTH = size.x;
+		BACKGROUND_HEIGHT = size.y;
 		 */
 		
 	}

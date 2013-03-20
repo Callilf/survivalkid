@@ -68,10 +68,10 @@ public class Meteore extends EnemyEntity {
 	
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
-		int random = (int) (Math.random() * MoveUtil.SCREEN_WIDTH);
+		int random = (int) (Math.random() * MoveUtil.BACKGROUND_WIDTH);
 		sprite.setX(random);
 		sprite.setY(1-sprite.getHeight());
-		if (random <= MoveUtil.SCREEN_WIDTH/2) {
+		if (random <= MoveUtil.BACKGROUND_WIDTH/2) {
 			direction = DirectionConstants.RIGHT;
 			directionFire = DirectionConstants.LEFT;
 		}
@@ -128,7 +128,7 @@ public class Meteore extends EnemyEntity {
 			return;
 		}
 
-		if (sprite.getX() + sprite.getWidth() < 0	|| sprite.getX() > MoveUtil.SCREEN_WIDTH) {
+		if (sprite.getX() + sprite.getWidth() < 0	|| sprite.getX() > MoveUtil.BACKGROUND_WIDTH) {
 			dead = true;
 		}
 		else if (sprite.getY() + sprite.getHeight()*3/4 >= MoveUtil.GROUND) {

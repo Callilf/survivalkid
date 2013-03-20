@@ -175,7 +175,7 @@ public class BalloonCrate extends ItemEntity {
 			setSpeedX(4 + randomSpeed);
 		} else {
 			// RIGHT
-			sprite.setX(MoveUtil.SCREEN_WIDTH);
+			sprite.setX(MoveUtil.BACKGROUND_WIDTH);
 			setSpeedX(-4 - randomSpeed);
 		}
 

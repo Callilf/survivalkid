@@ -289,7 +289,7 @@ public abstract class GameEntity implements Cloneable {
 
 	public boolean onScreen() {
 		return (sprite.getX() + sprite.getWidth() >= 0) && (sprite.getY() + sprite.getHeight() >= 0)
-				&& sprite.getX() < MoveUtil.SCREEN_WIDTH && sprite.getY() < MoveUtil.SCREEN_HEIGHT;
+				&& sprite.getX() < MoveUtil.BACKGROUND_WIDTH && sprite.getY() < MoveUtil.BACKGROUND_HEIGHT;
 	}
 
 	/**
@@ -307,7 +307,7 @@ public abstract class GameEntity implements Cloneable {
 	 * @return true or false
 	 */
 	public boolean touchRight() {
-		return hitBox.right == MoveUtil.SCREEN_WIDTH;
+		return hitBox.right == MoveUtil.BACKGROUND_WIDTH;
 	}
 
 	// ---------------------------- Move functions end
@@ -396,8 +396,8 @@ public abstract class GameEntity implements Cloneable {
 			// is out of the screen, give a positive dx to return in the screen
 			actualDX = -hitBox.left;
 			speedX = 0;
-		} else if (affectedByWalls && newX + hitBox.width() > MoveUtil.SCREEN_WIDTH) {
-			actualDX = MoveUtil.SCREEN_WIDTH - hitBox.right;
+		} else if (affectedByWalls && newX + hitBox.width() > MoveUtil.BACKGROUND_WIDTH) {
+			actualDX = MoveUtil.BACKGROUND_WIDTH - hitBox.right;
 			speedX = 0;
 		} else {
 			actualDX = _dx;

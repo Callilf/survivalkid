@@ -31,7 +31,7 @@ public class SuperMedkit extends StandardObject {
 
 	@Override
 	public void collideWithPerso(Personage _perso) {
-		_perso.revoceryLife(25, EnumLife.RECOVERY_LIFE);
+		_perso.recoveryLife(25, EnumLife.RECOVERY_LIFE);
 	}
 
 }

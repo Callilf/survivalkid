@@ -153,7 +153,7 @@ public class Personage extends GameEntity {
 	 * @param _bonusLife
 	 *            the amount of hp win
 	 */
-	public void revoceryLife(int _bonusLife, EnumLife typeChange) {
+	public void recoveryLife(int _bonusLife, EnumLife typeChange) {
 		life.modifyLife(_bonusLife, typeChange);
 		damages.add(new LifeChangeDisplayer(_bonusLife, typeChange, sprite.getX() + sprite.getWidth() / 2 - 20, sprite
 				.getY()));
