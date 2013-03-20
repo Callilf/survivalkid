@@ -49,7 +49,7 @@ public class Caterpillar extends EnemyEntity {
 			return;
 		}
 
-		if (sprite.getX() + sprite.getWidth() < 0 || sprite.getX() > MoveUtil.SCREEN_WIDTH + sprite.getWidth()) {
+		if (sprite.getX() + sprite.getWidth() < 0 || sprite.getX() > MoveUtil.BACKGROUND_WIDTH + sprite.getWidth()) {
 			dead = true;
 		}
 		
@@ -100,7 +100,7 @@ public class Caterpillar extends EnemyEntity {
 			sprite.setY(380);
 			direction = DirectionConstants.RIGHT;
 		} else if (random < 69) {
-			sprite.setX(MoveUtil.SCREEN_WIDTH + sprite.getWidth());
+			sprite.setX(MoveUtil.BACKGROUND_WIDTH + sprite.getWidth());
 			sprite.setY(380);
 			direction = DirectionConstants.LEFT;
 		} else if (random < 84) {
@@ -108,7 +108,7 @@ public class Caterpillar extends EnemyEntity {
 			sprite.setY(-20);
 			direction = DirectionConstants.RIGHT;
 		} else {
-			sprite.setX(MoveUtil.SCREEN_WIDTH + sprite.getWidth());
+			sprite.setX(MoveUtil.BACKGROUND_WIDTH + sprite.getWidth());
 			sprite.setY(-20);
 			direction = DirectionConstants.LEFT;
 		}

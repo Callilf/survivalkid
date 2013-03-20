@@ -32,7 +32,7 @@ public abstract class StandardObject extends ItemEntity {
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
 		// random spawn position
-		int randomX = 20 + (int) (Math.random() * MoveUtil.SCREEN_WIDTH - 20 - sprite.getWidth());
+		int randomX = 20 + (int) (Math.random() * MoveUtil.BACKGROUND_WIDTH - 20 - sprite.getWidth());
 		sprite.setX(randomX);
 		sprite.setY(-sprite.getHeight());
 

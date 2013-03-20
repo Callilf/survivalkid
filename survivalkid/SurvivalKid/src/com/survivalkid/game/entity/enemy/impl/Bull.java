@@ -51,7 +51,7 @@ public class Bull extends EnemyEntity {
 		active = false;
 		warningExpiration = GameContext.getSingleton().gameDuration + WARNING_DURATION;
 		if (direction == DirectionConstants.LEFT) {
-			warning.setX(MoveUtil.SCREEN_WIDTH - warning.getWidth());
+			warning.setX(MoveUtil.BACKGROUND_WIDTH - warning.getWidth());
 		} else {
 			warning.setX(0);
 		}
@@ -74,7 +74,7 @@ public class Bull extends EnemyEntity {
 			return;
 		}
 
-		if (sprite.getX() + sprite.getWidth() < 0 || sprite.getX() > MoveUtil.SCREEN_WIDTH) {
+		if (sprite.getX() + sprite.getWidth() < 0 || sprite.getX() > MoveUtil.BACKGROUND_WIDTH) {
 			dead = true;
 		}
 
@@ -145,7 +145,7 @@ public class Bull extends EnemyEntity {
 			sprite.setY(380);
 			direction = DirectionConstants.RIGHT;
 		} else {
-			sprite.setX(MoveUtil.SCREEN_WIDTH);
+			sprite.setX(MoveUtil.BACKGROUND_WIDTH);
 			sprite.setY(380);
 			direction = DirectionConstants.LEFT;
 		}

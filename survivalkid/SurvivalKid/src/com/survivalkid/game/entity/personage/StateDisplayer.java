@@ -57,7 +57,7 @@ public class StateDisplayer {
 				}
 				map.get(stateEnum).setRemainingTimeStr(timeInString.substring(0, timeInString.length() - 2));
 
-				as.setX(MoveUtil.SCREEN_WIDTH - offsetX - as.getWidth());
+				as.setX(MoveUtil.BACKGROUND_WIDTH - offsetX - as.getWidth());
 				as.setY(GAP_SIZE_Y);
 				offsetX += as.getWidth() + GAP_SIZE_X;
 			}
