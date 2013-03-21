@@ -1,0 +1,130 @@
+package com.survivalkid.game.core;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.view.SurfaceHolder;
+
+import com.survivalkid.R;
+import com.survivalkid.game.GameManager;
+import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.MoveUtil;
+
+/**
+ * Manage the draw on the surface
+ * 
+ * @author Thomas
+ *
+ */
+public class SurfaceHandler {
+
+	private static final boolean SCALE_ENABLE = false;
+	
+	private SurfaceHolder surfaceHolder;
+	
+	private boolean scaleActive;
+	private GameManager gameManager;
+	
+	private ChronoDisplayer chronoRestore;
+	private Bitmap ground;
+	
+	private float ratioWidth;
+	private float ratioHeight;
+	
+	
+	public SurfaceHandler(GameManager gameManager) {
+		this.gameManager = gameManager;
+		this.surfaceHolder = gameManager.getHolder();
+		
+		// init the local variable
+		if (SCALE_ENABLE && (MoveUtil.SCREEN_WIDTH != MoveUtil.BACKGROUND_WIDTH || MoveUtil.SCREEN_HEIGHT != MoveUtil.BACKGROUND_HEIGHT)) {
+			ratioWidth = MoveUtil.SCREEN_WIDTH/(float)MoveUtil.BACKGROUND_WIDTH;
+			ratioHeight = MoveUtil.SCREEN_HEIGHT/(float)MoveUtil.BACKGROUND_HEIGHT;
+			scaleActive = true;
+			MoveUtil.setScreenInCorner();
+		}
+		else {
+			scaleActive = false;
+		}
+		
+		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
+				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
+		chronoRestore.setSize(60f);
+		
+		ground = BitmapUtil.createBitmap(R.drawable.ground);
+	}
+	
+	//canvas.scale(ratioWidth, ratioHeight);
+	/**
+	 * Do a draw of the game. If withChrono is true, display a count down in foreground.
+	 */
+	public void completeDraw(boolean withChrono) {
+		Canvas canvas = null;
+		try {
+			canvas = this.surfaceHolder.lockCanvas();
+			if (canvas != null) {
+				synchronized (surfaceHolder) {
+					applyScaleRatio(canvas);
+					this.gameManager.onDraw(canvas);
+					if (withChrono) {
+						chronoRestore.draw(canvas);
+					}
+				}
+			}
+		}
+		finally {
+			// in case of an exception the surface is not left in
+			// an inconsistent state
+			if (canvas != null) {
+				surfaceHolder.unlockCanvasAndPost(canvas);
+			}
+		}	// end finally		
+	}
+	
+	
+	public void drawBackgroundAndButton() {
+		Canvas canvas = null;
+		try {
+			canvas = surfaceHolder.lockCanvas();
+			if (canvas != null) {
+				synchronized (surfaceHolder) {
+					applyScaleRatio(canvas);
+					drawBackground(canvas);
+					resetScale(canvas);
+					MoveUtil.virtualBag.draw(canvas);
+					drawButton(canvas);
+				}
+			}
+		}
+		finally {
+			// in case of an exception the surface is not left in
+			// an inconsistent state
+			if (canvas != null) {
+				surfaceHolder.unlockCanvasAndPost(canvas);
+			}
+		}	// end finally			
+	}
+	
+	public void applyScaleRatio(Canvas canvas) {
+		if (scaleActive) {
+			canvas.scale(ratioWidth, ratioHeight);
+		}
+	}
+	
+	public void resetScale(Canvas canvas) {
+		if (scaleActive) {
+			canvas.scale(1/ratioWidth, 1/ratioHeight);
+		}		
+	}
+	
+	public void drawBackground(Canvas canvas) {
+		canvas.drawColor(Color.BLUE);
+		canvas.drawBitmap(ground, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);		
+	}
+	
+	public void drawButton(Canvas canvas) {
+		MoveUtil.btn_left.draw(canvas);
+		MoveUtil.btn_right.draw(canvas);
+		MoveUtil.btn_up.draw(canvas);		
+	}
+}
