@@ -119,12 +119,36 @@ public final class MoveUtil {
 		return round(y*RATIO_HEIGHT*FPS_RATIO);
 	}
 	
+	/**
+	 * @return a random X position in the game (from left to right)
+	 */
 	public static int getRandomPositionX() {
-		return (int)(Math.random() * BACKGROUND_WIDTH) + BACKGROUND_LEFT;
+		return getRandomPositionX(1);
 	}
 	
+	/**
+	 * @return a random Y position in the game (from ground to top)
+	 */
 	public static int getRandomPositionY() {
-		return (int)(Math.random() * (GROUND - BACKGROUND_TOP)) + BACKGROUND_TOP;
-	}	
+		return getRandomPositionY(1);
+	}
+	
+	/**
+	 * @param marginPct margin in percentage
+	 * @return a random X position in the game (from left to right), excluded the marginPct of each side
+	 */
+	public static int getRandomPositionX(int marginPct) {
+		int margin = BACKGROUND_WIDTH * marginPct / 100;
+		return (int)(Math.random() * (BACKGROUND_WIDTH - 2 * margin)) + BACKGROUND_LEFT + margin;
+	}
+	
+	/**
+	 * @param marginPct margin in percentage
+	 * @return a random Y position in the game (from ground to top), excluded the marginPct of each side
+	 */
+	public static int getRandomPositionY(int marginPct) {
+		int margin = (GROUND - BACKGROUND_TOP) * marginPct / 100;
+		return (int)(Math.random() * (GROUND - BACKGROUND_TOP - 2 * margin)) + BACKGROUND_TOP + margin;
+	}
 	
 }

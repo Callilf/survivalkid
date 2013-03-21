@@ -251,8 +251,8 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
 		// Random spawn position
-		int randomY = (int) (MoveUtil.getRandomPositionY()/1.1f);
-		sprite.setX(MoveUtil.BACKGROUND_LEFT - 20);
+		int randomY = (int) (MoveUtil.getRandomPositionY(5));
+		sprite.setX(MoveUtil.BACKGROUND_LEFT - sprite.getWidth());
 		sprite.setY(randomY);
 
 		// init speed
