@@ -57,8 +57,8 @@ public final class MoveUtil {
 		SCREEN_HEIGHT = metrics.heightPixels;
 		
 		Bitmap ground = BitmapUtil.createBitmap(R.drawable.ground);
-		BACKGROUND_WIDTH = ground.getWidth();
-		BACKGROUND_HEIGHT = ground.getHeight();		
+		BACKGROUND_WIDTH = Math.min(ground.getWidth(), SCREEN_WIDTH);
+		BACKGROUND_HEIGHT = Math.min(ground.getHeight(), SCREEN_HEIGHT);		
 		//BACKGROUND_WIDTH = SCREEN_WIDTH;
 		//BACKGROUND_HEIGHT = SCREEN_HEIGHT;
 		
