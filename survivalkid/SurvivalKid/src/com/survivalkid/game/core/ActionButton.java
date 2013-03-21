@@ -62,8 +62,8 @@ public class ActionButton {
 		x = _x;
 		y = _y;
 		hitBox = new Rect(max(0,x - marginHorizontal), max(0,y - marginVertical), 
-				min(MoveUtil.BACKGROUND_WIDTH, x + sprite.getWidth() + marginHorizontal), 
-				min(MoveUtil.BACKGROUND_HEIGHT, y + sprite.getHeight() + marginVertical));
+				min(MoveUtil.SCREEN_WIDTH, x + sprite.getWidth() + marginHorizontal), 
+				min(MoveUtil.SCREEN_HEIGHT, y + sprite.getHeight() + marginVertical));
 		// log the initial position of the hitbox
 		Log.d(TAG, "Hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
 	}

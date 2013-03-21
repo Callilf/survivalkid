@@ -166,20 +166,20 @@ public class BalloonCrate extends ItemEntity {
 		int randomSide = (int) (Math.random() * 2);
 		int randomSpeed = (int) (Math.random() * 3);
 
-		int randomY = 20 + (int) (Math.random() * MoveUtil.GROUND - sprite.getHeight() - 20);
+		int randomY = 20 + (int) (MoveUtil.getRandomPositionY() - sprite.getHeight() - 20);
 		sprite.setY(randomY);
 
 		if (randomSide < 1) {
 			// LEFT
-			sprite.setX(-sprite.getWidth());
+			sprite.setX(MoveUtil.BACKGROUND_LEFT - sprite.getWidth());
 			setSpeedX(4 + randomSpeed);
 		} else {
 			// RIGHT
-			sprite.setX(MoveUtil.BACKGROUND_WIDTH);
+			sprite.setX(MoveUtil.BACKGROUND_RIGHT);
 			setSpeedX(-4 - randomSpeed);
 		}
 
-		if (sprite.getY() < MoveUtil.GROUND / 2) {
+		if (sprite.getY() < (MoveUtil.GROUND - MoveUtil.BACKGROUND_TOP) / 2) {
 			float randomFallSpeed = 1;
 			setSpeedY(randomFallSpeed);
 		} else {

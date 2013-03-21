@@ -278,7 +278,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private void drawBackground(Canvas canvas) {
 		canvas.drawColor(Color.BLUE);
-		canvas.drawBitmap(ground, 0, 0, null);		
+		canvas.drawBitmap(ground, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);		
 	}
 	
 	private void drawButton(Canvas canvas) {

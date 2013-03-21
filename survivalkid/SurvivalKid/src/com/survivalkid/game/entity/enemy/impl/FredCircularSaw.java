@@ -192,7 +192,7 @@ public class FredCircularSaw extends EnemyEntity {
 				lastNumber++;
 			}
 
-			if (newPoint.x > MoveUtil.BACKGROUND_WIDTH + sprite.getWidth() || newPoint.y < 0 - sprite.getHeight()
+			if (newPoint.x > MoveUtil.BACKGROUND_RIGHT + sprite.getWidth() || newPoint.y < MoveUtil.BACKGROUND_TOP - sprite.getHeight()
 					|| newPoint.y + sprite.getHeight() / 2 >= MoveUtil.GROUND) {
 				draw = false;
 				state = STATE_SAW;
@@ -251,8 +251,8 @@ public class FredCircularSaw extends EnemyEntity {
 	@Override
 	public void initRandomPositionAndSpeed(Point playerPosition) {
 		// Random spawn position
-		int randomY = (int) (20 + Math.random() * (MoveUtil.GROUND - 40));
-		sprite.setX(-20);
+		int randomY = (int) (MoveUtil.getRandomPositionY()/1.1f);
+		sprite.setX(MoveUtil.BACKGROUND_LEFT - 20);
 		sprite.setY(randomY);
 
 		// init speed

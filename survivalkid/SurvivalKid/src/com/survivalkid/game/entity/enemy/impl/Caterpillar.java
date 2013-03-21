@@ -49,7 +49,7 @@ public class Caterpillar extends EnemyEntity {
 			return;
 		}
 
-		if (sprite.getX() + sprite.getWidth() < 0 || sprite.getX() > MoveUtil.BACKGROUND_WIDTH + sprite.getWidth()) {
+		if (sprite.getX() + sprite.getWidth() < MoveUtil.BACKGROUND_LEFT || sprite.getX() > MoveUtil.BACKGROUND_RIGHT + sprite.getWidth()) {
 			dead = true;
 		}
 		
@@ -96,20 +96,20 @@ public class Caterpillar extends EnemyEntity {
 		// random spawn position
 		int random = (int) (Math.random() * 100);
 		if (random < 34) {
-			sprite.setX(-sprite.getWidth());
-			sprite.setY(380);
+			sprite.setX(MoveUtil.BACKGROUND_LEFT - sprite.getWidth());
+			sprite.setY(MoveUtil.GROUND - sprite.getHeight());
 			direction = DirectionConstants.RIGHT;
 		} else if (random < 69) {
-			sprite.setX(MoveUtil.BACKGROUND_WIDTH + sprite.getWidth());
-			sprite.setY(380);
+			sprite.setX(MoveUtil.BACKGROUND_RIGHT + sprite.getWidth());
+			sprite.setY(MoveUtil.GROUND - sprite.getHeight());
 			direction = DirectionConstants.LEFT;
 		} else if (random < 84) {
-			sprite.setX(-sprite.getWidth());
-			sprite.setY(-20);
+			sprite.setX(MoveUtil.BACKGROUND_LEFT - sprite.getWidth());
+			sprite.setY(MoveUtil.BACKGROUND_TOP - 20);
 			direction = DirectionConstants.RIGHT;
 		} else {
-			sprite.setX(MoveUtil.BACKGROUND_WIDTH + sprite.getWidth());
-			sprite.setY(-20);
+			sprite.setX(MoveUtil.BACKGROUND_RIGHT + sprite.getWidth());
+			sprite.setY(MoveUtil.BACKGROUND_TOP - 20);
 			direction = DirectionConstants.LEFT;
 		}
 		

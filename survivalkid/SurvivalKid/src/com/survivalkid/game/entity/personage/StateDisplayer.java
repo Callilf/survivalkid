@@ -22,7 +22,7 @@ public class StateDisplayer {
 	private static final String TAG = StateDisplayer.class.getSimpleName();
 
 	private static final int GAP_SIZE_X = 40;
-	private static final int GAP_SIZE_Y = 20;
+	private static final int GAP_SIZE_Y = 20 + MoveUtil.BACKGROUND_TOP;
 
 	private static final DateFormat formatter = new SimpleDateFormat("ss,SSS");
 
@@ -57,7 +57,7 @@ public class StateDisplayer {
 				}
 				map.get(stateEnum).setRemainingTimeStr(timeInString.substring(0, timeInString.length() - 2));
 
-				as.setX(MoveUtil.BACKGROUND_WIDTH - offsetX - as.getWidth());
+				as.setX(MoveUtil.BACKGROUND_RIGHT - offsetX - as.getWidth());
 				as.setY(GAP_SIZE_Y);
 				offsetX += as.getWidth() + GAP_SIZE_X;
 			}
