@@ -43,7 +43,8 @@ public class MainThread extends Thread {
 		this.surfaceHolder = surfaceHolder;
 		this.gameManager = gamePanel;
 		this.canvas = null;
-		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3, MoveUtil.BACKGROUND_HEIGHT/2);
+		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
+				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
 		chronoRestore.setSize(60f);
 	}
 

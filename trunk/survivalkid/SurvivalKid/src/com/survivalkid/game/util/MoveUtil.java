@@ -2,6 +2,7 @@ package com.survivalkid.game.util;
 
 import static com.survivalkid.game.thread.MainThread.FPS_RATIO;
 import static java.lang.Math.round;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -55,11 +56,11 @@ public final class MoveUtil {
 		SCREEN_WIDTH = metrics.widthPixels;
 		SCREEN_HEIGHT = metrics.heightPixels;
 		
-		//Bitmap ground = BitmapUtil.createBitmap(R.drawable.ground);
-		//BACKGROUND_WIDTH = ground.getWidth();
-		//BACKGROUND_HEIGHT = ground.getHeight();		
-		BACKGROUND_WIDTH = SCREEN_WIDTH;
-		BACKGROUND_HEIGHT = SCREEN_HEIGHT;
+		Bitmap ground = BitmapUtil.createBitmap(R.drawable.ground);
+		BACKGROUND_WIDTH = ground.getWidth();
+		BACKGROUND_HEIGHT = ground.getHeight();		
+		//BACKGROUND_WIDTH = SCREEN_WIDTH;
+		//BACKGROUND_HEIGHT = SCREEN_HEIGHT;
 		
 		BACKGROUND_LEFT = (SCREEN_WIDTH - BACKGROUND_WIDTH)/2;
 		BACKGROUND_RIGHT = BACKGROUND_LEFT + BACKGROUND_WIDTH;
@@ -78,7 +79,7 @@ public final class MoveUtil {
 		RATIO_WIDTH = BACKGROUND_WIDTH/(float)NORMALIZE_WIDTH;
 		RATIO_HEIGHT = BACKGROUND_HEIGHT/(float)NORMALIZE_HEIGHT;
 		
-		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT);
+		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
 		
 		/* new API not used
 		Point size = new Point();
@@ -117,5 +118,13 @@ public final class MoveUtil {
 	public static int normY(int y) {
 		return round(y*RATIO_HEIGHT*FPS_RATIO);
 	}
+	
+	public static int getRandomPositionX() {
+		return (int)(Math.random() * BACKGROUND_WIDTH) + BACKGROUND_LEFT;
+	}
+	
+	public static int getRandomPositionY() {
+		return (int)(Math.random() * (GROUND - BACKGROUND_TOP)) + BACKGROUND_TOP;
+	}	
 	
 }

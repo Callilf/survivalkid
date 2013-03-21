@@ -10,12 +10,12 @@ public class MoveImplSideScreen extends AbstractMove {
 	@Override
 	public boolean isOnLeft(int x, int y) {
 		// for test if the 20% left of the screen is touch
-		return x<MoveUtil.BACKGROUND_WIDTH/5;
+		return x<MoveUtil.SCREEN_WIDTH/5;
 	}
 	@Override	
 	public boolean isOnRight(int x, int y) {
 		// for test if the 20% right of the screen is touch
-		return x>MoveUtil.BACKGROUND_WIDTH/5*4;
+		return x>MoveUtil.SCREEN_WIDTH/5*4;
 	}
 	@Override	
 	public boolean isOnTop(int x, int y) {

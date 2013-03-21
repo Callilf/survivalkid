@@ -1,5 +1,10 @@
 package com.survivalkid.game.entity;
 
+import static com.survivalkid.game.util.MoveUtil.BACKGROUND_BOTTOM;
+import static com.survivalkid.game.util.MoveUtil.BACKGROUND_LEFT;
+import static com.survivalkid.game.util.MoveUtil.BACKGROUND_RIGHT;
+import static com.survivalkid.game.util.MoveUtil.BACKGROUND_TOP;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -288,8 +293,8 @@ public abstract class GameEntity implements Cloneable {
 	}
 
 	public boolean onScreen() {
-		return (sprite.getX() + sprite.getWidth() >= 0) && (sprite.getY() + sprite.getHeight() >= 0)
-				&& sprite.getX() < MoveUtil.BACKGROUND_WIDTH && sprite.getY() < MoveUtil.BACKGROUND_HEIGHT;
+		return (sprite.getX() + sprite.getWidth() >= BACKGROUND_LEFT) && (sprite.getY() + sprite.getHeight() >= BACKGROUND_TOP)
+				&& sprite.getX() < BACKGROUND_RIGHT && sprite.getY() < BACKGROUND_BOTTOM;
 	}
 
 	/**
@@ -298,7 +303,7 @@ public abstract class GameEntity implements Cloneable {
 	 * @return true or false
 	 */
 	public boolean touchLeft() {
-		return hitBox.left == 0;
+		return hitBox.left == MoveUtil.BACKGROUND_LEFT;
 	}
 
 	/**
@@ -307,7 +312,7 @@ public abstract class GameEntity implements Cloneable {
 	 * @return true or false
 	 */
 	public boolean touchRight() {
-		return hitBox.right == MoveUtil.BACKGROUND_WIDTH;
+		return hitBox.right == MoveUtil.BACKGROUND_RIGHT;
 	}
 
 	// ---------------------------- Move functions end
@@ -360,8 +365,8 @@ public abstract class GameEntity implements Cloneable {
 
 		int newY = hitBox.top + _dy;
 		int actualDY = _dy;
-		if (affectedByCeiling && newY < 0) {
-			actualDY = -hitBox.top;
+		if (affectedByCeiling && newY < MoveUtil.BACKGROUND_TOP) {
+			actualDY = MoveUtil.BACKGROUND_TOP - hitBox.top;
 			speedY = 0;
 		} else if (affectedByFloor && hitBox.bottom + _dy > MoveUtil.GROUND) {
 			actualDY = MoveUtil.GROUND - hitBox.bottom;
@@ -391,13 +396,13 @@ public abstract class GameEntity implements Cloneable {
 		// calculate the actual translation
 		int newX = hitBox.left + _dx;
 		int actualDX = 0;
-		if (affectedByWalls && newX < 0) {
+		if (affectedByWalls && newX < BACKGROUND_LEFT) {
 			// if left > 0, set dx to go near the wall. if left < 0, the perso
 			// is out of the screen, give a positive dx to return in the screen
-			actualDX = -hitBox.left;
+			actualDX = BACKGROUND_LEFT - hitBox.left;
 			speedX = 0;
-		} else if (affectedByWalls && newX + hitBox.width() > MoveUtil.BACKGROUND_WIDTH) {
-			actualDX = MoveUtil.BACKGROUND_WIDTH - hitBox.right;
+		} else if (affectedByWalls && newX + hitBox.width() > BACKGROUND_RIGHT) {
+			actualDX = BACKGROUND_RIGHT - hitBox.right;
 			speedX = 0;
 		} else {
 			actualDX = _dx;
