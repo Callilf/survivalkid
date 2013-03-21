@@ -24,6 +24,7 @@ public class ChronoDisplayer {
 		paint.setTextSize(20);
 		paint.setTypeface(GameContext.getSingleton().getFont());
 		paint.setColor(Color.WHITE);
+		paint.setAntiAlias(true);
 		stringToDisplay = "";
 
 		position = new Point(_x,_y);

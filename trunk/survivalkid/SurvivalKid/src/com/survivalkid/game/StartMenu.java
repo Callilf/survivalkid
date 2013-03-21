@@ -48,11 +48,13 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 		Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/MELODBO.TTF");
 
 		paint = new Paint();
+		paint.setAntiAlias(true);
 		paint.setTextSize(40);
 		paint.setTypeface(tf);
 		paint.setColor(Color.BLACK);
 
 		paint2 = new Paint();
+		paint2.setAntiAlias(true);
 		paint2.setTextSize(30);
 		paint2.setTypeface(tf);
 		paint2.setColor(Color.BLACK);

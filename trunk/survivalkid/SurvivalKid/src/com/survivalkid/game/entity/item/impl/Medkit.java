@@ -25,6 +25,12 @@ public class Medkit extends StandardObject {
 		gravity = 1;
 		affectedByFloor = true;
 		affectedByCeiling = false;
+
+		redefineHitBoxForItems();
+	}
+	
+	@Override
+	public void redefineHitBoxForItems() {
 		redefineHitBox((sprite.getWidth() * 5) / 100, (sprite.getHeight() * 5) / 100, (sprite.getWidth() * 90) / 100,
 				(sprite.getHeight() * 95) / 100);
 	}

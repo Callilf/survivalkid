@@ -28,6 +28,12 @@ public class EnemySpeedIncrease extends StandardObject {
 		gravity = 1;
 		affectedByFloor = true;
 		affectedByCeiling = false;
+		
+		redefineHitBoxForItems();
+	}
+	
+	@Override
+	public void redefineHitBoxForItems() {
 		redefineHitBox((sprite.getWidth() * 10) / 100, (sprite.getHeight() * 10) / 100, (sprite.getWidth() * 80) / 100,
 				(sprite.getHeight() * 90) / 100);
 	}

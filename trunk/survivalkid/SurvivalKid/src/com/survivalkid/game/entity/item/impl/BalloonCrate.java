@@ -62,8 +62,7 @@ public class BalloonCrate extends ItemEntity {
 		deathAnim = new AnimatedSprite(SpriteEnum.CRATE_EXPLOSION, 0, 0);
 		dying = false;
 
-		redefineHitBox((sprite.getWidth() * 30) / 100, (sprite.getHeight() * 65) / 100, (sprite.getWidth() * 36) / 100,
-				(sprite.getHeight() * 30) / 100);
+		redefineHitBoxForItems();
 
 		setBalloonTouchBox(new Rect(sprite.getX() + (sprite.getWidth() * 20) / 100, sprite.getY() + sprite.getHeight()
 				/ 100, sprite.getX() + (sprite.getWidth() * 20) / 100 + (sprite.getWidth() * 60) / 100, sprite.getY()
@@ -72,6 +71,12 @@ public class BalloonCrate extends ItemEntity {
 		new Animation("test", new int[] { 2 }, 8);
 
 		play("swing", true, true);
+	}
+	
+	@Override
+	public void redefineHitBoxForItems() {
+		redefineHitBox((sprite.getWidth() * 30) / 100, (sprite.getHeight() * 65) / 100, (sprite.getWidth() * 36) / 100,
+				(sprite.getHeight() * 30) / 100);
 	}
 
 	@Override

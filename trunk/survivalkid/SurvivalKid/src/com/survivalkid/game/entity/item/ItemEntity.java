@@ -65,6 +65,7 @@ public abstract class ItemEntity extends GameEntity {
 			if(balloon.isReleaseObject() && !released) {
 				setX(balloon.getSprite().getX() + balloon.getSprite().getWidth()/2 - sprite.getWidth()/2);
 				setY(MoveUtil.GROUND - sprite.getHeight());
+				redefineHitBoxForItems();
 				spawnTime = gameDuration;
 				blinking = false;
 				released = true;
@@ -118,6 +119,8 @@ public abstract class ItemEntity extends GameEntity {
 	protected abstract void collideWithPerso(Personage perso) ;
 
 	public abstract void initRandomPositionAndSpeed(Point playerPosition);
+	
+	public abstract void redefineHitBoxForItems();
 
 	public boolean isInBalloon() {
 		return inBalloon;
