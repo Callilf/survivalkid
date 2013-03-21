@@ -79,10 +79,12 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 		Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/MELODBO.TTF");
 		paint = new Paint();
+		paint.setAntiAlias(true);
 		paint.setTypeface(tf);
 		paint.setColor(Color.WHITE);
 		paintHighScore = new Paint(paint);
 		paint.setTextSize(50);
+		paintHighScore.setAntiAlias(true);
 		paintHighScore.setTextSize(40);
 
 		panel = BitmapUtil.createBitmap(R.drawable.panel_back);
