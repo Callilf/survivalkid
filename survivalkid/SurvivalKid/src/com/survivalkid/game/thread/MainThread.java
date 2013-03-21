@@ -1,11 +1,10 @@
 package com.survivalkid.game.thread;
 
-import android.graphics.Canvas;
 import android.util.Log;
-import android.view.SurfaceHolder;
 
 import com.survivalkid.game.GameManager;
 import com.survivalkid.game.core.ChronoDisplayer;
+import com.survivalkid.game.core.SurfaceHandler;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.TimerUtil;
@@ -33,16 +32,14 @@ public class MainThread extends Thread {
 	private boolean pause = false;
 	private boolean endGame = false;
 	private boolean restoring = false;
-	private SurfaceHolder surfaceHolder;
+	private SurfaceHandler surfaceHandler;
 	private GameManager gameManager;
-	private Canvas canvas;
 	private ChronoDisplayer chronoRestore;
 
-	public MainThread(SurfaceHolder surfaceHolder, GameManager gamePanel) {
+	public MainThread(GameManager gamePanel) {
 		super();
-		this.surfaceHolder = surfaceHolder;
 		this.gameManager = gamePanel;
-		this.canvas = null;
+		this.surfaceHandler = gameManager.getSurfaceHandler();
 		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
 				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
 		chronoRestore.setSize(60f);
@@ -190,40 +187,15 @@ public class MainThread extends Thread {
 	 * Do a draw of the game
 	 */
 	private void drawScreen() {
-		doDraw(false);
+		surfaceHandler.completeDraw(false);
 	}
 	
 	/**
 	 * Do a draw of the game with a count down in foreground.
 	 */	
 	private void drawRestore() {
-		doDraw(true);
+		surfaceHandler.completeDraw(true);
 	}
-	
-	/**
-	 * Do a draw of the game. If withChrono is true, display a count down in foreground.
-	 */
-	private void doDraw(boolean withChrono) {
-		try {
-			canvas = this.surfaceHolder.lockCanvas();
-			if (canvas != null) {
-				synchronized (surfaceHolder) {
-					this.gameManager.onDraw(canvas);
-					if (withChrono) {
-						chronoRestore.draw(canvas);
-					}
-				}
-			}
-		}
-		finally {
-			// in case of an exception the surface is not left in
-			// an inconsistent state
-			if (canvas != null) {
-				surfaceHolder.unlockCanvasAndPost(canvas);
-			}
-		}	// end finally		
-	}
-	
 
 	/**
 	 * Wait for the surface to be created every 200ms. Return true when this is the case. 

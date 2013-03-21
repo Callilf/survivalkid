@@ -56,30 +56,21 @@ public final class MoveUtil {
 		SCREEN_WIDTH = metrics.widthPixels;
 		SCREEN_HEIGHT = metrics.heightPixels;
 		
+		// in case of the width and height are exchanged
+		if (SCREEN_WIDTH < SCREEN_HEIGHT) {
+			int tmp = SCREEN_WIDTH;
+			SCREEN_WIDTH = SCREEN_HEIGHT;
+			SCREEN_HEIGHT = tmp;
+		}
+		
 		Bitmap ground = BitmapUtil.createBitmap(R.drawable.ground);
 		BACKGROUND_WIDTH = Math.min(ground.getWidth(), SCREEN_WIDTH);
-		BACKGROUND_HEIGHT = Math.min(ground.getHeight(), SCREEN_HEIGHT);		
-		//BACKGROUND_WIDTH = SCREEN_WIDTH;
-		//BACKGROUND_HEIGHT = SCREEN_HEIGHT;
+		BACKGROUND_HEIGHT = Math.min(ground.getHeight(), SCREEN_HEIGHT);	
 		
-		BACKGROUND_LEFT = (SCREEN_WIDTH - BACKGROUND_WIDTH)/2;
-		BACKGROUND_RIGHT = BACKGROUND_LEFT + BACKGROUND_WIDTH;
-		BACKGROUND_TOP = (SCREEN_HEIGHT - BACKGROUND_HEIGHT)/2;
-		BACKGROUND_BOTTOM = BACKGROUND_TOP + BACKGROUND_HEIGHT;
-		
-		
-		
-		// in case of the width and height are exchanged
-		if (BACKGROUND_WIDTH < BACKGROUND_HEIGHT) {
-			int tmp = BACKGROUND_WIDTH;
-			BACKGROUND_WIDTH = BACKGROUND_HEIGHT;
-			BACKGROUND_HEIGHT = tmp;
-		}
+		setScreenCenter();
 		
 		RATIO_WIDTH = BACKGROUND_WIDTH/(float)NORMALIZE_WIDTH;
 		RATIO_HEIGHT = BACKGROUND_HEIGHT/(float)NORMALIZE_HEIGHT;
-		
-		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
 		
 		/* new API not used
 		Point size = new Point();
@@ -96,6 +87,22 @@ public final class MoveUtil {
 	public static ActionButton btn_right;
 	public static ActionButton btn_up;
 	public static Bag virtualBag = null;
+	
+	public static void setScreenInCorner() {
+		BACKGROUND_LEFT = 0;
+		BACKGROUND_RIGHT = BACKGROUND_WIDTH;
+		BACKGROUND_TOP = 0;
+		BACKGROUND_BOTTOM = BACKGROUND_HEIGHT;
+		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
+	}
+	
+	public static void setScreenCenter() {
+		BACKGROUND_LEFT = (SCREEN_WIDTH - BACKGROUND_WIDTH)/2;
+		BACKGROUND_RIGHT = BACKGROUND_LEFT + BACKGROUND_WIDTH;
+		BACKGROUND_TOP = (SCREEN_HEIGHT - BACKGROUND_HEIGHT)/2;
+		BACKGROUND_BOTTOM = BACKGROUND_TOP + BACKGROUND_HEIGHT;
+		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
+	}
 	
 	public static void initializeButton() {
 		btn_left = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_left), BitmapUtil.createBitmap(R.drawable.arrow_left_pressed));

@@ -4,9 +4,7 @@ import static com.survivalkid.game.manager.CharacterManager.OWN_PERSO;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
@@ -17,9 +15,9 @@ import android.view.SurfaceView;
 import android.widget.Toast;
 
 import com.survivalkid.GameActivity;
-import com.survivalkid.R;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants.PersonageConstants;
+import com.survivalkid.game.core.SurfaceHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.data.DataSave;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
@@ -55,7 +53,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private int persoSelected;
 	private boolean modeEditLocationButton;
 
-	private Bitmap ground;
+	private SurfaceHandler surfaceHandler;
 	
 	private GameActivity activity;
 
@@ -78,6 +76,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		
 		SharedVars.getSingleton().initSingleton();
 		
+		surfaceHandler = new SurfaceHandler(this);
+		
 //		SharedPreferences prefs = getContext().getSharedPreferences("SURVIVAL-KID-PREF", Context.MODE_PRIVATE);
 //		if (prefs == null) {
 //			// todo
@@ -91,12 +91,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		getHolder().addCallback(this);
 
 		// create the game loop thread
-		thread = new MainThread(getHolder(), this);
+		thread = new MainThread(this);
 		
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 
-		ground = BitmapUtil.createBitmap(R.drawable.ground);
 		MoveUtil.initializeButton();
 		
 		HandlerUtil.handlerFin = new Handler() {
@@ -243,48 +242,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			// fills the canvas with black
-			drawBackground(canvas);
+			surfaceHandler.drawBackground(canvas);
 
+			surfaceHandler.resetScale(canvas);
 			chrono.draw(canvas);
+			surfaceHandler.drawButton(canvas);
+			surfaceHandler.applyScaleRatio(canvas);
+			
 			enemyManager.draw(canvas);
 			itemManager.draw(canvas);
 			characterManager.draw(canvas);
-
-			drawButton(canvas);
+			
 		}
-	}
-	
-	public void drawBackgroundAndButton() {
-		SurfaceHolder surfaceHolder = getHolder();
-		Canvas canvas = null;
-		try {
-			canvas = surfaceHolder.lockCanvas();
-			if (canvas != null) {
-				synchronized (surfaceHolder) {
-					drawBackground(canvas);
-					MoveUtil.virtualBag.draw(canvas);
-					drawButton(canvas);
-				}
-			}
-		}
-		finally {
-			// in case of an exception the surface is not left in
-			// an inconsistent state
-			if (canvas != null) {
-				surfaceHolder.unlockCanvasAndPost(canvas);
-			}
-		}	// end finally			
-	}
-	
-	private void drawBackground(Canvas canvas) {
-		canvas.drawColor(Color.BLUE);
-		canvas.drawBitmap(ground, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);		
-	}
-	
-	private void drawButton(Canvas canvas) {
-		MoveUtil.btn_left.draw(canvas);
-		MoveUtil.btn_right.draw(canvas);
-		MoveUtil.btn_up.draw(canvas);		
 	}
 
 	@Override
@@ -303,7 +272,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		else {
 			if (MoveUtil.buttonPosition.manageEventChangePosition(event)) {
-				drawBackgroundAndButton();
+				surfaceHandler.drawBackgroundAndButton();
 			}
 		}
 
@@ -379,7 +348,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		modeEditLocationButton = !modeEditLocationButton;
 		if (modeEditLocationButton) {
 			CollisionUtil.displayHitBoxes = true;
-			drawBackgroundAndButton();
+			surfaceHandler.drawBackgroundAndButton();
 		}
 		else {
 			CollisionUtil.displayHitBoxes = false;
@@ -392,7 +361,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			characterManager.getCharacterList(OWN_PERSO).getBag().initPosition();
 		}
 		if (modeEditLocationButton) {
-			drawBackgroundAndButton();
+			surfaceHandler.drawBackgroundAndButton();
 		}
 		MoveUtil.buttonPosition.savePosition();		
 	}
@@ -400,6 +369,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	// / getter & setter
 	public MainThread getThread() {
 		return thread;
+	}
+
+	public SurfaceHandler getSurfaceHandler() {
+		return surfaceHandler;
 	}
 
 	public int getNbPlayer() {

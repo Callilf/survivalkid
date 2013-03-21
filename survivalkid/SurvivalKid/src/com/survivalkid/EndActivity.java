@@ -97,7 +97,7 @@ public class EndActivity extends AbstractActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		parent.getGamePanel().drawBackgroundAndButton();
+		parent.getGamePanel().getSurfaceHandler().drawBackgroundAndButton();
 	}
 	
 	@Override
