@@ -67,11 +67,11 @@ public final class MoveUtil {
 		BACKGROUND_WIDTH = Math.min(ground.getWidth(), SCREEN_WIDTH);
 		BACKGROUND_HEIGHT = Math.min(ground.getHeight(), SCREEN_HEIGHT);	
 		
-		setScreenCenter();
-		
 		RATIO_WIDTH = BACKGROUND_WIDTH/(float)NORMALIZE_WIDTH;
 		RATIO_HEIGHT = BACKGROUND_HEIGHT/(float)NORMALIZE_HEIGHT;
 		
+		setScreenCenter();
+
 		/* new API not used
 		Point size = new Point();
 		display.getSize(size);
