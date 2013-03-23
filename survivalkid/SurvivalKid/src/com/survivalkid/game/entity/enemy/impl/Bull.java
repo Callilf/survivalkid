@@ -64,17 +64,22 @@ public class Bull extends EnemyEntity {
 		play("run", true, true);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 
-		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 20);
-		emitter.setParticleSpeedXMin(0);
-		emitter.setParticleSpeedXMax(1);
+		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_DUST_BROWN, 50);
+		if (direction == DirectionConstants.RIGHT) {
+			emitter.setParticleSpeedXMin(0);
+			emitter.setParticleSpeedXMax(2);
+		} else {
+			emitter.setParticleSpeedXMin(-2);
+			emitter.setParticleSpeedXMax(0);
+		}
 		emitter.setParticleSpeedYMin(-1);
 		emitter.setParticleSpeedYMax(-1);
-		emitter.setSpeedChange(0, 75, 0, 75);
+		emitter.setSpeedChange(0, 75, 0, 50);
 		emitter.setParticleFadeOut(true);
-		emitter.setParticleTimeOut(3000);
+		emitter.setParticleTimeOut(1000);
 		emitter.setGenerate(false);
 		emitter.setNumberOfParticlePerGeneration(1);
-		//SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
+		SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
 
 	}
 
@@ -118,10 +123,12 @@ public class Bull extends EnemyEntity {
 
 		if (direction == DirectionConstants.LEFT) {
 			emitter.setX(sprite.getX() + sprite.getWidth());
+			emitter.setParticleDirection(DirectionConstants.RIGHT);
 		} else {
 			emitter.setX(sprite.getX());
+			emitter.setParticleDirection(DirectionConstants.LEFT);
 		}
-		emitter.setY(sprite.getY() + sprite.getHeight());
+		emitter.setY(sprite.getY() + sprite.getHeight() - emitter.getParticleSprite().getHeight()/2);
 	}
 
 	@Override

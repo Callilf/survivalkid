@@ -1,12 +1,9 @@
 package com.survivalkid.game.particle;
 
-import java.util.Random;
-
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.survivalkid.game.core.AnimatedSprite;
-import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.singleton.GameContext;
 
@@ -43,7 +40,6 @@ public class Particle {
 		sprite = new AnimatedSprite(_spriteEnum);
 		speedX = _speedX;
 		speedY = _speedY;
-		direction = DirectionConstants.RIGHT;
 		expirationTime = GameContext.getSingleton().gameDuration + _timeout;
 	}
 

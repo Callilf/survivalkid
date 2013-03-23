@@ -84,7 +84,9 @@ public enum SpriteEnum {
 	PARTICLE_SMOKE_WHITE_ROUND(R.drawable.particle_smoke_white_round_short2, 5, 3, 
 			new Animation("faint1", new int[] { 0, 1, 2, 3, 4 }, 5), 
 			new Animation("faint2", new int[] { 5, 6, 7, 8, 9 }, 5), 
-			new Animation("faint3",	new int[] { 10, 11, 12, 13, 14 }, 5));
+			new Animation("faint3",	new int[] { 10, 11, 12, 13, 14 }, 5)),
+	
+	PARTICLE_DUST_BROWN(R.drawable.particle_dust_brown, 8, 1, new Animation("faint", new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 8));
 
 	private Bitmap bitmap;
 	private Bitmap flippedBitmap;
