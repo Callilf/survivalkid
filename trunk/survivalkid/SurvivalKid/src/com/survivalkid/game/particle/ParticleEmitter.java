@@ -41,6 +41,8 @@ public class ParticleEmitter {
 	private int particleTimeOut;
 	/** The sprite used by the particles (only one sprite so far). */
 	private SpriteEnum particleSpriteEnum;
+	/** The direction. */
+	private int particleDirection;
 	
 	/** Whether the emitter is generating or not. */
 	private boolean generate;
@@ -158,6 +160,7 @@ public class ParticleEmitter {
 		particleToGenerate.setSpeedXChangePeriod(rand.nextInt(speedChangeXMax - speedChangeXMin + 1) + speedChangeXMin);
 		particleToGenerate.setSpeedYChangePeriod(rand.nextInt(speedChangeYMax - speedChangeYMin + 1) + speedChangeYMin);
 		particleToGenerate.setDeleteParticleWhenAnimFinished(deleteParticleWhenAnimFinished);
+		particleToGenerate.setDirection(particleDirection);
 		
 		int randomAnimIndex = rand.nextInt(particleSpriteEnum.getAnimations().keySet().size());
 		String randomAnim = null;
@@ -381,6 +384,20 @@ public class ParticleEmitter {
 	 */
 	public void setDeleteParticleWhenAnimFinished(boolean deleteParticleWhenAnimFinished) {
 		this.deleteParticleWhenAnimFinished = deleteParticleWhenAnimFinished;
+	}
+
+	/**
+	 * @return the particleDirection
+	 */
+	public int getParticleDirection() {
+		return particleDirection;
+	}
+
+	/**
+	 * @param particleDirection the particleDirection to set
+	 */
+	public void setParticleDirection(int particleDirection) {
+		this.particleDirection = particleDirection;
 	}
 
 	
