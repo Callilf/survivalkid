@@ -26,6 +26,7 @@ import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
+import com.survivalkid.game.manager.ParticleManager;
 import com.survivalkid.game.particle.ParticleEmitter;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
@@ -47,6 +48,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private CharacterManager characterManager;
 	private EnemyManager enemyManager;
 	private ItemManager itemManager;
+	private ParticleManager particleManager;
 	private ChronoDisplayer chrono;
 	
 	private boolean surfaceActive;
@@ -57,10 +59,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private SurfaceHandler surfaceHandler;
 	
 	private GameActivity activity;
-	
-	
-	//TEST PARTICLES
-	private ParticleEmitter emitter;
 
 	public GameManager(Context context) {
 		super(context);
@@ -123,6 +121,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		characterManager = new CharacterManager();
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
+		particleManager = new ParticleManager();
+		SharedVars.getSingleton().setParticleManager(particleManager);
 		chrono = new ChronoDisplayer(10, 20);
 
 		Personage character = null;
@@ -140,16 +140,20 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		characterManager.addCharacter(character);
 		
 		
-		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 200, "faint");
-		emitter.setX(MoveUtil.BACKGROUND_RIGHT - MoveUtil.BACKGROUND_WIDTH/2);
+		ParticleEmitter emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 200);
+		emitter.setX(MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2);
 		emitter.setY(MoveUtil.GROUND);
-		emitter.setParticleSpeedXMin(-1);
+		emitter.setParticleSpeedXMin(0);
 		emitter.setParticleSpeedXMax(1);
 		emitter.setParticleSpeedYMin(-1);
 		emitter.setParticleSpeedYMax(-1);
-		emitter.setSpeedChange(0, 75, 0, 75);
+		emitter.setSpeedChange(0, 75, 0, 10);
 		emitter.setParticleFadeOut(true);
-		emitter.setParticleTimeOut(3000);
+		emitter.setParticleTimeOut(750);
+		emitter.setGenerate(true);
+		emitter.setNumberOfParticlePerGeneration(1);
+		emitter.setDeleteParticleWhenAnimFinished(false);
+		//SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
 	}
 
 	/**
@@ -186,7 +190,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		enemyManager.update(gameDuration);
 		itemManager.update(gameDuration);
 		characterManager.update(gameDuration);
-		emitter.update(gameDuration);
+		particleManager.update(gameDuration);
 
 		// Check the collisions
 		for (Personage perso : characterManager.getCharacterList()) {
@@ -271,7 +275,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			itemManager.draw(canvas);
 			characterManager.draw(canvas);
 			
-			emitter.draw(canvas);
+			particleManager.draw(canvas);
 		}
 	}
 

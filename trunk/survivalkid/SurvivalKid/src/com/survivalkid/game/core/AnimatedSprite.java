@@ -185,7 +185,17 @@ public class AnimatedSprite {
 	 * @param canvas
 	 */
 	public void draw(Canvas canvas, int direction) {
-		draw(canvas, direction, null);
+		draw(canvas, direction, null, 0);
+	}
+	
+
+	/**
+	 * Draw.
+	 * 
+	 * @param canvas
+	 */
+	public void draw(Canvas canvas, int direction, Paint paint) {
+		draw(canvas, direction, paint, 0);
 	}
 	
 	/**
@@ -193,7 +203,7 @@ public class AnimatedSprite {
 	 * 
 	 * @param canvas
 	 */
-	public void draw(Canvas canvas, int direction, Paint paint) {
+	public void draw(Canvas canvas, int direction, Paint paint, float rotation) {
 		if (bitmap != null && sourceRect != null) {
 			Rect destRect = new Rect(getX(), getY(), getX() + width, getY() + height);
 			Bitmap bitmapToUse = null;
@@ -220,11 +230,14 @@ public class AnimatedSprite {
 				}
 
 				if (visible) {
+					if(rotation != 0) { canvas.rotate(rotation, x + width/2, y + height/2); }
 					canvas.drawBitmap(bitmapToUse, sourceRect, destRect, paint);
+					if(rotation != 0) { canvas.rotate(-rotation, x + width/2, y + height/2); }
 				}
 			} else {
+				if(rotation != 0) { canvas.rotate(rotation, x + width/2, y + height/2); }
 				canvas.drawBitmap(bitmapToUse, sourceRect, destRect, paint);
-
+				if(rotation != 0) { canvas.rotate(-rotation, x + width/2, y + height/2); }
 			}
 		}
 	}

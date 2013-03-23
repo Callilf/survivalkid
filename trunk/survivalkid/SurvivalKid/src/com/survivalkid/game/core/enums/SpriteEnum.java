@@ -81,9 +81,10 @@ public enum SpriteEnum {
 	SMOKE_BROWN_LARGE(R.drawable.dead_anim_black, 7, 1, new Animation("die", new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25)),
 
 	// PARTICLES
-	PARTICLE_SMOKE_WHITE_ROUND(R.drawable.particle_smoke_white_round, 8, 5, new Animation("faint", new int[] { 0, 1, 2,
-			3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-			31, 32, 33, 34, 35, 36, 37, 38, 39 }, 10));
+	PARTICLE_SMOKE_WHITE_ROUND(R.drawable.particle_smoke_white_round_short2, 5, 3, 
+			new Animation("faint1", new int[] { 0, 1, 2, 3, 4 }, 5), 
+			new Animation("faint2", new int[] { 5, 6, 7, 8, 9 }, 5), 
+			new Animation("faint3",	new int[] { 10, 11, 12, 13, 14 }, 5));
 
 	private Bitmap bitmap;
 	private Bitmap flippedBitmap;
@@ -203,11 +204,11 @@ public enum SpriteEnum {
 	public void setAnimations(Map<String, Animation> animations) {
 		this.animations = animations;
 	}
-	
+
 	public int getWidth() {
 		return bitmap.getWidth() / nbColumn;
 	}
-	
+
 	public int getHeight() {
 		return bitmap.getHeight() / nbRows;
 	}
