@@ -26,6 +26,7 @@ import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
+import com.survivalkid.game.particle.ParticleEmitter;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.thread.MainThread;
@@ -56,6 +57,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private SurfaceHandler surfaceHandler;
 	
 	private GameActivity activity;
+	
+	
+	//TEST PARTICLES
+	private ParticleEmitter emitter;
 
 	public GameManager(Context context) {
 		super(context);
@@ -133,6 +138,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 
 		characterManager.addCharacter(character);
+		
+		
+		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 200, "faint");
+		emitter.setX(MoveUtil.BACKGROUND_RIGHT - MoveUtil.BACKGROUND_WIDTH/2);
+		emitter.setY(MoveUtil.GROUND);
+		emitter.setParticleSpeedXMin(-1);
+		emitter.setParticleSpeedXMax(1);
+		emitter.setParticleSpeedYMin(-1);
+		emitter.setParticleSpeedYMax(-1);
+		emitter.setSpeedChange(0, 75, 0, 75);
+		emitter.setParticleFadeOut(true);
+		emitter.setParticleTimeOut(3000);
 	}
 
 	/**
@@ -169,6 +186,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		enemyManager.update(gameDuration);
 		itemManager.update(gameDuration);
 		characterManager.update(gameDuration);
+		emitter.update(gameDuration);
 
 		// Check the collisions
 		for (Personage perso : characterManager.getCharacterList()) {
@@ -253,6 +271,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			itemManager.draw(canvas);
 			characterManager.draw(canvas);
 			
+			emitter.draw(canvas);
 		}
 	}
 

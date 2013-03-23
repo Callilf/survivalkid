@@ -256,7 +256,22 @@ public class AnimatedSprite {
 	 *            it waits for the previous animation to end.
 	 */
 	public void play(String _name, boolean _repeat, boolean _forceStop) {
-		if (currentAnimation != null && currentAnimation.equals(_name)) {
+		play(_name, _repeat, _forceStop, false);
+	}
+	
+	/**
+	 * Launch an animation.
+	 * 
+	 * @param _name
+	 *            the name of the animation
+	 * @param _repeat
+	 *            true is the animation must loop
+	 * @param _forceStop
+	 *            if true, the animation will be launched immediately. If false,
+	 *            it waits for the previous animation to end.
+	 */
+	public void play(String _name, boolean _repeat, boolean _forceStop, boolean _replaySameAnim) {
+		if (currentAnimation != null && currentAnimation.equals(_name) && !_replaySameAnim) {
 			return;
 		}
 		if (_forceStop || currentAnimation == null || !animating) {
@@ -272,6 +287,7 @@ public class AnimatedSprite {
 			waiting = true;
 		}
 	}
+	
 
 	/**
 	 * Stop the current animation;
