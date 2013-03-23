@@ -1,5 +1,7 @@
 package com.survivalkid.game.entity.enemy.impl;
 
+import java.util.Random;
+
 import android.graphics.Canvas;
 import android.graphics.Point;
 
@@ -9,7 +11,9 @@ import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.particle.ParticleEmitter;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.MoveUtil;
 
 public class FireGround extends EnemyEntity {
@@ -28,6 +32,7 @@ public class FireGround extends EnemyEntity {
 	
 	/** The death anim. */
 	private AnimatedSprite deathAnim;
+	private ParticleEmitter emitter;
 		
 	/**
 	 * Constructor
@@ -36,6 +41,18 @@ public class FireGround extends EnemyEntity {
 		super("FireGround", SpriteEnum.FIRE_GROUND, 0, MoveUtil.GROUND, 2, 1);
 		
 		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_GROUND, 0, 0);
+		
+		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 100);
+		emitter.setParticleSpeedXMin(0);
+		emitter.setParticleSpeedXMax(0);
+		emitter.setParticleSpeedYMin(-1);
+		emitter.setParticleSpeedYMax(-2);
+		emitter.setSpeedChange(0, 1, 0, 50);
+		emitter.setParticleFadeOut(true);
+		emitter.setParticleTimeOut(1000);
+		emitter.setGenerate(true);
+		emitter.setNumberOfParticlePerGeneration(1);
+		SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
 	}
 	
 	public void place(int _x, int _y) {
@@ -65,6 +82,7 @@ public class FireGround extends EnemyEntity {
 
 	@Override
 	public void die() {
+		emitter.setNumberOfParticlePerGeneration(5);
 		dying = true;
 
 		deathAnim.setX((sprite.getX() + sprite.getWidth() / 2) - deathAnim.getWidth() / 2);
@@ -74,10 +92,15 @@ public class FireGround extends EnemyEntity {
 	
 	@Override
 	public void update(long gameDuration) {
+		Random rand = new Random();
+		emitter.setX(rand.nextInt(sprite.getWidth() + 1) + sprite.getX());
+		emitter.setY(sprite.getY() + sprite.getHeight()/2);
+		
 		if (dying) {
 			deathAnim.update(gameDuration, DirectionConstants.RIGHT);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
+				emitter.setStopping(true);
 			}
 			return;
 		}

@@ -10,6 +10,7 @@ import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.particle.ParticleEmitter;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.MoveUtil;
@@ -18,7 +19,7 @@ public class Bull extends EnemyEntity {
 
 	// avoid to get hit 2 time by the same bull
 	private static final int RECOVERY_TIME = 900;
-	
+
 	private static final int VITESSE_BULL = 15;
 	private static final int SPEED_COLLISION_X = 20;
 	private static final int SPEED_COLLISION_Y = -30;
@@ -29,6 +30,7 @@ public class Bull extends EnemyEntity {
 	private boolean inWarning;
 	private long warningExpiration;
 	private AnimatedSprite deathAnim;
+	private ParticleEmitter emitter;
 
 	/** Default constructor. */
 	public Bull() {
@@ -62,6 +64,18 @@ public class Bull extends EnemyEntity {
 		play("run", true, true);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 
+		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 20);
+		emitter.setParticleSpeedXMin(0);
+		emitter.setParticleSpeedXMax(1);
+		emitter.setParticleSpeedYMin(-1);
+		emitter.setParticleSpeedYMax(-1);
+		emitter.setSpeedChange(0, 75, 0, 75);
+		emitter.setParticleFadeOut(true);
+		emitter.setParticleTimeOut(3000);
+		emitter.setGenerate(false);
+		emitter.setNumberOfParticlePerGeneration(1);
+		//SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
+
 	}
 
 	@Override
@@ -70,12 +84,14 @@ public class Bull extends EnemyEntity {
 			deathAnim.update(gameDuration, DirectionConstants.RIGHT);
 			if (deathAnim.isAnimationFinished()) {
 				dead = true;
+				emitter.setStopping(true);
 			}
 			return;
 		}
 
 		if (sprite.getX() + sprite.getWidth() < MoveUtil.BACKGROUND_LEFT || sprite.getX() > MoveUtil.BACKGROUND_RIGHT) {
 			dead = true;
+			emitter.setStopping(true);
 		}
 
 		if (inWarning) {
@@ -83,13 +99,14 @@ public class Bull extends EnemyEntity {
 				inWarning = false;
 				active = true;
 				initSpeed();
+				emitter.setGenerate(true);
 			} else {
 				if (warningExpiration - WARNING_DURATION / 4 < gameDuration) {
 					warning.setBlinkPeriod(2, 2);
 				}
 				warning.update(gameDuration, direction);
-				
-				if(direction == DirectionConstants.LEFT) {
+
+				if (direction == DirectionConstants.LEFT) {
 					SharedVars.getSingleton().getBullWarningRightList().add(warning);
 				} else {
 					SharedVars.getSingleton().getBullWarningLeftList().add(warning);
@@ -98,13 +115,21 @@ public class Bull extends EnemyEntity {
 		}
 
 		super.update(gameDuration);
+
+		if (direction == DirectionConstants.LEFT) {
+			emitter.setX(sprite.getX() + sprite.getWidth());
+		} else {
+			emitter.setX(sprite.getX());
+		}
+		emitter.setY(sprite.getY() + sprite.getHeight());
 	}
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
 		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
 			int newSpeedX = (direction == DirectionConstants.LEFT) ? -SPEED_COLLISION_X : SPEED_COLLISION_X;
-			_personage.setDirection((direction == DirectionConstants.LEFT) ? DirectionConstants.RIGHT : DirectionConstants.LEFT);
+			_personage.setDirection((direction == DirectionConstants.LEFT) ? DirectionConstants.RIGHT
+					: DirectionConstants.LEFT);
 			_personage.setSpeedX(newSpeedX);
 			_personage.setSpeedY(SPEED_COLLISION_Y);
 			_personage.addState(StateEnum.STATE_KNOCK_BACK, 500);
@@ -141,7 +166,7 @@ public class Bull extends EnemyEntity {
 		// random spawn position
 		int random = (int) (Math.random() * 100);
 		if (random < 50) {
-			sprite.setX( MoveUtil.BACKGROUND_LEFT - sprite.getWidth());
+			sprite.setX(MoveUtil.BACKGROUND_LEFT - sprite.getWidth());
 			sprite.setY(MoveUtil.GROUND - sprite.getHeight());
 			direction = DirectionConstants.RIGHT;
 		} else {

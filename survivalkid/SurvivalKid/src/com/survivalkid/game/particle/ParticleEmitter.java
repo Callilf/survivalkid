@@ -24,7 +24,7 @@ import com.survivalkid.game.singleton.GameContext;
  */
 public class ParticleEmitter {
 
-	private static final int NUMBER_OF_PARTICLES_IN_POOL = 50;
+	private static final int NUMBER_OF_PARTICLES_IN_POOL = 100;
 
 	/** The pool of particles. */
 	private Set<Particle> pool;
@@ -42,8 +42,16 @@ public class ParticleEmitter {
 	/** The sprite used by the particles (only one sprite so far). */
 	private SpriteEnum particleSpriteEnum;
 	
-	private String animation;
-
+	/** Whether the emitter is generating or not. */
+	private boolean generate;
+	private boolean stopping;
+	private boolean dead;
+	
+	/** Number of particle generated at each generation. */
+	private int numberOfParticlePerGeneration = 1;
+	
+	private boolean deleteParticleWhenAnimFinished;
+	
 	private int particleSpeedXMin;
 	private int particleSpeedXMax;
 	private int particleSpeedYMin;
@@ -59,12 +67,12 @@ public class ParticleEmitter {
 	/** the time of the next generation. */
 	private long nextGenerationTime;
 
-	public ParticleEmitter(SpriteEnum _particleSpriteEnum, int _generationFrequency, String _animationName) {
+	public ParticleEmitter(SpriteEnum _particleSpriteEnum, int _generationFrequency) {
 		pool = new HashSet<Particle>();
 		particleSpriteEnum = _particleSpriteEnum;
 		generationFrequency = _generationFrequency;
 		nextGenerationTime = GameContext.getSingleton().gameDuration + generationFrequency;
-		animation = _animationName;
+		generate = true;
 	}
 
 	public void setSpeedChange(int _speedChangeXMin, int _speedChangeXMax, int _speedChangeYMin, int _speedChangeYMax) {
@@ -78,15 +86,25 @@ public class ParticleEmitter {
 	public void update(long gameTime) {
 		if (gameTime > nextGenerationTime) {
 			// Generate a particle
-			generateAParticle();
+			if(generate) {
+				for(int i=0 ; i<numberOfParticlePerGeneration ; i++) {
+					generateAParticle();
+				}
+			}
 			nextGenerationTime = gameTime + generationFrequency;
 		}
 
+		boolean particleActive = false;
 		for (Particle particle : pool) {
 			if (!particle.isVisible()) {
 				continue;
 			}
+			particleActive = true;
 			particle.update(gameTime);
+		}
+		
+		if(stopping && !particleActive) {
+			dead = true;
 		}
 
 	}
@@ -114,7 +132,10 @@ public class ParticleEmitter {
 		// Generate random speed
 		Random rand = new Random();
 		int randomSpeedX = rand.nextInt(particleSpeedXMax - particleSpeedXMin + 1) + particleSpeedXMin;
-		int randomSpeedY = rand.nextInt(particleSpeedYMax - particleSpeedYMin + 1) + particleSpeedYMin;
+		int randomSpeedY = particleSpeedYMin;
+		if(particleSpeedYMax - particleSpeedYMin + 1 != 0) {
+			randomSpeedY = rand.nextInt(particleSpeedYMax - particleSpeedYMin + 1) + particleSpeedYMin;
+		}
 
 		if (particleToGenerate == null) {
 			// no particle available in the pool
@@ -136,7 +157,19 @@ public class ParticleEmitter {
 		particleToGenerate.setSpeedY(randomSpeedY);
 		particleToGenerate.setSpeedXChangePeriod(rand.nextInt(speedChangeXMax - speedChangeXMin + 1) + speedChangeXMin);
 		particleToGenerate.setSpeedYChangePeriod(rand.nextInt(speedChangeYMax - speedChangeYMin + 1) + speedChangeYMin);
-		particleToGenerate.getSprite().play(animation, false, true, true);
+		particleToGenerate.setDeleteParticleWhenAnimFinished(deleteParticleWhenAnimFinished);
+		
+		int randomAnimIndex = rand.nextInt(particleSpriteEnum.getAnimations().keySet().size());
+		String randomAnim = null;
+		int i = 0;
+		for(String str : particleSpriteEnum.getAnimations().keySet()) {
+			if(i == randomAnimIndex) {
+				randomAnim = str;
+				break;
+			}
+			i += 1;
+		}
+		particleToGenerate.getSprite().play(randomAnim, false, true, true);
 
 		pool.add(particleToGenerate);
 	}
@@ -277,4 +310,78 @@ public class ParticleEmitter {
 		this.particleSpeedYMax = particleSpeedYMax;
 	}
 
+	/**
+	 * @return the generate
+	 */
+	public boolean isGenerate() {
+		return generate;
+	}
+
+	/**
+	 * @param generate the generate to set
+	 */
+	public void setGenerate(boolean generate) {
+		this.generate = generate;
+	}
+
+	/**
+	 * @return the dead
+	 */
+	public boolean isDead() {
+		return dead;
+	}
+
+	/**
+	 * @param dead the dead to set
+	 */
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
+	/**
+	 * @return the stopping
+	 */
+	public boolean isStopping() {
+		return stopping;
+	}
+
+	/**
+	 * @param stopping the stopping to set
+	 */
+	public void setStopping(boolean stopping) {
+		this.stopping = stopping;
+		if(stopping){
+			generate = false;
+		}
+	}
+
+	/**
+	 * @return the numberOfParticlePerGeneration
+	 */
+	public int getNumberOfParticlePerGeneration() {
+		return numberOfParticlePerGeneration;
+	}
+
+	/**
+	 * @param numberOfParticlePerGeneration the numberOfParticlePerGeneration to set
+	 */
+	public void setNumberOfParticlePerGeneration(int numberOfParticlePerGeneration) {
+		this.numberOfParticlePerGeneration = numberOfParticlePerGeneration;
+	}
+
+	/**
+	 * @return the deleteParticleWhenAnimFinished
+	 */
+	public boolean isDeleteParticleWhenAnimFinished() {
+		return deleteParticleWhenAnimFinished;
+	}
+
+	/**
+	 * @param deleteParticleWhenAnimFinished the deleteParticleWhenAnimFinished to set
+	 */
+	public void setDeleteParticleWhenAnimFinished(boolean deleteParticleWhenAnimFinished) {
+		this.deleteParticleWhenAnimFinished = deleteParticleWhenAnimFinished;
+	}
+
+	
 }

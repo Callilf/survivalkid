@@ -1,5 +1,7 @@
 package com.survivalkid.game.particle;
 
+import java.util.Random;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -14,12 +16,12 @@ public class Particle {
 	private AnimatedSprite sprite;
 	/** The expiration time of the particle. */
 	private long expirationTime;
-	 
+
 	private long speedXChange;
 	private long speedYChange;
 	private int speedXChangePeriod;
 	private long speedYChangePeriod;
-	
+
 	/** The horizontal speed. */
 	private int speedX;
 	/** The vertical speed. */
@@ -29,6 +31,8 @@ public class Particle {
 
 	/** The paint for fadeOut. */
 	private Paint fadeOutPaint;
+	
+	private boolean deleteParticleWhenAnimFinished;
 
 	/** Whether it is being draw or not. */
 	private boolean visible;
@@ -56,30 +60,33 @@ public class Particle {
 				visible = false;
 			}
 		}
-		
-		if(!visible) {
+
+		if (deleteParticleWhenAnimFinished && sprite.isAnimationFinished()) {
+			visible = false;
+		}
+
+		if (!visible) {
 			return;
 		}
-		
-		if(gameDuration > speedXChange) {
+
+		if (gameDuration > speedXChange) {
 			sprite.setX(sprite.getX() + speedX);
 			speedXChange = gameDuration + speedXChangePeriod;
 		}
-		if(gameDuration > speedYChange) {
+		if (gameDuration > speedYChange) {
 			sprite.setY(sprite.getY() + speedY);
 			speedYChange = gameDuration + speedYChangePeriod;
 		}
-		
 
 		sprite.update(gameDuration, direction);
 
 	}
 
 	public void draw(Canvas canvas) {
-		if(fadeOut) {
+		if (fadeOut) {
 			sprite.draw(canvas, direction, fadeOutPaint);
 		} else {
-			sprite.draw(canvas, direction);
+			sprite.draw(canvas, direction, null);
 		}
 	}
 
@@ -191,25 +198,29 @@ public class Particle {
 			fadeOutPaint = new Paint();
 		}
 	}
-	
+
 	/**
 	 * Set the timeout.
-	 * @param timeout the time out to set
+	 * 
+	 * @param timeout
+	 *            the time out to set
 	 */
 	public void setTimeOut(int timeout) {
 		expirationTime = GameContext.getSingleton().gameDuration + timeout;
 	}
-	
+
 	/**
-	 * Set x. 
+	 * Set x.
+	 * 
 	 * @param x
 	 */
 	public void setX(int x) {
 		sprite.setX(x);
 	}
-	
+
 	/**
-	 * Set y. 
+	 * Set y.
+	 * 
 	 * @param y
 	 */
 	public void setY(int y) {
@@ -224,7 +235,8 @@ public class Particle {
 	}
 
 	/**
-	 * @param speedXChangePeriod the speedXChangePeriod to set
+	 * @param speedXChangePeriod
+	 *            the speedXChangePeriod to set
 	 */
 	public void setSpeedXChangePeriod(int speedXChangePeriod) {
 		this.speedXChangePeriod = speedXChangePeriod;
@@ -239,14 +251,26 @@ public class Particle {
 	}
 
 	/**
-	 * @param speedYChangePeriod the speedYChangePeriod to set
+	 * @param speedYChangePeriod
+	 *            the speedYChangePeriod to set
 	 */
 	public void setSpeedYChangePeriod(long speedYChangePeriod) {
 		this.speedYChangePeriod = speedYChangePeriod;
 		speedYChange = 0;
 	}
-	
-	
 
-	
+	/**
+	 * @return the deleteParticleWhenAnimFinished
+	 */
+	public boolean isDeleteParticleWhenAnimFinished() {
+		return deleteParticleWhenAnimFinished;
+	}
+
+	/**
+	 * @param deleteParticleWhenAnimFinished the deleteParticleWhenAnimFinished to set
+	 */
+	public void setDeleteParticleWhenAnimFinished(boolean deleteParticleWhenAnimFinished) {
+		this.deleteParticleWhenAnimFinished = deleteParticleWhenAnimFinished;
+	}
+
 }

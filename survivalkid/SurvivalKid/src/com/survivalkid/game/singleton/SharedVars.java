@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.manager.ParticleManager;
 
 /**
  * Dirty singleton that contains shared variables.
@@ -17,6 +18,8 @@ public class SharedVars {
 	
 	private Set<AnimatedSprite> bullWarningLeftList;
 	private Set<AnimatedSprite> bullWarningRightList;
+	
+	private ParticleManager particleManager;
 	
 	/** Get the singleton. */
 	public static SharedVars getSingleton() {
@@ -60,6 +63,20 @@ public class SharedVars {
 	 */
 	public void setBullWarningRightList(Set<AnimatedSprite> bullWarningRightList) {
 		this.bullWarningRightList = bullWarningRightList;
+	}
+
+	/**
+	 * @return the particleManager
+	 */
+	public ParticleManager getParticleManager() {
+		return particleManager;
+	}
+
+	/**
+	 * @param particleManager the particleManager to set
+	 */
+	public void setParticleManager(ParticleManager particleManager) {
+		this.particleManager = particleManager;
 	}
 	
 }
