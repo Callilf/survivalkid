@@ -1,5 +1,6 @@
 package com.survivalkid.game.core;
 
+import static com.survivalkid.game.util.MoveUtil.RESCALING_ACTIVE;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,39 +23,40 @@ public class SurfaceHandler {
 	
 	private SurfaceHolder surfaceHolder;
 	
-	private boolean scaleActive;
 	private GameManager gameManager;
 	
 	private ChronoDisplayer chronoRestore;
 	private Bitmap ground;
 	
-	private float ratioWidth;
-	private float ratioHeight;
-	
-	
 	public SurfaceHandler(GameManager gameManager) {
 		this.gameManager = gameManager;
 		this.surfaceHolder = gameManager.getHolder();
-		
-		// init the local variable
-		if (SCALE_ENABLE && (MoveUtil.SCREEN_WIDTH != MoveUtil.BACKGROUND_WIDTH || MoveUtil.SCREEN_HEIGHT != MoveUtil.BACKGROUND_HEIGHT)) {
-			ratioWidth = MoveUtil.SCREEN_WIDTH/(float)MoveUtil.BACKGROUND_WIDTH;
-			ratioHeight = MoveUtil.SCREEN_HEIGHT/(float)MoveUtil.BACKGROUND_HEIGHT;
-			scaleActive = true;
-			MoveUtil.setScreenInCorner();
-		}
-		else {
-			scaleActive = false;
-		}
 		
 		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
 				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
 		chronoRestore.setSize(60f);
 		
 		ground = BitmapUtil.createBitmap(R.drawable.ground);
+		
+		initScale();
 	}
 	
-	//canvas.scale(ratioWidth, ratioHeight);
+	private void initScale() {
+		// init the local variable
+		if (SCALE_ENABLE && (MoveUtil.SCREEN_WIDTH != MoveUtil.BACKGROUND_WIDTH || MoveUtil.SCREEN_HEIGHT != MoveUtil.BACKGROUND_HEIGHT)) {
+			if (!RESCALING_ACTIVE) {
+				MoveUtil.setScreenInCorner();
+			}
+			RESCALING_ACTIVE = true;
+		}
+		else {
+			if (RESCALING_ACTIVE) {
+				MoveUtil.setScreenCenter();
+			}
+			RESCALING_ACTIVE = false;
+		}
+	}
+	
 	/**
 	 * Do a draw of the game. If withChrono is true, display a count down in foreground.
 	 */
@@ -106,14 +108,14 @@ public class SurfaceHandler {
 	}
 	
 	public void applyScaleRatio(Canvas canvas) {
-		if (scaleActive) {
-			canvas.scale(ratioWidth, ratioHeight);
+		if (RESCALING_ACTIVE) {
+			canvas.scale(MoveUtil.RATIO_RESCALING_WIDTH, MoveUtil.RATIO_RESCALING_HEIGHT);
 		}
 	}
 	
 	public void resetScale(Canvas canvas) {
-		if (scaleActive) {
-			canvas.scale(1/ratioWidth, 1/ratioHeight);
+		if (RESCALING_ACTIVE) {
+			canvas.scale(1/MoveUtil.RATIO_RESCALING_WIDTH, 1/MoveUtil.RATIO_RESCALING_HEIGHT);
 		}		
 	}
 	
@@ -126,5 +128,9 @@ public class SurfaceHandler {
 		MoveUtil.btn_left.draw(canvas);
 		MoveUtil.btn_right.draw(canvas);
 		MoveUtil.btn_up.draw(canvas);		
+	}
+
+	public ChronoDisplayer getChronoRestore() {
+		return chronoRestore;
 	}
 }

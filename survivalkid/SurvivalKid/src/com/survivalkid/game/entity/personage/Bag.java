@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.singleton.GameContext;
@@ -71,12 +72,10 @@ public class Bag {
 	}
 
 	public void checkTouched(MotionEvent event) {
-		int action =  event.getAction();
-		int actionCode = action & MotionEvent.ACTION_MASK;
-		if (actionCode == MotionEvent.ACTION_DOWN || actionCode == MotionEvent.ACTION_POINTER_DOWN) {
-			int pid = action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT;
+		TouchHandler touchHandler = new TouchHandler(event);
+		if (touchHandler.getActionCode() == MotionEvent.ACTION_DOWN || touchHandler.getActionCode() == MotionEvent.ACTION_POINTER_DOWN) {
 			if (freezeExctinction < GameContext.getSingleton().getCurrentTimeMillis()
-					&& touchBox.contains((int) event.getX(pid), (int) event.getY(pid))) {
+					&& touchBox.contains(touchHandler.getX(), touchHandler.getY())) {
 				if(storedItem == null) {
 					toggleLocked();
 					freezeExctinction = GameContext.getSingleton().getCurrentTimeMillis() + FREEZE_TIME_DURATION;

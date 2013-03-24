@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import com.survivalkid.game.algo.item.BasicItemGenerator;
+import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.item.impl.EnemySpeedIncrease;
@@ -122,16 +123,11 @@ public class ItemManager extends ObjectManager {
 	public void checkBalloonTouchBox(MotionEvent event) {
 		for(ItemEntity item : itemList) {
 			if (item.isInBalloon() && !item.getBalloon().isPierced()) {
-				for (int i = 0; i < event.getPointerCount(); i++) {
-					int x = (int) event.getX(i);
-					int y = (int) event.getY(i);
-					
-					//If the balloon is touched
-					if(item.getBalloon().getBalloonTouchBox().contains(x, y)) {
-						item.balloonTouched();
-					}
-					
-				}
+				TouchHandler touchHandler = new TouchHandler(event, true);
+				//If the balloon is touched
+				if(item.getBalloon().getBalloonTouchBox().contains(touchHandler.getX(), touchHandler.getY())) {
+					item.balloonTouched();
+				}	
 			}
 		}
 	}

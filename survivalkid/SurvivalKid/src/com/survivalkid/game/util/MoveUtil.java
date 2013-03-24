@@ -29,6 +29,8 @@ public final class MoveUtil {
 			MotionEvent.ACTION_POINTER_INDEX_SHIFT:MotionEvent.ACTION_POINTER_ID_SHIFT;
 	
 	public static boolean HAS_MULTITOUCH;
+	
+	public static boolean RESCALING_ACTIVE = true;
 
 	// screen size
 	public static int SCREEN_WIDTH;
@@ -38,19 +40,28 @@ public final class MoveUtil {
 	public static int SCREEN_VIRTUAL_WIDTH;
 	public static int SCREEN_VIRTUAL_HEIGHT;
 	
+	// dimension of the background image
 	public static int BACKGROUND_WIDTH;
 	public static int BACKGROUND_HEIGHT;
 
+	// position of the background image
 	public static int BACKGROUND_LEFT;
 	public static int BACKGROUND_RIGHT;
 	public static int BACKGROUND_TOP;
 	public static int BACKGROUND_BOTTOM;
 	
+	// position of the ground
 	public static int GROUND;
 	
+	// ratio of the game (actual screen size by real screen size)
 	public static float RATIO_WIDTH;
 	public static float RATIO_HEIGHT;
 	
+	// ratio of the game to scaling the game to the resolution of the screen (if the screen is greater than the background)
+	public static float RATIO_RESCALING_WIDTH;
+	public static float RATIO_RESCALING_HEIGHT;
+	
+	// normalize dimension that determines the speed of the elements as if the screen would have these dimension
 	public static final int NORMALIZE_WIDTH = 800;
 	public static final int NORMALIZE_HEIGHT = 480;
 	
@@ -76,7 +87,15 @@ public final class MoveUtil {
 		RATIO_WIDTH = BACKGROUND_WIDTH/(float)NORMALIZE_WIDTH;
 		RATIO_HEIGHT = BACKGROUND_HEIGHT/(float)NORMALIZE_HEIGHT;
 		
-		setScreenCenter();
+		RATIO_RESCALING_WIDTH = SCREEN_WIDTH/(float)BACKGROUND_WIDTH;
+		RATIO_RESCALING_HEIGHT = SCREEN_HEIGHT/(float)BACKGROUND_HEIGHT;
+		
+		if (RESCALING_ACTIVE) {
+			setScreenInCorner();
+		}
+		else {
+			setScreenCenter();
+		}
 
 		/* new API not used
 		Point size = new Point();
@@ -134,6 +153,20 @@ public final class MoveUtil {
 	}
 	public static int normY(int y) {
 		return round(y*RATIO_HEIGHT*FPS_RATIO);
+	}
+	
+	public static int normTouchX(float x) {
+		if (RESCALING_ACTIVE) {
+			return (int)(x / RATIO_RESCALING_WIDTH);
+		}
+		return (int) x ;
+	}
+	
+	public static int normTouchY(float y) {
+		if (RESCALING_ACTIVE) {
+			return (int)(y / RATIO_RESCALING_HEIGHT);
+		}
+		return (int) y ;
 	}
 	
 	/**
