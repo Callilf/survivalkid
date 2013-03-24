@@ -10,7 +10,7 @@ public final class DesignUtil {
 
 	public static final Typeface TYPEFACE_MELOBDO = Typeface.createFromAsset(GameContext.getSingleton().getContext().getAssets(), "fonts/MELODBO.TTF");
 	
-	public static final boolean ANTIALIAS_ENABLE = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.ANTIALIAS_TEXT, true);
+	public static final boolean ANTIALIAS_ENABLED = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.ANTIALIAS_TEXT, true);
 	
 	public static final Paint PAINT_HITBOX_ENTITY = new Paint();
 	public static final Paint PAINT_HITBOX_ACTIONBUTTON = new Paint();
@@ -56,7 +56,7 @@ public final class DesignUtil {
 	 */
 	public static Paint createTextPaint(int color, int size, Typeface typeFace) {
 		Paint paint = new Paint();
-		paint.setAntiAlias(ANTIALIAS_ENABLE);
+		paint.setAntiAlias(ANTIALIAS_ENABLED);
 		paint.setTypeface(typeFace);
 		paint.setColor(color);
 		paint.setTextScaleX(MoveUtil.RATIO_WIDTH);

@@ -18,7 +18,7 @@ import com.survivalkid.game.util.MoveUtil;
 public class Bag {
 
 	private static final int FREEZE_TIME_DURATION = 50;
-	private ItemEntity slot;
+	private ItemEntity storedItem;
 	private boolean locked;
 	private AnimatedSprite slotSprite;
 	private AnimatedSprite bagSprite;
@@ -61,11 +61,12 @@ public class Bag {
 	}
 
 	public void addItem(ItemEntity item) {
-		if (slot == null) {
-			slot = item;
-			slot.setX(slotSprite.getX() + slotSprite.getWidth()/2 - slot.getSprite().getWidth()/2);
-			slot.setY(slotSprite.getY() + slotSprite.getHeight()/2 - slot.getSprite().getHeight()/2);
-			slot.getSprite().setBlinking(false);
+		if (storedItem == null) {
+			storedItem = item;
+			storedItem.setX(slotSprite.getX() + slotSprite.getWidth()/2 - storedItem.getSprite().getWidth()/2);
+			storedItem.setY(slotSprite.getY() + slotSprite.getHeight()/2 - storedItem.getSprite().getHeight()/2);
+			storedItem.getSprite().setBlinking(false);
+			storedItem.redefineHitBoxForItems();
 		}
 	}
 
@@ -76,12 +77,12 @@ public class Bag {
 			int pid = action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT;
 			if (freezeExctinction < GameContext.getSingleton().getCurrentTimeMillis()
 					&& touchBox.contains((int) event.getX(pid), (int) event.getY(pid))) {
-				if(slot == null) {
+				if(storedItem == null) {
 					toggleLocked();
 					freezeExctinction = GameContext.getSingleton().getCurrentTimeMillis() + FREEZE_TIME_DURATION;
 				} else {
-					slot.collide(perso);
-					slot = null;
+					storedItem.collide(perso);
+					storedItem = null;
 				}
 			}
 		}
@@ -95,8 +96,8 @@ public class Bag {
 		bagSprite.draw(canvas, DirectionConstants.RIGHT);
 		slotSprite.draw(canvas, DirectionConstants.RIGHT, slotPainter);
 		
-		if(slot != null) {
-			slot.draw(canvas);
+		if(storedItem != null) {
+			storedItem.draw(canvas);
 		}
 		
 		if (CollisionUtil.displayHitBoxes) {
@@ -142,15 +143,15 @@ public class Bag {
 	/**
 	 * @return the slot
 	 */
-	public ItemEntity getSlot() {
-		return slot;
+	public ItemEntity getStoredItem() {
+		return storedItem;
 	}
 
 	/**
 	 * @param slot the slot to set
 	 */
-	public void setSlot(ItemEntity slot) {
-		this.slot = slot;
+	public void setStoredItem(ItemEntity slot) {
+		this.storedItem = slot;
 
 	}
 	
