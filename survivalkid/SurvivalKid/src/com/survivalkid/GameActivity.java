@@ -182,6 +182,7 @@ public class GameActivity extends AbstractActivity {
 			break;
 		case R.id.m_scaling:
 			MoveUtil.changeScalingMode();
+			gamePanel.afterChangeLocationButton(false);
 			break;
 		case R.id.m_timer:
 			TimerUtil.logAll();

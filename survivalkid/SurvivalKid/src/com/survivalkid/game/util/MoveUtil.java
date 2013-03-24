@@ -143,6 +143,7 @@ public final class MoveUtil {
 			setScreenCenter();
 		}
 		initializePositionButton();
+		virtualBag.initPosition();
 		PrefsUtil.setPrefs(boolean.class, PreferencesConstants.RESCALING_ENABLED, RESCALING_ACTIVE);
 	}
 	

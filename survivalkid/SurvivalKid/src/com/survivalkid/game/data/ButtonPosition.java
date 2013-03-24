@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.survivalkid.game.core.ActionButton;
+import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.personage.Bag;
@@ -31,7 +32,6 @@ public class ButtonPosition {
 		LEFT, RIGHT, UP, BAG, NONE;
 	}
 	
-	private static final String KEY_POSITION = "survival-kid-buttonPosition";
 	private static final String SEPARATOR = ",";
 	
 	private Point leftButton;
@@ -50,7 +50,7 @@ public class ButtonPosition {
 	}
 	
 	public void init() {
-		String buttonPosition = PrefsUtil.getPrefs().getString(KEY_POSITION, null);
+		String buttonPosition = PrefsUtil.getPrefs().getString(getPrefsPosition(), null);
 		if (buttonPosition == null) {
 			initDefaultPosition();
 		}
@@ -60,7 +60,7 @@ public class ButtonPosition {
 	}
 	
 	public void resetPosition() {
-		PrefsUtil.removePref(KEY_POSITION);
+		PrefsUtil.removePref(getPrefsPosition());
 		MoveUtil.initializePositionButton();
 		MoveUtil.virtualBag.initPosition();
 		Log.d(TAG, "Button position has been reseted");
@@ -129,7 +129,7 @@ public class ButtonPosition {
 		sb.append(rightButton.x).append(SEPARATOR).append(rightButton.y).append(SEPARATOR);
 		sb.append(upButton.x).append(SEPARATOR).append(upButton.y).append(SEPARATOR);
 		sb.append(bagButton.x).append(SEPARATOR).append(bagButton.y);
-		PrefsUtil.setPrefs(String.class, KEY_POSITION, sb.toString());
+		PrefsUtil.setPrefs(String.class, getPrefsPosition(), sb.toString());
 	}
 	
 	/**
@@ -188,6 +188,15 @@ public class ButtonPosition {
 		point.x = x - bag.getTouchBox().width()/2;
 		point.y = y - bag.getTouchBox().height()/2;
 		bag.initPosition();
+	}
+	
+	private String getPrefsPosition() {
+		if (MoveUtil.RESCALING_ACTIVE) {
+			return PreferencesConstants.KEY_POSITION_STRETCH;
+		}
+		else {
+			return PreferencesConstants.KEY_POSITION_CENTER;
+		}
 	}
 
 	// GETTER and SETTER
