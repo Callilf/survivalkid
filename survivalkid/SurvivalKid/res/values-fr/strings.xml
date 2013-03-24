@@ -7,5 +7,16 @@
     <string name="movebutton">Déplacer boutons</string>
     <string name="resetbutton">Reset bouton</string>
     <string name="scaling">Etirer / Centrer</string>
-
+    <string name="app_name">SurvivalKid</string>
+    <string name="title_activity_menu">Survival Kid</string>
+    <string name="title_activity_game">Survival Kid</string>
+    <string name="hitbox">Hitbox</string>
+    <string name="resetscore">Reset scores</string>
+    <string name="timer">Timer</string>
+    <string name="test1">Test 1</string>
+    <string name="test2">Test 2</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_fred">FredActivity</string>
+    <string name="title_activity_end">EndActivity</string>
+    
 </resources>
