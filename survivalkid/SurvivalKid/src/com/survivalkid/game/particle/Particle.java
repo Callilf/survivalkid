@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.util.MoveUtil;
 
 public class Particle {
 
@@ -14,9 +15,13 @@ public class Particle {
 	/** The expiration time of the particle. */
 	private long expirationTime;
 
+	/** The time when the X position can be updated. */
 	private long speedXChange;
+	/** The time when the Y position can be updated. */
 	private long speedYChange;
+	/** The period of update of the X position. */
 	private int speedXChangePeriod;
+	/** The period of update of the Y position. */
 	private long speedYChangePeriod;
 
 	/** The horizontal speed. */
@@ -25,10 +30,13 @@ public class Particle {
 	private int speedY;
 	/** The direction of the sprite. */
 	private int direction;
+	/** The alpha. */
+	private int alpha;
 
 	/** The paint for fadeOut. */
-	private Paint fadeOutPaint;
+	private Paint paint;
 	
+	/** If true, a particle will be destroyed and reusable when it's animation is over. */
 	private boolean deleteParticleWhenAnimFinished;
 
 	/** Whether it is being draw or not. */
@@ -36,6 +44,13 @@ public class Particle {
 	/** Whether the particle should fade out or disappear instantely. */
 	private boolean fadeOut;
 
+	/**
+	 * Constructor.
+	 * @param _spriteEnum the sprite enum of the particle
+	 * @param _timeout the time to live
+	 * @param _speedX the speed X
+	 * @param _speedY the speed Y
+	 */
 	public Particle(SpriteEnum _spriteEnum, int _timeout, int _speedX, int _speedY) {
 		sprite = new AnimatedSprite(_spriteEnum);
 		speedX = _speedX;
@@ -43,21 +58,37 @@ public class Particle {
 		expirationTime = GameContext.getSingleton().gameDuration + _timeout;
 	}
 
+	/**
+	 * Update a particle.
+	 * @param gameDuration the game duration
+	 */
 	public void update(long gameDuration) {
+		
+		// 1 -- Test all the conditions that can make a particle invisible
+		//Check if the particle livetime has been reached
 		if (gameDuration > expirationTime) {
 			// Expiration reached, either disappear or fade
 			if (fadeOut) {
-				if (fadeOutPaint.getAlpha() == 0) {
+				if (paint.getAlpha() == 0) {
 					visible = false;
 				} else {
-					fadeOutPaint.setAlpha(fadeOutPaint.getAlpha() - 5);
+					paint.setAlpha(paint.getAlpha() - 5);
 				}
 			} else {
 				visible = false;
 			}
 		}
 
+		//Check if the animation is over
 		if (deleteParticleWhenAnimFinished && sprite.isAnimationFinished()) {
+			visible = false;
+		}
+		
+		//Check if the particle is out of the screen
+		if(sprite.getX() > MoveUtil.BACKGROUND_RIGHT 
+				&& sprite.getX() - sprite.getWidth() < MoveUtil.BACKGROUND_LEFT 
+				&& sprite.getY() > MoveUtil.BACKGROUND_BOTTOM 
+				&& sprite.getY() - sprite.getHeight() < MoveUtil.BACKGROUND_TOP) {
 			visible = false;
 		}
 
@@ -65,6 +96,9 @@ public class Particle {
 			return;
 		}
 
+		
+		// 2 -- Update the particle
+		
 		if (gameDuration > speedXChange) {
 			sprite.setX(sprite.getX() + speedX);
 			speedXChange = gameDuration + speedXChangePeriod;
@@ -78,11 +112,17 @@ public class Particle {
 
 	}
 
+	/**
+	 * Draw a particle.
+	 * @param canvas the canvas
+	 */
 	public void draw(Canvas canvas) {
-		if (fadeOut) {
-			sprite.draw(canvas, direction, fadeOutPaint);
-		} else {
-			sprite.draw(canvas, direction, null);
+		if(visible) {
+			if (fadeOut) {
+				sprite.draw(canvas, direction, paint);
+			} else {
+				sprite.draw(canvas, direction, null);
+			}
 		}
 	}
 
@@ -191,7 +231,7 @@ public class Particle {
 	public void setFadeOut(boolean fadeOut) {
 		this.fadeOut = fadeOut;
 		if (fadeOut) {
-			fadeOutPaint = new Paint();
+			paint = new Paint();
 		}
 	}
 
@@ -267,6 +307,21 @@ public class Particle {
 	 */
 	public void setDeleteParticleWhenAnimFinished(boolean deleteParticleWhenAnimFinished) {
 		this.deleteParticleWhenAnimFinished = deleteParticleWhenAnimFinished;
+	}
+
+	/**
+	 * @return the alpha
+	 */
+	public int getAlpha() {
+		return alpha;
+	}
+
+	/**
+	 * @param alpha the alpha to set
+	 */
+	public void setAlpha(int alpha) {
+		this.alpha = alpha;
+		paint.setAlpha(alpha);
 	}
 
 }

@@ -43,6 +43,8 @@ public class ParticleEmitter {
 	private SpriteEnum particleSpriteEnum;
 	/** The direction. */
 	private int particleDirection;
+	/** The particle alpha. */
+	private int particleAlpha;
 	
 	/** Whether the emitter is generating or not. */
 	private boolean generate;
@@ -75,6 +77,7 @@ public class ParticleEmitter {
 		generationFrequency = _generationFrequency;
 		nextGenerationTime = GameContext.getSingleton().gameDuration + generationFrequency;
 		generate = true;
+		particleAlpha = 255;
 	}
 
 	public void setSpeedChange(int _speedChangeXMin, int _speedChangeXMax, int _speedChangeYMin, int _speedChangeYMax) {
@@ -161,6 +164,7 @@ public class ParticleEmitter {
 		particleToGenerate.setSpeedYChangePeriod(rand.nextInt(speedChangeYMax - speedChangeYMin + 1) + speedChangeYMin);
 		particleToGenerate.setDeleteParticleWhenAnimFinished(deleteParticleWhenAnimFinished);
 		particleToGenerate.setDirection(particleDirection);
+		particleToGenerate.setAlpha(particleAlpha);
 		
 		int randomAnimIndex = rand.nextInt(particleSpriteEnum.getAnimations().keySet().size());
 		String randomAnim = null;
@@ -398,6 +402,20 @@ public class ParticleEmitter {
 	 */
 	public void setParticleDirection(int particleDirection) {
 		this.particleDirection = particleDirection;
+	}
+
+	/**
+	 * @return the particleAlpha
+	 */
+	public int getParticleAlpha() {
+		return particleAlpha;
+	}
+
+	/**
+	 * @param particleAlpha the particleAlpha to set
+	 */
+	public void setParticleAlpha(int particleAlpha) {
+		this.particleAlpha = particleAlpha;
 	}
 
 	

@@ -57,8 +57,11 @@ public abstract class ItemEntity extends GameEntity {
 		if(inBalloon) {
 			
 			balloon.update(gameDuration);
+			if(dead) {
+				return;
+			}
 			
-			if( balloon.isDead()) {
+			if( balloon.isDead() ) {
 				inBalloon = false;
 			}
 			
