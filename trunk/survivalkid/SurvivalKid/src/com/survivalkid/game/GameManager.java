@@ -15,7 +15,9 @@ import android.view.SurfaceView;
 import android.widget.Toast;
 
 import com.survivalkid.GameActivity;
+import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.ChronoDisplayer;
+import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.SurfaceHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -59,6 +61,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private SurfaceHandler surfaceHandler;
 	
 	private GameActivity activity;
+	
+	//TEST
+	private AnimatedSprite corrida;
+	private AnimatedSprite corrida2;
 
 	public GameManager(Context context) {
 		super(context);
@@ -154,6 +160,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		emitter.setNumberOfParticlePerGeneration(1);
 		emitter.setDeleteParticleWhenAnimFinished(false);
 		//SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
+		
+		corrida = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, 360, 320);
+		corrida.play("prepare", true, true);
+		corrida2 = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, 450, 320);
+		corrida2.play("ole", true, true);
 	}
 
 	/**
@@ -236,6 +247,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		if (characterManager.getCharacterList().isEmpty()) {
 			endGame();
 		}
+		corrida.update(gameDuration, DirectionConstants.RIGHT);
+		corrida2.update(gameDuration, DirectionConstants.RIGHT);
 	}
 
 	private void endGame() {
@@ -270,7 +283,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			chrono.draw(canvas);
 			surfaceHandler.drawButton(canvas);
 			surfaceHandler.applyScaleRatio(canvas);
-			
+			corrida.draw(canvas, DirectionConstants.RIGHT);
+			corrida2.draw(canvas, DirectionConstants.RIGHT);
 			enemyManager.draw(canvas);
 			itemManager.draw(canvas);
 			characterManager.draw(canvas);

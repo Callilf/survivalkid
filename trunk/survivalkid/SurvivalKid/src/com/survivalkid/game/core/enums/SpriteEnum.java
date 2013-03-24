@@ -21,6 +21,10 @@ public enum SpriteEnum {
 			PersonageConstants.ANIM_JUMPUP, new int[] { 19, 18, 17 }, 13), new Animation(
 			PersonageConstants.ANIM_JUMPDOWN, new int[] { 19 }, 13), new Animation(PersonageConstants.ANIM_KNOCK_BACK,
 			new int[] { 20 }, 13)),
+			
+	YUGO_CORRIDA(R.drawable.yugo_corrida, 7, 2, 
+			new Animation("prepare", new int[] { 0, 1, 2, 3, 4 }, 15), 
+			new Animation("ole", new int[] { 5, 6, 7, 8, 9, 10, 11, 12 }, 20)),
 
 	YUGO_ARTWORK1(R.drawable.yugo_artwork_1, 1, 1),
 
