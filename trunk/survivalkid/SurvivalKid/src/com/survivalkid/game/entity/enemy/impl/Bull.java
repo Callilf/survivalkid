@@ -79,6 +79,7 @@ public class Bull extends EnemyEntity {
 		emitter.setParticleTimeOut(1000);
 		emitter.setGenerate(false);
 		emitter.setNumberOfParticlePerGeneration(1);
+		emitter.setParticleAlpha(150);
 		SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
 
 	}
@@ -122,12 +123,11 @@ public class Bull extends EnemyEntity {
 		super.update(gameDuration);
 
 		if (direction == DirectionConstants.LEFT) {
-			emitter.setX(sprite.getX() + sprite.getWidth());
 			emitter.setParticleDirection(DirectionConstants.RIGHT);
 		} else {
-			emitter.setX(sprite.getX());
 			emitter.setParticleDirection(DirectionConstants.LEFT);
 		}
+		emitter.setX(sprite.getX() + sprite.getWidth()/2);
 		emitter.setY(sprite.getY() + sprite.getHeight() - emitter.getParticleSprite().getHeight()/2);
 	}
 

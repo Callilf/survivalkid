@@ -52,6 +52,7 @@ public class FireGround extends EnemyEntity {
 		emitter.setParticleTimeOut(1000);
 		emitter.setGenerate(true);
 		emitter.setNumberOfParticlePerGeneration(1);
+		emitter.setParticleAlpha(150);
 		SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
 	}
 	
