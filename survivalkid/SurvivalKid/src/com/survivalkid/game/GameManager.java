@@ -62,8 +62,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private GameActivity activity;
 	
 	//TEST
-	private AnimatedSprite corrida;
-	private AnimatedSprite corrida2;
+//	private AnimatedSprite corrida;
+//	private AnimatedSprite corrida2;
 
 	public GameManager(Context context) {
 		super(context);
@@ -159,10 +159,10 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		emitter.setDeleteParticleWhenAnimFinished(false);
 		//SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
 		
-		corrida = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, 360, 320);
-		corrida.play("prepare", true, true);
-		corrida2 = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, 450, 320);
-		corrida2.play("ole", true, true);
+//		corrida = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, 360, 320);
+//		corrida.play("prepare", true, true);
+//		corrida2 = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, 450, 320);
+//		corrida2.play("ole", true, true);
 	}
 
 	/**
@@ -245,8 +245,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		if (characterManager.getCharacterList().isEmpty()) {
 			endGame();
 		}
-		corrida.update(gameDuration, DirectionConstants.RIGHT);
-		corrida2.update(gameDuration, DirectionConstants.RIGHT);
+//		corrida.update(gameDuration, DirectionConstants.RIGHT);
+//		corrida2.update(gameDuration, DirectionConstants.RIGHT);
 	}
 
 	private void endGame() {
@@ -278,8 +278,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			surfaceHandler.drawBackground(canvas);
 
 			chrono.draw(canvas);
-			corrida.draw(canvas, DirectionConstants.RIGHT);
-			corrida2.draw(canvas, DirectionConstants.RIGHT);
+//			corrida.draw(canvas, DirectionConstants.RIGHT);
+//			corrida2.draw(canvas, DirectionConstants.RIGHT);
 			enemyManager.draw(canvas);
 			itemManager.draw(canvas);
 			characterManager.draw(canvas);
