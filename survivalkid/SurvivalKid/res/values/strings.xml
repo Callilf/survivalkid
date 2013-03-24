@@ -9,6 +9,7 @@
     <string name="switchar">Switch</string>
     <string name="restart">Restart</string>
     <string name="movebutton">Move button</string>
+    <string name="scaling">Stretch / Center</string>
     <string name="resetbutton">Reset button</string>
     <string name="resetscore">Reset scores</string>
     <string name="timer">Timer</string>

@@ -6,5 +6,6 @@
     <string name="restart">Redémarrer</string>
     <string name="movebutton">Déplacer boutons</string>
     <string name="resetbutton">Reset bouton</string>
+    <string name="scaling">Etirer / Centrer</string>
 
 </resources>

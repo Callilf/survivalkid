@@ -19,8 +19,6 @@ import com.survivalkid.game.util.MoveUtil;
  */
 public class SurfaceHandler {
 
-	private static final boolean SCALE_ENABLE = true;
-	
 	private SurfaceHolder surfaceHolder;
 	
 	private GameManager gameManager;
@@ -38,23 +36,6 @@ public class SurfaceHandler {
 		
 		ground = BitmapUtil.createBitmap(R.drawable.ground);
 		
-		initScale();
-	}
-	
-	private void initScale() {
-		// init the local variable
-		if (SCALE_ENABLE && (MoveUtil.SCREEN_WIDTH != MoveUtil.BACKGROUND_WIDTH || MoveUtil.SCREEN_HEIGHT != MoveUtil.BACKGROUND_HEIGHT)) {
-			if (!RESCALING_ACTIVE) {
-				MoveUtil.setScreenInCorner();
-			}
-			RESCALING_ACTIVE = true;
-		}
-		else {
-			if (RESCALING_ACTIVE) {
-				MoveUtil.setScreenCenter();
-			}
-			RESCALING_ACTIVE = false;
-		}
 	}
 	
 	/**
