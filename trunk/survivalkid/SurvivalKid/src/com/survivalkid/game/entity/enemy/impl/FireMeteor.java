@@ -19,6 +19,7 @@ public class FireMeteor extends Meteore {
 		//Log.w("FIRE",""+(Math.min(hitBox.bottom,MoveUtil.GROUND) - fire.getSprite().getHeight())+ " - "+(MoveUtil.GROUND-sprite.getHeight()));
 		fire.place(sprite.getX() + sprite.getWidth()/2 - fire.getSprite().getWidth()/2, 
 				Math.min(hitBox.bottom,MoveUtil.GROUND) - (int)(Math.ceil(fire.getSprite().getHeight()*0.95)));
+		emitter.setStopping(true);
 	}
 	
 	@Override

@@ -24,7 +24,7 @@ import com.survivalkid.game.singleton.GameContext;
  */
 public class ParticleEmitter {
 
-	private static final int NUMBER_OF_PARTICLES_IN_POOL = 100;
+	private static final int NUMBER_OF_PARTICLES_IN_POOL = 30;
 
 	/** The pool of particles. */
 	private Set<Particle> pool;

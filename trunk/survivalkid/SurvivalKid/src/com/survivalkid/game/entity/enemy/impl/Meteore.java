@@ -1,5 +1,7 @@
 package com.survivalkid.game.entity.enemy.impl;
 
+import java.util.Random;
+
 import android.graphics.Canvas;
 import android.graphics.Point;
 
@@ -9,6 +11,8 @@ import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.particle.ParticleEmitter;
+import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Meteore extends EnemyEntity {
@@ -21,6 +25,7 @@ public class Meteore extends EnemyEntity {
 	private AnimatedSprite fireAnim;
 	
 	private int directionFire;
+	protected ParticleEmitter emitter;
 	
 	/** duration of the recovery when the player is hit */
 	private static final int RECOVERY_TIME = 500;
@@ -58,8 +63,26 @@ public class Meteore extends EnemyEntity {
 				(sprite.getHeight() * 18) / 100,
 				(sprite.getWidth() * 74) / 100, (sprite.getHeight() * 74) / 100);
 		
+		createEmitter();
+		
 		setPositionFire();
 		fireAnim.play("fire", true, true);
+
+	}
+	
+	private void createEmitter() {
+		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 50);
+		emitter.setParticleSpeedXMin(0);
+		emitter.setParticleSpeedXMax(0);
+		emitter.setParticleSpeedYMin(0);
+		emitter.setParticleSpeedYMax(0);
+		emitter.setSpeedChange(0, 1, 0, 1);
+		emitter.setParticleFadeOut(true);
+		emitter.setParticleTimeOut(250);
+		emitter.setGenerate(true);
+		emitter.setNumberOfParticlePerGeneration(1);
+		emitter.setParticleAlpha(120);
+		SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
 	}
 	
 	protected void initDeathAnim() {
@@ -114,6 +137,10 @@ public class Meteore extends EnemyEntity {
 		
 		fireAnim.setX(decalX - fireAnim.getWidth() / 2);
 		fireAnim.setY(sprite.getY() - fireAnim.getHeight() * 3/4);
+		
+		Random rand = new Random();
+		emitter.setX(fireAnim.getX() + rand.nextInt(fireAnim.getWidth()));
+		emitter.setY(fireAnim.getY() + fireAnim.getHeight()/2);
 	}
 	
 	@Override
@@ -151,6 +178,7 @@ public class Meteore extends EnemyEntity {
 	
 	protected void terminate() {
 		// nothing to do : use by the fire meteor to pop the ground fire
+		emitter.setStopping(true);
 	}
 
 	@Override
