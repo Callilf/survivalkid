@@ -19,8 +19,8 @@ import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
-public class FredCircularSaw extends EnemyEntity {
-	private static final String TAG = FredCircularSaw.class.getSimpleName();
+public class CircularSaw extends EnemyEntity {
+	private static final String TAG = CircularSaw.class.getSimpleName();
 
 	private static int STATE_LINE = 0;
 	private static int STATE_SAW = 1;
@@ -56,7 +56,7 @@ public class FredCircularSaw extends EnemyEntity {
 	private AnimatedSprite deathAnim;
 
 	/** Default constructor. */
-	public FredCircularSaw() {
+	public CircularSaw() {
 		super("FredCircularSaw",SpriteEnum.CIRCULAR_SAW, -20, -20, 20, 1);
 	}
 

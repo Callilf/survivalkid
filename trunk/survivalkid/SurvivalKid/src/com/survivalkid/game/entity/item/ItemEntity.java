@@ -110,7 +110,7 @@ public abstract class ItemEntity extends GameEntity {
 	public void collide(GameEntity _gameEntity) {
 		if (_gameEntity instanceof Personage) {
 			Personage perso = (Personage) _gameEntity;
-			if (!perso.getBag().isLocked() && perso.getBag().getSlot() == null) {
+			if (!perso.getBag().isLocked() && perso.getBag().getStoredItem() == null) {
 				perso.getBag().addItem(this);
 			} else {
 				collideWithPerso(perso);

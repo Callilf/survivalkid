@@ -18,7 +18,7 @@ import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Bull;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
 import com.survivalkid.game.entity.enemy.impl.FireMeteor;
-import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
+import com.survivalkid.game.entity.enemy.impl.CircularSaw;
 import com.survivalkid.game.entity.enemy.impl.Meteore;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
@@ -59,7 +59,7 @@ public class EnemyManager extends ObjectManager {
 		zeroDiff.add(Caterpillar.class);
 		enemyDifficultyMap.put(0, zeroDiff);
 		ArrayList<Class<? extends EnemyEntity>> oneDiff = new ArrayList<Class<? extends EnemyEntity>>();
-		oneDiff.add(FredCircularSaw.class);
+		oneDiff.add(CircularSaw.class);
 		oneDiff.add(Meteore.class);
 		enemyDifficultyMap.put(1, oneDiff);
 		ArrayList<Class<? extends EnemyEntity>> twoDiff = new ArrayList<Class<? extends EnemyEntity>>();
