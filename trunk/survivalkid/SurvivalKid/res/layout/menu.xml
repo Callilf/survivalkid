@@ -21,7 +21,10 @@
 				android:title="@string/resetbutton"  />	
 
 			<item android:id="@+id/m_resetscore"
-				android:title="@string/resetscore"  />	
+				android:title="@string/resetscore"  />
+		 
+			<item android:id="@+id/m_test1" 
+			     android:title="@string/test1"/>		
 	      
 	     </menu>
 	</item>
@@ -33,10 +36,10 @@
 	      android:title="@string/restart"  />
    	
 	<item android:id="@+id/m_movebutton"
-	      android:title="@string/movebutton"  />	
-		 
-	<item android:id="@+id/m_test1" 
-	     android:title="@string/test1"/>	
+	      android:title="@string/movebutton"  />
+   	
+	<item android:id="@+id/m_scaling"
+	      android:title="@string/scaling"  />		
 		 
 	<item android:id="@+id/m_left" 
 	     android:title="@string/leave"/>

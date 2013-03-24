@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 
 import com.survivalkid.R;
 import com.survivalkid.game.core.ActionButton;
+import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.data.ButtonPosition;
 import com.survivalkid.game.entity.personage.Bag;
 import com.survivalkid.game.singleton.GameContext;
@@ -30,7 +31,7 @@ public final class MoveUtil {
 	
 	public static boolean HAS_MULTITOUCH;
 	
-	public static boolean RESCALING_ACTIVE = true;
+	public static boolean RESCALING_ACTIVE = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.RESCALING_ENABLED, true);;
 
 	// screen size
 	public static int SCREEN_WIDTH;
@@ -131,6 +132,18 @@ public final class MoveUtil {
 		BACKGROUND_TOP = (SCREEN_HEIGHT - BACKGROUND_HEIGHT)/2;
 		BACKGROUND_BOTTOM = BACKGROUND_TOP + BACKGROUND_HEIGHT;
 		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
+	}
+	
+	public static void changeScalingMode() {
+		RESCALING_ACTIVE = !RESCALING_ACTIVE;
+		if (RESCALING_ACTIVE) {
+			setScreenInCorner();
+		}
+		else {
+			setScreenCenter();
+		}
+		initializePositionButton();
+		PrefsUtil.setPrefs(boolean.class, PreferencesConstants.RESCALING_ENABLED, RESCALING_ACTIVE);
 	}
 	
 	public static void initializeButton() {

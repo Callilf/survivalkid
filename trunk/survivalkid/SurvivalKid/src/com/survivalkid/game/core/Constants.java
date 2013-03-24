@@ -46,5 +46,6 @@ public final class Constants {
 	public class PreferencesConstants {
 		public static final String DISPLAY_HITBOX = "displayHitbox";
 		public static final String ANTIALIAS_TEXT = "antialiasText";
+		public static final String RESCALING_ENABLED = "scalingEnabled";
 	}
 }

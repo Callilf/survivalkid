@@ -385,18 +385,20 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		else {
 			CollisionUtil.displayHitBoxes = false;
-			afterChangeLocationButton();
+			afterChangeLocationButton(true);
 		}
 	}
 	
-	public void afterChangeLocationButton() {
+	public void afterChangeLocationButton(boolean doSave) {
 		if (characterManager.getCharacterList().size() > OWN_PERSO) {
 			characterManager.getCharacterList(OWN_PERSO).getBag().initPosition();
 		}
 		if (modeEditLocationButton) {
 			surfaceHandler.drawBackgroundAndButton();
 		}
-		MoveUtil.buttonPosition.savePosition();		
+		if (doSave) {
+			MoveUtil.buttonPosition.savePosition();		
+		}
 	}
 
 	// / getter & setter

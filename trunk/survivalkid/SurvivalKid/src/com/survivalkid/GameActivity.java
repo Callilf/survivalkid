@@ -180,6 +180,9 @@ public class GameActivity extends AbstractActivity {
 		case R.id.m_resetscore:
 			GameContext.getSingleton().getDataSave().resetScores(this);
 			break;
+		case R.id.m_scaling:
+			MoveUtil.changeScalingMode();
+			break;
 		case R.id.m_timer:
 			TimerUtil.logAll();
 			break;
@@ -188,7 +191,7 @@ public class GameActivity extends AbstractActivity {
 			break;
 		case R.id.m_resetbutton:
 			MoveUtil.buttonPosition.resetPosition();
-			gamePanel.afterChangeLocationButton();
+			gamePanel.afterChangeLocationButton(false);
 			break;
 		case R.id.m_test1:
 			Log.d(TAG, "HighScore : " + GameContext.getSingleton().getDataSave().toString());
