@@ -7,10 +7,13 @@ import android.graphics.Point;
 
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.util.DesignUtil;
 
 public class LifeChangeDisplayer {
 
-	private Paint paint;
+	static private Paint paintRed;
+	static private Paint paintGreen;
+	
 	private int damageTaken;
 	private int displayDamagesDuration = 1000;
 	private long displayDamagesBeginTime;
@@ -19,11 +22,13 @@ public class LifeChangeDisplayer {
 	
 	private Point position;
 	
+	static {
+		// text
+		paintRed = DesignUtil.createTextPaint(Color.RED, 20);
+		paintGreen = DesignUtil.createTextPaint(Color.GREEN, 20);
+	}
+	
 	public LifeChangeDisplayer(int _damages, EnumLife _typeChange, int _x, int _y) {
-		//Text
-		paint = new Paint(); 
-		paint.setTextSize(20);
-		paint.setTypeface(GameContext.getSingleton().getFont());
 		
 		typeChange = _typeChange;
 		displayDamagesBeginTime = GameContext.getSingleton().gameDuration;
@@ -41,7 +46,7 @@ public class LifeChangeDisplayer {
 	}
 	
 	public void draw(Canvas canvas) {
-		paint.setColor( damageTaken < 0 ? Color.RED : Color.GREEN);
+		Paint paint = damageTaken < 0 ? paintRed : paintGreen;
 		String damageSring = damageTaken + typeChange.getUnite();
 		canvas.drawText( (damageTaken > 0) ? "+" + damageSring : damageSring, position.x, position.y, paint);
 	}

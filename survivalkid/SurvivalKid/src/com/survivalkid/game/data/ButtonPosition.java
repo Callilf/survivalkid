@@ -1,8 +1,8 @@
 package com.survivalkid.game.data;
 
 import static com.survivalkid.game.util.MoveUtil.HAS_MULTITOUCH;
-import static com.survivalkid.game.util.MoveUtil.SCREEN_HEIGHT;
-import static com.survivalkid.game.util.MoveUtil.SCREEN_WIDTH;
+import static com.survivalkid.game.util.MoveUtil.SCREEN_VIRTUAL_HEIGHT;
+import static com.survivalkid.game.util.MoveUtil.SCREEN_VIRTUAL_WIDTH;
 import static com.survivalkid.game.util.MoveUtil.btn_left;
 import static com.survivalkid.game.util.MoveUtil.btn_right;
 import static com.survivalkid.game.util.MoveUtil.btn_up;
@@ -89,22 +89,22 @@ public class ButtonPosition {
 	public void initDefaultPosition() {
 		// initialize default position
 		if (HAS_MULTITOUCH) {
-			int leftX = (int) (SCREEN_WIDTH*0.03);
+			int leftX = (int) (SCREEN_VIRTUAL_WIDTH*0.03);
 			int widthUp = btn_up.getWidth();
-			leftButton.set(leftX, SCREEN_HEIGHT - btn_left.getHeight());
-			rightButton.set(leftX + btn_left.getWidth()*2, SCREEN_HEIGHT - btn_right.getHeight());
-			upButton.set(SCREEN_WIDTH - widthUp - widthUp/2, SCREEN_HEIGHT - btn_up.getHeight());
+			leftButton.set(leftX, SCREEN_VIRTUAL_HEIGHT - btn_left.getHeight());
+			rightButton.set(leftX + btn_left.getWidth()*2, SCREEN_VIRTUAL_HEIGHT - btn_right.getHeight());
+			upButton.set(SCREEN_VIRTUAL_WIDTH - widthUp - widthUp/2, SCREEN_VIRTUAL_HEIGHT - btn_up.getHeight());
 			
 			Bitmap bagImg = SpriteEnum.BAG_SLOT.getBitmap();
-			bagButton.set(SCREEN_WIDTH - widthUp - widthUp/3 - (int)(bagImg.getWidth()), SCREEN_HEIGHT - bagImg.getHeight());
+			bagButton.set(SCREEN_VIRTUAL_WIDTH - widthUp - widthUp/3 - (int)(bagImg.getWidth()), SCREEN_VIRTUAL_HEIGHT - bagImg.getHeight());
 		}
 		else {
 			// not multitouch, the button are superposed so the player can jump and move un the same time
 			int heightHo = btn_left.getHeight();
 			int widthUp = btn_up.getWidth();
 			int widthHo = btn_left.getWidth();
-			int leftX = (int) (0.98f*SCREEN_WIDTH - widthHo*3);
-			int posY = SCREEN_HEIGHT - (int)(heightHo*1.3f);
+			int leftX = (int) (0.98f*SCREEN_VIRTUAL_WIDTH - widthHo*3);
+			int posY = SCREEN_VIRTUAL_HEIGHT - (int)(heightHo*1.3f);
 			
 			btn_left.setMarginVertical(heightHo);
 			btn_right.setMarginVertical(heightHo);
@@ -113,10 +113,10 @@ public class ButtonPosition {
 			leftButton.set(leftX, posY);
 			rightButton.set(leftX + widthHo*2, posY);
 			upButton.set(leftX + widthHo + btn_left.getMarginHorizontal() - widthUp/2,
-					SCREEN_HEIGHT - (int)(2.2f*heightHo) - btn_up.getHeight());
+					SCREEN_VIRTUAL_HEIGHT - (int)(2.2f*heightHo) - btn_up.getHeight());
 			
 			Bitmap bagImg = SpriteEnum.BAG_SLOT.getBitmap();
-			bagButton.set(SCREEN_WIDTH - widthUp - widthUp/2 - bagImg.getWidth()*2, SCREEN_HEIGHT - bagImg.getHeight());
+			bagButton.set(SCREEN_VIRTUAL_WIDTH - widthUp - widthUp/2 - bagImg.getWidth()*2, SCREEN_VIRTUAL_HEIGHT - bagImg.getHeight());
 		}		
 	}
 	

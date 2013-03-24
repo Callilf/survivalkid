@@ -4,12 +4,12 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class ActionButton {
@@ -25,7 +25,6 @@ public class ActionButton {
 	
 	private int marginHorizontal = 25;
 	private int marginVertical = 25;
-	
 	
 	/**
 	 * Constructor
@@ -62,8 +61,8 @@ public class ActionButton {
 		x = _x;
 		y = _y;
 		hitBox = new Rect(max(0,x - marginHorizontal), max(0,y - marginVertical), 
-				min(MoveUtil.SCREEN_WIDTH, x + sprite.getWidth() + marginHorizontal), 
-				min(MoveUtil.SCREEN_HEIGHT, y + sprite.getHeight() + marginVertical));
+				min(MoveUtil.SCREEN_VIRTUAL_WIDTH, x + sprite.getWidth() + marginHorizontal), 
+				min(MoveUtil.SCREEN_VIRTUAL_HEIGHT, y + sprite.getHeight() + marginVertical));
 		// log the initial position of the hitbox
 		Log.d(TAG, "Hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
 	}
@@ -87,9 +86,7 @@ public class ActionButton {
 			canvas.drawBitmap(sprite, x, y, null);
 		}
 		if (CollisionUtil.displayHitBoxes) {
-			final Paint paint = new Paint();
-			paint.setARGB(50, 0, 0, 128);
-			canvas.drawRect(hitBox, paint);
+			canvas.drawRect(hitBox, DesignUtil.PAINT_HITBOX_ACTIONBUTTON);
 		}
 	}
 	

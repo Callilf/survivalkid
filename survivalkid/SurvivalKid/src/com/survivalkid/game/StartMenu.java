@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -15,6 +14,7 @@ import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
@@ -45,19 +45,8 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 		activity = (MenuActivity) _context;
 		setWillNotDraw(false);
 
-		Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/MELODBO.TTF");
-
-		paint = new Paint();
-		paint.setAntiAlias(true);
-		paint.setTextSize(40);
-		paint.setTypeface(tf);
-		paint.setColor(Color.BLACK);
-
-		paint2 = new Paint();
-		paint2.setAntiAlias(true);
-		paint2.setTextSize(30);
-		paint2.setTypeface(tf);
-		paint2.setColor(Color.BLACK);
+		paint = DesignUtil.createTextPaint(Color.BLACK, 40);
+		paint2 = DesignUtil.createTextPaint(Color.BLACK, 30);
 
 		active = true;
 		

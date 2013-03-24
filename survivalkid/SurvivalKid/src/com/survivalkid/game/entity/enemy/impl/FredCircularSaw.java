@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -17,6 +16,7 @@ import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class FredCircularSaw extends EnemyEntity {
@@ -51,7 +51,6 @@ public class FredCircularSaw extends EnemyEntity {
 	private int sawFramesCurrent;
 
 	private boolean draw;
-	private Paint paint;
 
 	// explosion when the saw touch the ground
 	private AnimatedSprite deathAnim;
@@ -84,9 +83,6 @@ public class FredCircularSaw extends EnemyEntity {
 		redefineHitBox((sprite.getWidth() * 12) / 100, (sprite.getHeight() * 12) / 100, (sprite.getWidth() * 80) / 100,
 				(sprite.getHeight() * 80) / 100);
 		play("rotate", true, true);
-
-		paint = new Paint();
-		paint.setARGB(128, 0, 0, 0);
 	}
 
 	@Override
@@ -210,7 +206,7 @@ public class FredCircularSaw extends EnemyEntity {
 	public void draw(Canvas canvas) {
 		if (state == STATE_LINE) {
 			for (Point p : linePoints) {
-				canvas.drawCircle(p.x, p.y, 2, paint);
+				canvas.drawCircle(p.x, p.y, 2, DesignUtil.PAINT_CIRCULARSAW_POINT);
 			}
 		} else {
 
@@ -220,7 +216,7 @@ public class FredCircularSaw extends EnemyEntity {
 				int i = 0;
 				for (Point p : linePoints) {
 					if (i < drawList.size() && drawList.get(i)) {
-						canvas.drawCircle(p.x, p.y, 2, paint);
+						canvas.drawCircle(p.x, p.y, 2, DesignUtil.PAINT_CIRCULARSAW_POINT);
 					}
 					i++;
 				}

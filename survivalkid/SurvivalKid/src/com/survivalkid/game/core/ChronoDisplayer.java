@@ -9,7 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 
-import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.util.DesignUtil;
 
 public class ChronoDisplayer {
 	private static final DateFormat formatter = new SimpleDateFormat("mm:ss,SSS");
@@ -20,11 +20,7 @@ public class ChronoDisplayer {
 	
 	public ChronoDisplayer(int _x, int _y) {
 		//Text
-		paint = new Paint(); 
-		paint.setTextSize(20);
-		paint.setTypeface(GameContext.getSingleton().getFont());
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
+		paint = DesignUtil.createTextPaint(Color.WHITE, 20); 
 		stringToDisplay = "";
 
 		position = new Point(_x,_y);

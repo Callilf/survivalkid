@@ -30,8 +30,13 @@ public final class MoveUtil {
 	
 	public static boolean HAS_MULTITOUCH;
 
+	// screen size
 	public static int SCREEN_WIDTH;
 	public static int SCREEN_HEIGHT;
+	
+	// virtual screen size to put the object which need to fit the edge of the screen
+	public static int SCREEN_VIRTUAL_WIDTH;
+	public static int SCREEN_VIRTUAL_HEIGHT;
 	
 	public static int BACKGROUND_WIDTH;
 	public static int BACKGROUND_HEIGHT;
@@ -53,6 +58,7 @@ public final class MoveUtil {
 		buttonPosition = new ButtonPosition();
 		DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
+		
 		SCREEN_WIDTH = metrics.widthPixels;
 		SCREEN_HEIGHT = metrics.heightPixels;
 		
@@ -93,10 +99,14 @@ public final class MoveUtil {
 		BACKGROUND_RIGHT = BACKGROUND_WIDTH;
 		BACKGROUND_TOP = 0;
 		BACKGROUND_BOTTOM = BACKGROUND_HEIGHT;
+		SCREEN_VIRTUAL_WIDTH = BACKGROUND_WIDTH;
+		SCREEN_VIRTUAL_HEIGHT = BACKGROUND_HEIGHT;
 		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
 	}
 	
 	public static void setScreenCenter() {
+		SCREEN_VIRTUAL_WIDTH = SCREEN_WIDTH;
+		SCREEN_VIRTUAL_HEIGHT = SCREEN_HEIGHT;
 		BACKGROUND_LEFT = (SCREEN_WIDTH - BACKGROUND_WIDTH)/2;
 		BACKGROUND_RIGHT = BACKGROUND_LEFT + BACKGROUND_WIDTH;
 		BACKGROUND_TOP = (SCREEN_HEIGHT - BACKGROUND_HEIGHT)/2;
