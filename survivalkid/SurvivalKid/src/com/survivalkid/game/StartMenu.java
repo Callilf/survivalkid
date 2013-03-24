@@ -45,8 +45,8 @@ public class StartMenu extends SurfaceView implements SurfaceHolder.Callback {
 		activity = (MenuActivity) _context;
 		setWillNotDraw(false);
 
-		paint = DesignUtil.createTextPaint(Color.BLACK, 40);
-		paint2 = DesignUtil.createTextPaint(Color.BLACK, 30);
+		paint = DesignUtil.createTextPaint(Color.BLACK, 40, DesignUtil.TYPEFACE_MELOBDO, false);
+		paint2 = DesignUtil.createTextPaint(Color.BLACK, 30, DesignUtil.TYPEFACE_MELOBDO, false);
 
 		active = true;
 		
