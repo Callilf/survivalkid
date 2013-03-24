@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.view.MotionEvent;
 
+import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.move.impl.MoveImplButton;
 import com.survivalkid.game.util.MoveUtil;
@@ -62,13 +63,11 @@ public class MovePersoManager {
 	 */
 	public void calculMove(MotionEvent event) {
 		// get the action and the pid of the pointer
-		int action =  event.getAction();
-		int actionCode = action & MotionEvent.ACTION_MASK;
-		int pid = action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT;
-		Integer pidObject = pid;
+		TouchHandler touchHandler = new TouchHandler(event);
+		Integer pidObject = touchHandler.getPid();
 		int pidUP = -1;
 		
-		switch (actionCode) {
+		switch (touchHandler.getActionCode()) {
 		case MotionEvent.ACTION_DOWN:
 		case MotionEvent.ACTION_POINTER_DOWN:
 			lastPidPressed.remove(pidObject); // security in case of the point_up don't catch by the previous pressed 
@@ -77,7 +76,7 @@ public class MovePersoManager {
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_POINTER_UP:
 			lastPidPressed.remove(pidObject);
-			pidUP = pid;
+			pidUP = touchHandler.getPid();
 			break;
 		default:
 			break;
@@ -92,7 +91,7 @@ public class MovePersoManager {
 	}	
 	
 	/**
-	 * Calculate the changement to aply to the moving
+	 * Calculate the modification to apply to the moving
 	 * 
 	 * @param event the event which contains all the data
 	 * @param ignorePid a pid to ignore (pid corresponding to a UP event)
@@ -104,8 +103,8 @@ public class MovePersoManager {
 			// the pid up is ignored if exist
 			if (i == ignorePid) continue;
 			
-			int x = (int) event.getX(i);
-			int y = (int) event.getY(i);
+			int x = MoveUtil.normTouchX(event.getX(i));
+			int y = MoveUtil.normTouchY(event.getY(i));
 			// if the pointer has moved or not have previous position
 			if (moveImpl.isOnLeft(x, y)) {
 				onLeft.add(i);

@@ -59,7 +59,7 @@ public final class DesignUtil {
 		paint.setAntiAlias(ANTIALIAS_ENABLED);
 		paint.setTypeface(typeFace);
 		paint.setColor(color);
-		paint.setTextScaleX(MoveUtil.RATIO_WIDTH);
+		paint.setTextScaleX(MoveUtil.RATIO_RESCALING_WIDTH);
 		paint.setTextSize(size);
 		return paint;
 	}

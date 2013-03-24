@@ -3,10 +3,8 @@ package com.survivalkid.game.thread;
 import android.util.Log;
 
 import com.survivalkid.game.GameManager;
-import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.SurfaceHandler;
 import com.survivalkid.game.singleton.GameContext;
-import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.TimerUtil;
 
 public class MainThread extends Thread {
@@ -34,15 +32,11 @@ public class MainThread extends Thread {
 	private boolean restoring = false;
 	private SurfaceHandler surfaceHandler;
 	private GameManager gameManager;
-	private ChronoDisplayer chronoRestore;
 
 	public MainThread(GameManager gamePanel) {
 		super();
 		this.gameManager = gamePanel;
 		this.surfaceHandler = gameManager.getSurfaceHandler();
-		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
-				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
-		chronoRestore.setSize(60f);
 	}
 
 
@@ -116,7 +110,7 @@ public class MainThread extends Thread {
 								drawScreen();
 								break;
 							}
-							chronoRestore.setTime(timeRemain);
+							surfaceHandler.getChronoRestore().setTime(timeRemain);
 							drawRestore();
 						}
 					}

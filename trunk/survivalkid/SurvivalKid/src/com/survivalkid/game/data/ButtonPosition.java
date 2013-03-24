@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.survivalkid.game.core.ActionButton;
+import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.personage.Bag;
 import com.survivalkid.game.util.MoveUtil;
@@ -138,12 +139,11 @@ public class ButtonPosition {
 	 * @return true if a button has been moved, false otherwise
 	 */
 	public boolean manageEventChangePosition(MotionEvent event) {
-		int action =  event.getAction();
-		int actionCode = action & MotionEvent.ACTION_MASK;
+		TouchHandler touchHandler = new TouchHandler(event);
+		int actionCode = touchHandler.getActionCode();
 		if (actionCode == MotionEvent.ACTION_DOWN || actionCode == MotionEvent.ACTION_POINTER_DOWN) {
-			int pid = action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT;
-			int x = (int) event.getX(pid);
-			int y = (int) event.getY(pid);
+			int x = touchHandler.getX();
+			int y = touchHandler.getY();
 			if (MoveUtil.btn_left.isOnButton(x, y)) {
 				buttonSelect = TypeButton.LEFT;
 			}
@@ -164,9 +164,8 @@ public class ButtonPosition {
 			buttonSelect = TypeButton.NONE;
 		}
 		else { // move
-			int pid = action >> MoveUtil.ACTION_POINTER_INDEX_SHIFT;
-			int x = (int) event.getX(pid);
-			int y = (int) event.getY(pid);
+			int x = touchHandler.getX();
+			int y = touchHandler.getY();
 			switch(buttonSelect) {
 				case LEFT:manageMoveButton(leftButton, btn_left, x, y);break;
 				case RIGHT:manageMoveButton(rightButton, btn_right, x, y);break;
