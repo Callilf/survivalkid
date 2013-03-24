@@ -277,10 +277,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			// fills the canvas with black
 			surfaceHandler.drawBackground(canvas);
 
-			surfaceHandler.resetScale(canvas);
 			chrono.draw(canvas);
-			surfaceHandler.drawButton(canvas);
-			surfaceHandler.applyScaleRatio(canvas);
 			corrida.draw(canvas, DirectionConstants.RIGHT);
 			corrida2.draw(canvas, DirectionConstants.RIGHT);
 			enemyManager.draw(canvas);
@@ -288,6 +285,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			characterManager.draw(canvas);
 			
 			particleManager.draw(canvas);
+			surfaceHandler.drawButton(canvas);
 		}
 	}
 

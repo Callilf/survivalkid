@@ -19,7 +19,7 @@ import com.survivalkid.game.util.MoveUtil;
  */
 public class SurfaceHandler {
 
-	private static final boolean SCALE_ENABLE = false;
+	private static final boolean SCALE_ENABLE = true;
 	
 	private SurfaceHolder surfaceHolder;
 	
@@ -92,7 +92,6 @@ public class SurfaceHandler {
 				synchronized (surfaceHolder) {
 					applyScaleRatio(canvas);
 					drawBackground(canvas);
-					resetScale(canvas);
 					MoveUtil.virtualBag.draw(canvas);
 					drawButton(canvas);
 				}

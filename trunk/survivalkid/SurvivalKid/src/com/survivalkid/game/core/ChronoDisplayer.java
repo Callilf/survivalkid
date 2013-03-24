@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.survivalkid.game.util.DesignUtil;
+import com.survivalkid.game.util.MoveUtil;
 
 public class ChronoDisplayer {
 	private static final DateFormat formatter = new SimpleDateFormat("mm:ss,SSS");
@@ -36,7 +37,7 @@ public class ChronoDisplayer {
 	}
 	
 	public void setSize(float size) {
-		paint.setTextSize(size);
+		paint.setTextSize(size / MoveUtil.RATIO_RESCALING_WIDTH);
 	}
 
 }

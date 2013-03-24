@@ -42,7 +42,7 @@ public final class DesignUtil {
 	 * @return a new paint
 	 */
 	public static Paint createTextPaint(int color, int size) {
-		return createTextPaint(color, size, TYPEFACE_MELOBDO);
+		return createTextPaint(color, size, TYPEFACE_MELOBDO, true);
 	}
 	
 	/**
@@ -51,16 +51,21 @@ public final class DesignUtil {
 	 * @param textColor the color (use Color.X)
 	 * @param textSize the text size
 	 * @param typeFace the typeface
+	 * @param withScaling true to active the scaling with the game. False otherwise (exemple : for the menu)
 	 * 
 	 * @return a new paint
 	 */
-	public static Paint createTextPaint(int color, int size, Typeface typeFace) {
+	public static Paint createTextPaint(int color, int size, Typeface typeFace, boolean withScaling) {
 		Paint paint = new Paint();
 		paint.setAntiAlias(ANTIALIAS_ENABLED);
 		paint.setTypeface(typeFace);
 		paint.setColor(color);
-		paint.setTextScaleX(MoveUtil.RATIO_RESCALING_WIDTH);
-		paint.setTextSize(size);
+		if (withScaling) {
+			paint.setTextSize(size / MoveUtil.RATIO_RESCALING_WIDTH);		
+		}
+		else {
+			paint.setTextSize(size);
+		}
 		return paint;
 	}
 }
