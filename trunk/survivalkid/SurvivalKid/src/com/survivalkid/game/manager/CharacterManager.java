@@ -1,20 +1,20 @@
 package com.survivalkid.game.manager;
 
-import static com.survivalkid.game.util.MoveUtil.SCREEN_HEIGHT;
-import static com.survivalkid.game.util.MoveUtil.SCREEN_WIDTH;
+import static com.survivalkid.game.util.MoveUtil.SCREEN_VIRTUAL_HEIGHT;
+import static com.survivalkid.game.util.MoveUtil.SCREEN_VIRTUAL_WIDTH;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.DesignUtil;
 
 public class CharacterManager implements IManager {
 
@@ -73,9 +73,7 @@ public class CharacterManager implements IManager {
 			float pcLife = characterList.get(OWN_PERSO).getLife().getCurrentPcLife();
 			int newSizeBarLife = (int) (pcLife * sizeLifeBar);
 			life.right = life.left + newSizeBarLife;
-			final Paint paint = new Paint();
-			paint.setARGB(255, 200, 20, 20);
-			canvas.drawRect(life, paint);
+			canvas.drawRect(life, DesignUtil.PAINT_LIFE);
 			
 			//Display the life decoration (above the life bar...)
 			if(lifeDisplayer != null) {
@@ -109,12 +107,12 @@ public class CharacterManager implements IManager {
 			lifeDisplayerPart1 = BitmapUtil.createBitmap(R.drawable.yuna_life_bar_part1);
 		}
 		
-		int leftDisp = (int) (SCREEN_WIDTH * 0.33f);
-		lifeDisplayerRect1 = new Rect(leftDisp, SCREEN_HEIGHT - 40, leftDisp + lifeDisplayerPart1.getWidth(), SCREEN_HEIGHT - 40 + lifeDisplayerPart1.getHeight());
+		int leftDisp = (int) (SCREEN_VIRTUAL_WIDTH * 0.33f);
+		lifeDisplayerRect1 = new Rect(leftDisp, SCREEN_VIRTUAL_HEIGHT - 40, leftDisp + lifeDisplayerPart1.getWidth(), SCREEN_VIRTUAL_HEIGHT - 40 + lifeDisplayerPart1.getHeight());
 		lifeDisplayerPart2 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part2);
-		lifeDisplayerRect2 = new Rect(lifeDisplayerRect1.right, SCREEN_HEIGHT - 40, lifeDisplayerRect1.right + lifeDisplayerPart2.getWidth(),  SCREEN_HEIGHT - 40 + lifeDisplayerPart2.getHeight());
+		lifeDisplayerRect2 = new Rect(lifeDisplayerRect1.right, SCREEN_VIRTUAL_HEIGHT - 40, lifeDisplayerRect1.right + lifeDisplayerPart2.getWidth(),  SCREEN_VIRTUAL_HEIGHT - 40 + lifeDisplayerPart2.getHeight());
 		lifeDisplayerPart3 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part3);
-		lifeDisplayerRect3 = new Rect(lifeDisplayerRect2.right, SCREEN_HEIGHT - 40, lifeDisplayerRect2.right + lifeDisplayerPart3.getWidth(),  SCREEN_HEIGHT - 40 + lifeDisplayerPart3.getHeight());
+		lifeDisplayerRect3 = new Rect(lifeDisplayerRect2.right, SCREEN_VIRTUAL_HEIGHT - 40, lifeDisplayerRect2.right + lifeDisplayerPart3.getWidth(),  SCREEN_VIRTUAL_HEIGHT - 40 + lifeDisplayerPart3.getHeight());
 		
 		int left = lifeDisplayerRect2.left;
 		int right = lifeDisplayerRect3.right - 5;

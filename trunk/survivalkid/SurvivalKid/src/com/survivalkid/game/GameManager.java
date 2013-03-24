@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
-import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -81,7 +80,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(context);
 		GameContext.getSingleton().initSingleton();
-		GameContext.getSingleton().setFont(Typeface.createFromAsset(context.getAssets(), "fonts/MELODBO.TTF"));
 		
 		SharedVars.getSingleton().initSingleton();
 		

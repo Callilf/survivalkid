@@ -22,6 +22,7 @@ import com.survivalkid.game.entity.enemy.impl.FredCircularSaw;
 import com.survivalkid.game.entity.enemy.impl.Meteore;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.TimerUtil;
 
 public class EnemyManager extends ObjectManager {
@@ -74,10 +75,7 @@ public class EnemyManager extends ObjectManager {
 		enemiesToAdd = new ArrayList<EnemyEntity>();
 		
 		//Text
-		paint = new Paint(); 
-		paint.setTextSize(30);
-		paint.setTypeface(GameContext.getSingleton().getFont());
-		paint.setColor(Color.BLACK);
+		paint = DesignUtil.createTextPaint(Color.BLACK, 30);
 	}
 
 	public void create() {

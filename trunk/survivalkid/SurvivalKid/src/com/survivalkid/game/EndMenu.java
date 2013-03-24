@@ -13,7 +13,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -25,6 +24,7 @@ import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.data.Score;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.DesignUtil;
 
 public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -77,15 +77,8 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		activity = (EndActivity) _context;
 		setWillNotDraw(false);
 
-		Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/MELODBO.TTF");
-		paint = new Paint();
-		paint.setAntiAlias(true);
-		paint.setTypeface(tf);
-		paint.setColor(Color.WHITE);
-		paintHighScore = new Paint(paint);
-		paint.setTextSize(50);
-		paintHighScore.setAntiAlias(true);
-		paintHighScore.setTextSize(40);
+		paint = DesignUtil.createTextPaint(Color.WHITE, 50);
+		paintHighScore = DesignUtil.createTextPaint(Color.WHITE, 40);
 
 		panel = BitmapUtil.createBitmap(R.drawable.panel_back);
 		

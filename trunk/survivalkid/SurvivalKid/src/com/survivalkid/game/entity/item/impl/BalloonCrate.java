@@ -1,8 +1,6 @@
 package com.survivalkid.game.entity.item.impl;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -13,6 +11,7 @@ import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class BalloonCrate extends ItemEntity {
@@ -31,9 +30,6 @@ public class BalloonCrate extends ItemEntity {
 	private boolean exploding = false;
 	private boolean falling = false;
 	private boolean releaseObject = false;
-
-	/** Balloon hitbox for debug. */
-	public Paint balloonTouchBoxPainter;
 
 	/** Default constructor. */
 	public BalloonCrate() {
@@ -54,10 +50,6 @@ public class BalloonCrate extends ItemEntity {
 		affectedByFloor = true;
 		affectedByCeiling = false;
 		affectedByWalls = false;
-
-		balloonTouchBoxPainter = new Paint();
-		balloonTouchBoxPainter.setColor(Color.BLUE);
-		balloonTouchBoxPainter.setAlpha(200);
 
 		deathAnim = new AnimatedSprite(SpriteEnum.CRATE_EXPLOSION, 0, 0);
 		dying = false;
@@ -139,7 +131,7 @@ public class BalloonCrate extends ItemEntity {
 		} else {
 			super.draw(canvas);
 			if (CollisionUtil.displayHitBoxes) {
-				canvas.drawRect(balloonTouchBox, balloonTouchBoxPainter);
+				canvas.drawRect(balloonTouchBox, DesignUtil.PAINT_HITBOX_BALLON);
 			}
 		}
 	}

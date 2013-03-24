@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -23,6 +22,7 @@ import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.TimerUtil;
 
@@ -253,13 +253,11 @@ public abstract class GameEntity implements Cloneable {
 		sprite.draw(canvas, direction);
 
 		if (CollisionUtil.displayHitBoxes) {
-			final Paint paint = new Paint();
-			paint.setARGB(128, 255, 0, 0);
-
 			if (this instanceof Personage && overlaping) {
-				paint.setARGB(128, 100, 255, 100);
+				canvas.drawRect(hitBox, DesignUtil.PAINT_HITBOX_OVERLAPPING);
+			} else {
+				canvas.drawRect(hitBox, DesignUtil.PAINT_HITBOX_ENTITY);
 			}
-			canvas.drawRect(hitBox, paint);
 		}
 	}
 
