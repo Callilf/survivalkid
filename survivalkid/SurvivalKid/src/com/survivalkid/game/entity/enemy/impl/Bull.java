@@ -64,6 +64,10 @@ public class Bull extends EnemyEntity {
 		play("run", true, true);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 
+		createEmitter();
+	}
+	
+	private void createEmitter() {
 		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_DUST_BROWN, 50);
 		if (direction == DirectionConstants.RIGHT) {
 			emitter.setParticleSpeedXMin(0);
@@ -81,7 +85,6 @@ public class Bull extends EnemyEntity {
 		emitter.setNumberOfParticlePerGeneration(1);
 		emitter.setParticleAlpha(150);
 		SharedVars.getSingleton().getParticleManager().addEmitter(emitter);
-
 	}
 
 	@Override

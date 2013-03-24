@@ -42,6 +42,10 @@ public class FireGround extends EnemyEntity {
 		
 		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_GROUND, 0, 0);
 		
+		createEmitter();
+	}
+	
+	private void createEmitter() {
 		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_SMOKE_WHITE_ROUND, 100);
 		emitter.setParticleSpeedXMin(0);
 		emitter.setParticleSpeedXMax(0);
