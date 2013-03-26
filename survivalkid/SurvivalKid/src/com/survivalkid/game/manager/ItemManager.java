@@ -15,6 +15,7 @@ import com.survivalkid.game.entity.item.impl.EnemySpeedReducer;
 import com.survivalkid.game.entity.item.impl.Medkit;
 import com.survivalkid.game.entity.item.impl.PlayerSpeedReducer;
 import com.survivalkid.game.entity.item.impl.SuperMedkit;
+import com.survivalkid.game.entity.item.impl.Corrida;
 import com.survivalkid.game.util.TimerUtil;
 
 public class ItemManager extends ObjectManager {
@@ -40,6 +41,7 @@ public class ItemManager extends ObjectManager {
 		itemMap.add(PlayerSpeedReducer.class);
 		itemMap.add(EnemySpeedIncrease.class);
 		itemMap.add(EnemySpeedReducer.class);
+		itemMap.add(Corrida.class);
 	}
 
 	public ItemManager() {

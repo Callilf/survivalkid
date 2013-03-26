@@ -10,7 +10,11 @@ public enum StateEnum {
 	/** Low speed enemy mode */
 	STATE_LOW_SPEED_ENEMIES(SpriteEnum.HOURGLASS_GREEN),
 	/** Knocked back by an enemy (like the bull). */
-	STATE_KNOCK_BACK;
+	STATE_KNOCK_BACK,
+	/** Bring a bull and automatically dodge it to clean the screen (the character is
+	 * invincible during this state). 
+	 */
+	STATE_CORRIDA;
 	
 	private SpriteEnum sprite;
 	

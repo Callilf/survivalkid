@@ -28,7 +28,10 @@ public class Personage extends GameEntity {
 	private Life life;
 	private AnimatedSprite deathAnim;
 	
-	//The bag that allows to store items
+	//Attributes for the corrida item
+	private AnimatedSprite corridaAnim;
+
+	// The bag that allows to store items
 	private Bag bag;
 
 	private boolean dying;
@@ -65,7 +68,8 @@ public class Personage extends GameEntity {
 		persoType = perso;
 		movePersoManager = new MovePersoManager();
 		life = new Life(100);
-		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
+		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, -100, -100);
+		corridaAnim = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, -100, -100);
 		dying = false;
 
 		// damages
@@ -73,7 +77,7 @@ public class Personage extends GameEntity {
 		damagesOver = new ArrayList<LifeChangeDisplayer>();
 
 		stateDisplayer = new StateDisplayer(this);
-		
+
 		setBag(new Bag(this));
 
 		switch (perso) {
@@ -118,10 +122,10 @@ public class Personage extends GameEntity {
 	 *            TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
 	 * @param recoveryMaxTime
 	 *            duration of the recovery
-	 * @return true if the perso has taken the damages, false otherwise 
+	 * @return true if the perso has taken the damages, false otherwise
 	 */
 	public boolean takeDamage(int _damage, EnumLife _typeChange, int _recoveryMaxTime) {
-		if (hasState(StateEnum.STATE_RECOVERY)) {
+		if (hasState(StateEnum.STATE_RECOVERY) || hasState(StateEnum.STATE_CORRIDA)) {
 			return false;
 		}
 
@@ -141,7 +145,7 @@ public class Personage extends GameEntity {
 	 *            the amount of damages
 	 * @param typeChange
 	 *            TAKE_DAMAGE or TAKE_DAMAGE_PC (percent or not)
-	  * @return true if the perso has taken the damages, false otherwise 
+	 * @return true if the perso has taken the damages, false otherwise
 	 */
 	public boolean takeDamage(int _damage, EnumLife _typeChange) {
 		return takeDamage(_damage, _typeChange, DEFAULT_RECOVERYTIME);
@@ -163,7 +167,7 @@ public class Personage extends GameEntity {
 	public void die() {
 		Log.d(TAG, "Perso DEAD !");
 		dying = true;
-		
+
 		// Suppress status of the player
 		for (StateEnum state : states.keySet()) {
 			processEndState(state);
@@ -188,21 +192,35 @@ public class Personage extends GameEntity {
 			return;
 		}
 
-		if(!hasState(StateEnum.STATE_KNOCK_BACK)) {
+		// If state corrida is active, the player is unvisible and immobile and
+		// is replaced by the corrida animation.
+		if (!hasState(StateEnum.STATE_KNOCK_BACK) && !hasState(StateEnum.STATE_CORRIDA)) {
 			movePersoManager.calculNewSpeed(this);
 
 			// Set the direction based on the button pushed
-			if (movePersoManager.isLeftEnabled && (!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
+			if (movePersoManager.isLeftEnabled
+					&& (!movePersoManager.isRightEnabled || movePersoManager.lastEnabledLeft)) {
 				direction = DirectionConstants.LEFT;
 			} else if (movePersoManager.isRightEnabled) {
 				direction = DirectionConstants.RIGHT;
 			}
+		} else if (hasState(StateEnum.STATE_CORRIDA)) {
+			setSpeedX(0);
+			corridaAnim.setX(sprite.getX() + sprite.getWidth() / 2 - corridaAnim.getWidth() / 2);
+			corridaAnim.setY(sprite.getY() + sprite.getHeight() / 2 - corridaAnim.getHeight() / 2);
+			if (corridaAnim.isAnimationFinished()) {
+				states.remove(StateEnum.STATE_CORRIDA);
+				processEndState(StateEnum.STATE_CORRIDA);
+			}
+			corridaAnim.update(gameDuration, DirectionConstants.RIGHT);
 		}
-		
+
 		super.update(gameDuration);
 
-		// Play the correct animation
-		selectAnimation();
+		if (!hasState(StateEnum.STATE_CORRIDA)) {
+			// Play the correct animation
+			selectAnimation();
+		}
 
 		// Handle the damage displayers
 		for (LifeChangeDisplayer dd : damages) {
@@ -218,17 +236,16 @@ public class Personage extends GameEntity {
 		stateDisplayer.update(gameDuration);
 		bag.update(gameDuration);
 	}
-	
-	
+
 	/**
 	 * Handle the animations of the character.
 	 */
 	private void selectAnimation() {
-		if(hasState(StateEnum.STATE_KNOCK_BACK) && !isOnFloor) {
+		if (hasState(StateEnum.STATE_KNOCK_BACK) && !isOnFloor) {
 			play(PersonageConstants.ANIM_KNOCK_BACK, false, true);
 			return;
-		} 
-		
+		}
+
 		if (isJumpingUp) {
 			play(PersonageConstants.ANIM_JUMPUP, false, true);
 		} else if (isJumpingDown) {
@@ -239,7 +256,7 @@ public class Personage extends GameEntity {
 			play(PersonageConstants.ANIM_STAND, false, true);
 		}
 	}
-	
+
 	@Override
 	protected void processStartState(StateObject stateObject) {
 		switch (stateObject.getState()) {
@@ -249,8 +266,7 @@ public class Personage extends GameEntity {
 		default:
 			super.processStartState(stateObject);
 		}
-		
-		
+
 	}
 
 	@Override
@@ -268,6 +284,8 @@ public class Personage extends GameEntity {
 	public void draw(Canvas canvas) {
 		if (dying) {
 			deathAnim.draw(canvas, direction);
+		} else if (hasState(StateEnum.STATE_CORRIDA)) {
+			corridaAnim.draw(canvas, DirectionConstants.RIGHT);
 		} else {
 			super.draw(canvas);
 			// Handle the damage displayers
@@ -277,7 +295,7 @@ public class Personage extends GameEntity {
 
 			stateDisplayer.draw(canvas);
 		}
-		
+
 		bag.draw(canvas);
 	}
 
@@ -316,10 +334,22 @@ public class Personage extends GameEntity {
 	}
 
 	/**
-	 * @param bag the bag to set
+	 * @param bag
+	 *            the bag to set
 	 */
 	public void setBag(Bag bag) {
 		this.bag = bag;
 	}
 
+	public void playCorridaWaitingAnim() {
+		if (corridaAnim != null && hasState(StateEnum.STATE_CORRIDA)) {
+			corridaAnim.play("prepare", true, false);
+		}
+	}
+
+	public void playCorridaDodgingAnim() {
+		if (corridaAnim != null && hasState(StateEnum.STATE_CORRIDA)) {
+			corridaAnim.play("ole", false, true);
+		}
+	}
 }
