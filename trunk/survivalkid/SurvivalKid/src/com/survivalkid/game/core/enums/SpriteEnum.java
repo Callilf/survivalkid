@@ -24,7 +24,7 @@ public enum SpriteEnum {
 			
 	YUGO_CORRIDA(R.drawable.yugo_corrida, 7, 2, 
 			new Animation("prepare", new int[] { 0, 1, 2, 3, 4 }, 15), 
-			new Animation("ole", new int[] { 5, 6, 7, 8, 9, 10, 11, 12 }, 20)),
+			new Animation("ole", new int[] { 5, 6, 7, 8, 9, 10, 11, 12 }, 30)),
 
 	YUGO_ARTWORK1(R.drawable.yugo_artwork_1, 1, 1),
 
@@ -63,6 +63,8 @@ public enum SpriteEnum {
 	FIRE_METEORE_EXPLOSION(R.drawable.meteor_fire_explosion, 6, 2, new Animation("explode", new int[] { 0, 1, 2, 3, 4,
 			5, 6, 7, 8 }, 20)),
 
+	CORRIDA(R.drawable.corrida, 1, 1),
+			
 	MEDKIT(R.drawable.medkit, 1, 1),
 
 	MEDKIT_SMALL(R.drawable.medkit_small, 1, 1),

@@ -1,6 +1,8 @@
 package com.survivalkid.game.entity.enemy.impl;
 
 import android.graphics.Canvas;
+import android.graphics.LightingColorFilter;
+import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.survivalkid.game.core.AnimatedSprite;
@@ -31,6 +33,10 @@ public class Bull extends EnemyEntity {
 	private long warningExpiration;
 	private AnimatedSprite deathAnim;
 	private ParticleEmitter emitter;
+
+	// Special for the corrida bull
+	private boolean corridaBull;
+	private Paint paint;
 
 	/** Default constructor. */
 	public Bull() {
@@ -64,9 +70,14 @@ public class Bull extends EnemyEntity {
 		play("run", true, true);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, 0, 0);
 
+		if (corridaBull) {
+			paint = new Paint();
+			paint.setColorFilter(new LightingColorFilter(0xffff4444, 1));
+		}
+
 		createEmitter();
 	}
-	
+
 	private void createEmitter() {
 		emitter = new ParticleEmitter(SpriteEnum.PARTICLE_DUST_BROWN, 50);
 		if (direction == DirectionConstants.RIGHT) {
@@ -130,12 +141,17 @@ public class Bull extends EnemyEntity {
 		} else {
 			emitter.setParticleDirection(DirectionConstants.LEFT);
 		}
-		emitter.setX(sprite.getX() + sprite.getWidth()/2);
-		emitter.setY(sprite.getY() + sprite.getHeight() - emitter.getParticleSprite().getHeight()/2);
+		emitter.setX(sprite.getX() + sprite.getWidth() / 2);
+		emitter.setY(sprite.getY() + sprite.getHeight() - emitter.getParticleSprite().getHeight() / 2);
 	}
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
+		if (_personage.hasState(StateEnum.STATE_CORRIDA)) {
+			_personage.playCorridaDodgingAnim();
+			return;
+		}
+
 		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
 			int newSpeedX = (direction == DirectionConstants.LEFT) ? -SPEED_COLLISION_X : SPEED_COLLISION_X;
 			_personage.setDirection((direction == DirectionConstants.LEFT) ? DirectionConstants.RIGHT
@@ -163,7 +179,11 @@ public class Bull extends EnemyEntity {
 			if (inWarning) {
 				warning.draw(canvas, direction);
 			} else {
-				super.draw(canvas);
+				if (corridaBull) {
+					sprite.draw(canvas, direction, paint);
+				} else {
+					super.draw(canvas);
+				}
 			}
 		}
 	}
@@ -186,6 +206,20 @@ public class Bull extends EnemyEntity {
 		}
 
 		init();
+	}
+
+	public void initBullForCorrida() {
+		corridaBull = true;
+		sprite.setX(MoveUtil.BACKGROUND_RIGHT);
+		sprite.setY(MoveUtil.GROUND - sprite.getHeight());
+		direction = DirectionConstants.LEFT;
+		init();
+		attack = DEFAULT_DEFENSE + 10;
+		defense = DEFAULT_DEFENSE + 10;
+		inWarning = false;
+		active = true;
+		initSpeed();
+		emitter.setGenerate(true);
 	}
 
 	private void initSpeed() {

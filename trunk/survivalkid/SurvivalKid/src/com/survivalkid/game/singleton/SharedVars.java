@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ParticleManager;
 
 /**
@@ -20,6 +21,9 @@ public class SharedVars {
 	private Set<AnimatedSprite> bullWarningRightList;
 	
 	private ParticleManager particleManager;
+	private EnemyManager enemyManager;
+	
+	private boolean persoDrawnInBackground;
 	
 	/** Get the singleton. */
 	public static SharedVars getSingleton() {
@@ -35,6 +39,7 @@ public class SharedVars {
 	public void initSingleton() {
 		setBullWarningLeftList(new HashSet<AnimatedSprite>());
 		setBullWarningRightList(new HashSet<AnimatedSprite>());
+		persoDrawnInBackground = false;
 	}
 
 	/**
@@ -77,6 +82,34 @@ public class SharedVars {
 	 */
 	public void setParticleManager(ParticleManager particleManager) {
 		this.particleManager = particleManager;
+	}
+
+	/**
+	 * @return the persoDrawnInBackground
+	 */
+	public boolean isPersoDrawnInBackground() {
+		return persoDrawnInBackground;
+	}
+
+	/**
+	 * @param persoDrawnInBackground the persoDrawnInBackground to set
+	 */
+	public void setPersoDrawnInBackground(boolean persoDrawnInBackground) {
+		this.persoDrawnInBackground = persoDrawnInBackground;
+	}
+
+	/**
+	 * @return the enemyManager
+	 */
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
+	}
+
+	/**
+	 * @param enemyManager the enemyManager to set
+	 */
+	public void setEnemyManager(EnemyManager enemyManager) {
+		this.enemyManager = enemyManager;
 	}
 	
 }

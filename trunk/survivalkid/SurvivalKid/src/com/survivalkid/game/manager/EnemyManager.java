@@ -263,5 +263,9 @@ public class EnemyManager extends ObjectManager {
 		}
 		enemyList.add(ee);
 	}
+	
+	public void addEnemyAsync(EnemyEntity ee) {
+		enemiesToAdd.add(ee);
+	}
 
 }

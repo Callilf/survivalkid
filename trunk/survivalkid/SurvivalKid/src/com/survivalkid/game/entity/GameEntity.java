@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -19,8 +20,10 @@ import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
+import com.survivalkid.game.entity.enemy.impl.Bull;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.singleton.GameContext;
+import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
@@ -214,6 +217,9 @@ public abstract class GameEntity implements Cloneable {
 		switch(stateEnum) {
 		case STATE_RECOVERY: 
 			sprite.setRecovery(false);break;
+		case STATE_CORRIDA : 
+			SharedVars.getSingleton().setPersoDrawnInBackground(true);
+			addState(StateEnum.STATE_RECOVERY, 1000);
 		case STATE_HIGH_SPEED_ENEMIES:
 		case STATE_LOW_SPEED_ENEMIES:
 			GameContext.getSingleton().setAlterationSpeedEnemy(1f);
@@ -231,6 +237,12 @@ public abstract class GameEntity implements Cloneable {
 		switch(stateObject.getState()) {
 		case STATE_RECOVERY: 
 			sprite.setRecovery(true);break;
+		case STATE_CORRIDA :
+			SharedVars.getSingleton().setPersoDrawnInBackground(true);
+			Bull bull = new Bull();
+			bull.initBullForCorrida();
+			SharedVars.getSingleton().getEnemyManager().addEnemyAsync(bull);
+			break;
 		case STATE_LOW_SPEED_ENEMIES:
 			states.remove(StateEnum.STATE_HIGH_SPEED_ENEMIES);
 			GameContext.getSingleton().setAlterationSpeedEnemy(0.51f);
