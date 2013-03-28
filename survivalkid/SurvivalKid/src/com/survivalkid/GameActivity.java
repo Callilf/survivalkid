@@ -30,6 +30,8 @@ public class GameActivity extends AbstractActivity {
 	
 	/** Used to know if the user is closing the app or going to the main menu. */
 	private boolean goingBackToMainMenu = false;
+	/** Whether the pause menu is opened or not. */
+	private boolean inPauseMenu = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class GameActivity extends AbstractActivity {
 	}
 
 	public void displayEndMenu() {
+		inPauseMenu = true;
 		Intent intent = new Intent(GameActivity.this.getBaseContext(), EndActivity.class);
 
 		Bundle b = new Bundle();
@@ -77,6 +80,7 @@ public class GameActivity extends AbstractActivity {
 	}
 	
 	public void displayPauseMenu() {
+		inPauseMenu = true;
 		Intent intent = new Intent(GameActivity.this.getBaseContext(), EndActivity.class);
 		Bundle b = new Bundle();
 		b.putBoolean("endMode", false);
@@ -116,6 +120,7 @@ public class GameActivity extends AbstractActivity {
 				// Not used
 			}
 		}
+		inPauseMenu = false;
 	}
 
 	@Override
@@ -232,7 +237,7 @@ public class GameActivity extends AbstractActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		if(!goingBackToMainMenu) {
+		if(!goingBackToMainMenu && !inPauseMenu) {
 			displayPauseMenu();
 		}
 	}
