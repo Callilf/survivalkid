@@ -125,7 +125,8 @@ public class Personage extends GameEntity {
 	 * @return true if the perso has taken the damages, false otherwise
 	 */
 	public boolean takeDamage(int _damage, EnumLife _typeChange, int _recoveryMaxTime) {
-		if (hasState(StateEnum.STATE_RECOVERY) || hasState(StateEnum.STATE_CORRIDA)) {
+		if (hasState(StateEnum.STATE_RECOVERY) || hasState(StateEnum.STATE_CORRIDA) 
+				|| hasState(StateEnum.STATE_UNTOUCHABLE)) {
 			return false;
 		}
 

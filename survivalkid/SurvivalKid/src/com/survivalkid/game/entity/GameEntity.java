@@ -219,7 +219,7 @@ public abstract class GameEntity implements Cloneable {
 			sprite.setRecovery(false);break;
 		case STATE_CORRIDA : 
 			SharedVars.getSingleton().setPersoDrawnInBackground(true);
-			addState(StateEnum.STATE_RECOVERY, 1000);
+			addState(StateEnum.STATE_UNTOUCHABLE, 500);
 		case STATE_HIGH_SPEED_ENEMIES:
 		case STATE_LOW_SPEED_ENEMIES:
 			GameContext.getSingleton().setAlterationSpeedEnemy(1f);

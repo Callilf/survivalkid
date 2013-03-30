@@ -1,6 +1,8 @@
 package com.survivalkid.game.core.enums;
 
 public enum StateEnum {
+	/** The character is untouchable but doesn't blink. (currently used after the corrida state) */
+	STATE_UNTOUCHABLE,
 	/** Recovery mode : temporary invincibility after a hit! */
 	STATE_RECOVERY,
 	/** Low speed mode */
