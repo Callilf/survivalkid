@@ -38,7 +38,7 @@ public class MainMenuActivity extends AbstractActivity {
 	public void goToCharacterSelect() {
 		Intent intent = new Intent(MainMenuActivity.this.getBaseContext(), CharacterSelectMenuActivity.class);
 		startActivity(intent);
-		this.overridePendingTransition(R.anim.slide_out_left, R.anim.slide_in_right);
+		this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
 
 	@Override

@@ -53,7 +53,7 @@ public class CharacterSelectMenuActivity extends AbstractActivity {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			finish();
-			this.overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_left);
+			this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 			break;
 		case KeyEvent.KEYCODE_MENU:
 
