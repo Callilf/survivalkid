@@ -110,17 +110,17 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		setWillNotDraw(true);
+		//setWillNotDraw(true);
 	}
 
 	/** Action when clicking on the BACK button. */
 	public void unpause() {
-		setWillNotDraw(false);
+		//setWillNotDraw(false);
 	}
 
 	/** Action when clicking on the BACK button. */
 	public void stop() {
-		setWillNotDraw(true);
+		//setWillNotDraw(true);
 		// ((Activity) getContext()).finish();
 	}
 }
