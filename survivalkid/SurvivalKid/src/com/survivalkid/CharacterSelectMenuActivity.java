@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.CharacterSelectMenu;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.PrefsUtil;
 
 public class CharacterSelectMenuActivity extends AbstractActivity {

@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.survivalkid.MainMenuActivity;
 import com.survivalkid.game.data.DataSave;
 
 public class GameContext {
 
 	/** The instance. */
 	private static GameContext instance;
+	
+	private MainMenuActivity mainMenuActivity;
 	
 	/** the context */
 	private Context context;	
@@ -100,6 +103,20 @@ public class GameContext {
 
 	public void setAlterationSpeedEnemy(float alterationSpeedEnemy) {
 		this.alterationSpeedEnemy = alterationSpeedEnemy;
+	}
+
+	/**
+	 * @return the mainMenuActivity
+	 */
+	public MainMenuActivity getMainMenuActivity() {
+		return mainMenuActivity;
+	}
+
+	/**
+	 * @param mainMenuActivity the mainMenuActivity to set
+	 */
+	public void setMainMenuActivity(MainMenuActivity mainMenuActivity) {
+		this.mainMenuActivity = mainMenuActivity;
 	}
 	
 }
