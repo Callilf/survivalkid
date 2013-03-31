@@ -32,7 +32,7 @@ public class SurfaceHandler {
 		
 		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
 				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
-		chronoRestore.setSize(60f);
+		chronoRestore.setSize(60f, true);
 		
 		ground = BitmapUtil.createBitmap(R.drawable.ground);
 		
