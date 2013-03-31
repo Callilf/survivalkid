@@ -60,12 +60,16 @@ public final class DesignUtil {
 		paint.setAntiAlias(ANTIALIAS_ENABLED);
 		paint.setTypeface(typeFace);
 		paint.setColor(color);
+		setPaintTextSize(paint, size, withScaling);
+		return paint;
+	}
+	
+	public static void setPaintTextSize(Paint paint, float size, boolean withScaling) {
 		if (withScaling) {
-			paint.setTextSize(size / MoveUtil.RATIO_RESCALING_WIDTH);		
+			paint.setTextSize(size * MoveUtil.RATIO_WIDTH);		
 		}
 		else {
-			paint.setTextSize(size);
-		}
-		return paint;
+			paint.setTextSize(size * MoveUtil.RATIO_WIDTH * MoveUtil.RATIO_RESCALING_WIDTH);
+		}		
 	}
 }
