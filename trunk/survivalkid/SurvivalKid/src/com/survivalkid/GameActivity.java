@@ -91,7 +91,7 @@ public class GameActivity extends AbstractActivity {
 	
 	public void backToMainMenu() {
 		goingBackToMainMenu = true;
-		Intent intent = new Intent(GameActivity.this.getBaseContext(), MenuActivity.class);
+		Intent intent = new Intent(GameActivity.this.getBaseContext(), CharacterSelectMenuActivity.class);
 		startActivity(intent);
 		finish();
 	}
