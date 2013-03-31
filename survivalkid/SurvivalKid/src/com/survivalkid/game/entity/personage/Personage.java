@@ -208,7 +208,7 @@ public class Personage extends GameEntity {
 		} else if (hasState(StateEnum.STATE_CORRIDA)) {
 			setSpeedX(0);
 			corridaAnim.setX(sprite.getX() + sprite.getWidth() / 2 - corridaAnim.getWidth() / 2);
-			corridaAnim.setY(sprite.getY() + sprite.getHeight() / 2 - corridaAnim.getHeight() / 2);
+			corridaAnim.setY(sprite.getY() + sprite.getHeight() - corridaAnim.getHeight());
 			if (corridaAnim.isAnimationFinished()) {
 				states.remove(StateEnum.STATE_CORRIDA);
 				processEndState(StateEnum.STATE_CORRIDA);
