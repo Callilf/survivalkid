@@ -91,8 +91,6 @@ public class GameActivity extends AbstractActivity {
 	
 	public void backToMainMenu() {
 		goingBackToMainMenu = true;
-		Intent intent = new Intent(GameActivity.this.getBaseContext(), CharacterSelectMenuActivity.class);
-		startActivity(intent);
 		finish();
 	}
 
@@ -104,6 +102,7 @@ public class GameActivity extends AbstractActivity {
 				
 				if ("leave".equals(result)) {
 					//Leave game
+					GameContext.getSingleton().getMainMenuActivity().finish();
 					exitApplication();
 				} else if ("menu".equals(result)) {
 					//back to main menu

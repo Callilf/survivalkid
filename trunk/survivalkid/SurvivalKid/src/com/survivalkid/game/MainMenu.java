@@ -30,21 +30,22 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 	public MainMenu(Context _context) {
 		super(_context);
-
+		activity = (MainMenuActivity) _context;
+		
 		// Initialize the bitmapUtil
 		BitmapUtil.initialize(getResources());
 
 		// initialize of the context singleton
 		GameContext.getSingleton().setContext(_context);
 		GameContext.getSingleton().initSingleton();
+		GameContext.getSingleton().setMainMenuActivity(activity);
 
 		// adding the callback (this) to the surface holder to intercept events
 		getHolder().addCallback(this);
 
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
-
-		activity = (MainMenuActivity) _context;
+		
 		setWillNotDraw(false);
 		
 		background = BitmapUtil.createBitmap(R.drawable.menu_background);
