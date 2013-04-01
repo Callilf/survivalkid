@@ -3,8 +3,6 @@ package com.survivalkid.game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -15,7 +13,6 @@ import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
-import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class CharacterSelectMenu extends SurfaceView implements SurfaceHolder.Callback {
@@ -25,8 +22,8 @@ public class CharacterSelectMenu extends SurfaceView implements SurfaceHolder.Ca
 	private Bitmap background;
 
 	private CharacterSelectMenuActivity activity;
-	private Paint paint;
-	private Paint paint2;
+//	private Paint paint;
+//	private Paint paint2;
 	private boolean active;
 
 	public CharacterSelectMenu(Context _context) {
@@ -48,10 +45,10 @@ public class CharacterSelectMenu extends SurfaceView implements SurfaceHolder.Ca
 		activity = (CharacterSelectMenuActivity) _context;
 		setWillNotDraw(false);
 		
-		background = BitmapUtil.createBitmap(R.drawable.menu_background);
+		background = BitmapUtil.createBitmap(R.drawable.character_select);
 
-		paint = DesignUtil.createTextPaint(Color.BLACK, 40, DesignUtil.TYPEFACE_MELOBDO, false);
-		paint2 = DesignUtil.createTextPaint(Color.BLACK, 30, DesignUtil.TYPEFACE_MELOBDO, false);
+//		paint = DesignUtil.createTextPaint(Color.BLACK, 40, DesignUtil.TYPEFACE_MELOBDO, false);
+//		paint2 = DesignUtil.createTextPaint(Color.BLACK, 30, DesignUtil.TYPEFACE_MELOBDO, false);
 
 		active = true;
 		
@@ -85,9 +82,9 @@ public class CharacterSelectMenu extends SurfaceView implements SurfaceHolder.Ca
 		if (canvas != null) {
 			// fills the canvas with black
 			canvas.drawBitmap(background, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);		
-			canvas.drawText("Select your character", MoveUtil.SCREEN_WIDTH / 6, MoveUtil.SCREEN_HEIGHT / 2 - 10, paint);
-			canvas.drawText("Play with Yugo", MoveUtil.SCREEN_WIDTH * 0.1f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);
-			canvas.drawText("Play with Yuna", MoveUtil.SCREEN_WIDTH * 0.6f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);
+//			canvas.drawText("Select your character", MoveUtil.SCREEN_WIDTH / 6, MoveUtil.SCREEN_HEIGHT / 2 - 10, paint);
+//			canvas.drawText("Play with Yugo", MoveUtil.SCREEN_WIDTH * 0.1f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);
+//			canvas.drawText("Play with Yuna", MoveUtil.SCREEN_WIDTH * 0.6f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);
 		}
 	}
 
