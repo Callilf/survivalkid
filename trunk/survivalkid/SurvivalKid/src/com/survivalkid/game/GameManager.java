@@ -430,4 +430,26 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public boolean isModeEditLocationButton() {
 		return modeEditLocationButton;
 	}
+	
+	/**
+	 * @return the characterManager
+	 */
+	public CharacterManager getCharacterManager() {
+		return characterManager;
+	}
+
+	/**
+	 * @return the enemyManager
+	 */
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
+	}
+
+	/**
+	 * @return the itemManager
+	 */
+	public ItemManager getItemManager() {
+		return itemManager;
+	}
+
 }
