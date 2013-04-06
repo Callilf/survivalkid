@@ -44,7 +44,8 @@ public final class MoveUtil {
 	// dimension of the background image
 	public static int BACKGROUND_WIDTH;
 	public static int BACKGROUND_HEIGHT;
-
+	public static int BACKGROUND_IMAGE_WIDTH;
+	public static int BACKGROUND_IMAGE_HEIGHT;
 	// position of the background image
 	public static int BACKGROUND_LEFT;
 	public static int BACKGROUND_RIGHT;
@@ -82,8 +83,10 @@ public final class MoveUtil {
 		}
 		
 		Bitmap ground = BitmapUtil.createBitmap(R.drawable.ground);
-		BACKGROUND_WIDTH = Math.min(ground.getWidth(), SCREEN_WIDTH);
-		BACKGROUND_HEIGHT = Math.min(ground.getHeight(), SCREEN_HEIGHT);	
+		BACKGROUND_IMAGE_WIDTH = ground.getWidth();
+		BACKGROUND_IMAGE_HEIGHT = ground.getHeight();
+		BACKGROUND_WIDTH = Math.min(BACKGROUND_IMAGE_WIDTH, SCREEN_WIDTH);
+		BACKGROUND_HEIGHT = Math.min(BACKGROUND_IMAGE_HEIGHT, SCREEN_HEIGHT);	
 		
 		RATIO_WIDTH = BACKGROUND_WIDTH/(float)NORMALIZE_WIDTH;
 		RATIO_HEIGHT = BACKGROUND_HEIGHT/(float)NORMALIZE_HEIGHT;

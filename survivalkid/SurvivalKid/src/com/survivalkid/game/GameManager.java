@@ -23,6 +23,7 @@ import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.CharacterManager;
+import com.survivalkid.game.manager.DecorManager;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ItemManager;
 import com.survivalkid.game.manager.ParticleManager;
@@ -48,6 +49,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	private EnemyManager enemyManager;
 	private ItemManager itemManager;
 	private ParticleManager particleManager;
+	private DecorManager decorManager;
 	private ChronoDisplayer chrono;
 	
 	private boolean surfaceActive;
@@ -120,6 +122,8 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
 		particleManager = new ParticleManager();
+		decorManager = new DecorManager();
+		
 		SharedVars.getSingleton().setEnemyManager(enemyManager);
 		SharedVars.getSingleton().setParticleManager(particleManager);
 		chrono = new ChronoDisplayer(10, 20);
@@ -190,6 +194,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		itemManager.update(gameDuration);
 		characterManager.update(gameDuration);
 		particleManager.update(gameDuration);
+		decorManager.update(gameDuration);
 
 		// Check the collisions
 		for (Personage perso : characterManager.getCharacterList()) {
@@ -266,6 +271,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			surfaceHandler.drawBackground(canvas);
 
 			chrono.draw(canvas);
+			decorManager.draw(canvas, false);
 			
 			if(SharedVars.getSingleton().isPersoDrawnInBackground()) {
 				characterManager.draw(canvas);
@@ -279,6 +285,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			}
 			
 			particleManager.draw(canvas);
+			decorManager.draw(canvas, true);
 			surfaceHandler.drawButton(canvas);
 		}
 	}

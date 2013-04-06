@@ -101,7 +101,20 @@ public class SurfaceHandler {
 	
 	public void drawBackground(Canvas canvas) {
 		canvas.drawColor(Color.BLUE);
-		canvas.drawBitmap(ground, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);		
+		int left = MoveUtil.BACKGROUND_LEFT;
+		int top = MoveUtil.BACKGROUND_TOP;
+		
+		// put the bottom at the bottom and hide the top
+		if (MoveUtil.BACKGROUND_IMAGE_HEIGHT > MoveUtil.BACKGROUND_HEIGHT) {
+			top = MoveUtil.BACKGROUND_HEIGHT - MoveUtil.BACKGROUND_IMAGE_HEIGHT;
+		}
+		
+		// center the image in horizontal
+		if (MoveUtil.BACKGROUND_IMAGE_WIDTH > MoveUtil.BACKGROUND_WIDTH) {
+			left = (MoveUtil.BACKGROUND_WIDTH - MoveUtil.BACKGROUND_IMAGE_WIDTH)/2;
+		}
+		
+		canvas.drawBitmap(ground, left, top, null);		
 	}
 	
 	public void drawButton(Canvas canvas) {

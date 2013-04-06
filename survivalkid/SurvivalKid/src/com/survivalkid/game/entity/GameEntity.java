@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.DynamicDrawableObject;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.enemy.impl.Bull;
@@ -29,7 +29,7 @@ import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.TimerUtil;
 
-public abstract class GameEntity implements Cloneable {
+public abstract class GameEntity implements Cloneable, DynamicDrawableObject {
 
 	/** TAG for the logs. */
 	private static final String TAG = GameEntity.class.getSimpleName();
