@@ -1,5 +1,6 @@
 package com.survivalkid.game.util;
 
+import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.View;
@@ -23,6 +24,8 @@ public final class DesignUtil {
 	public static final Paint PAINT_LIFE = new Paint();
 	public static final Paint PAINT_CIRCULARSAW_POINT = new Paint();
 	
+	private static Resources resources;
+	
 	static {
 		PAINT_HITBOX_ENTITY.setARGB(128, 255, 0, 0);
 		PAINT_HITBOX_ACTIONBUTTON.setARGB(50, 0, 0, 128);
@@ -31,6 +34,8 @@ public final class DesignUtil {
 		PAINT_LIFE.setARGB(255, 200, 20, 20);
 		
 		PAINT_CIRCULARSAW_POINT.setARGB(128, 0, 0, 0);
+		
+		resources = GameContext.getSingleton().getContext().getResources();
 	}
 	
 	private DesignUtil() {
@@ -96,4 +101,14 @@ public final class DesignUtil {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
+	
+	/**
+	 * Get a string from the resources
+	 * 
+	 * @param id the id of the string
+	 * @return the textual string
+	 */
+	public static String getString(int id) {
+		return resources.getString(id);
+	}
 }
