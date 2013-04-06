@@ -1,14 +1,13 @@
 package com.survivalkid.game.core;
 
-import static com.survivalkid.game.util.MoveUtil.RESCALING_ACTIVE;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.SurfaceHolder;
 
 import com.survivalkid.R;
 import com.survivalkid.game.GameManager;
 import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 /**
@@ -47,7 +46,7 @@ public class SurfaceHandler {
 			canvas = this.surfaceHolder.lockCanvas();
 			if (canvas != null) {
 				synchronized (surfaceHolder) {
-					applyScaleRatio(canvas);
+					DesignUtil.applyScaleRatio(canvas);
 					this.gameManager.onDraw(canvas);
 					if (withChrono) {
 						chronoRestore.draw(canvas);
@@ -71,8 +70,8 @@ public class SurfaceHandler {
 			canvas = surfaceHolder.lockCanvas();
 			if (canvas != null) {
 				synchronized (surfaceHolder) {
-					applyScaleRatio(canvas);
-					drawBackground(canvas);
+					DesignUtil.applyScaleRatio(canvas);
+					drawBackgroundGame(canvas);
 					MoveUtil.virtualBag.draw(canvas);
 					drawButton(canvas);
 				}
@@ -87,34 +86,8 @@ public class SurfaceHandler {
 		}	// end finally			
 	}
 	
-	public void applyScaleRatio(Canvas canvas) {
-		if (RESCALING_ACTIVE) {
-			canvas.scale(MoveUtil.RATIO_RESCALING_WIDTH, MoveUtil.RATIO_RESCALING_HEIGHT);
-		}
-	}
-	
-	public void resetScale(Canvas canvas) {
-		if (RESCALING_ACTIVE) {
-			canvas.scale(1/MoveUtil.RATIO_RESCALING_WIDTH, 1/MoveUtil.RATIO_RESCALING_HEIGHT);
-		}		
-	}
-	
-	public void drawBackground(Canvas canvas) {
-		canvas.drawColor(Color.BLUE);
-		int left = MoveUtil.BACKGROUND_LEFT;
-		int top = MoveUtil.BACKGROUND_TOP;
-		
-		// put the bottom at the bottom and hide the top
-		if (MoveUtil.BACKGROUND_IMAGE_HEIGHT > MoveUtil.BACKGROUND_HEIGHT) {
-			top = MoveUtil.BACKGROUND_HEIGHT - MoveUtil.BACKGROUND_IMAGE_HEIGHT;
-		}
-		
-		// center the image in horizontal
-		if (MoveUtil.BACKGROUND_IMAGE_WIDTH > MoveUtil.BACKGROUND_WIDTH) {
-			left = (MoveUtil.BACKGROUND_WIDTH - MoveUtil.BACKGROUND_IMAGE_WIDTH)/2;
-		}
-		
-		canvas.drawBitmap(ground, left, top, null);		
+	public void drawBackgroundGame(Canvas canvas) {
+		DesignUtil.drawBackgroundImage(canvas, ground, false);
 	}
 	
 	public void drawButton(Canvas canvas) {
