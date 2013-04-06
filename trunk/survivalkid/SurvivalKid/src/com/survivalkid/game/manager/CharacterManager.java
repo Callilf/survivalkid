@@ -107,17 +107,23 @@ public class CharacterManager implements IManager {
 			lifeDisplayerPart1 = BitmapUtil.createBitmap(R.drawable.yuna_life_bar_part1);
 		}
 		
-		int leftDisp = (int) (SCREEN_VIRTUAL_WIDTH * 0.33f);
-		lifeDisplayerRect1 = new Rect(leftDisp, SCREEN_VIRTUAL_HEIGHT - 40, leftDisp + lifeDisplayerPart1.getWidth(), SCREEN_VIRTUAL_HEIGHT - 40 + lifeDisplayerPart1.getHeight());
 		lifeDisplayerPart2 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part2);
-		lifeDisplayerRect2 = new Rect(lifeDisplayerRect1.right, SCREEN_VIRTUAL_HEIGHT - 40, lifeDisplayerRect1.right + lifeDisplayerPart2.getWidth(),  SCREEN_VIRTUAL_HEIGHT - 40 + lifeDisplayerPart2.getHeight());
 		lifeDisplayerPart3 = BitmapUtil.createBitmap(R.drawable.yugo_life_bar_part3);
-		lifeDisplayerRect3 = new Rect(lifeDisplayerRect2.right, SCREEN_VIRTUAL_HEIGHT - 40, lifeDisplayerRect2.right + lifeDisplayerPart3.getWidth(),  SCREEN_VIRTUAL_HEIGHT - 40 + lifeDisplayerPart3.getHeight());
 		
+		initLifebarRect();
+		//************************************************************************
+	}
+	
+	public void initLifebarRect() {
+		int leftDisp = (int) (SCREEN_VIRTUAL_WIDTH * 0.33f);
+		int bottom = (int) (SCREEN_VIRTUAL_HEIGHT * 0.92f);
+		lifeDisplayerRect1 = new Rect(leftDisp, bottom, leftDisp + lifeDisplayerPart1.getWidth(), bottom + lifeDisplayerPart1.getHeight());
+		lifeDisplayerRect2 = new Rect(lifeDisplayerRect1.right, bottom, lifeDisplayerRect1.right + lifeDisplayerPart2.getWidth(),  bottom + lifeDisplayerPart2.getHeight());
+		lifeDisplayerRect3 = new Rect(lifeDisplayerRect2.right, bottom, lifeDisplayerRect2.right + lifeDisplayerPart3.getWidth(),  bottom + lifeDisplayerPart3.getHeight());
 		int left = lifeDisplayerRect2.left;
 		int right = lifeDisplayerRect3.right - 5;
 		sizeLifeBar = right - left;
 		life = new Rect(left, (int) (lifeDisplayerRect2.top + lifeDisplayerPart2.getHeight() * 0.1f) , right, (int) (lifeDisplayerRect2.bottom - lifeDisplayerPart2.getHeight() * 0.1f));
-		//************************************************************************
+
 	}
 }
