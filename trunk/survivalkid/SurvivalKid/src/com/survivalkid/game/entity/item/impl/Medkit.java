@@ -15,6 +15,7 @@ public class Medkit extends StandardObject {
 	/** Default constructor. */
 	public Medkit(int _x, int _y) {
 		super("Medkit", SpriteEnum.MEDKIT_SMALL, _x, _y, 0);
+		description = "Test description Medkit";
 	}
 
 	@Override

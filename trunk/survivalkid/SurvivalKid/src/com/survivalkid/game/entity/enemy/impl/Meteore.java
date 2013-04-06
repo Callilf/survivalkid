@@ -32,6 +32,7 @@ public class Meteore extends EnemyEntity {
 	
 	public Meteore() {
 		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
+		description = "Test description Meteor";
 	}
 	
 	/**

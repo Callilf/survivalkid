@@ -8,12 +8,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.survivalkid.CharacterSelectMenuActivity;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.MoveUtil;
+import com.survivalkid.menu.CharacterSelectMenuActivity;
 
 public class CharacterSelectMenu extends SurfaceView implements SurfaceHolder.Callback {
 

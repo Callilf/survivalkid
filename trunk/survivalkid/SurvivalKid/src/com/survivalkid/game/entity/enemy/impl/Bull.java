@@ -43,6 +43,8 @@ public class Bull extends EnemyEntity {
 		super("Bull", SpriteEnum.BULL, 0, 0, 30, 0);
 		attack = DEFAULT_DEFENSE + 2;
 		defense = DEFAULT_DEFENSE + 1;
+		
+		description = "Farida farida farida farida farida farida farida farida farida farida farida farida";
 	};
 
 	/** Initialize the enemy. */

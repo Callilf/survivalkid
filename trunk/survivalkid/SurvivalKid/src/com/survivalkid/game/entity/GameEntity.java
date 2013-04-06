@@ -43,6 +43,8 @@ public abstract class GameEntity implements Cloneable {
 	private String name;
 	/** The sprite (will be an animation in the future). */
 	protected AnimatedSprite sprite;
+	/** The description displayed in the HOW TO PLAY section. */
+	protected String description;
 
 	/** The hit box. */
 	protected Rect offsets;
@@ -582,6 +584,20 @@ public abstract class GameEntity implements Cloneable {
 	 */
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	
