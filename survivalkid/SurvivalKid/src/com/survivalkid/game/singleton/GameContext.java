@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.survivalkid.MainMenuActivity;
 import com.survivalkid.game.data.DataSave;
+import com.survivalkid.menu.MainMenuActivity;
 
 public class GameContext {
 

@@ -3,29 +3,39 @@ package com.survivalkid.game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.survivalkid.MainMenuActivity;
 import com.survivalkid.R;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
-import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
+import com.survivalkid.menu.MainMenuActivity;
 
 public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 	private static final String TAG = MainMenu.class.getSimpleName();
 
 	private Bitmap background;
+	
+	private Bitmap mainTitle;
+	private Rect mainTitleRect;
+	
+	private Bitmap playButton;
+	private Rect playButtonRect;
+	
+	private Bitmap optionsButton;
+	private Rect optionsButtonRect;
+	
+	private Bitmap htpButton;
+	private Rect htpButtonRect;
 
 	private MainMenuActivity activity;
-	private Paint paint;
+//	private Paint paint;
 	private boolean active;
 
 	public MainMenu(Context _context) {
@@ -45,17 +55,30 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
-		
 		setWillNotDraw(false);
 		
-		background = BitmapUtil.createBitmap(R.drawable.menu_background);
-
-		paint = DesignUtil.createTextPaint(Color.BLACK, 40, DesignUtil.TYPEFACE_MELOBDO, false);
-
-		active = true;
-		
+		//Launch the loader thread
 		ActiveLoadingThread threadLoader = new ActiveLoadingThread();
 		threadLoader.start();
+		
+		
+		background = BitmapUtil.createBitmap(R.drawable.menu_background);
+//		paint = DesignUtil.createTextPaint(Color.BLACK, 40, DesignUtil.TYPEFACE_MELOBDO, false);
+		active = true;
+		
+		
+		mainTitle = BitmapUtil.createBitmap(R.drawable.menu_main_title);
+		mainTitleRect = BitmapUtil.buildRect(mainTitle, MoveUtil.BACKGROUND_WIDTH/2 - mainTitle.getWidth()/2, MoveUtil.BACKGROUND_HEIGHT/20);
+		
+		playButton = BitmapUtil.createBitmap(R.drawable.menu_play_btn);
+		playButtonRect = BitmapUtil.buildRect(playButton, MoveUtil.BACKGROUND_WIDTH/2 - playButton.getWidth()/2, MoveUtil.BACKGROUND_HEIGHT/3);
+		
+		optionsButton = BitmapUtil.createBitmap(R.drawable.menu_options_btn);
+		optionsButtonRect = BitmapUtil.buildRect(optionsButton, MoveUtil.BACKGROUND_WIDTH/2 - optionsButton.getWidth()/2, playButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
+		
+		htpButton = BitmapUtil.createBitmap(R.drawable.menu_htp_btn);
+		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
+
 		
 		Log.d(TAG, "Start the game !");
 		create();
@@ -83,8 +106,13 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			// fills the canvas with black
-			canvas.drawBitmap(background, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);		
-			canvas.drawText("Touch to start", MoveUtil.SCREEN_WIDTH / 3, MoveUtil.SCREEN_HEIGHT / 2 - 10, paint);
+			canvas.drawBitmap(background, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);
+			
+			canvas.drawBitmap(mainTitle, mainTitleRect.left, mainTitleRect.top, null);
+			canvas.drawBitmap(playButton, playButtonRect.left, playButtonRect.top, null);
+			canvas.drawBitmap(optionsButton, optionsButtonRect.left, optionsButtonRect.top, null);
+			canvas.drawBitmap(htpButton, htpButtonRect.left, htpButtonRect.top, null);
+//			canvas.drawText("Touch to start", MoveUtil.SCREEN_WIDTH / 3, MoveUtil.SCREEN_HEIGHT / 2 - 10, paint);
 		}
 	}
 
@@ -94,8 +122,16 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 			return false;
 		}
 
-		activity.goToCharacterSelect();
-		active = false;
+		if (playButtonRect.contains((int) event.getX(), (int) event.getY())) {
+			activity.goToCharacterSelect();
+			active = false;
+		} else if (optionsButtonRect.contains((int) event.getX(), (int) event.getY())) {
+			activity.goToOptions();
+			active = false;
+		} else if (htpButtonRect.contains((int) event.getX(), (int) event.getY())) {
+			activity.goToHowToPlay();
+			active = false;
+		}
 
 		return true;
 	}

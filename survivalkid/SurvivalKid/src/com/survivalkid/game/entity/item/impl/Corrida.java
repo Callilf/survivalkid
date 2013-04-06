@@ -16,6 +16,7 @@ public class Corrida extends StandardObject {
 	/** Default constructor. */
 	public Corrida(int _x, int _y) {
 		super("Corrida", SpriteEnum.CORRIDA, _x, _y, 0);
+		description = "Test description Corrida";
 	}
 
 	@Override

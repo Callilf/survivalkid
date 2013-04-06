@@ -3,6 +3,7 @@ package com.survivalkid.game.util;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.util.SparseArray;
 
 public final class BitmapUtil {	
@@ -46,4 +47,7 @@ public final class BitmapUtil {
 		}
 	}
 	
+	public static Rect buildRect(Bitmap bitmap, int left, int top) {
+		return new Rect(left, top, left + bitmap.getWidth(), top + bitmap.getHeight());
+	}
 }

@@ -18,6 +18,7 @@ public class EnemySpeedIncrease extends StandardObject {
 	/** Default constructor. */
 	public EnemySpeedIncrease(int _x, int _y) {
 		super("EnemySpeedIncrease", SpriteEnum.HOURGLASS_RED, _x, _y, 0);
+		description = "Test description EnemySpeedIncreaser";
 	};
 
 	@Override

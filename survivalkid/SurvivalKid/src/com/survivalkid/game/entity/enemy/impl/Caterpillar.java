@@ -25,6 +25,7 @@ public class Caterpillar extends EnemyEntity {
 	/** Default constructor. */
 	public Caterpillar() {
 		super("Caterpillar", SpriteEnum.CATERPILLAR, 0, 0, 5, 0);
+		description = "Test test caterpillar test Test test caterpillar test Test test caterpillar";
 	};
 
 	/** Initialize the enemy. */

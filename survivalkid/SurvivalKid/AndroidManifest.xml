@@ -14,16 +14,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainMenuActivity"
+            android:name=".menu.MainMenuActivity"
             android:label="@string/title_activity_menu"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".CharacterSelectMenuActivity"
+            android:name=".menu.CharacterSelectMenuActivity"
             android:label="@string/title_activity_menu"
             android:screenOrientation="landscape" >
         </activity>
@@ -35,7 +36,21 @@
         <activity
             android:name=".EndActivity"
             android:label="@string/title_activity_end"
-            android:theme="@style/ThemeDialogCustom">
+            android:theme="@style/ThemeDialogCustom" >
+        </activity>
+        <activity
+            android:name=".menu.OptionsActivity"
+            android:label="@string/title_activity_options" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.survivalkid.MainMenuActivity" />
+        </activity>
+        <activity
+            android:name=".menu.HowToPlayActivity"
+            android:label="@string/title_activity_how_to_play" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.survivalkid.MainMenuActivity" />
         </activity>
     </application>
 

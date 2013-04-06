@@ -8,6 +8,7 @@ public class FireMeteor extends Meteore {
 	
 	public FireMeteor() {
 		super("Meteore", SpriteEnum.FIRE_METEORE, 0, 0, 10, 1);
+		description = "Test description FireMeteore";
 	}
 	
 	/**

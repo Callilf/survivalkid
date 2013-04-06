@@ -100,27 +100,27 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		Rect firstButtonRect = null;
 		Bitmap firstButton = null;
 		if(endMode) {
-			buttonRestartRect = buildRect(buttonRestart,
+			buttonRestartRect = BitmapUtil.buildRect(buttonRestart,
 				panel.getWidth() - buttonRestart.getWidth() - buttonRestart.getWidth() / 5,
 				buttonRestart.getHeight() / 3);
 			firstButton = buttonRestart;
 			firstButtonRect = buttonRestartRect;
 		} else {
-			buttonContinueRect = buildRect(buttonContinue,
+			buttonContinueRect = BitmapUtil.buildRect(buttonContinue,
 					panel.getWidth() - buttonContinue.getWidth() - buttonContinue.getWidth() / 5,
 					buttonContinue.getHeight() / 3);
 			firstButton = buttonContinue;
 			firstButtonRect = buttonContinueRect;
 		}
-		buttonMenuRect = buildRect(buttonMenu, panel.getWidth() - buttonMenu.getWidth() - buttonMenu.getWidth() / 5,
+		buttonMenuRect = BitmapUtil.buildRect(buttonMenu, panel.getWidth() - buttonMenu.getWidth() - buttonMenu.getWidth() / 5,
 				firstButtonRect.top + firstButton.getHeight() + panel.getHeight() / 7);
-		buttonLeaveRect = buildRect(buttonLeave,
+		buttonLeaveRect = BitmapUtil.buildRect(buttonLeave,
 				panel.getWidth() - buttonLeave.getWidth() - buttonLeave.getWidth() / 5,
 				buttonMenuRect.top + buttonMenu.getHeight() + panel.getHeight() / 7);
-		textSurvivalTimeRect = buildRect(textSurvivalTime, panel.getWidth() / 2 - textSurvivalTime.getWidth() / 2,
+		textSurvivalTimeRect = BitmapUtil.buildRect(textSurvivalTime, panel.getWidth() / 2 - textSurvivalTime.getWidth() / 2,
 				panel.getWidth() / 15);
-		textGamePausedRect = buildRect(textGamePaused, panel.getWidth() / 2 - textGamePaused.getWidth() / 2, panel.getWidth() / 20);
-		persoArtworkRect = buildRect(persoArtwork, persoArtwork.getWidth()/10, panel.getWidth() / 20);
+		textGamePausedRect = BitmapUtil.buildRect(textGamePaused, panel.getWidth() / 2 - textGamePaused.getWidth() / 2, panel.getWidth() / 20);
+		persoArtworkRect = BitmapUtil.buildRect(persoArtwork, persoArtwork.getWidth()/10, panel.getWidth() / 20);
 
 		Date date = new Date(GameContext.getSingleton().gameDuration);
 		survivalTime = formatter.format(date);
@@ -150,10 +150,6 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 				break;
 			}
 		}
-	}
-
-	private Rect buildRect(Bitmap bitmap, int left, int top) {
-		return new Rect(left, top, left + bitmap.getWidth(), top + bitmap.getHeight());
 	}
 
 	/**
