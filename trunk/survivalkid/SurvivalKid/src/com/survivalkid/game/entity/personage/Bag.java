@@ -71,8 +71,7 @@ public class Bag {
 		}
 	}
 
-	public void checkTouched(MotionEvent event) {
-		TouchHandler touchHandler = new TouchHandler(event);
+	public void checkTouched(TouchHandler touchHandler) {
 		if (touchHandler.getActionCode() == MotionEvent.ACTION_DOWN || touchHandler.getActionCode() == MotionEvent.ACTION_POINTER_DOWN) {
 			if (freezeExctinction < GameContext.getSingleton().getCurrentTimeMillis()
 					&& touchBox.contains(touchHandler.getX(), touchHandler.getY())) {

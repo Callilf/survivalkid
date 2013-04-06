@@ -12,6 +12,7 @@ import com.survivalkid.R;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.menu.CharacterSelectMenuActivity;
 
@@ -81,7 +82,9 @@ public class CharacterSelectMenu extends SurfaceView implements SurfaceHolder.Ca
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			// fills the canvas with black
-			canvas.drawBitmap(background, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);		
+			DesignUtil.applyScaleRatio(canvas);
+			DesignUtil.drawBackgroundImage(canvas, background, true);
+			
 //			canvas.drawText("Select your character", MoveUtil.SCREEN_WIDTH / 6, MoveUtil.SCREEN_HEIGHT / 2 - 10, paint);
 //			canvas.drawText("Play with Yugo", MoveUtil.SCREEN_WIDTH * 0.1f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);
 //			canvas.drawText("Play with Yuna", MoveUtil.SCREEN_WIDTH * 0.6f, MoveUtil.SCREEN_HEIGHT * 0.7f, paint2);

@@ -17,6 +17,7 @@ import com.survivalkid.GameActivity;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.SurfaceHandler;
+import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.data.DataSave;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
@@ -268,7 +269,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			// fills the canvas with black
-			surfaceHandler.drawBackground(canvas);
+			surfaceHandler.drawBackgroundGame(canvas);
 
 			chrono.draw(canvas);
 			decorManager.draw(canvas, false);
@@ -293,15 +294,18 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (!modeEditLocationButton) {
+			TouchHandler touchHandler = new TouchHandler(event);
 			if (characterManager.getCharacterList().size() > OWN_PERSO
 					&& characterManager.getCharacterList(OWN_PERSO) != null) {
-				characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event);
-				characterManager.getCharacterList(OWN_PERSO).getBag().checkTouched(event);
+				characterManager.getCharacterList(OWN_PERSO).getMoveManager().calculMove(event, touchHandler);
+				characterManager.getCharacterList(OWN_PERSO).getBag().checkTouched(touchHandler);
 			}
 	
 			// Check if a balloon has been touched
-			if (itemManager.getItemList().size() > 0) {
-				itemManager.checkBalloonTouchBox(event);
+			if (itemManager.getItemList().size() > 0 && 
+				(touchHandler.getActionCode() == MotionEvent.ACTION_DOWN || 
+				touchHandler.getActionCode() == MotionEvent.ACTION_POINTER_DOWN)) {
+				itemManager.checkBalloonTouchBox(touchHandler);
 			}
 		}
 		else {

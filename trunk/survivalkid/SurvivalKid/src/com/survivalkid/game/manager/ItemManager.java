@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
-import android.view.MotionEvent;
 
 import com.survivalkid.game.algo.item.BasicItemGenerator;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
+import com.survivalkid.game.entity.item.impl.Corrida;
 import com.survivalkid.game.entity.item.impl.EnemySpeedIncrease;
 import com.survivalkid.game.entity.item.impl.EnemySpeedReducer;
 import com.survivalkid.game.entity.item.impl.Medkit;
 import com.survivalkid.game.entity.item.impl.PlayerSpeedReducer;
 import com.survivalkid.game.entity.item.impl.SuperMedkit;
-import com.survivalkid.game.entity.item.impl.Corrida;
 import com.survivalkid.game.util.TimerUtil;
 
 public class ItemManager extends ObjectManager {
@@ -122,10 +121,9 @@ public class ItemManager extends ObjectManager {
 	//*******************
 	// CHECK BALLOON TOUCHBOX
 	//*******************	
-	public void checkBalloonTouchBox(MotionEvent event) {
+	public void checkBalloonTouchBox(TouchHandler touchHandler) {
 		for(ItemEntity item : itemList) {
 			if (item.isInBalloon() && !item.getBalloon().isPierced()) {
-				TouchHandler touchHandler = new TouchHandler(event, true);
 				//If the balloon is touched
 				if(item.getBalloon().getBalloonTouchBox().contains(touchHandler.getX(), touchHandler.getY())) {
 					item.balloonTouched();

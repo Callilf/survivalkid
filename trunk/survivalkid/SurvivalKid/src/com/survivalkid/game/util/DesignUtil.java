@@ -1,6 +1,10 @@
 package com.survivalkid.game.util;
 
+import static com.survivalkid.game.util.MoveUtil.RESCALING_ACTIVE;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.View;
@@ -101,6 +105,42 @@ public final class DesignUtil {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
+	
+	public static void applyScaleRatio(Canvas canvas) {
+		if (RESCALING_ACTIVE) {
+			canvas.scale(MoveUtil.RATIO_RESCALING_WIDTH, MoveUtil.RATIO_RESCALING_HEIGHT);
+		}
+	}
+	
+	/**
+	 * Draw an background image and center the image in the screen
+	 * 
+	 * @param canvas the canvas
+	 * @param image the image
+	 * @param isVerticalCenter true to center the image in vertical position. False to put the floor on the bottom of the screen
+	 */
+	public static void drawBackgroundImage(Canvas canvas, Bitmap image, boolean isVerticalCenter) {
+		canvas.drawColor(Color.BLUE);
+		int left = MoveUtil.BACKGROUND_LEFT;
+		int top = MoveUtil.BACKGROUND_TOP;
+		
+		// put the bottom at the bottom and hide the top
+		if (image.getHeight() > MoveUtil.BACKGROUND_HEIGHT) {
+			if (isVerticalCenter) {
+				top = (MoveUtil.BACKGROUND_HEIGHT - image.getHeight()) / 2;
+			}
+			else {
+				top = MoveUtil.BACKGROUND_HEIGHT - image.getHeight();
+			}
+		}
+		
+		// center the image in horizontal
+		if (image.getWidth() > MoveUtil.BACKGROUND_WIDTH) {
+			left = (MoveUtil.BACKGROUND_WIDTH - image.getWidth())/2;
+		}
+		
+		canvas.drawBitmap(image, left, top, null);				
+	}
 	
 	/**
 	 * Get a string from the resources

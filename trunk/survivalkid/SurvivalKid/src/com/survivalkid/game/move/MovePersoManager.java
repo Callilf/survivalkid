@@ -61,9 +61,8 @@ public class MovePersoManager {
 	 * 
 	 * @param event event of motion
 	 */
-	public void calculMove(MotionEvent event) {
+	public void calculMove(MotionEvent event, TouchHandler touchHandler) {
 		// get the action and the pid of the pointer
-		TouchHandler touchHandler = new TouchHandler(event);
 		Integer pidObject = touchHandler.getPid();
 		int pidUP = -1;
 		

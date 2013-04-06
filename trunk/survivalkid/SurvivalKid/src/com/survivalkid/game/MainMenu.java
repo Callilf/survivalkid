@@ -10,9 +10,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.menu.MainMenuActivity;
 
@@ -68,16 +70,16 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 		
 		
 		mainTitle = BitmapUtil.createBitmap(R.drawable.menu_main_title);
-		mainTitleRect = BitmapUtil.buildRect(mainTitle, MoveUtil.BACKGROUND_WIDTH/2 - mainTitle.getWidth()/2, MoveUtil.BACKGROUND_HEIGHT/20);
+		mainTitleRect = BitmapUtil.buildRect(mainTitle, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - mainTitle.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/20);
 		
 		playButton = BitmapUtil.createBitmap(R.drawable.menu_play_btn);
-		playButtonRect = BitmapUtil.buildRect(playButton, MoveUtil.BACKGROUND_WIDTH/2 - playButton.getWidth()/2, MoveUtil.BACKGROUND_HEIGHT/3);
+		playButtonRect = BitmapUtil.buildRect(playButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - playButton.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/3);
 		
 		optionsButton = BitmapUtil.createBitmap(R.drawable.menu_options_btn);
-		optionsButtonRect = BitmapUtil.buildRect(optionsButton, MoveUtil.BACKGROUND_WIDTH/2 - optionsButton.getWidth()/2, playButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
+		optionsButtonRect = BitmapUtil.buildRect(optionsButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - optionsButton.getWidth()/2, playButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
 		
 		htpButton = BitmapUtil.createBitmap(R.drawable.menu_htp_btn);
-		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
+		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
 
 		
 		Log.d(TAG, "Start the game !");
@@ -106,7 +108,8 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		if (canvas != null) {
 			// fills the canvas with black
-			canvas.drawBitmap(background, MoveUtil.BACKGROUND_LEFT, MoveUtil.BACKGROUND_TOP, null);
+			DesignUtil.applyScaleRatio(canvas);
+			DesignUtil.drawBackgroundImage(canvas, background, true);
 			
 			canvas.drawBitmap(mainTitle, mainTitleRect.left, mainTitleRect.top, null);
 			canvas.drawBitmap(playButton, playButtonRect.left, playButtonRect.top, null);
@@ -122,13 +125,14 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 			return false;
 		}
 
-		if (playButtonRect.contains((int) event.getX(), (int) event.getY())) {
+		TouchHandler touchHandler = new TouchHandler(event, true);
+		if (playButtonRect.contains(touchHandler.getX(), touchHandler.getY())) {
 			activity.goToCharacterSelect();
 			active = false;
-		} else if (optionsButtonRect.contains((int) event.getX(), (int) event.getY())) {
+		} else if (optionsButtonRect.contains(touchHandler.getX(), touchHandler.getY())) {
 			activity.goToOptions();
 			active = false;
-		} else if (htpButtonRect.contains((int) event.getX(), (int) event.getY())) {
+		} else if (htpButtonRect.contains(touchHandler.getX(), touchHandler.getY())) {
 			activity.goToHowToPlay();
 			active = false;
 		}
