@@ -220,7 +220,7 @@ public abstract class GameEntity implements Cloneable, DynamicDrawableObject {
 		case STATE_RECOVERY: 
 			sprite.setRecovery(false);break;
 		case STATE_CORRIDA : 
-			SharedVars.getSingleton().setPersoDrawnInBackground(true);
+			SharedVars.getSingleton().setPersoDrawnInBackground(false);
 			addState(StateEnum.STATE_UNTOUCHABLE, 500);
 		case STATE_HIGH_SPEED_ENEMIES:
 		case STATE_LOW_SPEED_ENEMIES:
