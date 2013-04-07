@@ -34,7 +34,7 @@ public class BalloonCrate extends ItemEntity {
 	/** Default constructor. */
 	public BalloonCrate() {
 		super("Balloon", SpriteEnum.BALLOON_CRATE, 0, 0, 0);
-		description = "Test description BalloonCrate";
+		description = "An item container. Pierce it with your finger to reveal it's content.";
 	};
 
 	/** Default constructor. */

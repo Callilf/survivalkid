@@ -71,7 +71,9 @@ public class Item_Adapter extends BaseAdapter{
         }
         
         
+        TextView name = (TextView)convertView.findViewById(R.id.entityTitle);
         TextView desc = (TextView)convertView.findViewById(R.id.entityText);
+        name.setText(entity.getName());
         desc.setText(entity.getDescription());
 
         return convertView;

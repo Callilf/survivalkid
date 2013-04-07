@@ -12,13 +12,14 @@ public class EnemySpeedReducer extends StandardObject {
 
 	/** Default constructor. */
 	public EnemySpeedReducer() {
-		this(0, 0);
+		super("Time decelerator", SpriteEnum.HOURGLASS_GREEN, 0, 0, 0);
+		description = "Reduce the speed of all the enemies during 10 seconds.";
 	};
 
 	/** Default constructor. */
 	public EnemySpeedReducer(int _x, int _y) {
-		super("EnemySpeedReducer", SpriteEnum.HOURGLASS_GREEN, _x, _y, 0);
-		description = "Test description EnemySpeedReducer";
+		super("Time decelerator", SpriteEnum.HOURGLASS_GREEN, _x, _y, 0);
+		description = "Reduce the speed of all the enemies during 10 seconds.";
 	};
 
 	@Override

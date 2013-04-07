@@ -7,8 +7,8 @@ import com.survivalkid.game.util.MoveUtil;
 public class FireMeteor extends Meteore {
 	
 	public FireMeteor() {
-		super("Meteore", SpriteEnum.FIRE_METEORE, 0, 0, 10, 1);
-		description = "Test description FireMeteore";
+		super("Fire Meteor", SpriteEnum.FIRE_METEORE, 0, 0, 10, 1);
+		description = "Rarer than the meteor, it releases a persistent fire on the ground when it crashes.";
 	}
 	
 	/**

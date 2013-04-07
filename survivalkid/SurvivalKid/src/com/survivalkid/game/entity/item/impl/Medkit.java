@@ -9,13 +9,14 @@ public class Medkit extends StandardObject {
 	
 	/** Default constructor. */
 	public Medkit() {
-		this(0, 0);
+		super("Medkit", SpriteEnum.MEDKIT_SMALL, 0, 0, 0);
+		description = "Heal 15 pv.";
 	}
 	
 	/** Default constructor. */
 	public Medkit(int _x, int _y) {
 		super("Medkit", SpriteEnum.MEDKIT_SMALL, _x, _y, 0);
-		description = "Test description Medkit";
+		description = "Heal 15 pv.";
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public abstract class StandardObject extends ItemEntity {
 	
 	/** Default constructor. */
 	public StandardObject(String _name, SpriteEnum spriteEnum, int _x, int _y, int _power) {
-		super("_name", spriteEnum, _x, _y, 0);
+		super(_name, spriteEnum, _x, _y, 0);
 		init();
 	}
 

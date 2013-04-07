@@ -5,24 +5,31 @@
     android:layout_gravity="center"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
-
+
 <ImageView
     android:id="@+id/entityImage"
     android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:layout_gravity="center_vertical"
-    android:layout_marginBottom="5dp"
-    android:layout_marginTop="5dp" />
-
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp" />
+
+<TextView
+    android:id="@+id/entityTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:text="Medium Text"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="#FFFFFF"
+    android:textSize="14dp"
+    android:textStyle="bold" />
+
 <TextView
     android:id="@+id/entityText"
     android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
-    android:layout_gravity="center_vertical"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="20dp"
+    android:layout_height="wrap_content"
     android:layout_marginRight="20dp"
-    android:layout_marginTop="5dp"
     android:text="Medium Text"
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:textColor="#FFFFFF"
