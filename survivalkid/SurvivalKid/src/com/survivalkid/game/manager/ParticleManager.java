@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import com.survivalkid.game.particle.ParticleEmitter;
 
 public class ParticleManager {
-	private static final String TAG = ParticleManager.class.getSimpleName();
 
 	private List<ParticleEmitter> emitterList;
 	private List<ParticleEmitter> deadEmitters;
