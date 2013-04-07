@@ -56,17 +56,6 @@ public class EndActivity extends AbstractActivity {
 		}
 	}
 	
-	public void returnResult(String result) {
-		 Intent returnIntent = new Intent();
-		 if(result != null) {
-			 returnIntent.putExtra("result", result);
-			 setResult(RESULT_OK,returnIntent);
-		 } else {
-			 setResult(RESULT_CANCELED,returnIntent);
-		 }
-		 finish();
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {

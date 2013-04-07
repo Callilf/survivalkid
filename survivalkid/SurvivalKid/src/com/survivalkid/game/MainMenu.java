@@ -71,22 +71,22 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 		
 		
 		mainTitle = BitmapUtil.createBitmap(R.drawable.menu_main_title);
-		mainTitleRect = BitmapUtil.buildRect(mainTitle, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - mainTitle.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/20);
-		
 		playButton = BitmapUtil.createBitmap(R.drawable.menu_play_btn);
-		playButtonRect = BitmapUtil.buildRect(playButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - playButton.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/3);
-		
 		optionsButton = BitmapUtil.createBitmap(R.drawable.menu_options_btn);
-		optionsButtonRect = BitmapUtil.buildRect(optionsButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - optionsButton.getWidth()/2, playButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
-		
 		htpButton = BitmapUtil.createBitmap(R.drawable.menu_htp_btn);
-		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
-
+		initRectsPosition();
 		
 		if (Constants.DEBUG) {
 			Log.d(TAG, "Start the game !");
 		}
 		create();
+	}
+	
+	public void initRectsPosition() {
+		mainTitleRect = BitmapUtil.buildRect(mainTitle, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - mainTitle.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/20);
+		playButtonRect = BitmapUtil.buildRect(playButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - playButton.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/3);
+		optionsButtonRect = BitmapUtil.buildRect(optionsButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - optionsButton.getWidth()/2, playButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
+		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
 	}
 
 	/**

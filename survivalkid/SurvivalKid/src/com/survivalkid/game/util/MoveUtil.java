@@ -133,7 +133,7 @@ public final class MoveUtil {
 		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
 	}
 	
-	public static void changeScalingMode() {
+	public static void changeScalingMode(boolean isInGame) {
 		RESCALING_ACTIVE = !RESCALING_ACTIVE;
 		if (RESCALING_ACTIVE) {
 			setScreenInCorner();
@@ -141,8 +141,10 @@ public final class MoveUtil {
 		else {
 			setScreenCenter();
 		}
-		initializePositionButton();
-		virtualBag.initPosition();
+		if (isInGame) {
+			initializePositionButton();
+			virtualBag.initPosition();
+		}
 		PrefsUtil.setPrefs(boolean.class, PreferencesConstants.RESCALING_ENABLED, RESCALING_ACTIVE);
 	}
 	

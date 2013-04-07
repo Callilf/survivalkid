@@ -18,7 +18,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.survivalkid.EndActivity;
+import com.survivalkid.AbstractActivity;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
@@ -41,7 +41,7 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 	/** The selected character. (yugo or yuna)*/
 	private int selectedCharacter;
 
-	private EndActivity activity;
+	private AbstractActivity activity;
 	private Bitmap panel;
 	private Bitmap buttonContinue;
 	private Rect buttonContinueRect;
@@ -75,7 +75,7 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		// make the GamePanel focusable so it can handle events
 		setFocusable(true);
 
-		activity = (EndActivity) _context;
+		activity = (AbstractActivity) _context;
 		setWillNotDraw(false);
 
 		paint = DesignUtil.createTextPaint(Color.WHITE, 50);

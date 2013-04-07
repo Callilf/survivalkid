@@ -109,7 +109,7 @@ public class GameActivity extends AbstractActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 1) {
 			if (resultCode == RESULT_OK) {
-				String result = data.getStringExtra("result");
+				String result = data.getStringExtra(RESULT);
 				
 				if ("leave".equals(result)) {
 					//Leave game
@@ -200,7 +200,7 @@ public class GameActivity extends AbstractActivity {
 			GameContext.getSingleton().getDataSave().resetScores(this);
 			break;
 		case R.id.m_scaling:
-			MoveUtil.changeScalingMode();
+			MoveUtil.changeScalingMode(true);
 			gamePanel.getCharacterManager().initLifebarRect();
 			gamePanel.afterChangeLocationButton(false);
 			break;

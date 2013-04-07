@@ -1,6 +1,7 @@
 package com.survivalkid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -9,6 +10,9 @@ import com.survivalkid.game.core.Constants;
 public abstract class AbstractActivity extends Activity {
 	
 	private static final String TAG = AbstractActivity.class.getSimpleName();
+	
+	protected static final String RESULT = "result";
+	protected static final String RETURN_NOTHING = "nothing";
 	
 	private String tagParent;
 
@@ -79,6 +83,22 @@ public abstract class AbstractActivity extends Activity {
 	
 	public void setTagParent(String tagParent) {
 		this.tagParent = tagParent;
+	}
+
+	/**
+	 * Return a result and finish the activity
+	 * 
+	 * @param result the result
+	 */
+	public void returnResult(String result) {
+		 Intent returnIntent = new Intent();
+		 if(result != null) {
+			 returnIntent.putExtra(RESULT, result);
+			 setResult(RESULT_OK,returnIntent);
+		 } else {
+			 setResult(RESULT_CANCELED,returnIntent);
+		 }
+		 finish();
 	}
 
 }
