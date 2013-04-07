@@ -47,6 +47,7 @@ public final class Constants {
 		public static final String DISPLAY_HITBOX = "displayHitbox";
 		public static final String ANTIALIAS_TEXT = "antialiasText";
 		public static final String RESCALING_ENABLED = "scalingEnabled";
+		public static final String SOUND_ENABLED = "soundEnabled";
 		public static final String KEY_POSITION_CENTER = "survival-kid-buttonPosition";
 		public static final String KEY_POSITION_STRETCH = "survival-kid-buttonPosition-stretch";
 	}

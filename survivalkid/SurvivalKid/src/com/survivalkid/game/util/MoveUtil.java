@@ -146,6 +146,10 @@ public final class MoveUtil {
 		PrefsUtil.setPrefs(boolean.class, PreferencesConstants.RESCALING_ENABLED, RESCALING_ACTIVE);
 	}
 	
+	public static boolean isScalingPossible() {
+		return SCREEN_WIDTH != BACKGROUND_WIDTH || SCREEN_HEIGHT != BACKGROUND_HEIGHT;
+	}
+	
 	public static void initializeButton() {
 		btn_left = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_left), BitmapUtil.createBitmap(R.drawable.arrow_left_pressed));
 		btn_right = new ActionButton(BitmapUtil.createBitmap(R.drawable.arrow_right), BitmapUtil.createBitmap(R.drawable.arrow_right_pressed));
