@@ -7,8 +7,10 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -73,6 +75,14 @@ public class OptionsActivity extends AbstractActivity {
         	View groupRadio = findViewById(R.id.optionLinearScreen);
         	groupRadio.setVisibility(View.GONE);
         }
+        
+        //Replace buttons
+        Button replaceButtonsBtn = (Button) findViewById(R.id.redefineButtonLocationsBtn);
+        replaceButtonsBtn.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Log.i(TAG, "CLIC !");
+			}
+		});
     }
 
     @Override
