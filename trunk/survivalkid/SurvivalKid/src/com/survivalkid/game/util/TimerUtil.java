@@ -6,6 +6,8 @@ import java.util.TreeMap;
 
 import android.util.Log;
 
+import com.survivalkid.game.core.Constants;
+
 /**
  * Use : 
  * - call TimerUtil.start(tag);
@@ -96,15 +98,19 @@ public final class TimerUtil {
 	 * @param object the object
 	 */
 	public static void log(String object) {
-		Log.i(TAG, "Timer - " + object + " > " + mapTime.get(object));
+		if (Constants.DEBUG) {
+			Log.i(TAG, "Timer - " + object + " > " + mapTime.get(object));
+		}
 	}
 	
 	public static void logAll() {
-		Log.i(TAG, "LOG ALL DURATION");
-		for (Entry<String, LocalTimer> entry : mapTime.entrySet()) {
-			Log.i(TAG, "Timer - " + entry.getKey() + " > " + entry.getValue());
+		if (Constants.DEBUG) {
+			Log.i(TAG, "LOG ALL DURATION");
+			for (Entry<String, LocalTimer> entry : mapTime.entrySet()) {
+				Log.i(TAG, "Timer - " + entry.getKey() + " > " + entry.getValue());
+			}
+			Log.i(TAG, "END LOG ALL DURATION");
 		}
-		Log.i(TAG, "END LOG ALL DURATION");
 	}
 	
 	public static void reset() {

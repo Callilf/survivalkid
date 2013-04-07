@@ -15,6 +15,8 @@ import java.util.TreeSet;
 import android.content.Context;
 import android.util.Log;
 
+import com.survivalkid.game.core.Constants;
+
 /**
  * Store data when the application is shutdown
  * 
@@ -125,14 +127,16 @@ public final class DataSave implements Serializable {
 			is.close();
 		}
 		catch(FileNotFoundException e) {
-			Log.d(TAG, "File not found");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "File not found");
+			}
 			data = new DataSave();
 		} catch (StreamCorruptedException e) {
-			Log.w(TAG, "Incorrect inputstream stream", e);
+			Log.e(TAG, "Incorrect inputstream stream", e);
 		} catch (IOException e) {
-			Log.w(TAG, "Incorrect inputstream", e);
+			Log.e(TAG, "Incorrect inputstream", e);
 		} catch (ClassNotFoundException e) {
-			Log.w(TAG, "Error in unserializing", e);
+			Log.e(TAG, "Error in unserializing", e);
 		}
 		finally {
 			if (fis != null) {
@@ -142,11 +146,13 @@ public final class DataSave implements Serializable {
 			// ignore all problem in deserialization 
 			// TODO : to delete when the format will be fixed to avoid overwrite the score if there is a minor problem
 			if (data == null) {
-				Log.w(TAG, "Old highscore will be erased because of problem of deserialization");
+				Log.e(TAG, "Old highscore will be erased because of problem of deserialization");
 				data = new DataSave();
 			}
 			else {
-				Log.d(TAG, "Scores has been loaded. Nb score : " + data.highScore.size());
+				if (Constants.DEBUG) {
+					Log.d(TAG, "Scores has been loaded. Nb score : " + data.highScore.size());
+				}
 			}
 		}
 		
@@ -162,9 +168,13 @@ public final class DataSave implements Serializable {
 			os.writeObject(this);
 			os.close();
 		} catch (FileNotFoundException e) {
-			Log.d(TAG, "File not found");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "File not found");
+			}
 		} catch (IOException e) {
-			Log.d(TAG, "Failed to init save data");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Failed to init save data");
+			}
 		}
 		finally {
 			if (fos != null) {
@@ -179,7 +189,7 @@ public final class DataSave implements Serializable {
 		try {
 			str.close();
 		} catch (IOException e) {
-			Log.w(TAG, "OutputStream cannot be closed : "+ toLog);
+			Log.w(TAG, "OutputStream cannot be closed : "+ toLog, e);
 		}
 	}
 	
@@ -187,7 +197,7 @@ public final class DataSave implements Serializable {
 		try {
 			str.close();
 		} catch (IOException e) {
-			Log.w(TAG, "InputStream cannot be closed : "+ toLog);
+			Log.w(TAG, "InputStream cannot be closed : "+ toLog, e);
 		}
 	}
 }

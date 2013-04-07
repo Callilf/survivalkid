@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.survivalkid.GameActivity;
-
 import android.util.Log;
+
+import com.survivalkid.GameActivity;
+import com.survivalkid.game.core.Constants;
 
 public class GameServer extends Thread {
 
@@ -69,18 +70,24 @@ public class GameServer extends Thread {
 	public void run() {
 		try {
 			serverSocket = new ServerSocket(SERVER_PORT);
-			Log.d(TAG, "Server started!");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Server started!");
+			}
 			// listen
 			while (!requestedToStop) {
 
 				Socket client = serverSocket.accept();
-				Log.d(TAG, "Server received a request!");
+				if (Constants.DEBUG) {
+					Log.d(TAG, "Server received a request!");
+				}
 				GameServerThread thread = new GameServerThread(client, this);
 				thread.start();
 			}
 
 			isStopped = true;
-			Log.d(TAG, "Server stopped!");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Server stopped!");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			handleError(e, "error on server socket!");
@@ -94,7 +101,9 @@ public class GameServer extends Thread {
 	}
 
 	public void handleError(Exception e, String msg) {
-		Log.e(TAG, msg, e);
+		if (Constants.DEBUG) {
+			Log.e(TAG, msg, e);
+		}
 	}
 
 	public void requestStop() {

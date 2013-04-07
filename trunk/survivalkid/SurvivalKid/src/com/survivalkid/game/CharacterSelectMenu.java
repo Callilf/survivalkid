@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.thread.ActiveLoadingThread;
 import com.survivalkid.game.util.BitmapUtil;
@@ -56,7 +57,9 @@ public class CharacterSelectMenu extends SurfaceView implements SurfaceHolder.Ca
 		ActiveLoadingThread threadLoader = new ActiveLoadingThread();
 		threadLoader.start();
 		
-		Log.d(TAG, "Start the game !");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Start the game !");
+		}
 		create();
 	}
 

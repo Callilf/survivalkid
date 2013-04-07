@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 
 import com.survivalkid.AbstractActivity;
 import com.survivalkid.R;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.impl.Bull;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
@@ -104,7 +105,9 @@ public class HowToPlayActivity extends AbstractActivity {
     
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.d(TAG, "Touch pressed : " + keyCode);
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Touch pressed : " + keyCode);
+		}
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			finish();

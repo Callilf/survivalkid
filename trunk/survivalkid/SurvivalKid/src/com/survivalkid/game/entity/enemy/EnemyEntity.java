@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.util.Log;
 
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.CollisionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
@@ -93,11 +94,15 @@ public abstract class EnemyEntity extends GameEntity {
 					collidingFrames = 1;
 				}
 
-				Log.d(TAG, this.getName() + " colliding with character " + _gameEntity.getId() + " for "
-						+ collidingFrames + " frames !");
-
+				if (Constants.DEBUG) {
+					Log.d(TAG, this.getName() + " colliding with character " + _gameEntity.getId() + " for "
+							+ collidingFrames + " frames !");
+				}
+						
 				if (collidingFrames >= CollisionConstants.MAX_FRAMES_OF_COLLISION) {
-					Log.i(TAG, this.getName() + " apply collision to character " + _gameEntity.getId());
+					if (Constants.DEBUG) {
+						Log.i(TAG, this.getName() + " apply collision to character " + _gameEntity.getId());
+					}
 					applyCollisionCharacter((Personage) _gameEntity);
 				}
 			} else if (_gameEntity instanceof EnemyEntity) {

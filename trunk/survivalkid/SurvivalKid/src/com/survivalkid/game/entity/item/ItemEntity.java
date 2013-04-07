@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.util.Log;
 
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.impl.BalloonCrate;
@@ -144,7 +145,9 @@ public abstract class ItemEntity extends GameEntity {
 	
 	public void balloonTouched() {
 		if(!balloon.isPierced()) {
-			Log.w(TAG, "balloon touched");
+			if (Constants.DEBUG) {
+				Log.i(TAG, "balloon touched");
+			}
 			balloon.touched();
 		}
 	}

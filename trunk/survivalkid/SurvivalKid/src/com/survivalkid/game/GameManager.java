@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.survivalkid.GameActivity;
 import com.survivalkid.game.core.ChronoDisplayer;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.SurfaceHandler;
 import com.survivalkid.game.core.TouchHandler;
@@ -67,7 +68,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		
 		modeEditLocationButton = false;
 		surfaceActive = false;
-		Log.d(TAG, "Create the GameManager!");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Create the GameManager!");
+		}
 
 		activity = (GameActivity) context;
 		
@@ -118,7 +121,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	 *            PersonageConstants
 	 */
 	public void create() {
-		Log.d(TAG, "Start the game !");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Start the game !");
+		}
 		characterManager = new CharacterManager();
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
@@ -168,7 +173,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	public void restart() {
 		thread.setPause(true);
 
-		Log.d(TAG, "ReStart the game !");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "ReStart the game !");
+		}
 
 		GameContext.getSingleton().initSingleton();
 		create();
@@ -261,7 +268,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 			}
 		}
 		
-		Log.i(TAG, "DISPLAY END MENU");
+		if (Constants.DEBUG) {
+			Log.i(TAG, "DISPLAY END MENU");
+		}
 		activity.displayEndMenu();
 	}
 
@@ -344,7 +353,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		Log.d(TAG, "Surface is being created");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Surface is being created");
+		}
 		surfaceActive = true;
 		// at this point the surface is created and
 		// we can safely start the game loop
@@ -352,7 +363,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.d(TAG, "Surface is being destroyed");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Surface is being destroyed");
+		}
 		surfaceActive = false;
 	}
 	
@@ -369,7 +382,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 				// try again shutting down the thread
 			}
 		}
-		Log.d(TAG, "Thread was shut down cleanly");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Thread was shut down cleanly");
+		}
 	}
 
 	/** Action when clicking on the BACK button. */

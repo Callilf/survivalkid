@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.singleton.GameContext;
@@ -59,7 +60,9 @@ public class GameActivity extends AbstractActivity {
 
 		launchGame(selectedCharacter);
 
-		Log.d(TAG, "View added");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "View added");
+		}
 	}
 
 	public void launchGame(int persoSelected) {
@@ -119,7 +122,7 @@ public class GameActivity extends AbstractActivity {
 					//restart
 					gamePanel.restart();
 				} else {
-					Log.e(TAG, "Wrong return code.");
+					Log.e(TAG, "Wrong return code : " + result);
 				}
 			}
 			if (resultCode == RESULT_CANCELED) {
@@ -132,7 +135,9 @@ public class GameActivity extends AbstractActivity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.d(TAG, "Touch pressed : " + keyCode);
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Touch pressed : " + keyCode);
+		}
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			displayPauseMenu();
@@ -186,7 +191,9 @@ public class GameActivity extends AbstractActivity {
 			}
 			break;
 		case R.id.m_restart:
-			Log.d(TAG, "Test");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Restart");
+			}
 			gamePanel.restart();
 			break;
 		case R.id.m_resetscore:

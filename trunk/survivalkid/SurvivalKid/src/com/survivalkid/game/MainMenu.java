@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.survivalkid.R;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.thread.ActiveLoadingThread;
@@ -82,7 +83,9 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
 
 		
-		Log.d(TAG, "Start the game !");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Start the game !");
+		}
 		create();
 	}
 

@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.survivalkid.GameActivity;
+import com.survivalkid.game.core.Constants;
 
 public class GameClient {
 
@@ -106,7 +107,9 @@ public class GameClient {
 	 * @throws JSONException 
 	 */
 	public JSONObject send(JSONObject command) throws IOException, JSONException {
-		Log.d(TAG,"Sending : "+command.toString());
+		if (Constants.DEBUG) {
+			Log.d(TAG,"Sending : "+command.toString());
+		}
 		out.append(command.toString());
 		
 		// read response
@@ -115,7 +118,9 @@ public class GameClient {
 		while((nextLine = in.readLine()) != null){
 			res.append(nextLine);
 		}
-		Log.d(TAG,"Received : "+res);
+		if (Constants.DEBUG) {
+			Log.d(TAG,"Received : "+res);
+		}
 		return new JSONObject(res.toString());
 	}
 	

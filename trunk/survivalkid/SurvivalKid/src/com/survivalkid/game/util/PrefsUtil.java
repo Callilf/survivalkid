@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.survivalkid.game.core.Constants;
+
 /**
  * The preferences allow to keep variable on the phone when the application is closed
  * 
@@ -62,7 +64,9 @@ public final class PrefsUtil {
 			editor.putLong(key, (Long) value);
 		}
 		else {
-			Log.w(TAG, "Could not put a preference of type " + classe.getName());
+			if (Constants.DEBUG) {
+				Log.i(TAG, "Could not put a preference of type " + classe.getName());
+			}
 			return;
 		}
 		// compatible only with android >= 11. Do not use

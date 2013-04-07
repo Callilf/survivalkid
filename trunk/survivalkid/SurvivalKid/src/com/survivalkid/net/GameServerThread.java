@@ -10,12 +10,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.personage.Personage;
-
-import android.util.Log;
 
 public class GameServerThread extends Thread {
 
@@ -45,11 +46,15 @@ public class GameServerThread extends Thread {
 			while ((nextLine = in.readLine()) != null) {
 				input.append(nextLine);
 			}
-			Log.d(TAG, "Received : " + input.toString());
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Received : " + input.toString());
+			}
 			String response = processMessage(input.toString());
 			// send back response
 			out.print(response);
-			Log.d(TAG, "Sent : " + response);
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Sent : " + response);
+			}
 			// finish
 			close();
 		} catch (IOException e) {

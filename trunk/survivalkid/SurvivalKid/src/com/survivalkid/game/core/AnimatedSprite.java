@@ -113,7 +113,9 @@ public class AnimatedSprite {
 	 */
 	public void update(long gameDuration, int direction) {
 		if (bitmap == null || sourceRect == null) {
-			Log.d(TAG, "Update on a sprite with a bitmap or a sourceRect null");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Update on a sprite with a bitmap or a sourceRect null");
+			}
 			return;
 		}
 
