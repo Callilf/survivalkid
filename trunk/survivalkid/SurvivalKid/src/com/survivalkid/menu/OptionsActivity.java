@@ -1,11 +1,5 @@
 package com.survivalkid.menu;
 
-import com.survivalkid.AbstractActivity;
-import com.survivalkid.R;
-import com.survivalkid.R.anim;
-import com.survivalkid.R.layout;
-import com.survivalkid.R.menu;
-
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -14,12 +8,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+
+import com.survivalkid.AbstractActivity;
+import com.survivalkid.R;
 
 public class OptionsActivity extends AbstractActivity {
 	
 	/** TAG for the logs. */
 	private static final String TAG = OptionsActivity.class.getSimpleName();
 
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	setTagParent("Options");
@@ -32,6 +32,36 @@ public class OptionsActivity extends AbstractActivity {
 		
 		
         setContentView(R.layout.activity_options);
+        
+        //ACTIVATE SOUND
+        RadioGroup soundRadioGroup = (RadioGroup) findViewById(R.id.radioSound);        
+        soundRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.radioSoundOn) {
+                	//SOUND ON
+                	//TODO -> Set to preferences
+                } else {
+                	//SOUND OFF
+                	//TODO -> Set to preferences
+                }
+            }
+        });
+        
+        //CENTERED OR SCALE UP THE SCREEN
+        RadioGroup imageRadioGroup = (RadioGroup) findViewById(R.id.radioImage);        
+        imageRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.radioImageCentered) {
+                	//CENTERED
+                	//TODO -> Set to preferences
+                } else {
+                	//SCALE UP
+                	//TODO -> Set to preferences
+                }
+            }
+        });
     }
 
     @Override

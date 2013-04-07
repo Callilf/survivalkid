@@ -1,15 +1,115 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/verticalLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@drawable/menu_background">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/menu_background" >
+
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".OptionsActivity" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:text="OPTIONS"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp" />
+
+    <LinearLayout
+        android:id="@+id/optionsLinearSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:text="Sound :"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/radioSound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+        
+	        <RadioButton
+	            android:id="@+id/radioSoundOn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:checked="true"
+	            android:text="ON"
+	            android:textColor="#FFFFFF"
+	            android:textSize="14dp" />
+	
+	        <RadioButton
+	            android:id="@+id/radioSoundOff"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="OFF"
+	            android:textColor="#FFFFFF"
+	            android:textSize="14dp" />
+	        
+        </RadioGroup>
 
-</RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/optionLinearScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:text="Image :"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/radioImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radioImageCentered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="CENTERED"
+                android:textColor="#FFFFFF"
+                android:textSize="14dp" />
+
+            <RadioButton
+                android:id="@+id/radioImageScaled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SCALED"
+                android:textColor="#FFFFFF"
+                android:textSize="14dp" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>
