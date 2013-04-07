@@ -22,5 +22,16 @@
     <string name="title_activity_end">EndActivity</string>
     <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_how_to_play">HowToPlayActivity</string>
+    <string name="optCentered">CENTRÉ</string>
+	<string name="optScaled">ÉTIRÉ</string>
+	<string name="optImage">Images :</string>
+	<string name="optSound">Son :</string>
+	<string name="options">OPTIONS</string>
+	<string name="on">ON</string>
+	<string name="off">OFF</string>
+	<string name="items">Objets</string>
+	<string name="enemies">Ennemis</string>
+	<string name="goal">Le but du jeu est de survivre le plus longtemps possible dans l\'écran de jeu. Pendant la partie, divers ennemies aparaissent qui font baisser votre vie en vous touchant. Plusieurs objets vont aussi apparaitre, qui peuvent aussi bien être bonus que malus. Cette page liste les ennemis et les items que vous pourrez rencontrer.</string>
+	<string name="howtoplay">AIDE</string>
     
 </resources>

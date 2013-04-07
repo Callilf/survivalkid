@@ -20,7 +20,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="false"
                 android:layout_marginTop="10dp"
-                android:text="HOW TO PLAY"
+                android:text="@string/howtoplay"
                 android:textColor="@android:color/white"
                 android:textSize="30dp"
                 android:textStyle="bold"
@@ -43,7 +43,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="The goal of Survival Kid is to survive in the fixed screen as long as possible.  During the game, multiple enemies will appear and lower your life when they touch you.  Several items will also appear, some being positive and some negative. This page lists all the enemies and items you can encounter."
+                android:text="@string/goal"
                 android:textColor="@android:color/white"
                 android:textSize="14dp"
                 android:typeface="normal" />
@@ -63,7 +63,7 @@
                 android:layout_centerVertical="false"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Enemies"
+                android:text="@string/enemies"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Items"
+                android:text="@string/items"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 

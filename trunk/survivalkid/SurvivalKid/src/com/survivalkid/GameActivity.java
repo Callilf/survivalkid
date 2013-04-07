@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.manager.CharacterManager;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
@@ -49,7 +50,12 @@ public class GameActivity extends AbstractActivity {
 
 		PrefsUtil.initPreferences(this);
 		gamePanel = new GameManager(this);
-		backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
+		if (PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SOUND_ENABLED, true)) {
+			backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
+		}
+		else {
+			backgroundMusic = null;
+		}
 
 		launchGame(selectedCharacter);
 
@@ -65,7 +71,9 @@ public class GameActivity extends AbstractActivity {
 		gamePanel.getThread().setRunning(true);
 		gamePanel.getThread().start();
 
-		backgroundMusic.start();
+		if (backgroundMusic != null) {
+			backgroundMusic.start();
+		}
 	}
 
 	public void displayEndMenu() {
@@ -219,14 +227,18 @@ public class GameActivity extends AbstractActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		gamePanel.leaveGame();
-		backgroundMusic.release();
+		if (backgroundMusic != null) {
+			backgroundMusic.release();
+		}
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		gamePanel.stop();
-		backgroundMusic.pause();
+		if (backgroundMusic != null) {
+			backgroundMusic.pause();
+		}
 	}
 	
 	@Override
@@ -245,7 +257,9 @@ public class GameActivity extends AbstractActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		backgroundMusic.start();
+		if (backgroundMusic != null) {
+			backgroundMusic.start();
+		}
 		gamePanel.unpause();
 	}
 
