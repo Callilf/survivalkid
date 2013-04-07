@@ -20,6 +20,7 @@ import android.view.SurfaceView;
 
 import com.survivalkid.EndActivity;
 import com.survivalkid.R;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.data.Score;
 import com.survivalkid.game.singleton.GameContext;
@@ -128,7 +129,9 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 				textSurvivalTimeRect.bottom + panel.getWidth() / 10, 0, 0);
 
 		initHighScore();
-		Log.d(TAG, "End menu displayed !");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "End menu displayed !");
+		}
 		create();
 	}
 

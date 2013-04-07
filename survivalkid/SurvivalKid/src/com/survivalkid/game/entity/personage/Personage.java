@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -91,7 +92,9 @@ public class Personage extends GameEntity {
 			break;
 		}
 
-		Log.d(TAG, "Personage " + persoType + " created");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Personage " + persoType + " created");
+		}
 	}
 
 	/**
@@ -166,7 +169,9 @@ public class Personage extends GameEntity {
 
 	@Override
 	public void die() {
-		Log.d(TAG, "Perso DEAD !");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Perso DEAD !");
+		}
 		dying = true;
 
 		// Suppress status of the player

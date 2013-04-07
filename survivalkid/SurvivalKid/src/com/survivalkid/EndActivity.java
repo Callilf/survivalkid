@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.survivalkid.game.EndMenu;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.singleton.GameContext;
 
 public class EndActivity extends AbstractActivity {
@@ -50,7 +51,9 @@ public class EndActivity extends AbstractActivity {
 
 		this.getWindow().setAttributes(params); 
 		
-		Log.d(TAG, "EndActivity created");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "EndActivity created");
+		}
 	}
 	
 	public void returnResult(String result) {

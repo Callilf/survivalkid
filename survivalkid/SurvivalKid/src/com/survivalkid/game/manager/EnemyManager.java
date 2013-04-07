@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Bull;
@@ -96,7 +97,9 @@ public class EnemyManager extends ObjectManager {
 		if(generationFrequency != 500 && gameDuration - difficultyIncreasingCounter >= difficultyIncreasingPeriod) {
 			difficultyIncreasingCounter = gameDuration;
 			generationFrequency -= 20;
-			Log.i(TAG, "Generation frequency : " + generationFrequency);
+			if (Constants.DEBUG) {
+				Log.i(TAG, "Generation frequency : " + generationFrequency);
+			}
 			if(generationFrequency <= 500) {
 				generationFrequency = 500;
 			}

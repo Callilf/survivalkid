@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.GameEntity;
@@ -38,7 +39,9 @@ public class StateDisplayer {
 		// Text
 		paint = DesignUtil.createTextPaint(Color.WHITE, 20);
 
-		Log.d(TAG, "State Displayer created");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "State Displayer created");
+		}
 	}
 
 	public void update(long gameDuration) {

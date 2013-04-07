@@ -16,6 +16,7 @@ import android.graphics.Rect;
 import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.DynamicDrawableObject;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -118,10 +119,12 @@ public abstract class GameEntity implements Cloneable, DynamicDrawableObject {
 		dead = false;
 
 		// check the correspondence between sprite and hitbox
-		Log.d(TAG, "init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY() + ", width=" + sprite.getWidth()
-				+ ", height=" + sprite.getHeight());
-		Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right=" + hitBox.right + ", top=" + hitBox.top
-				+ ", bottom=" + hitBox.bottom);
+		if (Constants.DEBUG) {
+			Log.d(TAG, "init Sprite : X=" + sprite.getX() + ", Y=" + sprite.getY() + ", width=" + sprite.getWidth()
+					+ ", height=" + sprite.getHeight());
+			Log.d(TAG, "init hitbox : left=" + hitBox.left + ", right=" + hitBox.right + ", top=" + hitBox.top
+					+ ", bottom=" + hitBox.bottom);
+		}
 	}
 
 	/**

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.survivalkid.game.core.ActionButton;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -63,7 +64,9 @@ public class ButtonPosition {
 		PrefsUtil.removePref(getPrefsPosition());
 		MoveUtil.initializePositionButton();
 		MoveUtil.virtualBag.initPosition();
-		Log.d(TAG, "Button position has been reseted");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Button position has been reseted");
+		}
 	}
 
 	public void initStorePosition(String buttonPosition) {

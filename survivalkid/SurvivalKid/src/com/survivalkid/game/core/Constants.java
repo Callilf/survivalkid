@@ -1,10 +1,15 @@
 package com.survivalkid.game.core;
 
+import com.survivalkid.BuildConfig;
+
 public final class Constants {
 
 	private Constants() {
 	}
 
+	// if the debug is Enable
+	public static final boolean DEBUG = BuildConfig.DEBUG;
+	
 	/**
 	 * Constants relatives to the characters.
 	 * 

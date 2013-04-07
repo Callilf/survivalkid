@@ -64,7 +64,9 @@ public class ActionButton {
 				min(MoveUtil.SCREEN_WIDTH, x + sprite.getWidth() + marginHorizontal), 
 				min(MoveUtil.SCREEN_HEIGHT, y + sprite.getHeight() + marginVertical));
 		// log the initial position of the hitbox
-		Log.d(TAG, "Hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Hitbox : left="+hitBox.left+", right="+hitBox.right+", top="+hitBox.top+", bottom="+hitBox.bottom);
+		}
 	}
 	
 	/**

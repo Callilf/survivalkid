@@ -15,6 +15,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.survivalkid.AbstractActivity;
 import com.survivalkid.R;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.PrefsUtil;
@@ -88,7 +89,9 @@ public class OptionsActivity extends AbstractActivity {
     
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.d(TAG, "Touch pressed : " + keyCode);
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Touch pressed : " + keyCode);
+		}
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			finish();

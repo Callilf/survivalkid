@@ -3,6 +3,7 @@ package com.survivalkid.game.thread;
 import android.util.Log;
 
 import com.survivalkid.game.GameManager;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.SurfaceHandler;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.TimerUtil;
@@ -77,7 +78,9 @@ public class MainThread extends Thread {
 
 	@Override
 	public void run() {
-		Log.d(TAG, "Starting game loop");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Starting game loop");
+		}
 		// wait for surface to be created before starting the game
 		if (waitAndTestForSurfaceActive()) {
 			while (running) {
@@ -91,17 +94,23 @@ public class MainThread extends Thread {
 				
 				// the game is end or the pause is enable
 				if (running) {
-					Log.d(TAG, "Wait for notify");
+					if (Constants.DEBUG) {
+						Log.d(TAG, "Wait for notify");
+					}
 					waitSecure();
 				}
 				
 				// after the pause is disabled, if the game just pop up (restoration), display a timer before starting
 				if (restoring) {
-					Log.d(TAG, "Restoring screen");
+					if (Constants.DEBUG) {
+						Log.d(TAG, "Restoring screen");
+					}
 					restoring = false;
 					// wait for surface to be created before restarting the game
 					if (waitAndTestForSurfaceActive()) {
-						Log.d(TAG, "Start countdown");
+						if (Constants.DEBUG) {
+							Log.d(TAG, "Start countdown");
+						}
 						long endTime = System.currentTimeMillis() + COUNTDOWN_RESTORING;
 						while(running) {
 							long timeRemain = endTime - System.currentTimeMillis();
@@ -141,11 +150,15 @@ public class MainThread extends Thread {
 			}
 		}
 		catch (IllegalMonitorStateException e) {
-			Log.d(TAG, e.getMessage());
+			if (Constants.DEBUG) {
+				Log.d(TAG, e.getMessage());
+			}
 			throw e;
 		} catch (InterruptedException e) {
 			// for the wait
-			Log.d(TAG, e.getMessage());
+			if (Constants.DEBUG) {
+				Log.d(TAG, e.getMessage());
+			}
 		}
 	}
 
@@ -199,7 +212,9 @@ public class MainThread extends Thread {
 	 */
 	private boolean waitAndTestForSurfaceActive() {
 		while (!gameManager.isSurfaceActive() && running) {
-			Log.d(TAG, "Waiting for surface to be created");
+			if (Constants.DEBUG) {
+				Log.d(TAG, "Waiting for surface to be created");
+			}
 			waitSecure(200);
 			// stop the waiting if the restoring is set again of the thread is stopping
 			if (!running || restoring) {
@@ -231,7 +246,7 @@ public class MainThread extends Thread {
 					wait(timeMs);
 				}
 			} catch (InterruptedException e) {
-				Log.e(TAG, "Error in waiting, timeMs="+timeMs, e);
+				Log.e(TAG, "Error in waiting, timeMs=" + timeMs, e);
 			}
 		}
 	}

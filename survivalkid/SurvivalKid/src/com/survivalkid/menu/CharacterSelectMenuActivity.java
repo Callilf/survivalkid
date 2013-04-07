@@ -10,8 +10,8 @@ import android.view.WindowManager;
 import com.survivalkid.AbstractActivity;
 import com.survivalkid.GameActivity;
 import com.survivalkid.R;
-import com.survivalkid.R.anim;
 import com.survivalkid.game.CharacterSelectMenu;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.util.PrefsUtil;
 
 public class CharacterSelectMenuActivity extends AbstractActivity {
@@ -36,7 +36,9 @@ public class CharacterSelectMenuActivity extends AbstractActivity {
 		menu = new CharacterSelectMenu(this);
 		setContentView(menu);
 		
-		Log.d(TAG, "View added");
+		if (Constants.DEBUG) {
+			Log.d(TAG, "View added");
+		}
 	}
 	
 	public void launchGame(int persoSelected) {
@@ -52,7 +54,9 @@ public class CharacterSelectMenuActivity extends AbstractActivity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.d(TAG, "Touch pressed : " + keyCode);
+		if (Constants.DEBUG) {
+			Log.d(TAG, "Touch pressed : " + keyCode);
+		}
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			finish();

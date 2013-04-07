@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
@@ -199,7 +200,7 @@ public class CircularSaw extends EnemyEntity {
 			// lastDrawnPoint.y);
 		}
 		else {
-			Log.d(TAG, "State incorrect : " + state);
+			Log.w(TAG, "State incorrect : " + state);
 		}
 	}
 
