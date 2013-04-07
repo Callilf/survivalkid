@@ -11,7 +11,6 @@ import android.graphics.Point;
 import android.util.Log;
 
 import com.survivalkid.game.core.AnimatedSprite;
-import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;

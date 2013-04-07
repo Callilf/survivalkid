@@ -52,8 +52,8 @@ public class OptionsActivity extends AbstractActivity {
         });
         
         //CENTERED OR SCALE UP THE SCREEN
-        RadioGroup imageRadioGroup = (RadioGroup) findViewById(R.id.radioImage);    
         if (MoveUtil.isScalingPossible()) {
+        	RadioGroup imageRadioGroup = (RadioGroup) findViewById(R.id.radioImage);    
 	        boolean isCurrentImageCentered = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.RESCALING_ENABLED, true);
 	        setChecked(imageRadioGroup, isCurrentImageCentered? 1:0);
 	        imageRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
@@ -65,8 +65,8 @@ public class OptionsActivity extends AbstractActivity {
 	        });
         }
         else {
-        	// could be change by  imageRadioGroup.setVisibility(View.GONE) but the label image stay
-        	imageRadioGroup.getChildAt(1).setVisibility(View.GONE);
+        	View groupRadio = findViewById(R.id.optionLinearScreen);
+        	groupRadio.setVisibility(View.GONE);
         }
     }
 
