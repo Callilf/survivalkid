@@ -8,6 +8,14 @@ public final class HandlerUtil {
 	private HandlerUtil() {}
 	
 	//private static final Context CONTEXT = GameContext.getSingleton().getContext();
+// exemple to create in a surfaceView	
+//	HandlerUtil.handlerFin = new Handler() {
+//		@Override
+//		public void handleMessage(Message msg) {
+//			Toast.makeText(getContext(), "Survival time : " + msg.arg1 / 1000f + " seconds", Toast.LENGTH_LONG)
+//					.show();
+//		}
+//	};
 	
 	public enum HandlerEnum { HANDLER_FIN }
 	

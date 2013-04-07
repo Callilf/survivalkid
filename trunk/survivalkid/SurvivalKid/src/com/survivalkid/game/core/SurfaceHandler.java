@@ -4,8 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+import com.survivalkid.AbstractSurfaceView;
 import com.survivalkid.R;
-import com.survivalkid.game.GameManager;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
@@ -20,13 +20,13 @@ public class SurfaceHandler {
 
 	private SurfaceHolder surfaceHolder;
 	
-	private GameManager gameManager;
+	private AbstractSurfaceView surfaceView;
 	
 	private ChronoDisplayer chronoRestore;
 	private Bitmap ground;
 	
-	public SurfaceHandler(GameManager gameManager) {
-		this.gameManager = gameManager;
+	public SurfaceHandler(AbstractSurfaceView gameManager) {
+		this.surfaceView = gameManager;
 		this.surfaceHolder = gameManager.getHolder();
 		
 		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
@@ -47,7 +47,7 @@ public class SurfaceHandler {
 			if (canvas != null) {
 				synchronized (surfaceHolder) {
 					DesignUtil.applyScaleRatio(canvas);
-					this.gameManager.onDraw(canvas);
+					this.surfaceView.onDraw(canvas);
 					if (withChrono) {
 						chronoRestore.draw(canvas);
 					}
