@@ -111,5 +111,16 @@
 
         </RadioGroup>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/redefineButtonLocationsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/menu_empty_btn"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/redefineButtonLocation"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>
