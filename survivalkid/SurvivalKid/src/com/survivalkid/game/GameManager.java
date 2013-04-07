@@ -1,18 +1,14 @@
 package com.survivalkid.game;
 
 import static com.survivalkid.game.manager.CharacterManager.OWN_PERSO;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.widget.Toast;
 
+import com.survivalkid.AbstractSurfaceView;
 import com.survivalkid.GameActivity;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants;
@@ -35,12 +31,9 @@ import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.thread.MainThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
-import com.survivalkid.game.util.HandlerUtil;
 import com.survivalkid.game.util.MoveUtil;
 
-@SuppressLint("HandlerLeak")
-// TODO DELETE WHEN THE HANDLER WOULDN'T BE USE ANYMORE
-public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
+public class GameManager extends AbstractSurfaceView {
 
 	private static final String TAG = GameManager.class.getSimpleName();
 	
@@ -65,6 +58,7 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	public GameManager(Context context) {
 		super(context);
+		setTagParent(TAG);
 		
 		modeEditLocationButton = false;
 		surfaceActive = false;
@@ -104,14 +98,6 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 		setFocusable(true);
 
 		MoveUtil.initializeButton();
-		
-		HandlerUtil.handlerFin = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				Toast.makeText(getContext(), "Survival time : " + msg.arg1 / 1000f + " seconds", Toast.LENGTH_LONG)
-						.show();
-			}
-		};
 	}
 
 	/**
@@ -349,13 +335,9 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 
 	// ------------------------------------------------------------------------
 	// Surface managing
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		if (Constants.DEBUG) {
-			Log.d(TAG, "Surface is being created");
-		}
+		super.surfaceCreated(holder);
 		surfaceActive = true;
 		// at this point the surface is created and
 		// we can safely start the game loop
@@ -363,11 +345,11 @@ public class GameManager extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		if (Constants.DEBUG) {
-			Log.d(TAG, "Surface is being destroyed");
-		}
+		super.surfaceDestroyed(holder);
 		surfaceActive = false;
 	}
+	
+	// ------------------------------------------------------------------------
 	
 	public void leaveGame() {
 		// tell the thread to shut down and wait for it to finish
