@@ -25,9 +25,9 @@ public class SurfaceHandler {
 	private ChronoDisplayer chronoRestore;
 	private Bitmap ground;
 	
-	public SurfaceHandler(AbstractSurfaceView gameManager) {
-		this.surfaceView = gameManager;
-		this.surfaceHolder = gameManager.getHolder();
+	public SurfaceHandler(AbstractSurfaceView surfaceView) {
+		this.surfaceView = surfaceView;
+		this.surfaceHolder = surfaceView.getHolder();
 		
 		this.chronoRestore = new ChronoDisplayer(MoveUtil.BACKGROUND_WIDTH*1/3 + MoveUtil.BACKGROUND_LEFT, 
 				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);

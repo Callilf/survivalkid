@@ -1,0 +1,11 @@
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+		 
+	<item android:id="@+id/m_resetbutton"
+			android:title="@string/resetbutton"  />
+	<item android:id="@+id/m_cancel"
+			android:title="@string/cancel"  />
+	<item android:id="@+id/m_valid"
+			android:title="@string/valid"  />
+			
+</menu>
