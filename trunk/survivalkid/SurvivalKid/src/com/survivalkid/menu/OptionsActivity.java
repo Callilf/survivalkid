@@ -24,8 +24,9 @@ public class OptionsActivity extends AbstractActivity {
 	
 	/** TAG for the logs. */
 	private static final String TAG = OptionsActivity.class.getSimpleName();
-
 	
+	private static boolean isScalingChanged = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	setTagParent("Options");
@@ -60,7 +61,11 @@ public class OptionsActivity extends AbstractActivity {
 	        {
 	            public void onCheckedChanged(RadioGroup group, int checkedId) {
 	            	boolean isImageCentered = checkedId == R.id.radioImageCentered;
-	                PrefsUtil.setPrefs(boolean.class, PreferencesConstants.RESCALING_ENABLED, !isImageCentered);
+	            	// if isRescalingActive (stretch) and isImageCentered
+	            	if (MoveUtil.RESCALING_ACTIVE == isImageCentered) {
+	            		MoveUtil.changeScalingMode(false);
+	            		isScalingChanged = !isScalingChanged;
+	            	}
 	            }
 	        });
         }
@@ -94,7 +99,13 @@ public class OptionsActivity extends AbstractActivity {
 		}
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
-			finish();
+			if (isScalingChanged) {
+				isScalingChanged = false;
+				returnResult(MainMenuActivity.RETURN_SCALINGMODE);
+			}
+			else {
+				returnResult(AbstractActivity.RETURN_NOTHING);
+			}
 			this.overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
 			break;
 		case KeyEvent.KEYCODE_MENU:
@@ -109,5 +120,6 @@ public class OptionsActivity extends AbstractActivity {
 		RadioButton radioButton = (RadioButton) radioGroup.getChildAt(position);
 		radioButton.setChecked(true);
 	}
+
 
 }

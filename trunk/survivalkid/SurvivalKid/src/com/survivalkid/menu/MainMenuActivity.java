@@ -18,6 +18,7 @@ public class MainMenuActivity extends AbstractActivity {
 	/** TAG for the logs. */
 	private static final String TAG = MainMenuActivity.class.getSimpleName();
 
+	public static final String RETURN_SCALINGMODE = "resetPosition";
 	private MainMenu menu;
 
 	@Override
@@ -48,7 +49,7 @@ public class MainMenuActivity extends AbstractActivity {
 	
 	public void goToOptions() {
 		Intent intent = new Intent(MainMenuActivity.this.getBaseContext(), OptionsActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 		this.overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
 	}
 	
@@ -75,6 +76,26 @@ public class MainMenuActivity extends AbstractActivity {
 		return false;
 	}
 
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1) {
+			if (resultCode == RESULT_OK) {
+				String result = data.getStringExtra(RESULT);
+				if (RETURN_SCALINGMODE.equals(result)) {
+					//recreate();
+					menu.initRectsPosition();
+					menu.invalidate();
+				} else {
+					// nothing
+				}
+			}
+			if (resultCode == RESULT_CANCELED) {
+				// Write your code on no result return
+				// Not used
+			}
+		}
+	}
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
