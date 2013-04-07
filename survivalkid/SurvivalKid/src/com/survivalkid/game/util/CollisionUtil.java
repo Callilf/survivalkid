@@ -25,4 +25,18 @@ public final class CollisionUtil {
 		return displayHitBoxes;
 	}
 	
+	/**
+	 * Show or hide the hitbox.
+	 * 
+	 * @param show showing or not the hitbox. If null, restore the configuration
+	 */
+	public static void showHitbox(Boolean show) {
+		if (show == null) {
+			displayHitBoxes = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.DISPLAY_HITBOX, false);
+		}
+		else {
+			displayHitBoxes = show;
+		}
+	}
+	
 }

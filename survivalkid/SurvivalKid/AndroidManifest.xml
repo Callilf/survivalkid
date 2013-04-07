@@ -34,6 +34,11 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
+            android:name=".menu.ReplaceButtonActivity"
+            android:label="@string/title_activity_replace_button"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
             android:name=".EndActivity"
             android:label="@string/title_activity_end"
             android:theme="@style/ThemeDialogCustom" >

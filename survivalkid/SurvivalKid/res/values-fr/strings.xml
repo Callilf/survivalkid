@@ -7,7 +7,7 @@
     <string name="seconds">secondes</string>
     <string name="minutes">minutes</string>
     <string name="movebutton">Déplacer boutons</string>
-    <string name="resetbutton">Reset bouton</string>
+    <string name="resetbutton">Reset défaut position</string>
     <string name="scaling">Etirer / Centrer</string>
     <string name="app_name">SurvivalKid</string>
     <string name="title_activity_menu">Survival Kid</string>
@@ -22,6 +22,7 @@
     <string name="title_activity_end">EndActivity</string>
     <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_how_to_play">HowToPlayActivity</string>
+    <string name="title_activity_replace_button">ReplaceButtonActivity</string>
     <string name="optCentered">CENTRÉ</string>
 	<string name="optScaled">ÉTIRÉ</string>
 	<string name="optImage">Images :</string>
@@ -34,5 +35,7 @@
 	<string name="goal">Le but du jeu est de survivre le plus longtemps possible dans l\'écran de jeu. Pendant la partie, divers ennemies aparaissent qui font baisser votre vie en vous touchant. Plusieurs objets vont aussi apparaitre, qui peuvent aussi bien être bonus que malus. Cette page liste les ennemis et les items que vous pourrez rencontrer.</string>
 	<string name="howtoplay">AIDE</string>
 	<string name="redefineButtonLocation">Redéfinir l\'emplacement des boutons</string>
+	<string name="cancel">Annuler</string>
+	<string name="valid">Valider</string>
     
 </resources>

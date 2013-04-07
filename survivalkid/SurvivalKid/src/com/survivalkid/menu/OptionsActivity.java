@@ -1,5 +1,6 @@
 package com.survivalkid.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -80,7 +81,9 @@ public class OptionsActivity extends AbstractActivity {
         Button replaceButtonsBtn = (Button) findViewById(R.id.redefineButtonLocationsBtn);
         replaceButtonsBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.i(TAG, "CLIC !");
+				Intent intent = new Intent(OptionsActivity.this.getBaseContext(), ReplaceButtonActivity.class);
+				startActivity(intent);
+				overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
     }
