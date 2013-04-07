@@ -44,7 +44,7 @@ public class Bull extends EnemyEntity {
 		attack = DEFAULT_DEFENSE + 2;
 		defense = DEFAULT_DEFENSE + 1;
 		
-		description = "Farida farida farida farida farida farida farida farida farida farida farida farida";
+		description = "It crosses the screen pretty fast and is very powerful. However, you know when it will arrive so be sure to avoid it.";
 	};
 
 	/** Initialize the enemy. */

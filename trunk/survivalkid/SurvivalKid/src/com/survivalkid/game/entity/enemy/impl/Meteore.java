@@ -31,8 +31,8 @@ public class Meteore extends EnemyEntity {
 	private static final int RECOVERY_TIME = 500;
 	
 	public Meteore() {
-		super("Meteore", SpriteEnum.METEORE, 0, 0, 10, 1);
-		description = "Test description Meteor";
+		super("Meteor", SpriteEnum.METEORE, 0, 0, 10, 1);
+		description = "Falls on the ground quite frequently but not very powerful.";
 	}
 	
 	/**

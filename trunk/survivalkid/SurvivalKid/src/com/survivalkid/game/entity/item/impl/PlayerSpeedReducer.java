@@ -12,13 +12,14 @@ public class PlayerSpeedReducer extends StandardObject {
 
 	/** Default constructor. */
 	public PlayerSpeedReducer() {
-		this(0, 0);
+		super("Player speed reducer", SpriteEnum.RED_CLOCK, 0, 0, 0);
+		description = "This will reduce the speed of your character for few seconds, try to avoid taking it.";
 	};
 
 	/** Default constructor. */
 	public PlayerSpeedReducer(int _x, int _y) {
-		super("PlayerSpeedReducer", SpriteEnum.RED_CLOCK, _x, _y, 0);
-		description = "Test description PlayerSpeedReducer";
+		super("Player speed reducer", SpriteEnum.RED_CLOCK, _x, _y, 0);
+		description = "This will reduce the speed of your character for few seconds, try to avoid taking it.";
 	};
 
 	@Override

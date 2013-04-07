@@ -57,8 +57,8 @@ public class CircularSaw extends EnemyEntity {
 
 	/** Default constructor. */
 	public CircularSaw() {
-		super("FredCircularSaw",SpriteEnum.CIRCULAR_SAW, -20, -20, 20, 1);
-		description = "Test description CircularSaw";
+		super("Circular Saw",SpriteEnum.CIRCULAR_SAW, -20, -20, 20, 1);
+		description = "It follows its trail so you can anticipate it. Be careful not to touch it for it is quite painful.";
 	}
 
 	/** Initialize the enemy. */
