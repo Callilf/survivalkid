@@ -31,6 +31,7 @@ import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.thread.MainThread;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
+import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
 public class GameManager extends AbstractSurfaceView {
@@ -265,24 +266,25 @@ public class GameManager extends AbstractSurfaceView {
 		if (canvas != null) {
 			// fills the canvas with black
 			surfaceHandler.drawBackgroundGame(canvas);
-
-			chrono.draw(canvas);
 			decorManager.draw(canvas, false);
 			
 			if(SharedVars.getSingleton().isPersoDrawnInBackground()) {
 				characterManager.draw(canvas);
 			}
-			
 			enemyManager.draw(canvas);
 			itemManager.draw(canvas);
-			
 			if(!SharedVars.getSingleton().isPersoDrawnInBackground()) {
 				characterManager.draw(canvas);
 			}
 			
 			particleManager.draw(canvas);
 			decorManager.draw(canvas, true);
+			DesignUtil.drawBlackBand(canvas);
+			
+			chrono.draw(canvas);
+			characterManager.drawSpecialOwnPerso(canvas);
 			surfaceHandler.drawButton(canvas);
+			
 		}
 	}
 

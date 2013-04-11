@@ -21,7 +21,7 @@ public class DecorManager implements IManager {
 	List<DynamicDrawableObject> backgroundObject;
 	
 	private long lastAddInformText;
-	private static final int FREQUENCY_ALERT_TIME = 10000;
+	private static final int FREQUENCY_ALERT_TIME = 60000;
 	
 	public DecorManager() {
 		lastAddInformText = 0;
@@ -37,7 +37,8 @@ public class DecorManager implements IManager {
 		// manage the creation of object
 		if (gameDuration - FREQUENCY_ALERT_TIME > lastAddInformText) {
 			lastAddInformText += FREQUENCY_ALERT_TIME;
-			InformText alertTime = new InformText(lastAddInformText/1000 + " " + DesignUtil.getString(R.string.seconds), 0.4f);
+			int quantity = (int) (lastAddInformText/FREQUENCY_ALERT_TIME);
+			InformText alertTime = new InformText(quantity + " " + DesignUtil.getQuantityString(R.plurals.minute, quantity), 0.4f);
 			alertTime.initInform(10, 500);
 			foregroundObject.add(alertTime);
 		}

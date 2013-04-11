@@ -67,10 +67,18 @@ public class CharacterManager implements IManager {
 		for (Personage perso : characterList) {
 			perso.drawTimed(canvas);
 		}
-
+	}
+	
+	/**
+	 * Draw do at the end of the onDraw of the gameManager to draw the specific field of the own perso
+	 * 
+	 * @param canvas the canvas
+	 */
+	public void drawSpecialOwnPerso(Canvas canvas) {
 		if (characterList.size() > OWN_PERSO) {
 			// compute the size of the life of the perso
-			float pcLife = characterList.get(OWN_PERSO).getLife().getCurrentPcLife();
+			Personage perso = characterList.get(OWN_PERSO);
+			float pcLife = perso.getLife().getCurrentPcLife();
 			int newSizeBarLife = (int) (pcLife * sizeLifeBar);
 			life.right = life.left + newSizeBarLife;
 			canvas.drawRect(life, DesignUtil.PAINT_LIFE);
@@ -84,7 +92,8 @@ public class CharacterManager implements IManager {
 				canvas.drawBitmap(lifeDisplayerPart2, lifeDisplayerRect2.left, lifeDisplayerRect2.top, null);
 				canvas.drawBitmap(lifeDisplayerPart3, lifeDisplayerRect3.left, lifeDisplayerRect3.top, null);
 			}
-		}
+			perso.getBag().draw(canvas);
+		}		
 	}
 
 	public List<Personage> getCharacterList() {

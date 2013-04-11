@@ -131,6 +131,7 @@ public final class MoveUtil {
 		BACKGROUND_TOP = (SCREEN_HEIGHT - BACKGROUND_HEIGHT)/2;
 		BACKGROUND_BOTTOM = BACKGROUND_TOP + BACKGROUND_HEIGHT;
 		GROUND = (int) (BACKGROUND_HEIGHT - 40*RATIO_HEIGHT) + BACKGROUND_TOP;
+		DesignUtil.initRectBlackBand();
 	}
 	
 	public static void changeScalingMode(boolean isInGame) {

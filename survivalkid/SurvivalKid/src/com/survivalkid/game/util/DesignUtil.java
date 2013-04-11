@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,13 @@ public final class DesignUtil {
 	public static final Paint PAINT_HITBOX_BALLON = new Paint();
 	public static final Paint PAINT_LIFE = new Paint();
 	public static final Paint PAINT_CIRCULARSAW_POINT = new Paint();
+	public static final Paint PAINT_BLACK_BAND = new Paint();
+	
+	private static boolean isBandInitialize = false;
+	private static Rect leftBand = null;
+	private static Rect rightBand = null;
+	private static Rect topBand = null;
+	private static Rect bottomBand = null;
 	
 	private static Resources resources;
 	
@@ -36,6 +44,8 @@ public final class DesignUtil {
 		PAINT_HITBOX_OVERLAPPING.setARGB(255, 200, 20, 20);
 		PAINT_HITBOX_BALLON.setARGB(200, 0, 0, 255);
 		PAINT_LIFE.setARGB(255, 200, 20, 20);
+		PAINT_BLACK_BAND.setColor(Color.BLACK);
+
 		
 		PAINT_CIRCULARSAW_POINT.setARGB(128, 0, 0, 0);
 		
@@ -141,6 +151,32 @@ public final class DesignUtil {
 		
 		canvas.drawBitmap(image, left, top, null);				
 	}
+
+	/**
+	 * Draw black band if center mode enabled
+	 * 
+	 * @param canvas the canvas
+	 */
+	public static void drawBlackBand(Canvas canvas) {
+		if (!MoveUtil.RESCALING_ACTIVE) {
+			// left band
+			if (leftBand != null) {
+				canvas.drawRect(leftBand, PAINT_BLACK_BAND);
+			}
+			// right band
+			if (rightBand != null) {
+				canvas.drawRect(rightBand, PAINT_BLACK_BAND);
+			}
+			// top band
+			if (topBand != null) {
+				canvas.drawRect(topBand, PAINT_BLACK_BAND);
+			}
+			// bottom band
+			if (bottomBand != null) {
+				canvas.drawRect(bottomBand, PAINT_BLACK_BAND);
+			}
+		}
+	}
 	
 	/**
 	 * Get a string from the resources
@@ -150,5 +186,36 @@ public final class DesignUtil {
 	 */
 	public static String getString(int id) {
 		return resources.getString(id);
+	}
+	/**
+	 * Get a string from the resources
+	 * 
+	 * @param id the id of the string
+	 * @param quantity the quantity of the string
+	 * @return the textual string
+	 */
+	public static String getQuantityString(int id, int quantity) {
+		return resources.getQuantityString(id, quantity);
+	}
+
+	public static void initRectBlackBand() {
+		if (!isBandInitialize) {
+			isBandInitialize = true;
+			if (MoveUtil.BACKGROUND_LEFT > 0) {
+				leftBand = new Rect(0, 0, MoveUtil.BACKGROUND_LEFT, MoveUtil.SCREEN_HEIGHT);
+			}
+			// right band
+			if (MoveUtil.BACKGROUND_RIGHT < MoveUtil.SCREEN_WIDTH) {
+				rightBand = new Rect(MoveUtil.BACKGROUND_RIGHT, 0, MoveUtil.SCREEN_WIDTH, MoveUtil.SCREEN_HEIGHT);
+			}
+			// top band
+			if (MoveUtil.BACKGROUND_TOP > 0) {
+				topBand = new Rect(0, 0, MoveUtil.SCREEN_WIDTH, MoveUtil.BACKGROUND_TOP);
+			}
+			// bottom band
+			if (MoveUtil.BACKGROUND_BOTTOM < MoveUtil.SCREEN_HEIGHT) {
+				bottomBand = new Rect(0, MoveUtil.BACKGROUND_BOTTOM, MoveUtil.SCREEN_WIDTH, MoveUtil.SCREEN_HEIGHT);
+			}
+		}
 	}
 }

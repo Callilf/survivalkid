@@ -93,7 +93,7 @@ public class SurfaceHandler {
 	public void drawButton(Canvas canvas) {
 		MoveUtil.btn_left.draw(canvas);
 		MoveUtil.btn_right.draw(canvas);
-		MoveUtil.btn_up.draw(canvas);		
+		MoveUtil.btn_up.draw(canvas);
 	}
 
 	public ChronoDisplayer getChronoRestore() {

@@ -79,7 +79,7 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		setWillNotDraw(false);
 
 		paint = DesignUtil.createTextPaint(Color.WHITE, 50);
-		paintHighScore = DesignUtil.createTextPaint(Color.WHITE, 40);
+		paintHighScore = DesignUtil.createTextPaint(Color.WHITE, 37);
 
 		panel = BitmapUtil.createBitmap(R.drawable.panel_back);
 		
