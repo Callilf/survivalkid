@@ -9,7 +9,6 @@
     <string name="switchar">Switch</string>
     <string name="restart">Restart</string>
     <string name="seconds">seconds</string>
-    <string name="minutes">minutes</string>
     <string name="movebutton">Move button</string>
     <string name="scaling">Stretch / Center</string>
     <string name="resetbutton">Reset default position</string>
@@ -37,5 +36,9 @@
 	<string name="redefineButtonLocation">Redefine the location of buttons</string>
 	<string name="cancel">Cancel</string>
 	<string name="valid">Validate</string>
+	<plurals name="minute">
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
 
 </resources>

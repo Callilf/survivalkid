@@ -5,7 +5,6 @@
     <string name="switchar">Inverser perso</string>
     <string name="restart">Redémarrer</string>
     <string name="seconds">secondes</string>
-    <string name="minutes">minutes</string>
     <string name="movebutton">Déplacer boutons</string>
     <string name="resetbutton">Reset défaut position</string>
     <string name="scaling">Etirer / Centrer</string>
@@ -37,5 +36,9 @@
 	<string name="redefineButtonLocation">Redéfinir l\'emplacement des boutons</string>
 	<string name="cancel">Annuler</string>
 	<string name="valid">Valider</string>
+    <plurals name="minute">
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
     
 </resources>

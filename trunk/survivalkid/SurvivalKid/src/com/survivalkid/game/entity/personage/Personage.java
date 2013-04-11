@@ -301,8 +301,6 @@ public class Personage extends GameEntity {
 
 			stateDisplayer.draw(canvas);
 		}
-
-		bag.draw(canvas);
 	}
 
 	public void setOverlaping(boolean b) {
