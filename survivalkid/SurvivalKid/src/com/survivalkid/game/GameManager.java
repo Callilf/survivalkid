@@ -13,6 +13,9 @@ import com.survivalkid.GameActivity;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
+import com.survivalkid.game.core.Constants.PreferencesConstants;
+import com.survivalkid.game.core.Difficulty;
+import com.survivalkid.game.core.Difficulty.DifficultyEnum;
 import com.survivalkid.game.core.SurfaceHandler;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -33,6 +36,7 @@ import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
+import com.survivalkid.game.util.PrefsUtil;
 
 public class GameManager extends AbstractSurfaceView {
 
@@ -47,6 +51,7 @@ public class GameManager extends AbstractSurfaceView {
 	private ParticleManager particleManager;
 	private DecorManager decorManager;
 	private ChronoDisplayer chrono;
+	private Difficulty difficulty;
 	
 	private boolean surfaceActive;
 
@@ -111,14 +116,21 @@ public class GameManager extends AbstractSurfaceView {
 		if (Constants.DEBUG) {
 			Log.d(TAG, "Start the game !");
 		}
+		
+		SharedVars sharedVars = SharedVars.getSingleton();
+		DifficultyEnum diff = DifficultyEnum.valueOf(PrefsUtil.getPrefs().getInt(PreferencesConstants.DIFFICULTY, 1));
+		difficulty = new Difficulty(diff);
+		sharedVars.setDifficulty(difficulty);
+		
 		characterManager = new CharacterManager();
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();
 		particleManager = new ParticleManager();
 		decorManager = new DecorManager();
 		
-		SharedVars.getSingleton().setEnemyManager(enemyManager);
-		SharedVars.getSingleton().setParticleManager(particleManager);
+		sharedVars.setEnemyManager(enemyManager);
+		sharedVars.setParticleManager(particleManager);
+		
 		chrono = new ChronoDisplayer(10, 20);
 
 		Personage character = null;

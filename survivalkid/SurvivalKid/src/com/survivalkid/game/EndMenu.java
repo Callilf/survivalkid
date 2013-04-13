@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeSet;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -142,15 +143,18 @@ public class EndMenu extends SurfaceView implements SurfaceHolder.Callback {
 		int espace = (int) (panel.getWidth()/9f);
 		int top = textSurvivalTimeRect.top + (int)(panel.getHeight()/1.95f);
 		int left = textSurvivalTimeRect.left + panel.getWidth()/30;
-		List<Score> scores = new ArrayList<Score>(GameContext.getSingleton().getDataSave().getHighScore());
-		// reverse the list to have the highest score first
-		Collections.reverse(scores);
-		for (Score score : scores) {
-			survivalTimeHighScore.add(formatter.format(new Date(score.getTimeScore())));
-			survivalTimeHighScoreRect.add(new Rect(left, top + i*espace,  left + (int) (panel.getWidth()/2f), top + espace*(i-1)));
-			// keep only 3 scores
-			if (++i == 3) {
-				break;
+		TreeSet<Score> scoresSet = GameContext.getSingleton().getDataSave().getCurrentHighScore();
+		if (scoresSet != null) {
+			List<Score> scores = new ArrayList<Score>(GameContext.getSingleton().getDataSave().getCurrentHighScore());
+			// reverse the list to have the highest score first
+			Collections.reverse(scores);
+			for (Score score : scores) {
+				survivalTimeHighScore.add(formatter.format(new Date(score.getTimeScore())));
+				survivalTimeHighScoreRect.add(new Rect(left, top + i*espace,  left + (int) (panel.getWidth()/2f), top + espace*(i-1)));
+				// keep only 3 scores
+				if (++i == 3) {
+					break;
+				}
 			}
 		}
 	}

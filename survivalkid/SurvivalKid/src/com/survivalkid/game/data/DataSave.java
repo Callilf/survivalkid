@@ -10,12 +10,16 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.survivalkid.game.core.Constants;
+import com.survivalkid.game.core.Difficulty.DifficultyEnum;
+import com.survivalkid.game.singleton.SharedVars;
 
 /**
  * Store data when the application is shutdown
@@ -39,10 +43,10 @@ public final class DataSave implements Serializable {
 	private long nbHighScore; 
 	
 	/** The highscore */
-	private TreeSet<Score> highScore;
+	private Map<DifficultyEnum,TreeSet<Score>> highScore;
 	
 	public DataSave() {
-		highScore = new TreeSet<Score>();
+		highScore = new HashMap<DifficultyEnum,TreeSet<Score>>();
 		nbHighScore = 0;
 	}
 
@@ -62,23 +66,28 @@ public final class DataSave implements Serializable {
 	 * @return
 	 */
 	public boolean addScore(long timePassed) {
-		
+		DifficultyEnum difficulty = SharedVars.getSingleton().getDifficulty().getDifficulty();
+		TreeSet<Score> scores = highScore.get(difficulty);
+		if (scores == null) {
+			scores = new TreeSet<Score>();
+			highScore.put(difficulty, scores);
+		}
 		// if the number of highscore is not reached
-		if (highScore.size() < NB_HIGHSCORE) {
+		if (scores.size() < NB_HIGHSCORE) {
 			
-			highScore.add(new Score(++nbHighScore, "Anonymous", timePassed));
+			scores.add(new Score(++nbHighScore, "Anonymous", timePassed));
 			return true;
 		}
 		
 		// else compare if the score is better than the lowest score
-		Score first = highScore.first();
+		Score first = scores.first();
 		if (first.getTimeScore() >= timePassed) {
 			// it's not a new highscore
 			return false;
 		}
 		else {
-			highScore.remove(first);
-			highScore.add(new Score(++nbHighScore, "Anonymous", timePassed));
+			scores.remove(first);
+			scores.add(new Score(++nbHighScore, "Anonymous", timePassed));
 			return true;
 		}
 	}
@@ -90,11 +99,15 @@ public final class DataSave implements Serializable {
 	
 	// getter et setter
 	
-	public TreeSet<Score> getHighScore() {
-		return highScore;
+	public TreeSet<Score> getHighScoreOneDiff(DifficultyEnum difficulty) {
+		return highScore.get(difficulty);
+	}
+	
+	public TreeSet<Score> getCurrentHighScore() {
+		return getHighScoreOneDiff(SharedVars.getSingleton().getDifficulty().getDifficulty());
 	}
 
-	public void setHighScore(TreeSet<Score> highScore) {
+	public void setHighScore(Map<DifficultyEnum, TreeSet<Score>> highScore) {
 		this.highScore = highScore;
 	}
 
@@ -120,10 +133,7 @@ public final class DataSave implements Serializable {
 //				data = (DataSave) tmp;
 //			}
 			data = (DataSave) is.readObject();
-			// TODO to delete after conversion done
-			if (!data.highScore.isEmpty() && (Object)data.highScore.first() instanceof Long) {
-				data = null;
-			}
+			
 			is.close();
 		}
 		catch(FileNotFoundException e) {
@@ -136,6 +146,8 @@ public final class DataSave implements Serializable {
 		} catch (IOException e) {
 			Log.e(TAG, "Incorrect inputstream", e);
 		} catch (ClassNotFoundException e) {
+			Log.e(TAG, "Error in unserializing", e);
+		} catch (IllegalArgumentException e) {
 			Log.e(TAG, "Error in unserializing", e);
 		}
 		finally {

@@ -55,5 +55,6 @@ public final class Constants {
 		public static final String SOUND_ENABLED = "soundEnabled";
 		public static final String KEY_POSITION_CENTER = "survival-kid-buttonPosition";
 		public static final String KEY_POSITION_STRETCH = "survival-kid-buttonPosition-stretch";
+		public static final String DIFFICULTY = "survival-kid-difficulty";
 	}
 }
