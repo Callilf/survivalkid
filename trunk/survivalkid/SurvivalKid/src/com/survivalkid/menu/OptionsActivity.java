@@ -20,6 +20,7 @@ import com.survivalkid.AbstractActivity;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PreferencesConstants;
+import com.survivalkid.game.core.Difficulty.DifficultyEnum;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.PrefsUtil;
 
@@ -76,6 +77,27 @@ public class OptionsActivity extends AbstractActivity {
         	View groupRadio = findViewById(R.id.optionLinearScreen);
         	groupRadio.setVisibility(View.GONE);
         }
+        
+        //CHANGE DIFFICULTY
+        RadioGroup difficultyRadioGroup = (RadioGroup) findViewById(R.id.radioDifficulty);
+        int currentDifficulty = PrefsUtil.getPrefs().getInt(PreferencesConstants.DIFFICULTY, 1);
+        setChecked(difficultyRadioGroup, currentDifficulty - 1);
+        difficultyRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            	switch(checkedId) {
+            	case R.id.radioDiffEasy:
+            		PrefsUtil.setPrefs(int.class, PreferencesConstants.DIFFICULTY, DifficultyEnum.EASY.getValue());
+            		break;
+            	case R.id.radioDiffNormal:
+            		PrefsUtil.setPrefs(int.class, PreferencesConstants.DIFFICULTY, DifficultyEnum.NORMAL.getValue());
+            		break; 
+            	case R.id.radioDiffHard:
+            		PrefsUtil.setPrefs(int.class, PreferencesConstants.DIFFICULTY, DifficultyEnum.HARD.getValue());
+            		break;           		
+            	}
+            }
+        });
         
         //Replace buttons
         Button replaceButtonsBtn = (Button) findViewById(R.id.redefineButtonLocationsBtn);

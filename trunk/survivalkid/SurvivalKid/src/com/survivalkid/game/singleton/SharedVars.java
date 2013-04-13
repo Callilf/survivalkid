@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.survivalkid.game.core.AnimatedSprite;
+import com.survivalkid.game.core.Difficulty;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ParticleManager;
 
@@ -22,7 +23,8 @@ public class SharedVars {
 	
 	private ParticleManager particleManager;
 	private EnemyManager enemyManager;
-	
+	private Difficulty difficulty;
+
 	private boolean persoDrawnInBackground;
 	
 	/** Get the singleton. */
@@ -112,4 +114,17 @@ public class SharedVars {
 		this.enemyManager = enemyManager;
 	}
 	
+	/**
+	 * @return the difficulty
+	 */
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+
+	/**
+	 * @param difficulty the difficulty to set
+	 */
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
+	}
 }

@@ -110,8 +110,65 @@
                 android:textSize="14dp" />
 
         </RadioGroup>
+        
+
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/optionDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:text="@string/optDifficulty"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+                <RadioGroup
+            android:id="@+id/radioDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+
+            <RadioButton
+                android:id="@+id/radioDiffEasy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/optDiffEasy"
+                android:textColor="#FFFFFF"
+                android:textSize="14dp" />
+
+
+            <RadioButton
+                android:id="@+id/radioDiffNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/optDiffNormal"
+                android:textColor="#FFFFFF"
+                android:textSize="14dp" />
+
+
+            <RadioButton
+                android:id="@+id/radioDiffHard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/optDiffHard"
+                android:textColor="#FFFFFF"
+                android:textSize="14dp" />
+            
+        </RadioGroup>    </LinearLayout>
     <Button
         android:id="@+id/redefineButtonLocationsBtn"
         android:layout_width="wrap_content"

@@ -14,12 +14,13 @@ import android.util.Log;
 import com.survivalkid.game.algo.enemy.ThreeStepEnemyGenerator;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants;
+import com.survivalkid.game.core.Difficulty;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.enemy.impl.Bull;
 import com.survivalkid.game.entity.enemy.impl.Caterpillar;
-import com.survivalkid.game.entity.enemy.impl.FireMeteor;
 import com.survivalkid.game.entity.enemy.impl.CircularSaw;
+import com.survivalkid.game.entity.enemy.impl.FireMeteor;
 import com.survivalkid.game.entity.enemy.impl.Meteore;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
@@ -42,8 +43,8 @@ public class EnemyManager extends ObjectManager {
 	/**
 	 * Generation frequency in ms.
 	 */
-	private long generationFrequency = 1500;
-	private long difficultyIncreasingPeriod = 3000;
+	private Difficulty difficulty;
+	private long generationFrequency;
 	
 	// change of the speed
 	private float alterationSpeed = 1f;
@@ -74,6 +75,8 @@ public class EnemyManager extends ObjectManager {
 		enemyKillerList = new ArrayList<EnemyEntity>();
 		deadEnemies = new ArrayList<EnemyEntity>();
 		enemiesToAdd = new ArrayList<EnemyEntity>();
+		difficulty = SharedVars.getSingleton().getDifficulty();
+		generationFrequency = difficulty.getStartedGenFreq();
 		
 		//Text
 		paint = DesignUtil.createTextPaint(Color.BLACK, 30);
@@ -94,14 +97,14 @@ public class EnemyManager extends ObjectManager {
 			generateTimed();
 		}
 		
-		if(generationFrequency != 500 && gameDuration - difficultyIncreasingCounter >= difficultyIncreasingPeriod) {
+		if(generationFrequency != difficulty.getMinGenFreq() && gameDuration - difficultyIncreasingCounter >= difficulty.getPeriodIncreasingFreq()) {
 			difficultyIncreasingCounter = gameDuration;
-			generationFrequency -= 20;
+			generationFrequency -= difficulty.getDecreaseStepPeriodFreq();
 			if (Constants.DEBUG) {
 				Log.i(TAG, "Generation frequency : " + generationFrequency);
 			}
-			if(generationFrequency <= 500) {
-				generationFrequency = 500;
+			if(generationFrequency <= difficulty.getMinGenFreq()) {
+				generationFrequency = difficulty.getMinGenFreq();
 			}
 		}
 		
