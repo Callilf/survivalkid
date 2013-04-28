@@ -17,8 +17,10 @@ import com.survivalkid.game.util.DesignUtil;
  */
 public class DecorManager implements IManager {
 
-	List<DynamicDrawableObject> foregroundObject;
-	List<DynamicDrawableObject> backgroundObject;
+	private List<DynamicDrawableObject> foregroundObject;
+	private List<DynamicDrawableObject> backgroundObject;
+	private List<DynamicDrawableObject> objectForegroundToAdd;
+	private List<DynamicDrawableObject> objectBackgroundToAdd;
 	
 	private long lastAddInformText;
 	private static final int FREQUENCY_ALERT_TIME = 60000;
@@ -31,9 +33,25 @@ public class DecorManager implements IManager {
 	public void create() {
 		foregroundObject = new ArrayList<DynamicDrawableObject>();
 		backgroundObject = new ArrayList<DynamicDrawableObject>();
+		objectForegroundToAdd = new ArrayList<DynamicDrawableObject>();
+		objectBackgroundToAdd = new ArrayList<DynamicDrawableObject>();
 	}
 
 	public void update(long gameDuration) {
+		// add the object
+		if (!objectForegroundToAdd.isEmpty()) {
+			for (DynamicDrawableObject o : objectForegroundToAdd) {
+				foregroundObject.add(o);
+			}
+			objectForegroundToAdd.clear();
+		}
+		if (!objectBackgroundToAdd.isEmpty()) {
+			for (DynamicDrawableObject o : objectBackgroundToAdd) {
+				backgroundObject.add(o);
+			}
+			objectBackgroundToAdd.clear();
+		}
+		
 		// manage the creation of object
 		if (gameDuration - FREQUENCY_ALERT_TIME > lastAddInformText) {
 			lastAddInformText += FREQUENCY_ALERT_TIME;
@@ -79,6 +97,14 @@ public class DecorManager implements IManager {
 		for (DynamicDrawableObject object : objectToDraw) {
 			object.draw(canvas);
 		}	
+	}
+	
+	public void addToForeground(DynamicDrawableObject o) {
+		objectForegroundToAdd.add(o);
+	}
+	
+	public void addToBackground(DynamicDrawableObject o) {
+		objectBackgroundToAdd.add(o);
 	}
 
 }

@@ -149,7 +149,7 @@ public class Bull extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-		if (_personage.hasState(StateEnum.STATE_CORRIDA)) {
+		if (_personage.hasState(StateEnum.STATE_CORRIDA) && corridaBull) {
 			_personage.playCorridaDodgingAnim();
 			return;
 		}

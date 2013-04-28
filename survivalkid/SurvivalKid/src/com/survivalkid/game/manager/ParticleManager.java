@@ -37,7 +37,7 @@ public class ParticleManager {
 		// add the enemies create during the update to the game
 		if (!emittersToAdd.isEmpty()) {
 			for (ParticleEmitter emitter : emittersToAdd) {
-				addEmitter(emitter);
+				emitterList.add(emitter);
 			}
 			emittersToAdd.clear();
 		}
@@ -65,7 +65,7 @@ public class ParticleManager {
 	}
 	
 	public void addEmitter(ParticleEmitter ee) {
-		emitterList.add(ee);
+		emittersToAdd.add(ee);
 	}
 
 }

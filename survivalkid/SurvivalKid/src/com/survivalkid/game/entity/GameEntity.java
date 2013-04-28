@@ -21,6 +21,7 @@ import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.DynamicDrawableObject;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
+import com.survivalkid.game.entity.dynamics.MuletaIntro;
 import com.survivalkid.game.entity.enemy.impl.Bull;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.singleton.GameContext;
@@ -247,6 +248,7 @@ public abstract class GameEntity implements Cloneable, DynamicDrawableObject {
 			Bull bull = new Bull();
 			bull.initBullForCorrida();
 			SharedVars.getSingleton().getEnemyManager().addEnemyAsync(bull);
+			SharedVars.getSingleton().getDecorManager().addToForeground(new MuletaIntro());
 			break;
 		case STATE_LOW_SPEED_ENEMIES:
 			states.remove(StateEnum.STATE_HIGH_SPEED_ENEMIES);
