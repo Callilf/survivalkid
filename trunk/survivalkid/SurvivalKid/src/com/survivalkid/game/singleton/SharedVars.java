@@ -3,8 +3,11 @@ package com.survivalkid.game.singleton;
 import java.util.HashSet;
 import java.util.Set;
 
+import android.graphics.Point;
+
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Difficulty;
+import com.survivalkid.game.manager.DecorManager;
 import com.survivalkid.game.manager.EnemyManager;
 import com.survivalkid.game.manager.ParticleManager;
 
@@ -22,10 +25,15 @@ public class SharedVars {
 	private Set<AnimatedSprite> bullWarningRightList;
 	
 	private ParticleManager particleManager;
+	private DecorManager decorManager;
 	private EnemyManager enemyManager;
 	private Difficulty difficulty;
 
 	private boolean persoDrawnInBackground;
+	
+	//When true, characters items and enemies are frozen
+	private boolean frozen;
+	private Point corridaPosition;
 	
 	/** Get the singleton. */
 	public static SharedVars getSingleton() {
@@ -126,5 +134,47 @@ public class SharedVars {
 	 */
 	public void setDifficulty(Difficulty difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	/**
+	 * @return the frozen
+	 */
+	public boolean isFrozen() {
+		return frozen;
+	}
+
+	/**
+	 * @param frozen the frozen to set
+	 */
+	public void setFrozen(boolean frozen) {
+		this.frozen = frozen;
+	}
+
+	/**
+	 * @return the decorManager
+	 */
+	public DecorManager getDecorManager() {
+		return decorManager;
+	}
+
+	/**
+	 * @param decorManager the decorManager to set
+	 */
+	public void setDecorManager(DecorManager decorManager) {
+		this.decorManager = decorManager;
+	}
+
+	/**
+	 * @return the corridaPosition
+	 */
+	public Point getCorridaPosition() {
+		return corridaPosition;
+	}
+
+	/**
+	 * @param corridaPosition the corridaPosition to set
+	 */
+	public void setCorridaPosition(Point corridaPosition) {
+		this.corridaPosition = corridaPosition;
 	}
 }

@@ -10,13 +10,13 @@ public class Corrida extends StandardObject {
 	/** Default constructor. */
 	public Corrida() {
 		super("Muleta", SpriteEnum.CORRIDA, 0, 0, 0);
-		description = "A matador cape that Yugo can use to invoke and dodge a pretty mad bull, thus killing all of the others enemies close to the ground.";
+		description = "A matador cape that Yugo can use to invoke and dodge a mad bull, thus killing all of the others enemies close to the ground.";
 	}
 	
 	/** Default constructor. */
 	public Corrida(int _x, int _y) {
 		super("Muleta", SpriteEnum.CORRIDA, _x, _y, 0);
-		description = "A matador cape that Yugo can use to invoke and dodge a pretty mad bull, thus killing all of the others enemies close to the ground.";
+		description = "A matador cape that Yugo can use to invoke and dodge a mad bull, thus killing all of the others enemies close to the ground.";
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class Corrida extends StandardObject {
 
 	@Override
 	public void collideWithPerso(Personage _perso) {
-		_perso.addState(StateEnum.STATE_CORRIDA, 2000);
+		_perso.addState(StateEnum.STATE_CORRIDA, 5000);
 		_perso.playCorridaWaitingAnim();
 	}
 

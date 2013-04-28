@@ -130,6 +130,7 @@ public class GameManager extends AbstractSurfaceView {
 		
 		sharedVars.setEnemyManager(enemyManager);
 		sharedVars.setParticleManager(particleManager);
+		sharedVars.setDecorManager(decorManager);
 		
 		chrono = new ChronoDisplayer(10, 20);
 
@@ -197,50 +198,53 @@ public class GameManager extends AbstractSurfaceView {
 		GameContext.getSingleton().setCurrentTimeMillis(gameTime);
 
 		// Update the gameEntities
-		enemyManager.update(gameDuration);
-		itemManager.update(gameDuration);
-		characterManager.update(gameDuration);
-		particleManager.update(gameDuration);
 		decorManager.update(gameDuration);
+		if(!SharedVars.getSingleton().isFrozen()) {
+			enemyManager.update(gameDuration);
+			itemManager.update(gameDuration);
+			characterManager.update(gameDuration);
+			particleManager.update(gameDuration);
+		
 
-		// Check the collisions
-		for (Personage perso : characterManager.getCharacterList()) {
-			perso.setOverlaping(false);
-		}
-		for (Personage perso : characterManager.getCharacterList()) {
-			for (ItemEntity item : itemManager.getItemList()) {
-				if (!item.isInBalloon()) {
-					if (CollisionUtil.Overlaps(perso, item)) {
+			// Check the collisions
+			for (Personage perso : characterManager.getCharacterList()) {
+				perso.setOverlaping(false);
+			}
+			for (Personage perso : characterManager.getCharacterList()) {
+				for (ItemEntity item : itemManager.getItemList()) {
+					if (!item.isInBalloon()) {
+						if (CollisionUtil.Overlaps(perso, item)) {
+							perso.setOverlaping(true);
+							item.collide(perso);
+						}
+					}
+				}
+				for (EnemyEntity enemy : enemyManager.getEnemyList()) {
+					if (CollisionUtil.Overlaps(perso, enemy)) {
 						perso.setOverlaping(true);
-						item.collide(perso);
+						enemy.collide(perso);
+					} else {
+						enemy.setCollidingCharacter(-1);
 					}
 				}
 			}
-			for (EnemyEntity enemy : enemyManager.getEnemyList()) {
-				if (CollisionUtil.Overlaps(perso, enemy)) {
-					perso.setOverlaping(true);
-					enemy.collide(perso);
-				} else {
-					enemy.setCollidingCharacter(-1);
+	
+			for (EnemyEntity enemyKiller : enemyManager.getEnemyKillerList()) {
+				for (EnemyEntity enemy : enemyManager.getEnemyList()) {
+					// also compare the pointer to avoid the enemy to kill itself
+					if (enemy != enemyKiller && CollisionUtil.Overlaps(enemyKiller, enemy)) {
+						enemy.collide(enemyKiller);
+					}
 				}
 			}
-		}
-
-		for (EnemyEntity enemyKiller : enemyManager.getEnemyKillerList()) {
-			for (EnemyEntity enemy : enemyManager.getEnemyList()) {
-				// also compare the pointer to avoid the enemy to kill itself
-				if (enemy != enemyKiller && CollisionUtil.Overlaps(enemyKiller, enemy)) {
-					enemy.collide(enemyKiller);
-				}
+	
+			// Change the buttons sprites when they are pressed.
+			if (characterManager.getCharacterList().size() > OWN_PERSO
+					&& characterManager.getCharacterList(OWN_PERSO) != null) {
+				MoveUtil.btn_left.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isLeftEnabled);
+				MoveUtil.btn_right.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isRightEnabled);
+				MoveUtil.btn_up.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isTopEnabled);
 			}
-		}
-
-		// Change the buttons sprites when they are pressed.
-		if (characterManager.getCharacterList().size() > OWN_PERSO
-				&& characterManager.getCharacterList(OWN_PERSO) != null) {
-			MoveUtil.btn_left.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isLeftEnabled);
-			MoveUtil.btn_right.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isRightEnabled);
-			MoveUtil.btn_up.setPressed(characterManager.getCharacterList(OWN_PERSO).getMoveManager().isTopEnabled);
 		}
 
 		// Restart the game if all players are dead

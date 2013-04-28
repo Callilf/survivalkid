@@ -17,7 +17,9 @@ import com.survivalkid.game.entity.Life;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.LifeChangeDisplayer;
 import com.survivalkid.game.entity.StateObject;
+import com.survivalkid.game.entity.dynamics.MuletaOle;
 import com.survivalkid.game.move.MovePersoManager;
+import com.survivalkid.game.singleton.SharedVars;
 
 public class Personage extends GameEntity {
 	private static final String TAG = Personage.class.getSimpleName();
@@ -31,6 +33,7 @@ public class Personage extends GameEntity {
 	
 	//Attributes for the corrida item
 	private AnimatedSprite corridaAnim;
+	private boolean corridaFirstFrame = true;
 
 	// The bag that allows to store items
 	private Bag bag;
@@ -212,11 +215,26 @@ public class Personage extends GameEntity {
 			}
 		} else if (hasState(StateEnum.STATE_CORRIDA)) {
 			setSpeedX(0);
-			corridaAnim.setX(sprite.getX() + sprite.getWidth() / 2 - corridaAnim.getWidth() / 2);
-			corridaAnim.setY(sprite.getY() + sprite.getHeight() - corridaAnim.getHeight());
+//			corridaAnim.setX(sprite.getX() + sprite.getWidth() / 2 - corridaAnim.getWidth() / 2);
+//			corridaAnim.setY(sprite.getY() + sprite.getHeight() - corridaAnim.getHeight());
+			corridaAnim.setX(SharedVars.getSingleton().getCorridaPosition().x);
+			corridaAnim.setY(SharedVars.getSingleton().getCorridaPosition().y);
+			setX(SharedVars.getSingleton().getCorridaPosition().x);
+			setY(SharedVars.getSingleton().getCorridaPosition().y);
+
+			//If the player plays yuna, repalce her to put her in the back of yugo during the muleta anim
+			if (persoType == PersonageConstants.PERSO_YUNA && corridaFirstFrame) {
+				//TODO
+//				play("stand", true, true);
+//				setX(sprite.getX() - 10);
+//				setY(sprite.getY() - 10);
+				corridaFirstFrame = false;
+			}
+			
 			if (corridaAnim.isAnimationFinished()) {
 				states.remove(StateEnum.STATE_CORRIDA);
 				processEndState(StateEnum.STATE_CORRIDA);
+				corridaFirstFrame = true;
 			}
 			corridaAnim.update(gameDuration, DirectionConstants.RIGHT);
 		}
@@ -291,6 +309,10 @@ public class Personage extends GameEntity {
 		if (dying) {
 			deathAnim.draw(canvas, direction);
 		} else if (hasState(StateEnum.STATE_CORRIDA)) {
+			if (persoType == PersonageConstants.PERSO_YUNA) {
+				//TODO
+//				super.draw(canvas);
+			}
 			corridaAnim.draw(canvas, DirectionConstants.RIGHT);
 		} else {
 			super.draw(canvas);
@@ -353,6 +375,7 @@ public class Personage extends GameEntity {
 
 	public void playCorridaDodgingAnim() {
 		if (corridaAnim != null && hasState(StateEnum.STATE_CORRIDA)) {
+			SharedVars.getSingleton().getDecorManager().addToForeground(new MuletaOle());
 			corridaAnim.play("ole", false, true);
 		}
 	}
