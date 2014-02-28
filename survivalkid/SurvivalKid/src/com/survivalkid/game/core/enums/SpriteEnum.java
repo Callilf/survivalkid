@@ -33,6 +33,10 @@ public enum SpriteEnum {
 			PersonageConstants.ANIM_JUMPUP, new int[] { 20, 21, 22 }, 13), new Animation(
 			PersonageConstants.ANIM_JUMPDOWN, new int[] { 17, 18, 19 }, 13), new Animation(
 			PersonageConstants.ANIM_KNOCK_BACK, new int[] { 23 }, 13)),
+			
+	YUNA_CORRIDA(R.drawable.yuna_corrida, 7, 2, 
+					new Animation("prepare", new int[] { 0, 1, 2, 3, 4 }, 15), 
+					new Animation("ole", new int[] { 5, 6, 7, 8, 9, 10, 11, 12 }, 30)),
 
 	YUNA_ARTWORK1(R.drawable.yuna_artwork_1, 1, 1),
 

@@ -248,7 +248,7 @@ public abstract class GameEntity implements Cloneable, DynamicDrawableObject {
 			Bull bull = new Bull();
 			bull.initBullForCorrida();
 			SharedVars.getSingleton().getEnemyManager().addEnemyAsync(bull);
-			SharedVars.getSingleton().getDecorManager().addToForeground(new MuletaIntro());
+			SharedVars.getSingleton().getDecorManager().addToForeground(new MuletaIntro(this));
 			break;
 		case STATE_LOW_SPEED_ENEMIES:
 			states.remove(StateEnum.STATE_HIGH_SPEED_ENEMIES);
