@@ -73,7 +73,6 @@ public class Personage extends GameEntity {
 		movePersoManager = new MovePersoManager();
 		life = new Life(100);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, -100, -100);
-		corridaAnim = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, -100, -100);
 		dying = false;
 
 		// damages
@@ -86,10 +85,12 @@ public class Personage extends GameEntity {
 
 		switch (perso) {
 		case PersonageConstants.PERSO_YUGO:
+			corridaAnim = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA, -100, -100);
 			redefineHitBox((sprite.getWidth() * 30) / 100, (sprite.getHeight() * 10) / 100,
 					(sprite.getWidth() * 40) / 100, (sprite.getHeight() * 84) / 100);
 			break;
 		case PersonageConstants.PERSO_YUNA:
+			corridaAnim = new AnimatedSprite(SpriteEnum.YUNA_CORRIDA, -100, -100);
 			redefineHitBox((sprite.getWidth() * 35) / 100, (sprite.getHeight() * 10) / 100,
 					(sprite.getWidth() * 40) / 100, (sprite.getHeight() * 84) / 100);
 			break;
@@ -221,15 +222,6 @@ public class Personage extends GameEntity {
 			corridaAnim.setY(SharedVars.getSingleton().getCorridaPosition().y);
 			setX(SharedVars.getSingleton().getCorridaPosition().x);
 			setY(SharedVars.getSingleton().getCorridaPosition().y);
-
-			//If the player plays yuna, repalce her to put her in the back of yugo during the muleta anim
-			if (persoType == PersonageConstants.PERSO_YUNA && corridaFirstFrame) {
-				//TODO
-//				play("stand", true, true);
-//				setX(sprite.getX() - 10);
-//				setY(sprite.getY() - 10);
-				corridaFirstFrame = false;
-			}
 			
 			if (corridaAnim.isAnimationFinished()) {
 				states.remove(StateEnum.STATE_CORRIDA);
@@ -309,10 +301,6 @@ public class Personage extends GameEntity {
 		if (dying) {
 			deathAnim.draw(canvas, direction);
 		} else if (hasState(StateEnum.STATE_CORRIDA)) {
-			if (persoType == PersonageConstants.PERSO_YUNA) {
-				//TODO
-//				super.draw(canvas);
-			}
 			corridaAnim.draw(canvas, DirectionConstants.RIGHT);
 		} else {
 			super.draw(canvas);

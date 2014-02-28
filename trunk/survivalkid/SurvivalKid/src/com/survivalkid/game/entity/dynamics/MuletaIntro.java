@@ -10,9 +10,11 @@ import android.graphics.Rect;
 import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
+import com.survivalkid.game.core.Constants.PersonageConstants;
 import com.survivalkid.game.core.DynamicDrawableObject;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
+import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.BitmapUtil;
@@ -32,11 +34,11 @@ public class MuletaIntro extends GameEntity implements DynamicDrawableObject  {
 	
 	private boolean slowing;
 	
-	private AnimatedSprite yugo;
+	private AnimatedSprite characterSprite;
 	
 	private boolean firstFrame;
 	
-	public MuletaIntro() {
+	public MuletaIntro(GameEntity parentEntity) {
 		expiration = GameContext.getSingleton().gameDuration + INTRO_DURATION;
 		blackBackground = new Rect(0,0,MoveUtil.BACKGROUND_RIGHT, MoveUtil.BACKGROUND_BOTTOM);
 		backPaint = new Paint();
@@ -48,10 +50,18 @@ public class MuletaIntro extends GameEntity implements DynamicDrawableObject  {
 		muletaText = BitmapUtil.createBitmap(R.drawable.corrida_intro_text);
 		muletaTextRect = BitmapUtil.buildRect(muletaText, -muletaText.getWidth(), MoveUtil.BACKGROUND_HEIGHT / 3);
 		
-		yugo = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA);
-		yugo.play("prepare", true, true);
-		yugo.setX(MoveUtil.BACKGROUND_WIDTH);
-		yugo.setY(MoveUtil.GROUND - yugo.getHeight());
+		if (parentEntity instanceof Personage) {
+			Personage perso = (Personage)parentEntity;
+			if (perso.getPersoType() == PersonageConstants.PERSO_YUGO) {
+				characterSprite = new AnimatedSprite(SpriteEnum.YUGO_CORRIDA);
+			} else {
+				characterSprite = new AnimatedSprite(SpriteEnum.YUNA_CORRIDA);
+			}
+			characterSprite.play("prepare", true, true);
+			characterSprite.setX(MoveUtil.BACKGROUND_WIDTH);
+			characterSprite.setY(MoveUtil.GROUND - characterSprite.getHeight());
+		}
+
 	}
 
 	public void update(long gameDuration) {
@@ -64,17 +74,17 @@ public class MuletaIntro extends GameEntity implements DynamicDrawableObject  {
 			SharedVars.getSingleton().setFrozen(true);
 		}
 		
-		slowing = yugo.getX() < MoveUtil.BACKGROUND_WIDTH/3;
+		slowing = characterSprite.getX() < MoveUtil.BACKGROUND_WIDTH/3;
 		
 		if (slowing) {
 			muletaTextRect.offset(3, 0);
-			yugo.setX(yugo.getX()-3);
+			characterSprite.setX(characterSprite.getX()-3);
 		} else {
 			muletaTextRect.offset(20, 0);
-			yugo.setX(yugo.getX()-20);
+			characterSprite.setX(characterSprite.getX()-20);
 		}
 		
-		yugo.update(gameDuration, DirectionConstants.RIGHT);
+		characterSprite.update(gameDuration, DirectionConstants.RIGHT);
 		
 		firstFrame = false;
 	}
@@ -83,7 +93,7 @@ public class MuletaIntro extends GameEntity implements DynamicDrawableObject  {
 		// TODO Auto-generated method stub
 		canvas.drawRect(blackBackground, backPaint);
 		canvas.drawBitmap(muletaText, muletaTextRect.left, muletaTextRect.top, null);
-		yugo.draw(canvas, DirectionConstants.RIGHT);
+		characterSprite.draw(canvas, DirectionConstants.RIGHT);
 	}
 
 	public boolean isDead() {
@@ -99,7 +109,7 @@ public class MuletaIntro extends GameEntity implements DynamicDrawableObject  {
 	@Override
 	public void die() {
 		SharedVars.getSingleton().setFrozen(false);
-		SharedVars.getSingleton().setCorridaPosition(new Point(yugo.getX(), yugo.getY()));
+		SharedVars.getSingleton().setCorridaPosition(new Point(characterSprite.getX(), characterSprite.getY()));
 		this.setDead(true);
 	}
 
