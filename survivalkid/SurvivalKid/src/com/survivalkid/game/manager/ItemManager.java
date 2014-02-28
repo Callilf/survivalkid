@@ -35,11 +35,11 @@ public class ItemManager extends ObjectManager {
 
 	static {
 		itemMap = new ArrayList<Class<? extends ItemEntity>>();
-		//itemMap.add(Medkit.class);
-		//itemMap.add(SuperMedkit.class);
-		//itemMap.add(PlayerSpeedReducer.class);
-		//itemMap.add(EnemySpeedIncrease.class);
-		//itemMap.add(EnemySpeedReducer.class);
+		itemMap.add(Medkit.class);
+		itemMap.add(SuperMedkit.class);
+		itemMap.add(PlayerSpeedReducer.class);
+		itemMap.add(EnemySpeedIncrease.class);
+		itemMap.add(EnemySpeedReducer.class);
 		itemMap.add(Corrida.class);
 	}
 
