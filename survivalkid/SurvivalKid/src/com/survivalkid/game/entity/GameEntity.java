@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
@@ -35,7 +36,7 @@ public abstract class GameEntity implements Cloneable, DynamicDrawableObject {
 
 	/** TAG for the logs. */
 	private static final String TAG = GameEntity.class.getSimpleName();
-
+	
 	/** Last affected id. */
 	public static int lastId;
 
@@ -136,7 +137,7 @@ public abstract class GameEntity implements Cloneable, DynamicDrawableObject {
 	 * @param _sprite
 	 *            sprite of the entity
 	 */
-	public GameEntity(String _name, AnimatedSprite _anim) {
+	public GameEntity(String _name, AnimatedSprite _anim, Context ctxt) {
 		id = lastId++;
 		name = _name;
 		sprite = _anim;

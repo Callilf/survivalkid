@@ -3,6 +3,7 @@ package com.survivalkid.game.entity.personage;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 

@@ -5,6 +5,7 @@ import java.util.Random;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -12,6 +13,7 @@ import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.particle.ParticleEmitter;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -31,8 +33,8 @@ public class Meteore extends EnemyEntity {
 	private static final int RECOVERY_TIME = 500;
 	
 	public Meteore() {
-		super("Meteor", SpriteEnum.METEORE, 0, 0, 10, 1);
-		description = "Falls on the ground quite frequently but not very powerful.";
+		super(GameContext.getSingleton().getContext().getString(R.string.meteor), SpriteEnum.METEORE, 0, 0, 10, 1);
+		description = GameContext.getSingleton().getContext().getString(R.string.meteorDesc);
 	}
 	
 	/**

@@ -3,12 +3,14 @@ package com.survivalkid.game.entity.enemy.impl;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Caterpillar extends EnemyEntity {
@@ -24,8 +26,8 @@ public class Caterpillar extends EnemyEntity {
 	
 	/** Default constructor. */
 	public Caterpillar() {
-		super("Caterpillar", SpriteEnum.CATERPILLAR, 0, 0, 5, 0);
-		description = "Its crawls more or less slowly, but isn't very dangerous. Take care of the violet ones though.";
+		super(GameContext.getSingleton().getContext().getString(R.string.caterpillar), SpriteEnum.CATERPILLAR, 0, 0, 5, 0);
+		description = GameContext.getSingleton().getContext().getString(R.string.caterpillarDesc);
 	};
 
 	/** Initialize the enemy. */

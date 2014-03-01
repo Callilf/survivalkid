@@ -5,6 +5,7 @@ import java.util.Random;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -38,7 +39,7 @@ public class FireGround extends EnemyEntity {
 	 * Constructor
 	 */
 	public FireGround() {
-		super("FireGround", SpriteEnum.FIRE_GROUND, 0, MoveUtil.GROUND, 2, 1);
+		super(GameContext.getSingleton().getContext().getString(R.string.fireGround), SpriteEnum.FIRE_GROUND, 0, MoveUtil.GROUND, 2, 1);
 		
 		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_GROUND, 0, 0);
 		

@@ -37,11 +37,40 @@
 	<string name="optDiffHard">Difficile</string>
 	<string name="goal">Le but du jeu est de survivre le plus longtemps possible dans l\'écran de jeu. Pendant la partie, divers ennemis vont apparaître et tenter de faire baisser votre vie. Plusieurs objets vont aussi apparaitre, pouvant être aussi bien des bonus que des malus. Cette page liste les ennemis et les items que vous pourrez rencontrer.</string>
 	<string name="howtoplay">AIDE</string>
-	<string name="credits">CREDITS</string>
+	<string name="credits">CRÉDITS</string>
     <string name="creditsText">Ce jeu est un prototype réalisé par deux ingénieurs récemment diplomés. Il s\'agissait juste pour nous d\'un test afin de voir ce que nous étions capable de faire, l\'intégralité du jeu étant codé durant notre temps libre en marge de nos emplois respectifs. Nous espérons que vous apprécierez jouer et sommes ouvert à tous les retours concernant ce jeu.</string>
+	<string name="withParticipationOf">avec la participation de</string>
 	<string name="redefineButtonLocation">Redéfinir l\'emplacement des boutons</string>
 	<string name="cancel">Annuler</string>
 	<string name="valid">Valider</string>
+	
+	<string name="balloonCrate">Ballon</string>
+    <string name="balloonCrateDesc">Un conteneur d\'items. Percez le avec votre doigts pour révéler son contenu.</string>
+	<string name="muleta">Muleta</string>
+	<string name="muletaDesc">Un foulard de matador permettant d\'invoquer un taureau enragé détruisant tout sur son passage.</string>
+	<string name="timeAccelerator">Accélerateur temporel</string>
+	<string name="timeAcceleratorDesc">Augmente la vitesse de tous les ennemis durant 5 secondes.</string>
+	<string name="timeDecelerator">Décélérateur temporel</string>
+	<string name="timeDeceleratorDesc">Réduit la vitesse de déplacement des ennemis durant 10 secondes.</string>
+	<string name="medkit">Medkit</string>
+	<string name="medkitDesc">Soigne 15 pv.</string>
+	<string name="playerSpeedReducer">Inhibiteur</string>
+	<string name="playerSpeedReducerDesc">Réduit la vitesse de déplacement du personnage.</string>
+	<string name="superMedkit">Super Medkit</string>
+	<string name="superMedkitDesc">Soigne 25 pv.</string>
+	
+	<string name="bull">Taureau</string>
+	<string name="bullDesc">Traverse l\'ecran très rapidement en détruisant tout sur son passage. Un panneau indique lorsqu\'il va arriver.</string>
+	<string name="caterpillar">Limace</string>
+	<string name="caterpillarDesc">Rampe plus ou moins rapidement. Les violettes sont les plus dangereuses.</string>
+	<string name="circularSaw">Scie Circulaire</string>
+	<string name="circularSawDesc">Elle suit son tracé jusqu\'a sortir de l\'écran.</string>
+	<string name="fireGround">Feu</string>
+	<string name="fireMeteor">Météor de feu</string>
+	<string name="fireMeteorDesc">Plus rare que le météor, il relache du feu sur le sol pendant plusieurs secondes.</string>
+	<string name="meteor">Météor</string>
+	<string name="meteorDesc">Tombe sur le sol assez régulièrement.</string>
+	
     <plurals name="minute">
         <item quantity="one">minute</item>
         <item quantity="other">minutes</item>

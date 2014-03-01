@@ -39,10 +39,38 @@
     <string name="howtoplay">HOW TO PLAY</string>
     <string name="credits">CREDITS</string>
     <string name="creditsText">This game is a prototype realized by 2 freshly graduated French guys. It was just supposed to be a test for us to see what we can do and was entirely made during our free time, outside of work. We hope you enjoy playing and would appreciate any feedback about it.</string>
+    <string name="withParticipationOf">with the participation of</string>
     <string name="redefineButtonLocation">Redefine the location of buttons</string>
     <string name="cancel">Cancel</string>
     <string name="valid">Validate</string>
-
+    
+    <string name="balloonCrate">Balloon</string>
+    <string name="balloonCrateDesc">An item container. Pierce it with your finger to reveal it\'s content.</string>
+	<string name="muleta">Muleta</string>
+	<string name="muletaDesc">A matador cape that Yugo can use to invoke and dodge a mad bull, thus killing all of the others enemies close to the ground.</string>
+	<string name="timeAccelerator">Time Accelerator</string>
+	<string name="timeAcceleratorDesc">Increase the speed of all the enemies during 5 seconds.</string>
+	<string name="timeDecelerator">Time Decelerator</string>
+	<string name="timeDeceleratorDesc">Reduce the speed of all the enemies during 10 seconds.</string>
+	<string name="medkit">Medkit</string>
+	<string name="medkitDesc">Heal 15 pv.</string>
+	<string name="playerSpeedReducer">Player Speed Reducer</string>
+	<string name="playerSpeedReducerDesc">This will reduce the speed of your character for few seconds, try to avoid taking it.</string>
+	<string name="superMedkit">Super Medkit</string>
+	<string name="superMedkitDesc">Heal 25 pv.</string>
+	
+	<string name="bull">Bull</string>
+	<string name="bullDesc">It crosses the screen pretty fast and is very powerful. However, you know when it will arrive so be sure to avoid it.</string>
+	<string name="caterpillar">Caterpillar</string>
+	<string name="caterpillarDesc">Its crawls more or less slowly, but isn\'t very dangerous. Take care of the violet ones though.</string>
+	<string name="circularSaw">Circular Saw</string>
+	<string name="circularSawDesc">It follows its trail so you can anticipate it. Be careful not to touch it for it is quite painful.</string>
+	<string name="fireGround">Ground Fire</string>
+	<string name="fireMeteor">Fire Meteor</string>
+	<string name="fireMeteorDesc">Rarer than the meteor, it releases a persistent fire on the ground when it crashes.</string>
+	<string name="meteor">Meteor</string>
+	<string name="meteorDesc">Falls on the ground quite frequently but not very powerful.</string>
+	
     <plurals name="minute">
         <item quantity="one">minute</item>
         <item quantity="other">minutes</item>

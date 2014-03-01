@@ -1,14 +1,16 @@
 package com.survivalkid.game.entity.enemy.impl;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.enums.SpriteEnum;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
 
 public class FireMeteor extends Meteore {
 	
 	public FireMeteor() {
-		super("Fire Meteor", SpriteEnum.FIRE_METEORE, 0, 0, 10, 1);
-		description = "Rarer than the meteor, it releases a persistent fire on the ground when it crashes.";
+		super(GameContext.getSingleton().getContext().getString(R.string.fireMeteor), SpriteEnum.FIRE_METEORE, 0, 0, 10, 1);
+		description = GameContext.getSingleton().getContext().getString(R.string.fireMeteorDesc);
 	}
 	
 	/**

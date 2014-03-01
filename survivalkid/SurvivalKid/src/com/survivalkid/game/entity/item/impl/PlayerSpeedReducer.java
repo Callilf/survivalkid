@@ -1,9 +1,11 @@
 package com.survivalkid.game.entity.item.impl;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.singleton.GameContext;
 
 public class PlayerSpeedReducer extends StandardObject {
 
@@ -12,14 +14,14 @@ public class PlayerSpeedReducer extends StandardObject {
 
 	/** Default constructor. */
 	public PlayerSpeedReducer() {
-		super("Player speed reducer", SpriteEnum.RED_CLOCK, 0, 0, 0);
-		description = "This will reduce the speed of your character for few seconds, try to avoid taking it.";
+		super(GameContext.getSingleton().getContext().getString(R.string.playerSpeedReducer), SpriteEnum.RED_CLOCK, 0, 0, 0);
+		description = GameContext.getSingleton().getContext().getString(R.string.playerSpeedReducerDesc);
 	};
 
 	/** Default constructor. */
 	public PlayerSpeedReducer(int _x, int _y) {
-		super("Player speed reducer", SpriteEnum.RED_CLOCK, _x, _y, 0);
-		description = "This will reduce the speed of your character for few seconds, try to avoid taking it.";
+		super(GameContext.getSingleton().getContext().getString(R.string.playerSpeedReducer), SpriteEnum.RED_CLOCK, _x, _y, 0);
+		description = GameContext.getSingleton().getContext().getString(R.string.playerSpeedReducerDesc);
 	};
 
 	@Override

@@ -77,7 +77,7 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 		playButton = BitmapUtil.createBitmap(R.drawable.menu_play_btn);
 		optionsButton = BitmapUtil.createBitmap(R.drawable.menu_options_btn);
 		htpButton = BitmapUtil.createBitmap(R.drawable.menu_htp_btn);
-		creditsButton = BitmapUtil.createBitmap(R.drawable.menu_htp_btn);
+		creditsButton = BitmapUtil.createBitmap(R.drawable.menu_credits_btn);
 		initRectsPosition();
 		
 		if (Constants.DEBUG) {
@@ -91,8 +91,7 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 		playButtonRect = BitmapUtil.buildRect(playButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - playButton.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/3);
 		optionsButtonRect = BitmapUtil.buildRect(optionsButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - optionsButton.getWidth()/2, playButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
 		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
-		creditsButtonRect = BitmapUtil.buildRect(creditsButton, MoveUtil.BACKGROUND_RIGHT - MoveUtil.BACKGROUND_WIDTH/6 - creditsButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
-
+		creditsButtonRect = BitmapUtil.buildRect(creditsButton, MoveUtil.BACKGROUND_RIGHT - creditsButton.getWidth() - 5, MoveUtil.BACKGROUND_BOTTOM - creditsButton.getHeight() - 5);
 	}
 
 	/**
