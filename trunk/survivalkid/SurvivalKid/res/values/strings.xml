@@ -23,26 +23,31 @@
     <string name="title_activity_how_to_play">HowToPlayActivity</string>
     <string name="title_activity_replace_button">ReplaceButtonActivity</string>
     <string name="optCentered">CENTERED</string>
-	<string name="optScaled">SCALED</string>
-	<string name="optImage">Images:</string>
-	<string name="optSound">Sound:</string>
-	<string name="options">OPTIONS</string>
-	<string name="on">ON</string>
-	<string name="off">OFF</string>
-	<string name="items">Items</string>
-	<string name="enemies">Enemies</string>
-	<string name="optDifficulty">Difficulty:</string>
-	<string name="optDiffEasy">Easy</string>
-	<string name="optDiffNormal">Normal</string>
-	<string name="optDiffHard">Hard</string>
-	<string name="goal">The goal of Survival Kid is to survive in the fixed screen as long as possible.  During the game, multiple enemies will appear and lower your life when they touch you.  Several items will also appear, some being positive and some negative. This page lists all the enemies and items you can encounter.</string>
-	<string name="howtoplay">HOW TO PLAY</string>
-	<string name="redefineButtonLocation">Redefine the location of buttons</string>
-	<string name="cancel">Cancel</string>
-	<string name="valid">Validate</string>
-	<plurals name="minute">
+    <string name="optScaled">SCALED</string>
+    <string name="optImage">Images:</string>
+    <string name="optSound">Sound:</string>
+    <string name="options">OPTIONS</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="items">Items</string>
+    <string name="enemies">Enemies</string>
+    <string name="optDifficulty">Difficulty:</string>
+    <string name="optDiffEasy">Easy</string>
+    <string name="optDiffNormal">Normal</string>
+    <string name="optDiffHard">Hard</string>
+    <string name="goal">The goal of Survival Kid is to survive in the fixed screen as long as possible.  During the game, multiple enemies will appear and lower your life when they touch you.  Several items will also appear, some being positive and some negative. This page lists all the enemies and items you can encounter.</string>
+    <string name="howtoplay">HOW TO PLAY</string>
+    <string name="credits">CREDITS</string>
+    <string name="creditsText">This game is a prototype realized by 2 freshly graduated French guys. It was just supposed to be a test for us to see what we can do and was entirely made during our free time, outside of work. We hope you enjoy playing and would appreciate any feedback about it.</string>
+    <string name="redefineButtonLocation">Redefine the location of buttons</string>
+    <string name="cancel">Cancel</string>
+    <string name="valid">Validate</string>
+
+    <plurals name="minute">
         <item quantity="one">minute</item>
         <item quantity="other">minutes</item>
     </plurals>
+
+    <string name="title_activity_credits">CreditsActivity</string>
 
 </resources>
