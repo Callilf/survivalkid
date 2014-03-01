@@ -4,12 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Animation;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.item.ItemEntity;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
@@ -33,8 +35,8 @@ public class BalloonCrate extends ItemEntity {
 
 	/** Default constructor. */
 	public BalloonCrate() {
-		super("Balloon", SpriteEnum.BALLOON_CRATE, 0, 0, 0);
-		description = "An item container. Pierce it with your finger to reveal it's content.";
+		super(GameContext.getSingleton().getContext().getString(R.string.balloonCrate), SpriteEnum.BALLOON_CRATE, 0, 0, 0);
+		description = GameContext.getSingleton().getContext().getString(R.string.balloonCrateDesc);
 	};
 
 	/** Default constructor. */

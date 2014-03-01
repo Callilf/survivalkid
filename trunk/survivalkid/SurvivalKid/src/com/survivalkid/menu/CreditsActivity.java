@@ -1,17 +1,15 @@
 package com.survivalkid.menu;
 
-import com.survivalkid.R;
-import com.survivalkid.R.layout;
-import com.survivalkid.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.support.v4.app.NavUtils;
+
+import com.survivalkid.R;
 
 public class CreditsActivity extends Activity {
 

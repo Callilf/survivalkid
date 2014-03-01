@@ -5,6 +5,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
@@ -40,11 +41,11 @@ public class Bull extends EnemyEntity {
 
 	/** Default constructor. */
 	public Bull() {
-		super("Bull", SpriteEnum.BULL, 0, 0, 30, 0);
+		super(GameContext.getSingleton().getContext().getString(R.string.bull), SpriteEnum.BULL, 0, 0, 30, 0);
 		attack = DEFAULT_DEFENSE + 2;
 		defense = DEFAULT_DEFENSE + 1;
 		
-		description = "It crosses the screen pretty fast and is very powerful. However, you know when it will arrive so be sure to avoid it.";
+		description = GameContext.getSingleton().getContext().getString(R.string.bullDesc);
 	};
 
 	/** Initialize the enemy. */

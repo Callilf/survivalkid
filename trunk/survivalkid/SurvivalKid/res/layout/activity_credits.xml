@@ -105,34 +105,28 @@
                 android:textSize="14dp"
                 android:typeface="normal" />
 
-            <LinearLayout
-                android:layout_width="253dp"
+            <TextView
+                android:id="@+id/TextView07"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginRight="80px" >
+                android:layout_weight="0.53"
+                android:gravity="center_horizontal"
+                android:text="@string/withParticipationOf"
+                android:textColor="@android:color/white"
+                android:textSize="8dp"
+                android:typeface="normal" />
 
-                <TextView
-                    android:id="@+id/TextView07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.53"
-                    android:gravity="center_horizontal"
-                    android:text="with the participation of"
-                    android:textColor="@android:color/white"
-                    android:textSize="8dp"
-                    android:typeface="normal" />
-
-                <TextView
-                    android:id="@+id/TextView05"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="François DROUMAGUET"
-                    android:textColor="@android:color/white"
-                    android:textSize="14dp"
-                    android:typeface="normal" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/TextView05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="François DROUMAGUET"
+                android:textColor="@android:color/white"
+                android:textSize="14dp"
+                android:typeface="normal" />
 
             <TextView
                 android:id="@+id/TextView04"
@@ -153,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="Ice and Chilli by _ghost (http://ccmixter.org/)"
+                android:text="&quot;Ice and Chilli&quot; by _ghost (http://ccmixter.org/)"
                 android:textColor="@android:color/white"
                 android:textSize="14dp"
                 android:typeface="normal" />

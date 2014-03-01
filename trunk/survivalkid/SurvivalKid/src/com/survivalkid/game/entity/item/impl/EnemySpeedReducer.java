@@ -1,9 +1,11 @@
 package com.survivalkid.game.entity.item.impl;
 
+import com.survivalkid.R;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.item.StandardObject;
 import com.survivalkid.game.entity.personage.Personage;
+import com.survivalkid.game.singleton.GameContext;
 
 public class EnemySpeedReducer extends StandardObject {
 
@@ -12,14 +14,14 @@ public class EnemySpeedReducer extends StandardObject {
 
 	/** Default constructor. */
 	public EnemySpeedReducer() {
-		super("Time decelerator", SpriteEnum.HOURGLASS_GREEN, 0, 0, 0);
-		description = "Reduce the speed of all the enemies during 10 seconds.";
+		super(GameContext.getSingleton().getContext().getString(R.string.timeDecelerator), SpriteEnum.HOURGLASS_GREEN, 0, 0, 0);
+		description = GameContext.getSingleton().getContext().getString(R.string.timeDeceleratorDesc);
 	};
 
 	/** Default constructor. */
 	public EnemySpeedReducer(int _x, int _y) {
-		super("Time decelerator", SpriteEnum.HOURGLASS_GREEN, _x, _y, 0);
-		description = "Reduce the speed of all the enemies during 10 seconds.";
+		super(GameContext.getSingleton().getContext().getString(R.string.timeDecelerator), SpriteEnum.HOURGLASS_GREEN, _x, _y, 0);
+		description = GameContext.getSingleton().getContext().getString(R.string.timeDeceleratorDesc);
 	};
 
 	@Override
