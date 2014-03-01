@@ -58,6 +58,12 @@ public class MainMenuActivity extends AbstractActivity {
 		startActivity(intent);
 		this.overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
 	}
+	
+	public void goToCredits() {
+		Intent intent = new Intent(MainMenuActivity.this.getBaseContext(), CreditsActivity.class);
+		startActivity(intent);
+		this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

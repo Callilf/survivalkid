@@ -36,6 +36,9 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 	
 	private Bitmap htpButton;
 	private Rect htpButtonRect;
+	
+	private Bitmap creditsButton;
+	private Rect creditsButtonRect;
 
 	private MainMenuActivity activity;
 //	private Paint paint;
@@ -74,6 +77,7 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 		playButton = BitmapUtil.createBitmap(R.drawable.menu_play_btn);
 		optionsButton = BitmapUtil.createBitmap(R.drawable.menu_options_btn);
 		htpButton = BitmapUtil.createBitmap(R.drawable.menu_htp_btn);
+		creditsButton = BitmapUtil.createBitmap(R.drawable.menu_htp_btn);
 		initRectsPosition();
 		
 		if (Constants.DEBUG) {
@@ -87,6 +91,8 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 		playButtonRect = BitmapUtil.buildRect(playButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - playButton.getWidth()/2, MoveUtil.BACKGROUND_TOP + MoveUtil.BACKGROUND_HEIGHT/3);
 		optionsButtonRect = BitmapUtil.buildRect(optionsButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - optionsButton.getWidth()/2, playButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
 		htpButtonRect = BitmapUtil.buildRect(htpButton, MoveUtil.BACKGROUND_LEFT + MoveUtil.BACKGROUND_WIDTH/2 - htpButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
+		creditsButtonRect = BitmapUtil.buildRect(creditsButton, MoveUtil.BACKGROUND_RIGHT - MoveUtil.BACKGROUND_WIDTH/6 - creditsButton.getWidth()/2, optionsButtonRect.bottom + MoveUtil.BACKGROUND_HEIGHT/20);
+
 	}
 
 	/**
@@ -118,6 +124,7 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 			canvas.drawBitmap(playButton, playButtonRect.left, playButtonRect.top, null);
 			canvas.drawBitmap(optionsButton, optionsButtonRect.left, optionsButtonRect.top, null);
 			canvas.drawBitmap(htpButton, htpButtonRect.left, htpButtonRect.top, null);
+			canvas.drawBitmap(creditsButton, creditsButtonRect.left, creditsButtonRect.top, null);
 //			canvas.drawText("Touch to start", MoveUtil.SCREEN_WIDTH / 3, MoveUtil.SCREEN_HEIGHT / 2 - 10, paint);
 		}
 	}
@@ -137,6 +144,9 @@ public class MainMenu extends SurfaceView implements SurfaceHolder.Callback {
 			active = false;
 		} else if (htpButtonRect.contains(touchHandler.getX(), touchHandler.getY())) {
 			activity.goToHowToPlay();
+			active = false;
+		} else if (creditsButtonRect.contains(touchHandler.getX(), touchHandler.getY())) {
+			activity.goToCredits();
 			active = false;
 		}
 
