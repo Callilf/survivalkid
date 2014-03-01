@@ -52,7 +52,7 @@ public class GameActivity extends AbstractActivity {
 		PrefsUtil.initPreferences(this);
 		gamePanel = new GameManager(this);
 		if (PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SOUND_ENABLED, true)) {
-			backgroundMusic = MediaPlayer.create(this, R.raw.for_the_children);
+			backgroundMusic = MediaPlayer.create(this, R.raw.ice_and_chilli);
 		}
 		else {
 			backgroundMusic = null;
