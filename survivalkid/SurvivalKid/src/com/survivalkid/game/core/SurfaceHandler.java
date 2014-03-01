@@ -33,7 +33,7 @@ public class SurfaceHandler {
 				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
 		chronoRestore.setSize(60f, true);
 		
-		ground = BitmapUtil.createBitmap(R.drawable.ground);
+		ground = BitmapUtil.createBitmap(R.drawable.ground_hell);
 		
 	}
 	
