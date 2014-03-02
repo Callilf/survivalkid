@@ -3,15 +3,12 @@ package com.survivalkid.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
@@ -45,13 +42,7 @@ public class HowToPlayActivity extends AbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
     	setTagParent("HowToPlay");
         super.onCreate(savedInstanceState);
-        
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		
+
         setContentView(R.layout.activity_how_to_play);
         
         enemyList = (ListView) findViewById(R.id.enemies);

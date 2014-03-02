@@ -2,8 +2,11 @@ package com.survivalkid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.survivalkid.game.core.Constants;
 
@@ -23,6 +26,17 @@ public abstract class AbstractActivity extends Activity {
 		finish();
 		System.gc();
 		android.os.Process.killProcess(android.os.Process.myPid());
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Set fullscreen and remove the title bar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		this.getWindow().getDecorView().setBackgroundColor(Color.BLACK);
 	}
 	
 	@Override

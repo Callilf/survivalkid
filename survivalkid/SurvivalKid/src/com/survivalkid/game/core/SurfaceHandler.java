@@ -6,6 +6,8 @@ import android.view.SurfaceHolder;
 
 import com.survivalkid.AbstractSurfaceView;
 import com.survivalkid.R;
+import com.survivalkid.game.core.Difficulty.DifficultyEnum;
+import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
@@ -33,8 +35,25 @@ public class SurfaceHandler {
 				MoveUtil.BACKGROUND_HEIGHT/2 + MoveUtil.BACKGROUND_TOP);
 		chronoRestore.setSize(60f, true);
 		
-		ground = BitmapUtil.createBitmap(R.drawable.ground_hell);
-		
+	}
+	
+	/**
+	 * Set the background image of the level depending of the difficulty.
+	 * @param diff the difficulty
+	 */
+	public void setBackground(Difficulty diff) {
+		//Display the correct ground depending on the difficulty
+		if ( SharedVars.getSingleton().getDifficulty() != null) {
+			if (diff.getDifficulty() == DifficultyEnum.HARD 
+					|| diff.getDifficulty() == DifficultyEnum.HARDER
+					|| diff.getDifficulty() == DifficultyEnum.HARDEST) {
+				ground = BitmapUtil.createBitmap(R.drawable.ground_hell);
+			} else {
+				ground = BitmapUtil.createBitmap(R.drawable.ground);
+			}
+		} else {
+			ground = BitmapUtil.createBitmap(R.drawable.ground);
+		}
 	}
 	
 	/**

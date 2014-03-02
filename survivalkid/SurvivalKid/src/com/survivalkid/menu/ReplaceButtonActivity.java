@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.survivalkid.AbstractActivity;
 import com.survivalkid.R;
@@ -23,15 +21,9 @@ public class ReplaceButtonActivity extends AbstractActivity {
 	
 	ReplaceMenu gamePanel;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		setTagParent("ReplaceButton");
 		super.onCreate(savedInstanceState);
-		
-		// Set fullscreen and remove the title bar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		// initialize multitouch
 		MoveUtil.HAS_MULTITOUCH = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH);
