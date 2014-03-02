@@ -84,7 +84,6 @@ public class GameManager extends AbstractSurfaceView {
 		SharedVars.getSingleton().initSingleton();
 		
 		surfaceHandler = new SurfaceHandler(this);
-		
 //		SharedPreferences prefs = getContext().getSharedPreferences("SURVIVAL-KID-PREF", Context.MODE_PRIVATE);
 //		if (prefs == null) {
 //			// todo
@@ -122,6 +121,7 @@ public class GameManager extends AbstractSurfaceView {
 		difficulty = new Difficulty(diff);
 		sharedVars.setDifficulty(difficulty);
 		
+		surfaceHandler.setBackground(difficulty);
 		characterManager = new CharacterManager();
 		enemyManager = new EnemyManager();
 		itemManager = new ItemManager();

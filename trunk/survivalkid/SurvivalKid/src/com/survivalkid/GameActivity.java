@@ -1,6 +1,7 @@
 package com.survivalkid;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,12 +44,7 @@ public class GameActivity extends AbstractActivity {
 		setTagParent("Game");
 
 		super.onCreate(savedInstanceState);
-		// Set fullscreen and remove the title bar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+		
 		PrefsUtil.initPreferences(this);
 		gamePanel = new GameManager(this);
 		if (PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SOUND_ENABLED, true)) {

@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.survivalkid.AbstractActivity;
 import com.survivalkid.GameActivity;
@@ -26,12 +24,7 @@ public class CharacterSelectMenuActivity extends AbstractActivity {
 
 		setTagParent("Menu");
 		super.onCreate(savedInstanceState);
-		// Set fullscreen and remove the title bar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-				WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+		
 		PrefsUtil.initPreferences(this);
 		menu = new CharacterSelectMenu(this);
 		setContentView(menu);
