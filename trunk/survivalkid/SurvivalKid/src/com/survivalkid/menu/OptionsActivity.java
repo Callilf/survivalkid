@@ -91,6 +91,18 @@ public class OptionsActivity extends AbstractActivity {
             }
         });
         
+        //CHANGE MOVEMENT CHOICE
+        RadioGroup moveRadioGroup = (RadioGroup) findViewById(R.id.radioMove);
+        boolean isSlideMove = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SLIDE_MOVE_ENABLED, false);
+        setChecked(moveRadioGroup, isSlideMove? 0:1);
+        moveRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            	boolean isSlideMove = checkedId == R.id.radioMoveSlide;
+            	PrefsUtil.setPrefs(boolean.class, PreferencesConstants.SLIDE_MOVE_ENABLED, isSlideMove);
+            }
+        });
+        
         //Replace buttons
         Button replaceButtonsBtn = (Button) findViewById(R.id.redefineButtonLocationsBtn);
         replaceButtonsBtn.setOnClickListener(new OnClickListener() {

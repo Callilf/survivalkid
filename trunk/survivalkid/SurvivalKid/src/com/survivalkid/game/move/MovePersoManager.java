@@ -5,15 +5,20 @@ import java.util.List;
 
 import android.view.MotionEvent;
 
+import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.move.impl.MoveImplButton;
+import com.survivalkid.game.move.impl.MoveImplSlide;
 import com.survivalkid.game.util.MoveUtil;
+import com.survivalkid.game.util.PrefsUtil;
 
 public class MovePersoManager {
 
+	private Personage perso;
+	
 	/** Define the implementation of move */
-	private AbstractMove moveImpl = new MoveImplButton();
+	private AbstractMove moveImpl; 
 	
 	/** true if the priority if moving to left, false to right (in case there is both left and right moving enabled) */
 	public boolean lastEnabledLeft;
@@ -25,12 +30,24 @@ public class MovePersoManager {
 	/** list of the last pointer enabled */
 	private static List<Integer> lastPidPressed;
 	
-	public MovePersoManager() {
+	public MovePersoManager(Personage p) {
 		lastEnabledLeft = true;
 		isLeftEnabled = false;
 		isRightEnabled = false;
 		isTopEnabled = false;
 		lastPidPressed = new ArrayList<Integer>();
+		perso = p;
+		initMove();
+	}
+	
+	private void initMove() {
+		boolean isSlideEnable = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SLIDE_MOVE_ENABLED, false);
+		if (isSlideEnable) {
+			moveImpl = new MoveImplSlide(perso);
+		}
+		else {
+			moveImpl = new MoveImplButton();
+		}
 	}
 	
 	/**
@@ -64,8 +81,9 @@ public class MovePersoManager {
 	public void calculMove(MotionEvent event, TouchHandler touchHandler) {
 		// get the action and the pid of the pointer
 		Integer pidObject = touchHandler.getPid();
-		int pidUP = -1;
+		int pidUp = -1;
 		
+		moveImpl.startNewFrame();
 		switch (touchHandler.getActionCode()) {
 		case MotionEvent.ACTION_DOWN:
 		case MotionEvent.ACTION_POINTER_DOWN:
@@ -75,7 +93,7 @@ public class MovePersoManager {
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_POINTER_UP:
 			lastPidPressed.remove(pidObject);
-			pidUP = touchHandler.getPid();
+			pidUp = touchHandler.getPid();
 			break;
 		default:
 			break;
@@ -85,7 +103,7 @@ public class MovePersoManager {
 		isLeftEnabled = false;
 		isRightEnabled = false;
 		isTopEnabled = false;
-		calculChange(event, pidUP);
+		calculChange(event, pidUp);
 
 	}	
 	
@@ -100,7 +118,7 @@ public class MovePersoManager {
 		List<Integer> onRight = new ArrayList<Integer>();
 		for (int i = 0; i < event.getPointerCount(); i++) {
 			// the pid up is ignored if exist
-			if (i == ignorePid) continue;
+			if (i == ignorePid || !moveImpl.keepPid(i)) continue;
 			
 			int x = MoveUtil.normTouchX(event.getX(i));
 			int y = MoveUtil.normTouchY(event.getY(i));

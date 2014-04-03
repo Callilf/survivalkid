@@ -45,6 +45,13 @@ public abstract class AbstractMove {
 	
 	public abstract boolean isOnTop(int x, int y);
 	
+	public boolean keepPid(int pid) {
+		return true;
+	}
+	
+	public void startNewFrame() {
+	}
+	
 	public void moveToLeft(Personage perso) {
 		perso.setSpeedX(Math.max(-vitesseMaxX,perso.getSpeedX()-accelerationX));
 	}
