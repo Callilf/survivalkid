@@ -3,7 +3,6 @@ package com.survivalkid.game.entity.personage;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 
@@ -71,7 +70,7 @@ public class Personage extends GameEntity {
 		super("CharacterA", spriteEnum, x, y);
 		gravity = 2;
 		persoType = perso;
-		movePersoManager = new MovePersoManager();
+		movePersoManager = new MovePersoManager(this);
 		life = new Life(100);
 		deathAnim = new AnimatedSprite(SpriteEnum.SMOKE_WHITE_LARGE, -100, -100);
 		dying = false;

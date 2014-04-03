@@ -35,6 +35,9 @@
 	<string name="optDiffEasy">Facile</string>
 	<string name="optDiffNormal">Normal</string>
 	<string name="optDiffHard">Difficile</string>
+    <string name="movement">Déplacement :</string>
+    <string name="moveSlide">Glissé</string>
+    <string name="moveButton">Bouton</string>  
 	<string name="goal">Le but du jeu est de survivre le plus longtemps possible dans l\'écran de jeu. Pendant la partie, divers ennemis vont apparaître et tenter de faire baisser votre vie. Plusieurs objets vont aussi apparaitre, pouvant être aussi bien des bonus que des malus. Cette page liste les ennemis et les items que vous pourrez rencontrer.</string>
 	<string name="howtoplay">AIDE</string>
 	<string name="credits">CRÉDITS</string>

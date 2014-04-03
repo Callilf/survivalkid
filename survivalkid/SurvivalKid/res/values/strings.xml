@@ -35,6 +35,9 @@
     <string name="optDiffEasy">Easy</string>
     <string name="optDiffNormal">Normal</string>
     <string name="optDiffHard">Hard</string>
+    <string name="movement">Movement:</string>
+    <string name="moveSlide">Slide</string>
+    <string name="moveButton">Button</string>   
     <string name="goal">The goal of Survival Kid is to survive in the fixed screen as long as possible.  During the game, multiple enemies will appear and lower your life as they touch you.  Several items will also appear, some being positive and some negative. This page lists all the enemies and items you can encounter.</string>
     <string name="howtoplay">HOW TO PLAY</string>
     <string name="credits">CREDITS</string>
