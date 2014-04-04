@@ -4,7 +4,10 @@ import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.survivalkid.game.core.Constants.PreferencesConstants;
+import com.survivalkid.game.core.Difficulty.DifficultyEnum;
 import com.survivalkid.game.data.DataSave;
+import com.survivalkid.game.util.PrefsUtil;
 import com.survivalkid.menu.MainMenuActivity;
 
 public class GameContext {
@@ -22,6 +25,12 @@ public class GameContext {
 	
 	/** duration of the game */
 	public long gameDuration;
+	
+	/** difficulty of the game */
+	public DifficultyEnum gameDifficulty;
+	
+	/** Movement mode */
+	public boolean slideMoveEnabled;
 	
 	/** The time when the game started. */ // use gameDuration instead of initialTime for all handling
 	public long initialTime;
@@ -51,6 +60,8 @@ public class GameContext {
 		instance.initialTime=System.currentTimeMillis();
 		currentDifficulty = 0;
 		gameDuration = 0;
+		gameDifficulty = DifficultyEnum.valueOf(PrefsUtil.getPrefs().getInt(PreferencesConstants.DIFFICULTY, 1));
+		slideMoveEnabled = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SLIDE_MOVE_ENABLED, false);
 		score = 0;
 		alterationSpeedEnemy = 1f;
 		if (dataSave == null) {

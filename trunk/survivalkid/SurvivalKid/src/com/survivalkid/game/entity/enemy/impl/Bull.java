@@ -5,12 +5,12 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Point;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.core.enums.StateEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.enemy.EnemyDesc;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.particle.ParticleEmitter;
@@ -41,12 +41,10 @@ public class Bull extends EnemyEntity {
 
 	/** Default constructor. */
 	public Bull() {
-		super(GameContext.getSingleton().getContext().getString(R.string.bull), SpriteEnum.BULL, 0, 0, 30, 0);
+		super(EnemyDesc.BULL, 0, 0);
 		attack = DEFAULT_DEFENSE + 2;
 		defense = DEFAULT_DEFENSE + 1;
-		
-		description = GameContext.getSingleton().getContext().getString(R.string.bullDesc);
-	};
+	}
 
 	/** Initialize the enemy. */
 	private void init() {
@@ -155,7 +153,7 @@ public class Bull extends EnemyEntity {
 			return;
 		}
 
-		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
+		if (_personage.takeDamage(damage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
 			int newSpeedX = (direction == DirectionConstants.LEFT) ? -SPEED_COLLISION_X : SPEED_COLLISION_X;
 			_personage.setDirection((direction == DirectionConstants.LEFT) ? DirectionConstants.RIGHT
 					: DirectionConstants.LEFT);

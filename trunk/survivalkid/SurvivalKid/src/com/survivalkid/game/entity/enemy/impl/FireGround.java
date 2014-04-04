@@ -5,11 +5,11 @@ import java.util.Random;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.enemy.EnemyDesc;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.particle.ParticleEmitter;
@@ -39,7 +39,7 @@ public class FireGround extends EnemyEntity {
 	 * Constructor
 	 */
 	public FireGround() {
-		super(GameContext.getSingleton().getContext().getString(R.string.fireGround), SpriteEnum.FIRE_GROUND, 0, MoveUtil.GROUND, 2, 1);
+		super(EnemyDesc.FIRE_GROUND, 0, MoveUtil.GROUND);
 		
 		deathAnim = new AnimatedSprite(SpriteEnum.FIRE_GROUND, 0, 0);
 		
@@ -72,7 +72,7 @@ public class FireGround extends EnemyEntity {
 	
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-			_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME);
+			_personage.takeDamage(damage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME);
 	}
 
 	@Override

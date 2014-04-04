@@ -66,8 +66,8 @@ public class Difficulty {
 	private void initEnemyGenerationFrequency(DifficultyEnum difficulty) {
 		switch (difficulty) {
 		case NORMAL:
-			startedGenFreq = 1250;
-			periodIncreasingFreq = 1000;
+			startedGenFreq = 1350;
+			periodIncreasingFreq = 2000;
 			minGenFreq = 400;
 			decreaseStepPeriodFreq = 20;
 			break;	
@@ -75,15 +75,15 @@ public class Difficulty {
 		case HARDER:
 		case HARDEST:
 			startedGenFreq = 1000;
-			periodIncreasingFreq = 1000;
-			minGenFreq = 350;
+			periodIncreasingFreq = 1600;
+			minGenFreq = 300;
 			decreaseStepPeriodFreq = 20;
 			break;	
 		case EASY:
 		default:
 			startedGenFreq = 1500;
 			periodIncreasingFreq = 3000;
-			minGenFreq = 500;
+			minGenFreq = 400;
 			decreaseStepPeriodFreq = 20;
 			break;
 		}		

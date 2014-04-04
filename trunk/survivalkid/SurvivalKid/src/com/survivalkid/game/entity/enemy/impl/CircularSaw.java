@@ -10,14 +10,13 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.util.Log;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.enemy.EnemyDesc;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -59,8 +58,7 @@ public class CircularSaw extends EnemyEntity {
 
 	/** Default constructor. */
 	public CircularSaw() {
-		super(GameContext.getSingleton().getContext().getString(R.string.circularSaw),SpriteEnum.CIRCULAR_SAW, -20, -20, 20, 1);
-		description = GameContext.getSingleton().getContext().getString(R.string.circularSawDesc);
+		super(EnemyDesc.CIRCULAR_SAW, -20, -20);
 	}
 
 	/** Initialize the enemy. */
@@ -232,7 +230,7 @@ public class CircularSaw extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-			_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE);
+			_personage.takeDamage(damage, EnumLife.TAKE_DAMAGE);
 	}
 
 	@Override
