@@ -17,6 +17,7 @@ import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.personage.Bag;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
 import com.survivalkid.game.util.PrefsUtil;
 
@@ -100,7 +101,13 @@ public class ButtonPosition {
 			upButton.set(SCREEN_VIRTUAL_WIDTH - widthUp - widthUp/2, SCREEN_VIRTUAL_HEIGHT - btn_up.getHeight());
 			
 			Bitmap bagImg = SpriteEnum.BAG_SLOT.getBitmap();
-			bagButton.set(SCREEN_VIRTUAL_WIDTH - widthUp - widthUp/3 - (int)(bagImg.getWidth()), SCREEN_VIRTUAL_HEIGHT - bagImg.getHeight());
+			if (GameContext.getSingleton().slideMoveEnabled) {
+				bagButton.set(SCREEN_VIRTUAL_WIDTH - (int)(bagImg.getWidth()*0.6), SCREEN_VIRTUAL_HEIGHT - (int)(bagImg.getHeight() * 2.5));
+			}
+			else {
+				bagButton.set(SCREEN_VIRTUAL_WIDTH - widthUp - widthUp/3 - (int)(bagImg.getWidth()), SCREEN_VIRTUAL_HEIGHT - bagImg.getHeight());
+			}
+				
 		}
 		else {
 			// not multitouch, the button are superposed so the player can jump and move un the same time

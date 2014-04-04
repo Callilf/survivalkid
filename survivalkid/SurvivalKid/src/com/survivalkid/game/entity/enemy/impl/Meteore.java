@@ -5,15 +5,14 @@ import java.util.Random;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.enemy.EnemyDesc;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.particle.ParticleEmitter;
-import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.MoveUtil;
 
@@ -33,8 +32,7 @@ public class Meteore extends EnemyEntity {
 	private static final int RECOVERY_TIME = 500;
 	
 	public Meteore() {
-		super(GameContext.getSingleton().getContext().getString(R.string.meteor), SpriteEnum.METEORE, 0, 0, 10, 1);
-		description = GameContext.getSingleton().getContext().getString(R.string.meteorDesc);
+		super(EnemyDesc.METEORE, 0, 0);
 	}
 	
 	/**
@@ -47,8 +45,8 @@ public class Meteore extends EnemyEntity {
 	 * @param damage the damages
 	 * @param difficulty the difficulty
 	 */
-	protected Meteore(String _name, SpriteEnum _sprite, int _x, int _y, int _damage, int _difficulty) {
-		super(_name, _sprite, _x, _y, _damage, _difficulty);
+	protected Meteore(EnemyDesc enemyDesc, int _x, int _y) {
+		super(enemyDesc, _x, _y);
 	}
 	
 	private void init() {
@@ -119,7 +117,7 @@ public class Meteore extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
+		if (_personage.takeDamage(damage, EnumLife.TAKE_DAMAGE, RECOVERY_TIME)) {
 			die();
 		}
 	}

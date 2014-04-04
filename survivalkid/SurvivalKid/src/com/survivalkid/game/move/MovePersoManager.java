@@ -5,13 +5,12 @@ import java.util.List;
 
 import android.view.MotionEvent;
 
-import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.core.TouchHandler;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.move.impl.MoveImplButton;
 import com.survivalkid.game.move.impl.MoveImplSlide;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
-import com.survivalkid.game.util.PrefsUtil;
 
 public class MovePersoManager {
 
@@ -41,8 +40,7 @@ public class MovePersoManager {
 	}
 	
 	private void initMove() {
-		boolean isSlideEnable = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SLIDE_MOVE_ENABLED, false);
-		if (isSlideEnable) {
+		if (GameContext.getSingleton().slideMoveEnabled) {
 			moveImpl = new MoveImplSlide(perso);
 		}
 		else {

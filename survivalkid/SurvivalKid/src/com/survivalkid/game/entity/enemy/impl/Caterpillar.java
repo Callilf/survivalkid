@@ -3,14 +3,13 @@ package com.survivalkid.game.entity.enemy.impl;
 import android.graphics.Canvas;
 import android.graphics.Point;
 
-import com.survivalkid.R;
 import com.survivalkid.game.core.AnimatedSprite;
 import com.survivalkid.game.core.Constants.DirectionConstants;
 import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.Life.EnumLife;
+import com.survivalkid.game.entity.enemy.EnemyDesc;
 import com.survivalkid.game.entity.enemy.EnemyEntity;
 import com.survivalkid.game.entity.personage.Personage;
-import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.util.MoveUtil;
 
 public class Caterpillar extends EnemyEntity {
@@ -26,8 +25,7 @@ public class Caterpillar extends EnemyEntity {
 	
 	/** Default constructor. */
 	public Caterpillar() {
-		super(GameContext.getSingleton().getContext().getString(R.string.caterpillar), SpriteEnum.CATERPILLAR, 0, 0, 5, 0);
-		description = GameContext.getSingleton().getContext().getString(R.string.caterpillarDesc);
+		super(EnemyDesc.CATERPILLAR, 0, 0);
 	};
 
 	/** Initialize the enemy. */
@@ -61,8 +59,8 @@ public class Caterpillar extends EnemyEntity {
 
 	@Override
 	public void applyCollisionCharacter(Personage _personage) {
-		int recovery = (dammage > 5)? RECOVERY_TIME_PURPLE : RECOVERY_TIME_NORMAL;
-		if (_personage.takeDamage(dammage, EnumLife.TAKE_DAMAGE, recovery)) {
+		int recovery = (damage > 5)? RECOVERY_TIME_PURPLE : RECOVERY_TIME_NORMAL;
+		if (_personage.takeDamage(damage, EnumLife.TAKE_DAMAGE, recovery)) {
 			die();
 		}
 	}
@@ -93,7 +91,7 @@ public class Caterpillar extends EnemyEntity {
 		float speed = (float) (Math.random() * (CATERPILLAR_HIGHEST_SPEED - CATERPILLAR_LOWEST_SPEED) + CATERPILLAR_LOWEST_SPEED);
 		if(speed >= 2.5f) {
 			sprite = new AnimatedSprite(SpriteEnum.CATERPILLAR_PURPLE);
-			dammage = 10;
+			damage = 10;
 		}
 		
 		// random spawn position

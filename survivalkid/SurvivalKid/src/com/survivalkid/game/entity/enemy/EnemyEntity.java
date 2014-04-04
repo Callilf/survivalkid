@@ -6,10 +6,10 @@ import android.util.Log;
 
 import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.CollisionConstants;
-import com.survivalkid.game.core.enums.SpriteEnum;
 import com.survivalkid.game.entity.GameEntity;
 import com.survivalkid.game.entity.personage.Personage;
 import com.survivalkid.game.manager.EnemyManager;
+import com.survivalkid.game.singleton.GameContext;
 
 public abstract class EnemyEntity extends GameEntity {
 	private static final String TAG = EnemyEntity.class.getSimpleName();
@@ -17,12 +17,12 @@ public abstract class EnemyEntity extends GameEntity {
 	/** Defense by default of all enemy. */
 	protected static final int DEFAULT_DEFENSE = 4;
 
-	/** damage cause to the player the enemy hit */
-	protected int dammage;
-
-	/** index of difficulty */
-	protected int difficulty;
-
+	/** Description of the enemy */
+	protected EnemyDesc enemyDesc;
+	
+	/** Dammage deals when the enemy hits a player */
+	protected int damage;
+	
 	/**
 	 * attack against other ennemy. If this value is > 0, it can destroy enemy
 	 * with less defense
@@ -51,29 +51,24 @@ public abstract class EnemyEntity extends GameEntity {
 
 	/** Whether the enemy is active and can collide. */
 	protected boolean active;
-
+	
 	/**
 	 * 
 	 * Constructor called by parents class
 	 * 
-	 * @param _name
-	 *            name of the entity
-	 * @param spriteEnum
-	 *            the sprite
+	 * @param EnemyDesc
+	 *            description of the entity
 	 * @param x
 	 *            position x initial
 	 * @param y
 	 *            position y initial
-	 * @param _dammage
-	 *            how much the perso loose life when he hit the enemy
-	 * @param _difficulty
-	 *            the index of difficulty of the enemy
 	 */
-	public EnemyEntity(String _name, SpriteEnum spriteEnum, int _x, int _y, int _dammage, int _difficulty) {
-		super(_name, spriteEnum, _x, _y);
+	//public EnemyEntity(String _name, SpriteEnum spriteEnum, int _x, int _y, int _dammage, int _difficulty) {
+	public EnemyEntity(EnemyDesc _enemyDesc, int _x, int _y) {
+		super(_enemyDesc.getName(), _enemyDesc.getSpriteEnum(), _x, _y);
+		damage = _enemyDesc.getDamage(GameContext.getSingleton().gameDifficulty.getValue());
 		dying = false;
-		dammage = _dammage;
-		difficulty = _difficulty;
+		enemyDesc = _enemyDesc;
 		attack = 0;
 		defense = DEFAULT_DEFENSE;
 		active = true;
@@ -155,7 +150,7 @@ public abstract class EnemyEntity extends GameEntity {
 	public int getAttack() {
 		return attack;
 	}
-
+	
 	/**
 	 * @return the active
 	 */
@@ -169,6 +164,11 @@ public abstract class EnemyEntity extends GameEntity {
 	 */
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	@Override
+	public String getDescription() {
+		return enemyDesc.getTxtDesc();
 	}
 
 }

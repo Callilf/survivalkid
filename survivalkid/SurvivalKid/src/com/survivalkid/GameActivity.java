@@ -1,7 +1,6 @@
 package com.survivalkid;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +8,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.survivalkid.game.GameManager;
 import com.survivalkid.game.core.Constants;
@@ -49,6 +46,7 @@ public class GameActivity extends AbstractActivity {
 		gamePanel = new GameManager(this);
 		if (PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SOUND_ENABLED, true)) {
 			backgroundMusic = MediaPlayer.create(this, R.raw.ice_and_chilli);
+			backgroundMusic.setLooping(true);
 		}
 		else {
 			backgroundMusic = null;

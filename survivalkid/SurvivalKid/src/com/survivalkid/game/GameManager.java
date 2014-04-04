@@ -13,7 +13,6 @@ import com.survivalkid.GameActivity;
 import com.survivalkid.game.core.ChronoDisplayer;
 import com.survivalkid.game.core.Constants;
 import com.survivalkid.game.core.Constants.PersonageConstants;
-import com.survivalkid.game.core.Constants.PreferencesConstants;
 import com.survivalkid.game.core.Difficulty;
 import com.survivalkid.game.core.Difficulty.DifficultyEnum;
 import com.survivalkid.game.core.SurfaceHandler;
@@ -36,7 +35,6 @@ import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.CollisionUtil;
 import com.survivalkid.game.util.DesignUtil;
 import com.survivalkid.game.util.MoveUtil;
-import com.survivalkid.game.util.PrefsUtil;
 
 public class GameManager extends AbstractSurfaceView {
 
@@ -117,7 +115,7 @@ public class GameManager extends AbstractSurfaceView {
 		}
 		
 		SharedVars sharedVars = SharedVars.getSingleton();
-		DifficultyEnum diff = DifficultyEnum.valueOf(PrefsUtil.getPrefs().getInt(PreferencesConstants.DIFFICULTY, 1));
+		DifficultyEnum diff = GameContext.getSingleton().gameDifficulty;
 		difficulty = new Difficulty(diff);
 		sharedVars.setDifficulty(difficulty);
 		

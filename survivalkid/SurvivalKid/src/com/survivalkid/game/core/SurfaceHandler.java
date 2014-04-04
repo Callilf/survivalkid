@@ -1,5 +1,6 @@
 package com.survivalkid.game.core;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
@@ -7,6 +8,7 @@ import android.view.SurfaceHolder;
 import com.survivalkid.AbstractSurfaceView;
 import com.survivalkid.R;
 import com.survivalkid.game.core.Difficulty.DifficultyEnum;
+import com.survivalkid.game.singleton.GameContext;
 import com.survivalkid.game.singleton.SharedVars;
 import com.survivalkid.game.util.BitmapUtil;
 import com.survivalkid.game.util.DesignUtil;
@@ -59,6 +61,7 @@ public class SurfaceHandler {
 	/**
 	 * Do a draw of the game. If withChrono is true, display a count down in foreground.
 	 */
+	@SuppressLint("WrongCall")
 	public void completeDraw(boolean withChrono) {
 		Canvas canvas = null;
 		try {
@@ -110,9 +113,11 @@ public class SurfaceHandler {
 	}
 	
 	public void drawButton(Canvas canvas) {
-		MoveUtil.btn_left.draw(canvas);
-		MoveUtil.btn_right.draw(canvas);
-		MoveUtil.btn_up.draw(canvas);
+		if (!GameContext.getSingleton().slideMoveEnabled) {
+			MoveUtil.btn_left.draw(canvas);
+			MoveUtil.btn_right.draw(canvas);
+			MoveUtil.btn_up.draw(canvas);
+		}
 	}
 
 	public ChronoDisplayer getChronoRestore() {
