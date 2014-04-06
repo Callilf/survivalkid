@@ -1,280 +1,284 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/verticalLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/menu_background" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:text="@string/options"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FFFFFF"
-        android:textSize="30dp" />
-
-    <LinearLayout
-        android:id="@+id/optionsLinearSound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:text="@string/optSound"
-            android:textColor="#FFFFFF"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/radioSound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal" >
-        
-	        <RadioButton
-	            android:id="@+id/radioSoundOn"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:checked="true"
-	            android:text="@string/on"
-	            android:textColor="#FFFFFF"
-	            android:textSize="14dp" />
-	
-	        <RadioButton
-	            android:id="@+id/radioSoundOff"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/off"
-	            android:textColor="#FFFFFF"
-	            android:textSize="14dp" />
-	        
-        </RadioGroup>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/optionLinearScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
-
-        <TextView
-            android:id="@+id/TextView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:text="@string/optImage"
-            android:textColor="#FFFFFF"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/radioImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/radioImageCentered"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/optCentered"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp" />
-
-            <RadioButton
-                android:id="@+id/radioImageScaled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/optScaled"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp" />
-
-        </RadioGroup>
-        
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/optionsLinearParticle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:text="@string/optParticle"
-            android:textColor="#FFFFFF"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/radioParticle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal" >
-        
-	        <RadioButton
-	            android:id="@+id/radioParticleOn"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:checked="true"
-	            android:text="@string/on"
-	            android:textColor="#FFFFFF"
-	            android:textSize="14dp" />
-	
-	        <RadioButton
-	            android:id="@+id/radioParticleOff"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/off"
-	            android:textColor="#FFFFFF"
-	            android:textSize="14dp" />
-	        
-        </RadioGroup>
-
-    </LinearLayout>    
     
     <LinearLayout
-        android:id="@+id/optionsLinearMove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:text="@string/movement"
-            android:textColor="#FFFFFF"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/radioMove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal" >
-        
-	        <RadioButton
-	            android:id="@+id/radioMoveSlide"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:checked="true"
-	            android:text="@string/moveSlide"
-	            android:textColor="#FFFFFF"
-	            android:textSize="14dp" />
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/verticalLayout"
+       android:orientation="vertical" >  
+           
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginBottom="20dp"
+	        android:text="@string/options"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:textColor="#FFFFFF"
+	        android:textSize="30dp" />
 	
-	        <RadioButton
-	            android:id="@+id/radioMoveButton"
+	    <LinearLayout
+	        android:id="@+id/optionsLinearSound"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp" >
+	
+	        <TextView
+	            android:id="@+id/textView2"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:text="@string/moveButton"
+	            android:layout_gravity="center_vertical"
+	            android:layout_marginRight="10dp"
+	            android:text="@string/optSound"
 	            android:textColor="#FFFFFF"
-	            android:textSize="14dp" />
+	            android:textSize="14dp"
+	            android:textStyle="bold" />
+	
+	        <RadioGroup
+	            android:id="@+id/radioSound"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:baselineAligned="false"
+	            android:orientation="horizontal" >
 	        
-        </RadioGroup>
-
-    </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/optionDifficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" >
-
-        <TextView
-            android:id="@+id/TextView02"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:text="@string/optDifficulty"
-            android:textColor="#FFFFFF"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-        
-        <RadioGroup
-            android:id="@+id/radioDifficulty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/radioDiffEasy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/optDiffEasy"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp" />
-
-            <RadioButton
-                android:id="@+id/radioDiffNormal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/optDiffNormal"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp" />
-
-            <RadioButton
-                android:id="@+id/radioDiffHard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/optDiffHard"
-                android:textColor="#FFFFFF"
-                android:textSize="14dp" />
-            
-        </RadioGroup>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/redefineButtonLocationsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/menu_empty_btn"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/redefineButtonLocation"
-        android:textColor="#FFFFFF" />
-
-</LinearLayout>
+		        <RadioButton
+		            android:id="@+id/radioSoundOn"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:checked="true"
+		            android:text="@string/on"
+		            android:textColor="#FFFFFF"
+		            android:textSize="14dp" />
+		
+		        <RadioButton
+		            android:id="@+id/radioSoundOff"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/off"
+		            android:textColor="#FFFFFF"
+		            android:textSize="14dp" />
+		        
+	        </RadioGroup>
+	
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:id="@+id/optionLinearScreen"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp" >
+	
+	        <TextView
+	            android:id="@+id/TextView3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:layout_marginRight="10dp"
+	            android:text="@string/optImage"
+	            android:textColor="#FFFFFF"
+	            android:textSize="14dp"
+	            android:textStyle="bold" />
+	
+	        <RadioGroup
+	            android:id="@+id/radioImage"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:baselineAligned="false"
+	            android:orientation="horizontal" >
+	
+	            <RadioButton
+	                android:id="@+id/radioImageCentered"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:checked="true"
+	                android:text="@string/optCentered"
+	                android:textColor="#FFFFFF"
+	                android:textSize="14dp" />
+	
+	            <RadioButton
+	                android:id="@+id/radioImageScaled"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/optScaled"
+	                android:textColor="#FFFFFF"
+	                android:textSize="14dp" />
+	
+	        </RadioGroup>
+	        
+	
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:id="@+id/optionsLinearParticle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp" >
+	
+	        <TextView
+	            android:id="@+id/textView5"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:layout_marginRight="10dp"
+	            android:text="@string/optParticle"
+	            android:textColor="#FFFFFF"
+	            android:textSize="14dp"
+	            android:textStyle="bold" />
+	
+	        <RadioGroup
+	            android:id="@+id/radioParticle"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:baselineAligned="false"
+	            android:orientation="horizontal" >
+	        
+		        <RadioButton
+		            android:id="@+id/radioParticleOn"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:checked="true"
+		            android:text="@string/on"
+		            android:textColor="#FFFFFF"
+		            android:textSize="14dp" />
+		
+		        <RadioButton
+		            android:id="@+id/radioParticleOff"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/off"
+		            android:textColor="#FFFFFF"
+		            android:textSize="14dp" />
+		        
+	        </RadioGroup>
+	
+	    </LinearLayout>    
+	    
+	    <LinearLayout
+	        android:id="@+id/optionsLinearMove"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp" >
+	
+	        <TextView
+	            android:id="@+id/textView4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:layout_marginRight="10dp"
+	            android:text="@string/movement"
+	            android:textColor="#FFFFFF"
+	            android:textSize="14dp"
+	            android:textStyle="bold" />
+	
+	        <RadioGroup
+	            android:id="@+id/radioMove"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:baselineAligned="false"
+	            android:orientation="horizontal" >
+	        
+		        <RadioButton
+		            android:id="@+id/radioMoveSlide"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:checked="true"
+		            android:text="@string/moveSlide"
+		            android:textColor="#FFFFFF"
+		            android:textSize="14dp" />
+		
+		        <RadioButton
+		            android:id="@+id/radioMoveButton"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/moveButton"
+		            android:textColor="#FFFFFF"
+		            android:textSize="14dp" />
+		        
+	        </RadioGroup>
+	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/optionDifficulty"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp" >
+	
+	        <TextView
+	            android:id="@+id/TextView02"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:layout_marginRight="10dp"
+	            android:text="@string/optDifficulty"
+	            android:textColor="#FFFFFF"
+	            android:textSize="14dp"
+	            android:textStyle="bold" />
+	        
+	        <RadioGroup
+	            android:id="@+id/radioDifficulty"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:baselineAligned="false"
+	            android:orientation="horizontal" >
+	
+	            <RadioButton
+	                android:id="@+id/radioDiffEasy"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:checked="true"
+	                android:text="@string/optDiffEasy"
+	                android:textColor="#FFFFFF"
+	                android:textSize="14dp" />
+	
+	            <RadioButton
+	                android:id="@+id/radioDiffNormal"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/optDiffNormal"
+	                android:textColor="#FFFFFF"
+	                android:textSize="14dp" />
+	
+	            <RadioButton
+	                android:id="@+id/radioDiffHard"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/optDiffHard"
+	                android:textColor="#FFFFFF"
+	                android:textSize="14dp" />
+	            
+	        </RadioGroup>
+	
+	    </LinearLayout>
+	
+	    <Button
+	        android:id="@+id/redefineButtonLocationsBtn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:background="@drawable/menu_empty_btn"
+	        android:paddingLeft="15dp"
+	        android:paddingRight="15dp"
+	        android:text="@string/redefineButtonLocation"
+	        android:textColor="#FFFFFF" />
+     </LinearLayout>
+</ScrollView>

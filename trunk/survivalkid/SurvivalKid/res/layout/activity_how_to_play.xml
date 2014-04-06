@@ -1,123 +1,117 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/menu_background">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/scrollView"
+android:layout_width="match_parent"
+android:layout_height="match_parent"  >
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent" 
+        android:background="@drawable/menu_background" >
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/howToPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginTop="10dp"
+            android:text="@string/howtoplay"
+            android:textColor="@android:color/white"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            tools:context=".HowToPlayActivity" />
+
+        <TextView
+            android:id="@+id/goal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@+id/howToPlay"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/goal"
+            android:textColor="@android:color/white"
+            android:textSize="14dp"
+            android:typeface="normal" />
 
-            <TextView
-                android:id="@+id/howToPlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="false"
-                android:layout_marginTop="10dp"
-                android:text="@string/howtoplay"
-                android:textColor="@android:color/white"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:typeface="normal"
-                tools:context=".HowToPlayActivity" />
+        <TextView
+            android:id="@+id/enemiesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@+id/goal"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/enemies"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/goal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentTop="false"
-                android:layout_alignWithParentIfMissing="false"
-                android:layout_below="@+id/howToPlay"
-                android:layout_centerHorizontal="false"
-                android:layout_centerInParent="false"
-                android:layout_centerVertical="false"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="@string/goal"
-                android:textColor="@android:color/white"
-                android:textSize="14dp"
-                android:typeface="normal" />
-
-            <TextView
-                android:id="@+id/enemiesTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentTop="false"
-                android:layout_alignWithParentIfMissing="false"
-                android:layout_below="@+id/goal"
-                android:layout_centerHorizontal="false"
-                android:layout_centerInParent="false"
-                android:layout_centerVertical="false"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/enemies"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/enemiesList"
-                android:scrollbars="none"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentTop="false"
-                android:layout_alignWithParentIfMissing="false"
-                android:layout_below="@+id/enemiesTitle"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="false"
-                android:layout_centerVertical="false"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical" >
-
-                <ListView
-                    android:id="@+id/enemies"
-                    android:scrollbars="none"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
-                </ListView>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/itemsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/enemiesList"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/items"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/enemiesList"
+            android:scrollbars="none"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_below="@+id/enemiesTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical" >
 
             <ListView
-                android:id="@+id/itemsList"
+                android:id="@+id/enemies"
                 android:scrollbars="none"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/itemsTitle"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp" >
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
             </ListView>
-        </RelativeLayout>
+        </LinearLayout>
 
-    </ScrollView>
+        <TextView
+            android:id="@+id/itemsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enemiesList"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/items"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <ListView
+            android:id="@+id/itemsList"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/itemsTitle"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp" >
+        </ListView>
+    </RelativeLayout>
+
+</ScrollView>
