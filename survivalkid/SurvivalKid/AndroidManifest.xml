@@ -46,21 +46,24 @@
         </activity>
         <activity
             android:name=".menu.OptionsActivity"
-            android:label="@string/title_activity_options" >
+            android:label="@string/title_activity_options"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.survivalkid.MainMenuActivity" />
         </activity>
         <activity
             android:name=".menu.HowToPlayActivity"
-            android:label="@string/title_activity_how_to_play" >
+            android:label="@string/title_activity_how_to_play"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.survivalkid.MainMenuActivity" />
         </activity>
         <activity
             android:name=".menu.CreditsActivity"
-            android:label="@string/title_activity_credits" >
+            android:label="@string/title_activity_credits"
+            android:screenOrientation="landscape" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.survivalkid.menu.MainMenuActivity" />
