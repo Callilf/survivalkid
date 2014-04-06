@@ -26,6 +26,7 @@
     <string name="optScaled">SCALED</string>
     <string name="optImage">Images:</string>
     <string name="optSound">Sound:</string>
+    <string name="optParticle">Particle:</string>
     <string name="options">OPTIONS</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>

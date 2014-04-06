@@ -130,7 +130,7 @@ public final class DesignUtil {
 	 * @param isVerticalCenter true to center the image in vertical position. False to put the floor on the bottom of the screen
 	 */
 	public static void drawBackgroundImage(Canvas canvas, Bitmap image, boolean isVerticalCenter) {
-		canvas.drawColor(Color.BLUE);
+		canvas.drawColor(Color.BLACK);
 		int left = MoveUtil.BACKGROUND_LEFT;
 		int top = MoveUtil.BACKGROUND_TOP;
 		

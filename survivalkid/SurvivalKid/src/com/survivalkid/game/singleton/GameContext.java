@@ -32,6 +32,9 @@ public class GameContext {
 	/** Movement mode */
 	public boolean slideMoveEnabled;
 	
+	/** Movement mode */
+	public boolean particleEnabled;
+	
 	/** The time when the game started. */ // use gameDuration instead of initialTime for all handling
 	public long initialTime;
 	/** The current on-screen difficulty. */
@@ -62,6 +65,7 @@ public class GameContext {
 		gameDuration = 0;
 		gameDifficulty = DifficultyEnum.valueOf(PrefsUtil.getPrefs().getInt(PreferencesConstants.DIFFICULTY, 1));
 		slideMoveEnabled = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.SLIDE_MOVE_ENABLED, false);
+		particleEnabled = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.PARTICLE_ENABLED, true);
 		score = 0;
 		alterationSpeedEnemy = 1f;
 		if (dataSave == null) {
