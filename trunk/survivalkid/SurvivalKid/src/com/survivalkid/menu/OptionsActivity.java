@@ -48,6 +48,18 @@ public class OptionsActivity extends AbstractActivity {
             }
         });
         
+        //ACTIVATE PARTICLE
+        RadioGroup particleRadioGroup = (RadioGroup) findViewById(R.id.radioParticle);
+        boolean isCurrentParticleOn = PrefsUtil.getPrefs().getBoolean(PreferencesConstants.PARTICLE_ENABLED, true);
+        setChecked(particleRadioGroup, isCurrentParticleOn? 0:1);
+        particleRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            	boolean isParticleOn = checkedId == R.id.radioParticleOn;
+            	PrefsUtil.setPrefs(boolean.class, PreferencesConstants.PARTICLE_ENABLED, isParticleOn);
+            }
+        });
+        
         //CENTERED OR SCALE UP THE SCREEN
         if (MoveUtil.isScalingPossible()) {
         	RadioGroup imageRadioGroup = (RadioGroup) findViewById(R.id.radioImage);    

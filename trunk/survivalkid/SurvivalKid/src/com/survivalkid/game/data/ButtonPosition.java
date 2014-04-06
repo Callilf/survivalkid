@@ -102,7 +102,8 @@ public class ButtonPosition {
 			
 			Bitmap bagImg = SpriteEnum.BAG_SLOT.getBitmap();
 			if (GameContext.getSingleton().slideMoveEnabled) {
-				bagButton.set(SCREEN_VIRTUAL_WIDTH - (int)(bagImg.getWidth()*0.6), SCREEN_VIRTUAL_HEIGHT - (int)(bagImg.getHeight() * 2.5));
+				bagButton.set(MoveUtil.BACKGROUND_RIGHT - (int)(bagImg.getWidth()*0.6), 
+						MoveUtil.BACKGROUND_BOTTOM - (int)(bagImg.getHeight() * 4));
 			}
 			else {
 				bagButton.set(SCREEN_VIRTUAL_WIDTH - widthUp - widthUp/3 - (int)(bagImg.getWidth()), SCREEN_VIRTUAL_HEIGHT - bagImg.getHeight());

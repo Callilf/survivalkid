@@ -26,6 +26,7 @@
 	<string name="optScaled">ÉTIRÉ</string>
 	<string name="optImage">Images :</string>
 	<string name="optSound">Son :</string>
+	<string name="optParticle">Particule :</string>
 	<string name="options">OPTIONS</string>
 	<string name="on">Activé</string>
 	<string name="off">Désactivé</string>

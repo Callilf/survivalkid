@@ -201,8 +201,9 @@ public class GameManager extends AbstractSurfaceView {
 			enemyManager.update(gameDuration);
 			itemManager.update(gameDuration);
 			characterManager.update(gameDuration);
-			particleManager.update(gameDuration);
-		
+			if (GameContext.getSingleton().particleEnabled) {
+				particleManager.update(gameDuration);
+			}
 
 			// Check the collisions
 			for (Personage perso : characterManager.getCharacterList()) {
@@ -290,8 +291,9 @@ public class GameManager extends AbstractSurfaceView {
 			if(!SharedVars.getSingleton().isPersoDrawnInBackground()) {
 				characterManager.draw(canvas);
 			}
-			
-			particleManager.draw(canvas);
+			if (GameContext.getSingleton().particleEnabled) {
+				particleManager.draw(canvas);
+			}
 			decorManager.draw(canvas, true);
 			DesignUtil.drawBlackBand(canvas);
 			
