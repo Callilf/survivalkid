@@ -1,0 +1,517 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .idea\
+* .idea\workspace.xml
+* Artworks\
+* Artworks\Balloon+Crate Spritesheet.psd
+* Artworks\Bull Spritesheet.psd
+* Artworks\Bull Warning.psd
+* Artworks\Bull.psd
+* Artworks\Character Selector.psd
+* Artworks\Crate Explosion Spritesheet.psd
+* Artworks\Dead Spritesheet.psd
+* Artworks\EndPannel.psd
+* Artworks\Enemy_Caterpillar.psd
+* Artworks\Enemy_Caterpillar2.psd
+* Artworks\Fire Spritesheet.psd
+* Artworks\FireGround SpriteSheet.psd
+* Artworks\FullCiruclarSaw.psd
+* Artworks\Ground.psd
+* Artworks\Hell Background.psd
+* Artworks\Hourglass Spritesheet.psd
+* Artworks\Icon.psd
+* Artworks\Items.psd
+* Artworks\Life display.psd
+* Artworks\MainMenu.psd
+* Artworks\Meteor Explosion Spritesheet.psd
+* Artworks\Meteor.psd
+* Artworks\Particles.psd
+* Artworks\Particles_bak.psd
+* Artworks\Yugo Corrida Spritesheet.psd
+* Artworks\Yugo Spritesheet Light.psd
+* Artworks\Yugo Spritesheet.png
+* Artworks\Yugo Spritesheet.psd
+* Artworks\Yuna Corrida Spritesheet.psd
+* Artworks\Yuna Corrida Spritesheet_bak.psd
+* Artworks\Yuna Spritesheet Light.psd
+* Artworks\Yuna Spritesheet.psd
+* Artworks\ole.psd
+* _ghost_-_Ice_and_Chilli(1).mp3
+* _ghost_-_Ice_and_Chilli(10).mp3
+* _ghost_-_Ice_and_Chilli(2).mp3
+* _ghost_-_Ice_and_Chilli(3).mp3
+* _ghost_-_Ice_and_Chilli(4).mp3
+* _ghost_-_Ice_and_Chilli(5).mp3
+* _ghost_-_Ice_and_Chilli(6).mp3
+* _ghost_-_Ice_and_Chilli(7).mp3
+* _ghost_-_Ice_and_Chilli(8).mp3
+* _ghost_-_Ice_and_Chilli(9).mp3
+* _ghost_-_Ice_and_Chilli.mp3
+* app\
+* app\build.gradle
+* app\src\
+* app\src\main\
+* app\src\main\AndroidManifest.xml
+* app\src\main\assets\
+* app\src\main\assets\fonts\
+* app\src\main\assets\fonts\MELODBO.TTF
+* app\src\main\assets\fonts\OLIVIER.TTF
+* app\src\main\java\
+* app\src\main\java\com\
+* app\src\main\java\com\survivalkid\
+* app\src\main\java\com\survivalkid\AbstractActivity.java
+* app\src\main\java\com\survivalkid\AbstractSurfaceView.java
+* app\src\main\java\com\survivalkid\EndActivity.java
+* app\src\main\java\com\survivalkid\GameActivity.java
+* app\src\main\java\com\survivalkid\game\
+* app\src\main\java\com\survivalkid\game\CharacterSelectMenu.java
+* app\src\main\java\com\survivalkid\game\EndMenu.java
+* app\src\main\java\com\survivalkid\game\GameManager.java
+* app\src\main\java\com\survivalkid\game\MainMenu.java
+* app\src\main\java\com\survivalkid\game\ReplaceMenu.java
+* app\src\main\java\com\survivalkid\game\algo\
+* app\src\main\java\com\survivalkid\game\algo\enemy\
+* app\src\main\java\com\survivalkid\game\algo\enemy\ThreeStepEnemyGenerator.java
+* app\src\main\java\com\survivalkid\game\algo\item\
+* app\src\main\java\com\survivalkid\game\algo\item\BasicItemGenerator.java
+* app\src\main\java\com\survivalkid\game\algo\item\ThreeStepItemGenerator.java
+* app\src\main\java\com\survivalkid\game\core\
+* app\src\main\java\com\survivalkid\game\core\ActionButton.java
+* app\src\main\java\com\survivalkid\game\core\AnimatedSprite.java
+* app\src\main\java\com\survivalkid\game\core\Animation.java
+* app\src\main\java\com\survivalkid\game\core\ChronoDisplayer.java
+* app\src\main\java\com\survivalkid\game\core\Constants.java
+* app\src\main\java\com\survivalkid\game\core\Difficulty.java
+* app\src\main\java\com\survivalkid\game\core\DynamicDrawableObject.java
+* app\src\main\java\com\survivalkid\game\core\InformText.java
+* app\src\main\java\com\survivalkid\game\core\SurfaceHandler.java
+* app\src\main\java\com\survivalkid\game\core\TouchHandler.java
+* app\src\main\java\com\survivalkid\game\core\enums\
+* app\src\main\java\com\survivalkid\game\core\enums\SpriteEnum.java
+* app\src\main\java\com\survivalkid\game\core\enums\StateEnum.java
+* app\src\main\java\com\survivalkid\game\data\
+* app\src\main\java\com\survivalkid\game\data\ButtonPosition.java
+* app\src\main\java\com\survivalkid\game\data\DataSave.java
+* app\src\main\java\com\survivalkid\game\data\Score.java
+* app\src\main\java\com\survivalkid\game\entity\
+* app\src\main\java\com\survivalkid\game\entity\GameEntity.java
+* app\src\main\java\com\survivalkid\game\entity\ItemEnum.java
+* app\src\main\java\com\survivalkid\game\entity\Life.java
+* app\src\main\java\com\survivalkid\game\entity\LifeChangeDisplayer.java
+* app\src\main\java\com\survivalkid\game\entity\StateObject.java
+* app\src\main\java\com\survivalkid\game\entity\dynamics\
+* app\src\main\java\com\survivalkid\game\entity\dynamics\MuletaIntro.java
+* app\src\main\java\com\survivalkid\game\entity\dynamics\MuletaOle.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\
+* app\src\main\java\com\survivalkid\game\entity\enemy\EnemyDesc.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\EnemyEntity.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\impl\
+* app\src\main\java\com\survivalkid\game\entity\enemy\impl\Bull.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\impl\Caterpillar.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\impl\CircularSaw.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\impl\FireGround.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\impl\FireMeteor.java
+* app\src\main\java\com\survivalkid\game\entity\enemy\impl\Meteore.java
+* app\src\main\java\com\survivalkid\game\entity\item\
+* app\src\main\java\com\survivalkid\game\entity\item\ItemEntity.java
+* app\src\main\java\com\survivalkid\game\entity\item\StandardObject.java
+* app\src\main\java\com\survivalkid\game\entity\item\impl\
+* app\src\main\java\com\survivalkid\game\entity\item\impl\BalloonCrate.java
+* app\src\main\java\com\survivalkid\game\entity\item\impl\Corrida.java
+* app\src\main\java\com\survivalkid\game\entity\item\impl\EnemySpeedIncrease.java
+* app\src\main\java\com\survivalkid\game\entity\item\impl\EnemySpeedReducer.java
+* app\src\main\java\com\survivalkid\game\entity\item\impl\Medkit.java
+* app\src\main\java\com\survivalkid\game\entity\item\impl\PlayerSpeedReducer.java
+* app\src\main\java\com\survivalkid\game\entity\item\impl\SuperMedkit.java
+* app\src\main\java\com\survivalkid\game\entity\personage\
+* app\src\main\java\com\survivalkid\game\entity\personage\Bag.java
+* app\src\main\java\com\survivalkid\game\entity\personage\Personage.java
+* app\src\main\java\com\survivalkid\game\entity\personage\StateDisplayer.java
+* app\src\main\java\com\survivalkid\game\manager\
+* app\src\main\java\com\survivalkid\game\manager\CharacterManager.java
+* app\src\main\java\com\survivalkid\game\manager\DecorManager.java
+* app\src\main\java\com\survivalkid\game\manager\EnemyManager.java
+* app\src\main\java\com\survivalkid\game\manager\IManager.java
+* app\src\main\java\com\survivalkid\game\manager\ItemManager.java
+* app\src\main\java\com\survivalkid\game\manager\ObjectManager.java
+* app\src\main\java\com\survivalkid\game\manager\ParticleManager.java
+* app\src\main\java\com\survivalkid\game\move\
+* app\src\main\java\com\survivalkid\game\move\AbstractMove.java
+* app\src\main\java\com\survivalkid\game\move\MovePersoManager.java
+* app\src\main\java\com\survivalkid\game\move\impl\
+* app\src\main\java\com\survivalkid\game\move\impl\MoveImplButton.java
+* app\src\main\java\com\survivalkid\game\move\impl\MoveImplSideScreen.java
+* app\src\main\java\com\survivalkid\game\move\impl\MoveImplSlide.java
+* app\src\main\java\com\survivalkid\game\particle\
+* app\src\main\java\com\survivalkid\game\particle\Particle.java
+* app\src\main\java\com\survivalkid\game\particle\ParticleEmitter.java
+* app\src\main\java\com\survivalkid\game\singleton\
+* app\src\main\java\com\survivalkid\game\singleton\GameContext.java
+* app\src\main\java\com\survivalkid\game\singleton\SharedVars.java
+* app\src\main\java\com\survivalkid\game\thread\
+* app\src\main\java\com\survivalkid\game\thread\ActiveLoadingThread.java
+* app\src\main\java\com\survivalkid\game\thread\MainThread.java
+* app\src\main\java\com\survivalkid\game\util\
+* app\src\main\java\com\survivalkid\game\util\BitmapUtil.java
+* app\src\main\java\com\survivalkid\game\util\CollisionUtil.java
+* app\src\main\java\com\survivalkid\game\util\DesignUtil.java
+* app\src\main\java\com\survivalkid\game\util\HandlerUtil.java
+* app\src\main\java\com\survivalkid\game\util\MoveUtil.java
+* app\src\main\java\com\survivalkid\game\util\PrefsUtil.java
+* app\src\main\java\com\survivalkid\game\util\TimerUtil.java
+* app\src\main\java\com\survivalkid\menu\
+* app\src\main\java\com\survivalkid\menu\CharacterSelectMenuActivity.java
+* app\src\main\java\com\survivalkid\menu\CreditsActivity.java
+* app\src\main\java\com\survivalkid\menu\HowToPlayActivity.java
+* app\src\main\java\com\survivalkid\menu\Item_Adapter.java
+* app\src\main\java\com\survivalkid\menu\MainMenuActivity.java
+* app\src\main\java\com\survivalkid\menu\OptionsActivity.java
+* app\src\main\java\com\survivalkid\menu\ReplaceButtonActivity.java
+* app\src\main\java\com\survivalkid\net\
+* app\src\main\java\com\survivalkid\net\GameClient.java
+* app\src\main\java\com\survivalkid\net\GameServer.java
+* app\src\main\java\com\survivalkid\net\GameServerThread.java
+* app\src\main\java\com\survivalkid\net\NetworkManagerService.java
+* app\src\main\java\com\survivalkid\net\ServerCommand.java
+* app\src\main\res\
+* app\src\main\res\anim\
+* app\src\main\res\anim\slide_in_bottom.xml
+* app\src\main\res\anim\slide_in_left.xml
+* app\src\main\res\anim\slide_in_right.xml
+* app\src\main\res\anim\slide_in_top.xml
+* app\src\main\res\anim\slide_out_bottom.xml
+* app\src\main\res\anim\slide_out_left.xml
+* app\src\main\res\anim\slide_out_right.xml
+* app\src\main\res\anim\slide_out_top.xml
+* app\src\main\res\drawable-hdpi\
+* app\src\main\res\drawable-hdpi\Thumbs.db
+* app\src\main\res\drawable-hdpi\arrow_left.png
+* app\src\main\res\drawable-hdpi\arrow_left_pressed.png
+* app\src\main\res\drawable-hdpi\arrow_right.png
+* app\src\main\res\drawable-hdpi\arrow_right_pressed.png
+* app\src\main\res\drawable-hdpi\arrow_up.png
+* app\src\main\res\drawable-hdpi\arrow_up_pressed.png
+* app\src\main\res\drawable-hdpi\bag.png
+* app\src\main\res\drawable-hdpi\bag_slot.png
+* app\src\main\res\drawable-hdpi\balloon_crate.png
+* app\src\main\res\drawable-hdpi\balloon_crate_oneframe.png
+* app\src\main\res\drawable-hdpi\bull.png
+* app\src\main\res\drawable-hdpi\bull_oneframe.png
+* app\src\main\res\drawable-hdpi\bull_warning.png
+* app\src\main\res\drawable-hdpi\button_continue.png
+* app\src\main\res\drawable-hdpi\button_leave.png
+* app\src\main\res\drawable-hdpi\button_menu.png
+* app\src\main\res\drawable-hdpi\button_restart.png
+* app\src\main\res\drawable-hdpi\caterpillar.png
+* app\src\main\res\drawable-hdpi\caterpillar_oneframe.png
+* app\src\main\res\drawable-hdpi\caterpillar_purple.png
+* app\src\main\res\drawable-hdpi\caterpillar_purple_oneframe.png
+* app\src\main\res\drawable-hdpi\character_select.png
+* app\src\main\res\drawable-hdpi\corrida.png
+* app\src\main\res\drawable-hdpi\corrida_intro_text.png
+* app\src\main\res\drawable-hdpi\crate_explosion.png
+* app\src\main\res\drawable-hdpi\dead_anim.png
+* app\src\main\res\drawable-hdpi\dead_anim_black.png
+* app\src\main\res\drawable-hdpi\dead_anim_small.png
+* app\src\main\res\drawable-hdpi\dead_players.png
+* app\src\main\res\drawable-hdpi\enemy_circular_saw.png
+* app\src\main\res\drawable-hdpi\enemy_circular_saw_oneframe.png
+* app\src\main\res\drawable-hdpi\enemy_circular_saw_white.png
+* app\src\main\res\drawable-hdpi\fire.png
+* app\src\main\res\drawable-hdpi\fire_ground.png
+* app\src\main\res\drawable-hdpi\ground.png
+* app\src\main\res\drawable-hdpi\ground_hell.png
+* app\src\main\res\drawable-hdpi\hourglass_green.png
+* app\src\main\res\drawable-hdpi\hourglass_red.png
+* app\src\main\res\drawable-hdpi\ic_action_search.png
+* app\src\main\res\drawable-hdpi\ic_launcher.png
+* app\src\main\res\drawable-hdpi\item_red_clock.png
+* app\src\main\res\drawable-hdpi\medkit.png
+* app\src\main\res\drawable-hdpi\medkit_small.png
+* app\src\main\res\drawable-hdpi\menu_background.png
+* app\src\main\res\drawable-hdpi\menu_credits_btn.png
+* app\src\main\res\drawable-hdpi\menu_empty_btn.png
+* app\src\main\res\drawable-hdpi\menu_htp_btn.png
+* app\src\main\res\drawable-hdpi\menu_main_title.png
+* app\src\main\res\drawable-hdpi\menu_options_btn.png
+* app\src\main\res\drawable-hdpi\menu_play_btn.png
+* app\src\main\res\drawable-hdpi\meteor.png
+* app\src\main\res\drawable-hdpi\meteor_explosion.png
+* app\src\main\res\drawable-hdpi\meteor_fire.png
+* app\src\main\res\drawable-hdpi\meteor_fire_explosion.png
+* app\src\main\res\drawable-hdpi\ole.png
+* app\src\main\res\drawable-hdpi\panel_back.png
+* app\src\main\res\drawable-hdpi\particle_dust_brown.png
+* app\src\main\res\drawable-hdpi\particle_smoke_white_round_short2.png
+* app\src\main\res\drawable-hdpi\test_end_panel.png
+* app\src\main\res\drawable-hdpi\test_end_panel2.png
+* app\src\main\res\drawable-hdpi\text_game_paused.png
+* app\src\main\res\drawable-hdpi\text_survival_time.png
+* app\src\main\res\drawable-hdpi\yugo.png
+* app\src\main\res\drawable-hdpi\yugo_artwork_1.png
+* app\src\main\res\drawable-hdpi\yugo_corrida.png
+* app\src\main\res\drawable-hdpi\yugo_life_bar_part1.png
+* app\src\main\res\drawable-hdpi\yugo_life_bar_part2.png
+* app\src\main\res\drawable-hdpi\yugo_life_bar_part3.png
+* app\src\main\res\drawable-hdpi\yuna.png
+* app\src\main\res\drawable-hdpi\yuna_artwork_1.png
+* app\src\main\res\drawable-hdpi\yuna_corrida.png
+* app\src\main\res\drawable-hdpi\yuna_life_bar_part1.png
+* app\src\main\res\drawable-ldpi\
+* app\src\main\res\drawable-ldpi\Thumbs.db
+* app\src\main\res\drawable-ldpi\arrow_left.png
+* app\src\main\res\drawable-ldpi\arrow_left_pressed.png
+* app\src\main\res\drawable-ldpi\arrow_right.png
+* app\src\main\res\drawable-ldpi\arrow_right_pressed.png
+* app\src\main\res\drawable-ldpi\arrow_up.png
+* app\src\main\res\drawable-ldpi\arrow_up_pressed.png
+* app\src\main\res\drawable-ldpi\balloon_crate.png
+* app\src\main\res\drawable-ldpi\bull.png
+* app\src\main\res\drawable-ldpi\bull_warning.png
+* app\src\main\res\drawable-ldpi\caterpillar.png
+* app\src\main\res\drawable-ldpi\caterpillar_purple.png
+* app\src\main\res\drawable-ldpi\crate_explosion.png
+* app\src\main\res\drawable-ldpi\dead_anim.png
+* app\src\main\res\drawable-ldpi\dead_anim_black.png
+* app\src\main\res\drawable-ldpi\dead_anim_small.png
+* app\src\main\res\drawable-ldpi\enemy_circular_saw.png
+* app\src\main\res\drawable-ldpi\fire.png
+* app\src\main\res\drawable-ldpi\fire_ground.png
+* app\src\main\res\drawable-ldpi\ground.png
+* app\src\main\res\drawable-ldpi\ic_action_search.png
+* app\src\main\res\drawable-ldpi\ic_launcher.png
+* app\src\main\res\drawable-ldpi\item_red_clock.png
+* app\src\main\res\drawable-ldpi\medkit.png
+* app\src\main\res\drawable-ldpi\meteor.png
+* app\src\main\res\drawable-ldpi\meteor_explosion.png
+* app\src\main\res\drawable-ldpi\meteor_fire.png
+* app\src\main\res\drawable-ldpi\meteor_fire_explosion.png
+* app\src\main\res\drawable-ldpi\yugo.png
+* app\src\main\res\drawable-ldpi\yugo_life_bar_part1.png
+* app\src\main\res\drawable-ldpi\yugo_life_bar_part2.png
+* app\src\main\res\drawable-ldpi\yugo_life_bar_part3.png
+* app\src\main\res\drawable-ldpi\yuna.png
+* app\src\main\res\drawable-ldpi\yuna_life_bar_part1.png
+* app\src\main\res\drawable-mdpi\
+* app\src\main\res\drawable-mdpi\Thumbs.db
+* app\src\main\res\drawable-mdpi\arrow_left.png
+* app\src\main\res\drawable-mdpi\arrow_left_pressed.png
+* app\src\main\res\drawable-mdpi\arrow_right.png
+* app\src\main\res\drawable-mdpi\arrow_right_pressed.png
+* app\src\main\res\drawable-mdpi\arrow_up.png
+* app\src\main\res\drawable-mdpi\arrow_up_pressed.png
+* app\src\main\res\drawable-mdpi\bag.png
+* app\src\main\res\drawable-mdpi\bag_slot.png
+* app\src\main\res\drawable-mdpi\balloon_crate.png
+* app\src\main\res\drawable-mdpi\balloon_crate_oneframe.png
+* app\src\main\res\drawable-mdpi\bull.png
+* app\src\main\res\drawable-mdpi\bull_oneframe.png
+* app\src\main\res\drawable-mdpi\bull_warning.png
+* app\src\main\res\drawable-mdpi\button_continue.png
+* app\src\main\res\drawable-mdpi\button_leave.png
+* app\src\main\res\drawable-mdpi\button_menu.png
+* app\src\main\res\drawable-mdpi\button_restart.png
+* app\src\main\res\drawable-mdpi\caterpillar.png
+* app\src\main\res\drawable-mdpi\caterpillar_oneframe.png
+* app\src\main\res\drawable-mdpi\caterpillar_purple.png
+* app\src\main\res\drawable-mdpi\caterpillar_purple_oneframe.png
+* app\src\main\res\drawable-mdpi\character_select.png
+* app\src\main\res\drawable-mdpi\corrida.png
+* app\src\main\res\drawable-mdpi\corrida_intro_text.png
+* app\src\main\res\drawable-mdpi\crate_explosion.png
+* app\src\main\res\drawable-mdpi\dead_anim.png
+* app\src\main\res\drawable-mdpi\dead_anim_black.png
+* app\src\main\res\drawable-mdpi\dead_anim_small.png
+* app\src\main\res\drawable-mdpi\enemy_circular_saw.png
+* app\src\main\res\drawable-mdpi\enemy_circular_saw_oneframe.png
+* app\src\main\res\drawable-mdpi\fire.png
+* app\src\main\res\drawable-mdpi\fire_ground.png
+* app\src\main\res\drawable-mdpi\ground.png
+* app\src\main\res\drawable-mdpi\ground_hell.png
+* app\src\main\res\drawable-mdpi\hourglass_green.png
+* app\src\main\res\drawable-mdpi\hourglass_red.png
+* app\src\main\res\drawable-mdpi\ic_action_search.png
+* app\src\main\res\drawable-mdpi\ic_launcher.png
+* app\src\main\res\drawable-mdpi\item_red_clock.png
+* app\src\main\res\drawable-mdpi\medkit.png
+* app\src\main\res\drawable-mdpi\medkit_small.png
+* app\src\main\res\drawable-mdpi\menu_background.png
+* app\src\main\res\drawable-mdpi\menu_credits_btn.png
+* app\src\main\res\drawable-mdpi\menu_htp_btn.png
+* app\src\main\res\drawable-mdpi\menu_main_title.png
+* app\src\main\res\drawable-mdpi\menu_options_btn.png
+* app\src\main\res\drawable-mdpi\menu_play_btn.png
+* app\src\main\res\drawable-mdpi\meteor.png
+* app\src\main\res\drawable-mdpi\meteor_explosion.png
+* app\src\main\res\drawable-mdpi\meteor_fire.png
+* app\src\main\res\drawable-mdpi\meteor_fire_explosion.png
+* app\src\main\res\drawable-mdpi\ole.png
+* app\src\main\res\drawable-mdpi\panel_back.png
+* app\src\main\res\drawable-mdpi\particle_dust_brown.png
+* app\src\main\res\drawable-mdpi\particle_smoke_white_round_short2.png
+* app\src\main\res\drawable-mdpi\text_game_paused.png
+* app\src\main\res\drawable-mdpi\text_survival_time.png
+* app\src\main\res\drawable-mdpi\yugo.png
+* app\src\main\res\drawable-mdpi\yugo_artwork_1.png
+* app\src\main\res\drawable-mdpi\yugo_corrida.png
+* app\src\main\res\drawable-mdpi\yugo_life_bar_part1.png
+* app\src\main\res\drawable-mdpi\yugo_life_bar_part2.png
+* app\src\main\res\drawable-mdpi\yugo_life_bar_part3.png
+* app\src\main\res\drawable-mdpi\yuna.png
+* app\src\main\res\drawable-mdpi\yuna_artwork_1.png
+* app\src\main\res\drawable-mdpi\yuna_corrida.png
+* app\src\main\res\drawable-mdpi\yuna_life_bar_part1.png
+* app\src\main\res\drawable-xhdpi\
+* app\src\main\res\drawable-xhdpi\Thumbs.db
+* app\src\main\res\drawable-xhdpi\arrow_left.png
+* app\src\main\res\drawable-xhdpi\arrow_left_pressed.png
+* app\src\main\res\drawable-xhdpi\arrow_right.png
+* app\src\main\res\drawable-xhdpi\arrow_right_pressed.png
+* app\src\main\res\drawable-xhdpi\arrow_up.png
+* app\src\main\res\drawable-xhdpi\arrow_up_pressed.png
+* app\src\main\res\drawable-xhdpi\bag.png
+* app\src\main\res\drawable-xhdpi\bag_slot.png
+* app\src\main\res\drawable-xhdpi\balloon_crate.png
+* app\src\main\res\drawable-xhdpi\balloon_crate_oneframe.png
+* app\src\main\res\drawable-xhdpi\bull.png
+* app\src\main\res\drawable-xhdpi\bull_oneframe.png
+* app\src\main\res\drawable-xhdpi\bull_warning.png
+* app\src\main\res\drawable-xhdpi\button_continue.png
+* app\src\main\res\drawable-xhdpi\button_leave.png
+* app\src\main\res\drawable-xhdpi\button_menu.png
+* app\src\main\res\drawable-xhdpi\button_restart.png
+* app\src\main\res\drawable-xhdpi\caterpillar.png
+* app\src\main\res\drawable-xhdpi\caterpillar_oneframe.png
+* app\src\main\res\drawable-xhdpi\caterpillar_purple.png
+* app\src\main\res\drawable-xhdpi\caterpillar_purple_oneframe.png
+* app\src\main\res\drawable-xhdpi\character_select.png
+* app\src\main\res\drawable-xhdpi\corrida.png
+* app\src\main\res\drawable-xhdpi\corrida_intro_text.png
+* app\src\main\res\drawable-xhdpi\crate_explosion.png
+* app\src\main\res\drawable-xhdpi\dead_anim.png
+* app\src\main\res\drawable-xhdpi\dead_anim_black.png
+* app\src\main\res\drawable-xhdpi\dead_anim_small.png
+* app\src\main\res\drawable-xhdpi\enemy_circular_saw.png
+* app\src\main\res\drawable-xhdpi\enemy_circular_saw_oneframe.png
+* app\src\main\res\drawable-xhdpi\fire.png
+* app\src\main\res\drawable-xhdpi\fire_ground.png
+* app\src\main\res\drawable-xhdpi\ground.png
+* app\src\main\res\drawable-xhdpi\ground_hell.png
+* app\src\main\res\drawable-xhdpi\hourglass_green.png
+* app\src\main\res\drawable-xhdpi\hourglass_red.png
+* app\src\main\res\drawable-xhdpi\ic_action_search.png
+* app\src\main\res\drawable-xhdpi\ic_launcher.png
+* app\src\main\res\drawable-xhdpi\item_red_clock.png
+* app\src\main\res\drawable-xhdpi\medkit.png
+* app\src\main\res\drawable-xhdpi\medkit_small.png
+* app\src\main\res\drawable-xhdpi\menu_background.png
+* app\src\main\res\drawable-xhdpi\menu_credits_btn.png
+* app\src\main\res\drawable-xhdpi\menu_empty_btn.png
+* app\src\main\res\drawable-xhdpi\menu_htp_btn.png
+* app\src\main\res\drawable-xhdpi\menu_main_title.png
+* app\src\main\res\drawable-xhdpi\menu_options_btn.png
+* app\src\main\res\drawable-xhdpi\menu_play_btn.png
+* app\src\main\res\drawable-xhdpi\meteor.png
+* app\src\main\res\drawable-xhdpi\meteor_explosion.png
+* app\src\main\res\drawable-xhdpi\meteor_fire.png
+* app\src\main\res\drawable-xhdpi\meteor_fire_explosion.png
+* app\src\main\res\drawable-xhdpi\ole.png
+* app\src\main\res\drawable-xhdpi\panel_back.png
+* app\src\main\res\drawable-xhdpi\particle_dust_brown.png
+* app\src\main\res\drawable-xhdpi\particle_smoke_white_round_short2.png
+* app\src\main\res\drawable-xhdpi\text_game_paused.png
+* app\src\main\res\drawable-xhdpi\text_survival_time.png
+* app\src\main\res\drawable-xhdpi\yugo.png
+* app\src\main\res\drawable-xhdpi\yugo_artwork_1.png
+* app\src\main\res\drawable-xhdpi\yugo_corrida.png
+* app\src\main\res\drawable-xhdpi\yugo_life_bar_part1.png
+* app\src\main\res\drawable-xhdpi\yugo_life_bar_part2.png
+* app\src\main\res\drawable-xhdpi\yugo_life_bar_part3.png
+* app\src\main\res\drawable-xhdpi\yuna.png
+* app\src\main\res\drawable-xhdpi\yuna_artwork_1.png
+* app\src\main\res\drawable-xhdpi\yuna_corrida.png
+* app\src\main\res\drawable-xhdpi\yuna_life_bar_part1.png
+* app\src\main\res\drawable\
+* app\src\main\res\drawable\Thumbs.db
+* app\src\main\res\layout\
+* app\src\main\res\layout\activity_credits.xml
+* app\src\main\res\layout\activity_end.xml
+* app\src\main\res\layout\activity_game.xml
+* app\src\main\res\layout\activity_how_to_play.xml
+* app\src\main\res\layout\activity_menu.xml
+* app\src\main\res\layout\activity_options.xml
+* app\src\main\res\layout\activity_replacebutton_menu.xml
+* app\src\main\res\layout\how_to_play_single_entity.xml
+* app\src\main\res\layout\menu.xml
+* app\src\main\res\menu\
+* app\src\main\res\menu\activity_credits.xml
+* app\src\main\res\menu\activity_end.xml
+* app\src\main\res\menu\activity_how_to_play.xml
+* app\src\main\res\menu\activity_options.xml
+* app\src\main\res\raw\
+* app\src\main\res\raw\ice_and_chilli.mp3
+* app\src\main\res\values-fr\
+* app\src\main\res\values-fr\strings.xml
+* app\src\main\res\values-v11\
+* app\src\main\res\values-v11\styles.xml
+* app\src\main\res\values-v14\
+* app\src\main\res\values-v14\styles.xml
+* app\src\main\res\values\
+* app\src\main\res\values\strings.xml
+* app\src\main\res\values\styles.xml
+* app\src\main\res\values\theme.xml
+* build.gradle
+* gradle\
+* gradle\wrapper\
+* gradle\wrapper\gradle-wrapper.jar
+* gradle\wrapper\gradle-wrapper.properties
+* gradlew
+* gradlew.bat
+* ic_launcher-web.png
+* proguard-project.txt
+* settings.gradle
+* survivalkid.iml
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
