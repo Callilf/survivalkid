@@ -50,7 +50,8 @@ public class GameScreen extends ScreenAdapter {
 
 	public GameScreen (SurvivalKidGame game) {
 		this.game = game;
-		
+		// init singleton
+		InputSingleton.getInstance();
 		// already running
 		state = State.GAME_RUNNING;
 		guiCam = new OrthographicCamera(SCREEN_W, SCREEN_H);
@@ -85,7 +86,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private void updateRunning (float deltaTime) {
 		if (Gdx.input.justTouched()) {
-			// TODO do nothing yet
+			//
 		}
 	}
 

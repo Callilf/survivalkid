@@ -8,7 +8,7 @@ import java.util.Map;
 
 public enum TextureEnum {
 
-    YUNA("sprites/yuna.png", 6, 4, com.calliltbn.spritesdef.SpriteAnimationEnum.YUNA_RUN, com.calliltbn.spritesdef.SpriteAnimationEnum.YUNA_JUMP);
+    YUNA("sprites/yuna.png", 6, 4, SpriteAnimationEnum.YUNA_RUN, SpriteAnimationEnum.YUNA_JUMP, SpriteAnimationEnum.YUNA_FALL);
 
     private TextureRegion textureDefault;
 

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class MoveStraightComponent implements Component {
 
     public enum BorderCollision {
-        FALL, BOUNCE, DIE_TOUCH, DIE_OUT;
+        FALL, BOUNCE, DIE_TOUCH, DIE_OUT, STOP;
     }
 
     private Vector2 speed;

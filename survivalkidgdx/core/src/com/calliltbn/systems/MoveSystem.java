@@ -6,8 +6,11 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
+import com.calliltbn.InputSingleton;
 import com.calliltbn.components.MoveStraightComponent;
+import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.util.Mappers;
 
 public class MoveSystem extends IteratingSystem {
@@ -23,12 +26,52 @@ public class MoveSystem extends IteratingSystem {
 
         if (spriteComponent != null && moveStraightComponent != null) {
             Vector2 speed = moveStraightComponent.getSpeed();
+            Vector2 position = spriteComponent.getPosition();
+
+            // calculate player speed if this is a player
+            PlayerComponent playerComponent = Mappers.getComponent(PlayerComponent.class, entity);
+            if (playerComponent != null) {
+                calculatePlayerSpeed(speed, position, spriteComponent);
+            }
+
+            // if no speed, do nothing
             if (speed.isZero()) {
                 return;
             }
-            Vector2 position = spriteComponent.getPosition();
+
             position.add(speed);
             processSpriteOutOfScreen(moveStraightComponent, spriteComponent, speed, position);
+        }
+    }
+
+    private void calculatePlayerSpeed(Vector2 speed, Vector2 position, SpriteComponent spriteComponent) {
+        InputSingleton input = InputSingleton.getInstance();
+        if (input.leftPressed) {
+            speed.x = -5;
+            spriteComponent.setFlip(true);
+            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_RUN, true);
+        }
+        else if (input.rightPressed) {
+            speed.x = 5;
+            spriteComponent.setFlip(false);
+            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_RUN, true);
+        }
+        else {
+            speed.x = 0;
+        }
+        if (input.jumpPressed && speed.y >= 0) {
+            speed.y = 5;
+            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_JUMP, false);
+        }
+        else if (position.y > 40) {
+            speed.y = -5;
+            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_FALL, false);
+        }
+        else {
+            speed.y = 0;
+            if (speed.x == 0) {
+                spriteComponent.setCurrentAnimation(null, true);
+            }
         }
     }
 
@@ -38,6 +81,15 @@ public class MoveSystem extends IteratingSystem {
         // touch left or right
         if (position.x <= 0 && speed.x < 0 || position.x + sprite.getWidth() >= GameScreen.SCREEN_W && speed.x > 0) {
             switch (moveStraightComponent.getBorderCollision()) {
+                case STOP:
+                    speed.x=0;
+                    if (position.x <= 0) {
+                        position.x = 0;
+                    }
+                    else {
+                        position.x = GameScreen.SCREEN_W - sprite.getWidth();
+                    }
+                    break;
                 case BOUNCE:
                     speed.x *= -1;
                     spriteComponent.setFlip(position.x > 0);
@@ -67,6 +119,7 @@ public class MoveSystem extends IteratingSystem {
                     }
                     return;
                 case FALL:
+                case STOP:
                     if (position.y <= 40) {
                         position.y = 40;
                         speed.x = 0;
