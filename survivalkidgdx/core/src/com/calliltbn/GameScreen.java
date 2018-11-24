@@ -23,6 +23,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.factory.EntityFactory;
+import com.calliltbn.systems.MoveSystem;
 import com.calliltbn.systems.RenderingSystem;
 
 public class GameScreen extends ScreenAdapter {
@@ -59,7 +60,8 @@ public class GameScreen extends ScreenAdapter {
 		this.entityFactory = new EntityFactory(this.engine);
 
 		player = entityFactory.createPlayer(new Vector2(100, 40));
-		
+
+		engine.addSystem(new MoveSystem());
 		engine.addSystem(new RenderingSystem(game.batch));
 	}
 

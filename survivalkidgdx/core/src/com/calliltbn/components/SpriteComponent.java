@@ -23,6 +23,8 @@ public class SpriteComponent implements Component, Poolable {
     private SpriteAnimationEnum currentAnimation;
     private boolean loop;
 
+    private boolean flip;
+
     private Vector2 position;
 
     private Map<SpriteAnimationEnum, Animation<Sprite>> allAnimations;
@@ -94,6 +96,7 @@ public class SpriteComponent implements Component, Poolable {
             resultSprite = anim.getKeyFrame(stateTime, loop);
         }
         resultSprite.setPosition(position.x, position.y);
+        resultSprite.setFlip(flip, false);
         return resultSprite;
     }
 
@@ -103,5 +106,13 @@ public class SpriteComponent implements Component, Poolable {
 
     public void setPosition(Vector2 position) {
         this.position = position;
+    }
+
+    public boolean isFlip() {
+        return flip;
+    }
+
+    public void setFlip(boolean flip) {
+        this.flip = flip;
     }
 }
