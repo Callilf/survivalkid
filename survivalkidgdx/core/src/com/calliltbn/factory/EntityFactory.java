@@ -47,6 +47,7 @@ public class EntityFactory {
         }
         spriteCompo.setCurrentAnimation(null, true);
         spriteCompo.setPosition(pos);
+        spriteCompo.setZindex(10);
         playerEntity.add(spriteCompo);
 
         MoveStraightComponent moveStraightCompo = engine.createComponent(MoveStraightComponent.class);

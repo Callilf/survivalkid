@@ -22,8 +22,6 @@ public class PlayerSpeedSystem extends IteratingSystem {
     protected static final float DECELERATE_X = 1.3f;
     protected static final float VITESSE_Y = 15;
 
-    private float durationJump = 0;
-
     /** To simplify access to singleton */
     private InputSingleton input;
 
@@ -73,7 +71,7 @@ public class PlayerSpeedSystem extends IteratingSystem {
         if (input.jumpPressed || speed.y != 0) {
             GravityComponent gravityComponent = Mappers.getComponent(GravityComponent.class, entity);
             float gravity = (gravityComponent != null)? gravityComponent.getGravity() : 0;
-            PlayerAnimation anim = jump(speed, position, gravity, deltaTime);
+            PlayerAnimation anim = jump(player, speed, position, gravity, deltaTime);
             spriteComponent.setCurrentAnimation(player.getSpriteAnim(anim), false);
         }
         if (speed.y == 0 && speed.x == 0) {
@@ -94,9 +92,10 @@ public class PlayerSpeedSystem extends IteratingSystem {
         }
     }
 
-    public PlayerAnimation jump(Vector2 speed, Vector2 position, float gravity, float deltaTime) {
+    public PlayerAnimation jump(PlayerComponent player, Vector2 speed, Vector2 position,
+                                float gravity, float deltaTime) {
         if (MoveSystem.isOnFloor(position)) {
-            durationJump = 0;
+            player.setJumpDuration(0);
             if (input.jumpPressed) {
                 // start jump
                 speed.y = VITESSE_Y + gravity;
@@ -108,11 +107,12 @@ public class PlayerSpeedSystem extends IteratingSystem {
                 return PlayerAnimation.STAND;
             }
         }
-        durationJump += deltaTime;
+        float jumpDuration = player.getJumpDuration() + deltaTime;
+        player.setJumpDuration(jumpDuration);
 
-        if (input.jumpPressed && durationJump < JUMP_DURATION_MAX) {
+        if (input.jumpPressed && jumpDuration < JUMP_DURATION_MAX) {
             // don't fall
-            if (durationJump > JUMP_SLOW_BEGIN) {
+            if (jumpDuration > JUMP_SLOW_BEGIN) {
                 // speed reduce by half the gravity
                 speed.y += gravity / 2;
             } else {

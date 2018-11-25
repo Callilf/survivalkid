@@ -15,6 +15,8 @@ public class PlayerComponent implements Component {
 
     public Perso perso;
 
+    private float jumpDuration = 0;
+
     private boolean knockBack;
 
     public SpriteAnimationEnum getSpriteAnim(PlayerAnimation anim) {
@@ -45,5 +47,13 @@ public class PlayerComponent implements Component {
 
     public void setKnockBack(boolean knockBack) {
         this.knockBack = knockBack;
+    }
+
+    public float getJumpDuration() {
+        return jumpDuration;
+    }
+
+    public void setJumpDuration(float jumpDuration) {
+        this.jumpDuration = jumpDuration;
     }
 }

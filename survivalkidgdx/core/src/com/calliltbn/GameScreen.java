@@ -63,7 +63,7 @@ public class GameScreen extends ScreenAdapter {
 		this.entityFactory = new EntityFactory(this.engine);
 
 		player = entityFactory.createPlayer(new Vector2(100, 40), PlayerComponent.Perso.YUGO);
-		// entityFactory.createPlayer(new Vector2(200, 80), PlayerComponent.Perso.YUNA);
+		entityFactory.createPlayer(new Vector2(300, 250), PlayerComponent.Perso.YUNA);
 
 		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());

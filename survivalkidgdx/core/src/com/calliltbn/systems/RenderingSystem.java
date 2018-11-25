@@ -11,13 +11,14 @@ import com.calliltbn.GameScreen;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.util.Mappers;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
 
 public class RenderingSystem extends IteratingSystem {
 
     private SpriteBatch batch;
-    private TreeSet<Entity> renderQueue;
+    private Collection<Entity> renderQueue;
     private OrthographicCamera cam;
     private Sprite background;
 
@@ -31,11 +32,16 @@ public class RenderingSystem extends IteratingSystem {
         Comparator<Entity> comparator = new Comparator<Entity>() {
             @Override
             public int compare(Entity t1, Entity t2) {
-                return t1.flags - t2.flags;
+                SpriteComponent spriteCompo1 = Mappers.getComponent(SpriteComponent.class, t1);
+                SpriteComponent spriteCompo2 = Mappers.getComponent(SpriteComponent.class, t2);
+                int zIndexDiff = spriteCompo1.getZindex() - spriteCompo2.getZindex();
+                // if 0, return 1 (last has priority), else return zIndexDiff
+                return (zIndexDiff == 0)? 1 : zIndexDiff;
             }
         };
 
         renderQueue = new TreeSet<>(comparator);
+        //renderQueue = new ArrayList<>();
 
         // init background
         Texture img = new Texture("images/ground.png");

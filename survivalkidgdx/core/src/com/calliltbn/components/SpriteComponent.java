@@ -30,6 +30,7 @@ public class SpriteComponent implements Component, Poolable {
     private Map<SpriteAnimationEnum, Animation<Sprite>> allAnimations;
     private float stateTime = 0f;
 
+    private int zindex = 0;
 
     @Override
     public void reset() {
@@ -114,5 +115,13 @@ public class SpriteComponent implements Component, Poolable {
 
     public void setFlip(boolean flip) {
         this.flip = flip;
+    }
+
+    public int getZindex() {
+        return zindex;
+    }
+
+    public void setZindex(int zindex) {
+        this.zindex = zindex;
     }
 }
