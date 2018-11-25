@@ -8,14 +8,17 @@ import java.util.Map;
 
 public enum TextureEnum {
 
-    YUNA("sprites/yuna.png", 6, 4, SpriteAnimationEnum.YUNA_RUN, SpriteAnimationEnum.YUNA_JUMP, SpriteAnimationEnum.YUNA_FALL);
+    YUNA("sprites/yuna.png", 6, 4, SpriteAnimationEnum.YUNA_RUN, SpriteAnimationEnum.YUNA_JUMP,
+            SpriteAnimationEnum.YUNA_FALL, SpriteAnimationEnum.YUNA_KNOCKBACK),
+    YUGO("sprites/yugo.png", 6, 4, SpriteAnimationEnum.YUGO_RUN, SpriteAnimationEnum.YUGO_JUMP,
+            SpriteAnimationEnum.YUGO_FALL, SpriteAnimationEnum.YUGO_KNOCKBACK);
 
     private TextureRegion textureDefault;
 
     private Map<com.calliltbn.spritesdef.SpriteAnimationEnum, TextureRegion[]> textureAnimation;
 
-    TextureEnum(String s, int nbWidth, int nbHeight, com.calliltbn.spritesdef.SpriteAnimationEnum... listSpriteAnim) {
-        Texture texture = new Texture("sprites/yuna.png");
+    TextureEnum(String pathImage, int nbWidth, int nbHeight, com.calliltbn.spritesdef.SpriteAnimationEnum... listSpriteAnim) {
+        Texture texture = new Texture(pathImage);
         if (listSpriteAnim != null) {
             TextureRegion[][] textureRegionMat = TextureRegion.split(texture,
                     texture.getWidth() / nbWidth,

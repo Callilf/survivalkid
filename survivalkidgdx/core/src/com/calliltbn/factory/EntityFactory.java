@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.PlayerComponent;
+import com.calliltbn.components.PlayerComponent.Perso;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.spritesdef.TextureEnum;
 
@@ -34,11 +35,16 @@ public class EntityFactory {
      * @param pos the position
      * @return the player entity
      */
-    public Entity createPlayer(Vector2 pos) {
+    public Entity createPlayer(Vector2 pos, Perso personage) {
         Entity playerEntity = engine.createEntity();
 
         SpriteComponent spriteCompo = engine.createComponent(SpriteComponent.class);
-        spriteCompo.initTexture(TextureEnum.YUNA);
+        if (Perso.YUNA == personage) {
+            spriteCompo.initTexture(TextureEnum.YUNA);
+        }
+        else {
+            spriteCompo.initTexture(TextureEnum.YUGO);
+        }
         spriteCompo.setCurrentAnimation(null, true);
         spriteCompo.setPosition(pos);
         playerEntity.add(spriteCompo);
@@ -49,7 +55,7 @@ public class EntityFactory {
         playerEntity.add(moveStraightCompo);
 
         PlayerComponent playerComponent = engine.createComponent(PlayerComponent.class);
-        playerComponent.perso = PlayerComponent.Perso.YUNA;
+        playerComponent.perso = personage;
         playerEntity.add(playerComponent);
 
         GravityComponent gravityComponent = engine.createComponent(GravityComponent.class);

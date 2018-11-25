@@ -22,6 +22,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.factory.EntityFactory;
 import com.calliltbn.systems.MoveSystem;
 import com.calliltbn.systems.PlayerSpeedSystem;
@@ -61,7 +62,8 @@ public class GameScreen extends ScreenAdapter {
 		engine = new PooledEngine();
 		this.entityFactory = new EntityFactory(this.engine);
 
-		player = entityFactory.createPlayer(new Vector2(100, 40));
+		player = entityFactory.createPlayer(new Vector2(100, 40), PlayerComponent.Perso.YUGO);
+		// entityFactory.createPlayer(new Vector2(200, 80), PlayerComponent.Perso.YUNA);
 
 		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());

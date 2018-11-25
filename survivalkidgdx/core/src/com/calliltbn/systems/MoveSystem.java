@@ -14,6 +14,7 @@ import com.calliltbn.util.Mappers;
 public class MoveSystem extends IteratingSystem {
 
     private static final int FLOOR_Y = 40;
+    private static final int MAX_SPEED_DOWN = -25;
 
     public MoveSystem() {
         super(Family.all(MoveStraightComponent.class).get());
@@ -32,7 +33,7 @@ public class MoveSystem extends IteratingSystem {
             if (!isOnFloor(position)) {
                 GravityComponent gravityComponent = Mappers.getComponent(GravityComponent.class, entity);
                 if (gravityComponent != null) {
-                    speed.y -= gravityComponent.getGravity();
+                    speed.y = Math.max(MAX_SPEED_DOWN, speed.y-gravityComponent.getGravity());
                 }
             }
 
@@ -92,12 +93,10 @@ public class MoveSystem extends IteratingSystem {
                 case STOP:
                     if (position.y <= 40) {
                         position.y = 40;
-                        speed.x = 0;
                         speed.y = 0;
                     }
                     else {
                         speed.y *= -1;
-                        speed.x = 0;
                     }
                     break;
             }

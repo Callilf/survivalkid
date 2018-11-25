@@ -14,11 +14,11 @@ import com.calliltbn.util.Mappers;
 
 public class PlayerSpeedSystem extends IteratingSystem {
 
-    protected static final float JUMP_DURATION_MAX = 0.5f;
-    protected static final float JUMP_SLOW_BEGIN = 0.3f;
+    protected static final float JUMP_DURATION_MAX = 0.44f;
+    protected static final float JUMP_SLOW_BEGIN = 0.23f;
 
-    protected static final float VITESSE_MAX_X = 11;
-    protected static final float ACCELERATION_X = 1f;
+    protected static final float VITESSE_MAX_X = 9;
+    protected static final float ACCELERATION_X = 0.75f;
     protected static final float DECELERATE_X = 1.3f;
     protected static final float VITESSE_Y = 15;
 
@@ -85,11 +85,11 @@ public class PlayerSpeedSystem extends IteratingSystem {
         if (speed.x != 0) {
             if (speed.x > 0)
             {
-                speed.x = Math.max(0, speed.x- DECELERATE_X);
+                speed.x = Math.max(0, speed.x - DECELERATE_X);
             }
             else
             {
-                speed.x = Math.min(0, speed.x+ DECELERATE_X);
+                speed.x = Math.min(0, speed.x + DECELERATE_X);
             }
         }
     }
