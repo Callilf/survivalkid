@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
+import com.calliltbn.components.MoveStraightComponent.BorderCollision;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.PlayerComponent.Perso;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
 /**
@@ -38,30 +40,30 @@ public class EntityFactory {
     public Entity createPlayer(Vector2 pos, Perso personage) {
         Entity playerEntity = engine.createEntity();
 
-        SpriteComponent spriteCompo = engine.createComponent(SpriteComponent.class);
-        if (Perso.YUNA == personage) {
-            spriteCompo.initTexture(TextureEnum.YUNA);
-        }
-        else {
-            spriteCompo.initTexture(TextureEnum.YUGO);
-        }
-        spriteCompo.setCurrentAnimation(null, true);
-        spriteCompo.setPosition(pos);
-        spriteCompo.setZindex(10);
-        playerEntity.add(spriteCompo);
+        TextureEnum texture = (Perso.YUNA == personage)? TextureEnum.YUNA : TextureEnum.YUGO;
+        playerEntity.add(
+                SpriteComponent.make(engine, texture, pos, null, 10));
+        playerEntity.add(
+                MoveStraightComponent.make(engine, new Vector2(0,0), BorderCollision.STOP));
+        playerEntity.add(PlayerComponent.make(engine, personage));
+        playerEntity.add(GravityComponent.make(engine, 4));
 
-        MoveStraightComponent moveStraightCompo = engine.createComponent(MoveStraightComponent.class);
-        moveStraightCompo.setSpeed(new Vector2(0,0));
-        moveStraightCompo.setBorderCollision(MoveStraightComponent.BorderCollision.STOP);
-        playerEntity.add(moveStraightCompo);
+        engine.addEntity(playerEntity);
 
-        PlayerComponent playerComponent = engine.createComponent(PlayerComponent.class);
-        playerComponent.perso = personage;
-        playerEntity.add(playerComponent);
+        return playerEntity;
+    }
 
-        GravityComponent gravityComponent = engine.createComponent(GravityComponent.class);
-        gravityComponent.setGravity(4);
-        playerEntity.add(gravityComponent);
+    /**
+     * Function for test
+     */
+    public Entity createBouncePlayer() {
+        Entity playerEntity = engine.createEntity();
+
+        playerEntity.add(
+                SpriteComponent.make(engine, TextureEnum.YUNA, new Vector2(150,200),
+                        SpriteAnimationEnum.YUNA_RUN, 8));
+        playerEntity.add(
+                MoveStraightComponent.make(engine, new Vector2(5,4), BorderCollision.BOUNCE));
 
         engine.addEntity(playerEntity);
 

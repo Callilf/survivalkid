@@ -1,6 +1,7 @@
 package com.calliltbn.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.PooledEngine;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 
 public class PlayerComponent implements Component {
@@ -11,6 +12,13 @@ public class PlayerComponent implements Component {
 
     public enum Perso {
         YUNA, YUGO;
+    }
+
+    /** Generate a PlayerComponent */
+    public static PlayerComponent make(PooledEngine engine, Perso perso) {
+        PlayerComponent component = engine.createComponent(PlayerComponent.class);
+        component.perso = perso;
+        return component;
     }
 
     public Perso perso;

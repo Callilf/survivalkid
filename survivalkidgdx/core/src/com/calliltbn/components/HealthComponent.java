@@ -11,8 +11,13 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class HealthComponent implements Component, Pool.Poolable {
 
-    /** The engine that managed entities.*/
-    public PooledEngine engine;
+    /** Generate a HealthComponent */
+    public static HealthComponent make(PooledEngine engine, int maxHp, int hp) {
+        HealthComponent component = engine.createComponent(HealthComponent.class);
+        component.maxHp = maxHp;
+        component.hp = hp;
+        return component;
+    }
 
     /** The max number of h. */
     private int maxHp;

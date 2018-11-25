@@ -1,6 +1,7 @@
 package com.calliltbn.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,6 +19,19 @@ import java.util.Map;
  * @author callil, tbn
  */
 public class SpriteComponent implements Component, Poolable {
+
+    /** Generate a SpriteComponent */
+    public static SpriteComponent make(PooledEngine engine, TextureEnum texture, Vector2 position,
+        SpriteAnimationEnum currentAnimation, int zindex) {
+        SpriteComponent component = engine.createComponent(SpriteComponent.class);
+        component.position = position;
+        component.currentAnimation = currentAnimation;
+        component.loop = true;
+        component.zindex = zindex;
+        component.initTexture(texture);
+        return component;
+    }
+
     public boolean hide;
     private Sprite sprite;
     private SpriteAnimationEnum currentAnimation;
