@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.factory.EntityFactory;
 import com.calliltbn.systems.MoveSystem;
+import com.calliltbn.systems.PlayerSpeedSystem;
 import com.calliltbn.systems.RenderingSystem;
 
 public class GameScreen extends ScreenAdapter {
@@ -62,13 +63,14 @@ public class GameScreen extends ScreenAdapter {
 
 		player = entityFactory.createPlayer(new Vector2(100, 40));
 
+		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());
 		engine.addSystem(new RenderingSystem(game.batch));
 	}
 
 	public void update (float deltaTime) {
-		if (deltaTime > 0.02f) deltaTime = 0.02f;
-
+		// force deltaTime equivalent to 60 fps
+		deltaTime = 1/60f;
 		engine.update(deltaTime);
 
 		switch (state) {

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.SpriteComponent;
@@ -46,7 +47,14 @@ public class EntityFactory {
         moveStraightCompo.setSpeed(new Vector2(0,0));
         moveStraightCompo.setBorderCollision(MoveStraightComponent.BorderCollision.STOP);
         playerEntity.add(moveStraightCompo);
-        playerEntity.add(engine.createComponent(PlayerComponent.class));
+
+        PlayerComponent playerComponent = engine.createComponent(PlayerComponent.class);
+        playerComponent.perso = PlayerComponent.Perso.YUNA;
+        playerEntity.add(playerComponent);
+
+        GravityComponent gravityComponent = engine.createComponent(GravityComponent.class);
+        gravityComponent.setGravity(4);
+        playerEntity.add(gravityComponent);
 
         engine.addEntity(playerEntity);
 

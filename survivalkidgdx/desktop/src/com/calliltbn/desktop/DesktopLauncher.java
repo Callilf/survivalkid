@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		config.width = 854;
 		config.height = 480;
 		config.fullscreen = false;
+		config.foregroundFPS = 60;
 		new LwjglApplication(new SurvivalKidGame(), config);
 	}
 }

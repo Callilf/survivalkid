@@ -6,14 +6,14 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
-import com.calliltbn.InputSingleton;
+import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
-import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.SpriteComponent;
-import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.util.Mappers;
 
 public class MoveSystem extends IteratingSystem {
+
+    private static final int FLOOR_Y = 40;
 
     public MoveSystem() {
         super(Family.all(MoveStraightComponent.class).get());
@@ -28,50 +28,20 @@ public class MoveSystem extends IteratingSystem {
             Vector2 speed = moveStraightComponent.getSpeed();
             Vector2 position = spriteComponent.getPosition();
 
-            // calculate player speed if this is a player
-            PlayerComponent playerComponent = Mappers.getComponent(PlayerComponent.class, entity);
-            if (playerComponent != null) {
-                calculatePlayerSpeed(speed, position, spriteComponent);
+            // manage gravity
+            if (!isOnFloor(position)) {
+                GravityComponent gravityComponent = Mappers.getComponent(GravityComponent.class, entity);
+                if (gravityComponent != null) {
+                    speed.y -= gravityComponent.getGravity();
+                }
             }
 
             // if no speed, do nothing
             if (speed.isZero()) {
                 return;
             }
-
             position.add(speed);
             processSpriteOutOfScreen(moveStraightComponent, spriteComponent, speed, position);
-        }
-    }
-
-    private void calculatePlayerSpeed(Vector2 speed, Vector2 position, SpriteComponent spriteComponent) {
-        InputSingleton input = InputSingleton.getInstance();
-        if (input.leftPressed) {
-            speed.x = -5;
-            spriteComponent.setFlip(true);
-            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_RUN, true);
-        }
-        else if (input.rightPressed) {
-            speed.x = 5;
-            spriteComponent.setFlip(false);
-            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_RUN, true);
-        }
-        else {
-            speed.x = 0;
-        }
-        if (input.jumpPressed && speed.y >= 0) {
-            speed.y = 5;
-            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_JUMP, false);
-        }
-        else if (position.y > 40) {
-            speed.y = -5;
-            spriteComponent.setCurrentAnimation(SpriteAnimationEnum.YUNA_FALL, false);
-        }
-        else {
-            speed.y = 0;
-            if (speed.x == 0) {
-                spriteComponent.setCurrentAnimation(null, true);
-            }
         }
     }
 
@@ -105,7 +75,7 @@ public class MoveSystem extends IteratingSystem {
             }
         }
         // touch floor or ceil
-        if (position.y <= 40 && speed.y < 0 || position.y + sprite.getHeight() >= GameScreen.SCREEN_H && speed.y > 0) {
+        if (isOnFloor(position) && speed.y < 0 || position.y + sprite.getHeight() >= GameScreen.SCREEN_H && speed.y > 0) {
             switch (moveStraightComponent.getBorderCollision()) {
                 case BOUNCE:
                     speed.y *= -1;
@@ -132,5 +102,9 @@ public class MoveSystem extends IteratingSystem {
                     break;
             }
         }
+    }
+
+    public static boolean isOnFloor(Vector2 position) {
+        return position.y <= FLOOR_Y;
     }
 }
