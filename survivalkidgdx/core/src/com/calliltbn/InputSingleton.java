@@ -7,6 +7,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.calliltbn.components.SpriteComponent;
 
 /**
  * Singleton used to manager player's inputs.
@@ -30,8 +33,16 @@ public class InputSingleton {
 	/** Whether the down key has been pressed this frame. */
 	public boolean bagPressed;
 
-
+	/** If left and right are pressed, priority to the last */
 	public boolean leftLastPressed = false;
+
+	// For touch control depending of the position of the screen
+
+	/** Position of the main player */
+	private Vector2 playerPosition;
+	private Vector2 shiftToMiddle;
+
+	private int lastPointer;
 
 	/**
 	 *  Forbidden constructor since it's a singleton.
@@ -94,6 +105,7 @@ public class InputSingleton {
 		return true;
 	}
 
+	/*
 	private boolean setTouchUpOrDown(int button, boolean touchDown) {
 		switch(button) {
 			case Input.Buttons.LEFT: return setKeyUpOrDown(Keys.LEFT, touchDown);
@@ -102,6 +114,26 @@ public class InputSingleton {
 			case Input.Buttons.BACK: return setKeyUpOrDown(Keys.DOWN, touchDown);
 			default: return false;
 		}
+	}*/
+
+	private boolean touchUpOrDown(int screenX, int screenY, boolean touchDown) {
+		if (!touchDown) {
+			resetEvents();
+		}
+		else {
+			if (screenX < playerPosition.x + shiftToMiddle.x) {
+				leftPressed = true;
+				rightPressed = false;
+			}
+			else {
+				rightPressed = true;
+				leftPressed = false;
+			}
+			if (screenY < GameScreen.SCREEN_H / 2) {
+				jumpPressed = true;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -127,16 +159,27 @@ public class InputSingleton {
 
 			@Override
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-				return setTouchUpOrDown(button, true);
+				if (Input.Buttons.LEFT == button) {
+					lastPointer = pointer;
+					return touchUpOrDown(screenX, screenY, true);
+				}
+				return false;
 			}
 
 			@Override
 			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-				return setTouchUpOrDown(button, false);
+				if (Input.Buttons.LEFT == button) {
+					lastPointer = -1;
+					return touchUpOrDown(screenX, screenY, false);
+				}
+				return false;
 			}
 
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) {
+				if (pointer == lastPointer) {
+					return touchUpOrDown(screenX, screenY, true);
+				}
 				return false;
 			}
 
@@ -152,5 +195,10 @@ public class InputSingleton {
 
         });
 	}
-	
+
+	public void initMainPlayerPosition(SpriteComponent spriteComponent) {
+		playerPosition = spriteComponent.getPosition();
+		Sprite sprite = spriteComponent.getSprite(0); // TODO hitbox instead of sprite
+		shiftToMiddle = new Vector2(sprite.getWidth() / 2, sprite.getHeight() / 2);
+	}
 }

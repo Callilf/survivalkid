@@ -23,10 +23,12 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.components.PlayerComponent;
+import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.factory.EntityFactory;
 import com.calliltbn.systems.MoveSystem;
 import com.calliltbn.systems.PlayerSpeedSystem;
 import com.calliltbn.systems.RenderingSystem;
+import com.calliltbn.util.Mappers;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -65,6 +67,9 @@ public class GameScreen extends ScreenAdapter {
 		player = entityFactory.createPlayer(new Vector2(100, 40), PlayerComponent.Perso.YUGO);
 		entityFactory.createPlayer(new Vector2(300, 250), PlayerComponent.Perso.YUNA);
 		entityFactory.createBouncePlayer();
+
+		SpriteComponent spriteComponent = Mappers.getComponent(SpriteComponent.class, player);
+		InputSingleton.getInstance().initMainPlayerPosition(spriteComponent);
 
 		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());
