@@ -30,6 +30,15 @@ public final class Mappers {
 		return mapper.get(entity);
 	}
 
+	public static boolean hasAtLeastOneComponent(Entity entity, Class<? extends Component>... classList) {
+		for (Class<? extends Component> clazz: classList) {
+			if (allMappers.get(clazz) != null && allMappers.get(clazz).get(entity) != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/** No constructor. */
 	private Mappers() {}
 	

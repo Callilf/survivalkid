@@ -48,7 +48,7 @@ public class MoveSystem extends IteratingSystem {
 
     private void processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent,
                                           SpriteComponent spriteComponent, Vector2 speed, Vector2 position) {
-        Sprite sprite = spriteComponent.getSprite(0);
+        Sprite sprite = spriteComponent.getSprite();
         // touch left or right
         if (position.x <= 0 && speed.x < 0 || position.x + sprite.getWidth() >= GameScreen.SCREEN_W && speed.x > 0) {
             switch (moveStraightComponent.getBorderCollision()) {

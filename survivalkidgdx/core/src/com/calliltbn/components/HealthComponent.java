@@ -12,10 +12,10 @@ import com.badlogic.gdx.utils.Pool;
 public class HealthComponent implements Component, Pool.Poolable {
 
     /** Generate a HealthComponent */
-    public static HealthComponent make(PooledEngine engine, int maxHp, int hp) {
+    public static HealthComponent make(PooledEngine engine, int maxHp) {
         HealthComponent component = engine.createComponent(HealthComponent.class);
         component.maxHp = maxHp;
-        component.hp = hp;
+        component.hp = maxHp;
         return component;
     }
 
@@ -54,6 +54,11 @@ public class HealthComponent implements Component, Pool.Poolable {
 
     public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
+    }
+
+    public boolean hit(int damage) {
+        hp -= damage;
+        return isDead();
     }
 
 

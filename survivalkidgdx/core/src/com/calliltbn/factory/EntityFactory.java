@@ -4,12 +4,15 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.GravityComponent;
+import com.calliltbn.components.HealthComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.MoveStraightComponent.BorderCollision;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.PlayerComponent.Perso;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.components.StateComponent;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
@@ -46,7 +49,10 @@ public class EntityFactory {
         playerEntity.add(
                 MoveStraightComponent.make(engine, new Vector2(0,0), BorderCollision.STOP));
         playerEntity.add(PlayerComponent.make(engine, personage));
+        playerEntity.add(StateComponent.make(engine));
         playerEntity.add(GravityComponent.make(engine, 4));
+        playerEntity.add(HealthComponent.make(engine, 30));
+        playerEntity.add(CollideComponent.make(engine, 10, 1));
 
         engine.addEntity(playerEntity);
 
@@ -57,17 +63,18 @@ public class EntityFactory {
      * Function for test
      */
     public Entity createBouncePlayer() {
-        Entity playerEntity = engine.createEntity();
+        Entity bounceEntity = engine.createEntity();
 
-        playerEntity.add(
+        bounceEntity.add(
                 SpriteComponent.make(engine, TextureEnum.YUNA, new Vector2(150,200),
                         SpriteAnimationEnum.YUNA_RUN, 8));
-        playerEntity.add(
+        bounceEntity.add(
                 MoveStraightComponent.make(engine, new Vector2(5,4), BorderCollision.BOUNCE));
+        bounceEntity.add(CollideComponent.make(engine, 10, 2));
 
-        engine.addEntity(playerEntity);
+        engine.addEntity(bounceEntity);
 
-        return playerEntity;
+        return bounceEntity;
     }
 
     private TextureRegion[] getTextureRegion(TextureRegion[][] matrice, int width, int[] positions) {

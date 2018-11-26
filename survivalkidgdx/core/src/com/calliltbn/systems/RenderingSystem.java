@@ -68,7 +68,10 @@ public class RenderingSystem extends IteratingSystem {
                 continue;
             }
             // spriteCompo.getSprite().setPosition(... calcul new position ...);
-            spriteCompo.getSprite(deltaTime).draw(batch);
+            spriteCompo.increaseAnimTime(deltaTime);
+            if (!spriteCompo.isHide()) {
+                spriteCompo.getSprite().draw(batch);
+            }
         }
 
         batch.end();

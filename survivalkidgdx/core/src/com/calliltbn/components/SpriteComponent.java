@@ -46,6 +46,11 @@ public class SpriteComponent implements Component, Poolable {
 
     private int zindex = 0;
 
+    // Manage blink
+    private float blinkDurationVisible = 0.03f;
+    private float blinkDurationInvisible = 0.015f;
+    private float currentBlinkDuration = 0f;
+
     @Override
     public void reset() {
         hide = false;
@@ -77,6 +82,10 @@ public class SpriteComponent implements Component, Poolable {
     }
 
     public void setCurrentAnimation(SpriteAnimationEnum animation, boolean loop) {
+        if (this.currentAnimation != animation) {
+            // change animation, reset state time
+            stateTime = 0f;
+        }
         this.currentAnimation = animation;
         this.loop = loop;
     }
@@ -100,19 +109,40 @@ public class SpriteComponent implements Component, Poolable {
         return sprite != null && sprite.getBoundingRectangle().contains(x, y);
     }
 
-    public Sprite getSprite(float deltaTime) {
+    public void increaseAnimTime(float deltaTime) {
+        if (currentAnimation != null) {
+            stateTime += deltaTime;
+        }
+    }
+
+    public Sprite getSprite() {
         Sprite resultSprite = null;
         if (currentAnimation == null) {
             resultSprite = sprite;
         }
         else {
             Animation<Sprite> anim = allAnimations.get(currentAnimation);
-            stateTime += deltaTime; // Accumulate elapsed animation time
             resultSprite = anim.getKeyFrame(stateTime, loop);
         }
         resultSprite.setPosition(position.x, position.y);
         resultSprite.setFlip(flip, false);
         return resultSprite;
+    }
+
+    public void processBlink(float deltaTime) {
+        currentBlinkDuration += deltaTime;
+        if (hide) {
+            if (currentBlinkDuration > blinkDurationInvisible) {
+                currentBlinkDuration =  0;
+                hide = false;
+            }
+        }
+        else {
+            if (currentBlinkDuration > blinkDurationVisible) {
+                currentBlinkDuration =  0;
+                hide = true;
+            }
+        }
     }
 
     public Vector2 getPosition() {
@@ -137,5 +167,13 @@ public class SpriteComponent implements Component, Poolable {
 
     public void setZindex(int zindex) {
         this.zindex = zindex;
+    }
+
+    public boolean isHide() {
+        return hide;
+    }
+
+    public void setHide(boolean hide) {
+        this.hide = hide;
     }
 }

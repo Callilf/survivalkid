@@ -198,7 +198,7 @@ public class InputSingleton {
 
 	public void initMainPlayerPosition(SpriteComponent spriteComponent) {
 		playerPosition = spriteComponent.getPosition();
-		Sprite sprite = spriteComponent.getSprite(0); // TODO hitbox instead of sprite
+		Sprite sprite = spriteComponent.getSprite(); // TODO hitbox instead of sprite
 		shiftToMiddle = new Vector2(sprite.getWidth() / 2, sprite.getHeight() / 2);
 	}
 }
