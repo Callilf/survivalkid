@@ -7,25 +7,36 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.calliltbn.GameScreen;
+import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.util.Mappers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.TreeSet;
 
 public class RenderingSystem extends IteratingSystem {
 
+    public static final boolean DISPLAY_HITBOX = true;
+
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private Collection<Entity> renderQueue;
     private OrthographicCamera cam;
     private Sprite background;
 
-    public RenderingSystem(SpriteBatch batch) {
+    public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
         super(Family.one(SpriteComponent.class).get());
 
         this.batch = batch;
+        this.shapeRenderer = shapeRenderer;
+        shapeRenderer.setAutoShapeType(true);
         cam = new OrthographicCamera(GameScreen.SCREEN_W, GameScreen.SCREEN_H);
         cam.position.set(GameScreen.SCREEN_W/2, GameScreen.SCREEN_H/2, 0);
 
@@ -62,20 +73,35 @@ public class RenderingSystem extends IteratingSystem {
 
         background.draw(batch);
 
+        List<RectangleMapObject> listHitbox = new ArrayList<>();
         for (Entity entity : renderQueue) {
             SpriteComponent spriteCompo = Mappers.getComponent(SpriteComponent.class, entity);
-            if (spriteCompo == null) {
-                continue;
+            if (spriteCompo != null) {
+                spriteCompo.increaseAnimTime(deltaTime);
+                if (!spriteCompo.isHide()) {
+                    spriteCompo.getSprite().draw(batch);
+                }
             }
-            // spriteCompo.getSprite().setPosition(... calcul new position ...);
-            spriteCompo.increaseAnimTime(deltaTime);
-            if (!spriteCompo.isHide()) {
-                spriteCompo.getSprite().draw(batch);
+            if (DISPLAY_HITBOX) {
+                CollideComponent collideCompo = Mappers.getComponent(CollideComponent.class, entity);
+                if (collideCompo != null) {
+                    listHitbox.add(collideCompo.getHitbox());
+                }
             }
         }
 
         batch.end();
         renderQueue.clear();
+        
+        if (!listHitbox.isEmpty()) {
+            shapeRenderer.begin(); // ShapeType.Filled
+            for (RectangleMapObject hitbox : listHitbox) {
+                Rectangle rect = hitbox.getRectangle();
+                shapeRenderer.setColor(0, 0, 1, 0.5f);
+                shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+            }
+            shapeRenderer.end();
+        }
     }
 
     @Override

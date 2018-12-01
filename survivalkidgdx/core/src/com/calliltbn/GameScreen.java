@@ -22,8 +22,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.PlayerComponent;
-import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.factory.EntityFactory;
 import com.calliltbn.systems.CollisionSystem;
 import com.calliltbn.systems.MoveSystem;
@@ -70,14 +70,14 @@ public class GameScreen extends ScreenAdapter {
 		entityFactory.createPlayer(new Vector2(300, 250), PlayerComponent.Perso.YUNA);
 		entityFactory.createBouncePlayer();
 
-		SpriteComponent spriteComponent = Mappers.getComponent(SpriteComponent.class, player);
-		InputSingleton.getInstance().initMainPlayerPosition(spriteComponent);
+		CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, player);
+		InputSingleton.getInstance().initMainPlayerPosition(collideComponent);
 
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new CollisionSystem());
 		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());
-		engine.addSystem(new RenderingSystem(game.batch));
+		engine.addSystem(new RenderingSystem(game.batch, game.shapeRenderer));
 	}
 
 	public void update (float deltaTime) {

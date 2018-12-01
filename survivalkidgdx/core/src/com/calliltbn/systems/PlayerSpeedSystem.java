@@ -3,8 +3,10 @@ package com.calliltbn.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.InputSingleton;
+import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.PlayerComponent;
@@ -14,8 +16,8 @@ import com.calliltbn.util.Mappers;
 
 public class PlayerSpeedSystem extends IteratingSystem {
 
-    protected static final float JUMP_DURATION_MAX = 0.44f;
-    protected static final float JUMP_SLOW_BEGIN = 0.23f;
+    protected static final float JUMP_DURATION_MAX = 0.47f;
+    protected static final float JUMP_SLOW_BEGIN = 0.26f;
 
     protected static final float VITESSE_MAX_X = 9;
     protected static final float ACCELERATION_X = 0.75f;
@@ -70,8 +72,9 @@ public class PlayerSpeedSystem extends IteratingSystem {
         }
         if (input.jumpPressed || speed.y != 0) {
             GravityComponent gravityComponent = Mappers.getComponent(GravityComponent.class, entity);
+            CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, entity);
             float gravity = (gravityComponent != null)? gravityComponent.getGravity() : 0;
-            PlayerAnimation anim = jump(player, speed, position, gravity, deltaTime);
+            PlayerAnimation anim = jump(player, speed, collideComponent.getHitbox().getRectangle(), gravity, deltaTime);
             spriteComponent.setCurrentAnimation(player.getSpriteAnim(anim), false);
         }
         if (speed.y == 0 && speed.x == 0) {
@@ -92,9 +95,9 @@ public class PlayerSpeedSystem extends IteratingSystem {
         }
     }
 
-    public PlayerAnimation jump(PlayerComponent player, Vector2 speed, Vector2 position,
+    public PlayerAnimation jump(PlayerComponent player, Vector2 speed, Rectangle hitbox,
                                 float gravity, float deltaTime) {
-        if (MoveSystem.isOnFloor(position)) {
+        if (MoveSystem.isOnFloor(hitbox)) {
             player.setJumpDuration(0);
             if (input.jumpPressed) {
                 // start jump

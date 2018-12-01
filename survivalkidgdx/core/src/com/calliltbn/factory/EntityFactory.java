@@ -44,15 +44,17 @@ public class EntityFactory {
         Entity playerEntity = engine.createEntity();
 
         TextureEnum texture = (Perso.YUNA == personage)? TextureEnum.YUNA : TextureEnum.YUGO;
-        playerEntity.add(
-                SpriteComponent.make(engine, texture, pos, null, 10));
+        SpriteComponent spriteComponent =
+                SpriteComponent.make(engine, texture, pos, null, 10);
+        playerEntity.add(spriteComponent);
         playerEntity.add(
                 MoveStraightComponent.make(engine, new Vector2(0,0), BorderCollision.STOP));
         playerEntity.add(PlayerComponent.make(engine, personage));
         playerEntity.add(StateComponent.make(engine));
         playerEntity.add(GravityComponent.make(engine, 4));
         playerEntity.add(HealthComponent.make(engine, 30));
-        playerEntity.add(CollideComponent.make(engine, 10, 1));
+        playerEntity.add(CollideComponent.make(engine, 10, 1,
+                spriteComponent, texture.getOffsets()));
 
         engine.addEntity(playerEntity);
 
@@ -65,12 +67,14 @@ public class EntityFactory {
     public Entity createBouncePlayer() {
         Entity bounceEntity = engine.createEntity();
 
-        bounceEntity.add(
+        SpriteComponent spriteComponent =
                 SpriteComponent.make(engine, TextureEnum.YUNA, new Vector2(150,200),
-                        SpriteAnimationEnum.YUNA_RUN, 8));
+                        SpriteAnimationEnum.YUNA_RUN, 8);
+        bounceEntity.add(spriteComponent);
         bounceEntity.add(
                 MoveStraightComponent.make(engine, new Vector2(5,4), BorderCollision.BOUNCE));
-        bounceEntity.add(CollideComponent.make(engine, 10, 2));
+        bounceEntity.add(CollideComponent.make(engine, 10, 2,
+                spriteComponent, TextureEnum.YUNA.getOffsets()));
 
         engine.addEntity(bounceEntity);
 

@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
+import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.SpriteComponent;
@@ -24,13 +26,14 @@ public class MoveSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         MoveStraightComponent moveStraightComponent = Mappers.getComponent(MoveStraightComponent.class, entity);
         SpriteComponent spriteComponent = Mappers.getComponent(SpriteComponent.class, entity);
+        CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, entity);
 
         if (spriteComponent != null && moveStraightComponent != null) {
             Vector2 speed = moveStraightComponent.getSpeed();
             Vector2 position = spriteComponent.getPosition();
 
             // manage gravity
-            if (!isOnFloor(position)) {
+            if (collideComponent != null && !isOnFloor(collideComponent.getHitbox().getRectangle())) {
                 GravityComponent gravityComponent = Mappers.getComponent(GravityComponent.class, entity);
                 if (gravityComponent != null) {
                     speed.y = Math.max(MAX_SPEED_DOWN, speed.y-gravityComponent.getGravity());
@@ -42,41 +45,49 @@ public class MoveSystem extends IteratingSystem {
                 return;
             }
             position.add(speed);
-            processSpriteOutOfScreen(moveStraightComponent, spriteComponent, speed, position);
+
+            if (collideComponent != null) {
+                collideComponent.updateHitbox();
+            }
+            processSpriteOutOfScreen(moveStraightComponent, collideComponent.getHitbox().getRectangle(),
+                    spriteComponent, speed, position);
+
         }
     }
 
-    private void processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent,
+    private void processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent, Rectangle hitbox,
                                           SpriteComponent spriteComponent, Vector2 speed, Vector2 position) {
         Sprite sprite = spriteComponent.getSprite();
         // touch left or right
-        if (position.x <= 0 && speed.x < 0 || position.x + sprite.getWidth() >= GameScreen.SCREEN_W && speed.x > 0) {
+        if (hitbox.x <= 0 && speed.x < 0 || hitbox.x + hitbox.width >= GameScreen.SCREEN_W && speed.x > 0) {
             switch (moveStraightComponent.getBorderCollision()) {
                 case STOP:
                     speed.x=0;
-                    if (position.x <= 0) {
-                        position.x = 0;
+                    if (hitbox.x <= 0) {
+                        position.x -= hitbox.x;
+                        hitbox.x = 0;
                     }
                     else {
-                        position.x = GameScreen.SCREEN_W - sprite.getWidth();
+                        position.x -= hitbox.x - GameScreen.SCREEN_W + hitbox.width;
+                        hitbox.x = GameScreen.SCREEN_W - hitbox.width;
                     }
                     break;
                 case BOUNCE:
                     speed.x *= -1;
-                    spriteComponent.setFlip(position.x > 0);
+                    spriteComponent.setFlip(hitbox.x > 0);
                     break;
                 case DIE_TOUCH:
                     // destroy entity
                     return;
                 case DIE_OUT:
-                    if (position.x + sprite.getWidth() < 0 || position.x > GameScreen.SCREEN_W) {
+                    if (hitbox.x + hitbox.width < 0 || hitbox.x > GameScreen.SCREEN_W) {
                         // destroy entity
                     }
                     return;
             }
         }
         // touch floor or ceil
-        if (isOnFloor(position) && speed.y < 0 || position.y + sprite.getHeight() >= GameScreen.SCREEN_H && speed.y > 0) {
+        if (isOnFloor(hitbox) && speed.y < 0 || hitbox.y + hitbox.height >= GameScreen.SCREEN_H && speed.y > 0) {
             switch (moveStraightComponent.getBorderCollision()) {
                 case BOUNCE:
                     speed.y *= -1;
@@ -85,15 +96,15 @@ public class MoveSystem extends IteratingSystem {
                     // destroy entity
                     return;
                 case DIE_OUT:
-                    if (position.y > GameScreen.SCREEN_H) {
+                    if (hitbox.y > GameScreen.SCREEN_H) {
                         // destroy entity
                     }
                     return;
                 case FALL:
                 case STOP:
-                    if (position.y <= 40) {
-                        position.y = 40;
-                        speed.y = 0;
+                    if (hitbox.y <= FLOOR_Y) {
+                        position.y -= hitbox.y - FLOOR_Y;
+                        hitbox.y = FLOOR_Y;
                     }
                     else {
                         speed.y *= -1;
@@ -103,7 +114,7 @@ public class MoveSystem extends IteratingSystem {
         }
     }
 
-    public static boolean isOnFloor(Vector2 position) {
-        return position.y <= FLOOR_Y;
+    public static boolean isOnFloor(Rectangle hitbox) {
+        return hitbox.y <= FLOOR_Y;
     }
 }

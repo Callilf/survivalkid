@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
@@ -38,6 +39,7 @@ public class SpriteComponent implements Component, Poolable {
     private boolean loop;
 
     private boolean flip;
+    private float flipShift;
 
     private Vector2 position;
 
@@ -70,6 +72,11 @@ public class SpriteComponent implements Component, Poolable {
                         textureRegionToSprite(entryAnim.getValue()));
                 allAnimations.put(entryAnim.getKey(), animation);
             }
+        }
+
+        if (textureEnum.getOffsets() != null) {
+            Rectangle offsets = textureEnum.getOffsets();
+            flipShift = sprite.getWidth() - offsets.width - 2 * offsets.x;
         }
     }
 
@@ -124,8 +131,8 @@ public class SpriteComponent implements Component, Poolable {
             Animation<Sprite> anim = allAnimations.get(currentAnimation);
             resultSprite = anim.getKeyFrame(stateTime, loop);
         }
-        resultSprite.setPosition(position.x, position.y);
         resultSprite.setFlip(flip, false);
+        resultSprite.setPosition(position.x, position.y);
         return resultSprite;
     }
 
@@ -158,7 +165,11 @@ public class SpriteComponent implements Component, Poolable {
     }
 
     public void setFlip(boolean flip) {
-        this.flip = flip;
+        if (this.flip != flip) {
+            this.flip = flip;
+            // move the sprite center to the hitbox
+            position.x += flip? -flipShift : flipShift;
+        }
     }
 
     public int getZindex() {

@@ -7,9 +7,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.components.CollideComponent;
 
 /**
  * Singleton used to manager player's inputs.
@@ -39,7 +39,7 @@ public class InputSingleton {
 	// For touch control depending of the position of the screen
 
 	/** Position of the main player */
-	private Vector2 playerPosition;
+	private Rectangle playerHitbox;
 	private Vector2 shiftToMiddle;
 
 	private int lastPointer;
@@ -121,7 +121,7 @@ public class InputSingleton {
 			resetEvents();
 		}
 		else {
-			if (screenX < playerPosition.x + shiftToMiddle.x) {
+			if (screenX < playerHitbox.x + shiftToMiddle.x) {
 				leftPressed = true;
 				rightPressed = false;
 			}
@@ -196,9 +196,8 @@ public class InputSingleton {
         });
 	}
 
-	public void initMainPlayerPosition(SpriteComponent spriteComponent) {
-		playerPosition = spriteComponent.getPosition();
-		Sprite sprite = spriteComponent.getSprite(); // TODO hitbox instead of sprite
-		shiftToMiddle = new Vector2(sprite.getWidth() / 2, sprite.getHeight() / 2);
+	public void initMainPlayerPosition(CollideComponent collideComponent) {
+		playerHitbox = collideComponent.getHitbox().getRectangle();
+		shiftToMiddle = new Vector2(playerHitbox.width / 2, playerHitbox.height / 2);
 	}
 }

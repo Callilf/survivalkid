@@ -7,7 +7,6 @@ import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.FriendlyFireComponent;
 import com.calliltbn.components.HealthComponent;
 import com.calliltbn.components.PlayerComponent;
-import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.components.StateComponent;
 import com.calliltbn.components.StateComponent.State;
 import com.calliltbn.util.Mappers;
@@ -54,7 +53,10 @@ public class CollisionSystem extends IteratingSystem {
             // loop what's next inside collideEntity
             for (int j = i+1 ; j < collideEntity.size() ; j++) {
                 Entity targetEntity = collideEntity.get(j);
-                checkAndProcessCollision(listDeadEntity, sourceEntity, collideSource, stateSource, healthSource, targetEntity);
+                if (Mappers.hasAtLeastOneComponent(targetEntity, FriendlyFireComponent.class)
+                        || Mappers.hasAtLeastOneComponent(sourceEntity, FriendlyFireComponent.class)) {
+                    checkAndProcessCollision(listDeadEntity, sourceEntity, collideSource, stateSource, healthSource, targetEntity);
+                }
             }
         }
 
@@ -77,11 +79,7 @@ public class CollisionSystem extends IteratingSystem {
             return;
         }
 
-        SpriteComponent spriteSource = Mappers.getComponent(SpriteComponent.class , sourceEntity);
-        SpriteComponent spriteTarget = Mappers.getComponent(SpriteComponent.class , targetEntity);
-
-        if (spriteSource.getSprite().getBoundingRectangle().overlaps(
-                spriteTarget.getSprite().getBoundingRectangle())) {
+        if (collideSource.collideWith(collideTarget)) {
             // process hit target -> source
             if (healthSource != null && !StateComponent.hasAtLeastOneState(stateSource, State.INVICIBLE)) {
                 if (healthSource.hit(collideTarget.getDamage())) {
