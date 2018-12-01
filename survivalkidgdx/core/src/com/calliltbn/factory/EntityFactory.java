@@ -53,8 +53,7 @@ public class EntityFactory {
         playerEntity.add(StateComponent.make(engine));
         playerEntity.add(GravityComponent.make(engine, 4));
         playerEntity.add(HealthComponent.make(engine, 30));
-        playerEntity.add(CollideComponent.make(engine, 10, 1,
-                spriteComponent, texture.getOffsets()));
+        playerEntity.add(CollideComponent.make(engine, 10, 1, spriteComponent));
 
         engine.addEntity(playerEntity);
 
@@ -73,13 +72,86 @@ public class EntityFactory {
         bounceEntity.add(spriteComponent);
         bounceEntity.add(
                 MoveStraightComponent.make(engine, new Vector2(5,4), BorderCollision.BOUNCE));
-        bounceEntity.add(CollideComponent.make(engine, 10, 2,
-                spriteComponent, TextureEnum.YUNA.getOffsets()));
+        bounceEntity.add(CollideComponent.make(engine, 10, 2, spriteComponent));
 
         engine.addEntity(bounceEntity);
 
         return bounceEntity;
     }
+
+    public void createTestSprite() {
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.BALLOON_CRATE, new Vector2(0,300),
+                        SpriteAnimationEnum.BALLON_MOVE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.BALLOON_CRATE, new Vector2(75,300),
+                        SpriteAnimationEnum.BALLON_EXPLODE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.CATERPILLAR, new Vector2(160,300),
+                        SpriteAnimationEnum.CATERPILLAR_MOVE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.CATERPILLAR_PURPLE, new Vector2(230,300),
+                        SpriteAnimationEnum.CATERPILLAR_PURPLE_MOVE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.BULL, new Vector2(180,360),
+                        SpriteAnimationEnum.BULL_MOVE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.BULL_WARNING, new Vector2(300,300),
+                        SpriteAnimationEnum.BULL_WARN_ANIM, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.CIRCULAR_SAW, new Vector2(380,300),
+                        SpriteAnimationEnum.CIRCULAR_SAW_MOVE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.METEOR, new Vector2(450,400),
+                        null, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.METEOR_FIRE, new Vector2(450,300),
+                        null, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.METEOR_EXPLOSION, new Vector2(550,300),
+                        SpriteAnimationEnum.METEOR_EXPLODE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.METEOR_FIRE_EXPLOSION, new Vector2(700,300),
+                        SpriteAnimationEnum.METEOR_FIRE_EXPLODE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.FIRE_TRAIL, new Vector2(460,350),
+                        SpriteAnimationEnum.FIRE_TRAIL_DO, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.FIRE_GROUND, new Vector2(150,400),
+                        SpriteAnimationEnum.FIRE_GROUND_DO, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.FIRE_GROUND, new Vector2(150,350),
+                        SpriteAnimationEnum.FIRE_GROUND_DIE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.SMOKE_WHITE_LARGE, new Vector2(550,200),
+                        SpriteAnimationEnum.SMOKE_WHITE_LARGE_DIE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.SMOKE_BROWN_LARGE, new Vector2(700,200),
+                        SpriteAnimationEnum.SMOKE_BROWN_LARGE_DIE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.SMOKE_WHITE_SMALL, new Vector2(450,230),
+                        SpriteAnimationEnum.SMOKE_WHITE_SMALL_DIE, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.PARTICLE_DUST_BROWN, new Vector2(370,230),
+                        SpriteAnimationEnum.PARTICLE_DUST_FAINT, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.PARTICLE_SMOKE_WHITE_ROUND, new Vector2(170,230),
+                        SpriteAnimationEnum.PARTICLE_SMOKE_FAINT1, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.PARTICLE_SMOKE_WHITE_ROUND, new Vector2(235,230),
+                        SpriteAnimationEnum.PARTICLE_SMOKE_FAINT2, 8));
+        createTestEntityFromSprite(
+                SpriteComponent.make(engine, TextureEnum.PARTICLE_SMOKE_WHITE_ROUND, new Vector2(300,230),
+                        SpriteAnimationEnum.PARTICLE_SMOKE_FAINT3, 8));
+    }
+
+    private void createTestEntityFromSprite(SpriteComponent spriteComponent) {
+        Entity testEntity = engine.createEntity();
+        testEntity.add(spriteComponent);
+        testEntity.add(CollideComponent.make(engine, 0, 0, spriteComponent));
+        engine.addEntity(testEntity);
+    }
+
 
     private TextureRegion[] getTextureRegion(TextureRegion[][] matrice, int width, int[] positions) {
         TextureRegion[] allFrames = new TextureRegion[positions.length];

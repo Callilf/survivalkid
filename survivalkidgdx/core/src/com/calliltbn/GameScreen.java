@@ -69,6 +69,7 @@ public class GameScreen extends ScreenAdapter {
 		player = entityFactory.createPlayer(new Vector2(100, 40), PlayerComponent.Perso.YUGO);
 		entityFactory.createPlayer(new Vector2(300, 250), PlayerComponent.Perso.YUNA);
 		entityFactory.createBouncePlayer();
+		entityFactory.createTestSprite();
 
 		CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, player);
 		InputSingleton.getInstance().initMainPlayerPosition(collideComponent);

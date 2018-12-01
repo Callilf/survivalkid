@@ -25,6 +25,7 @@ public class SpriteComponent implements Component, Poolable {
     public static SpriteComponent make(PooledEngine engine, TextureEnum texture, Vector2 position,
         SpriteAnimationEnum currentAnimation, int zindex) {
         SpriteComponent component = engine.createComponent(SpriteComponent.class);
+        component.texture = texture;
         component.position = position;
         component.currentAnimation = currentAnimation;
         component.loop = true;
@@ -34,6 +35,8 @@ public class SpriteComponent implements Component, Poolable {
     }
 
     public boolean hide;
+
+    private TextureEnum texture;
     private Sprite sprite;
     private SpriteAnimationEnum currentAnimation;
     private boolean loop;
@@ -68,7 +71,7 @@ public class SpriteComponent implements Component, Poolable {
             allAnimations = new HashMap<>();
             for (Map.Entry<SpriteAnimationEnum, TextureRegion[]> entryAnim :
                     textureEnum.getTextureAnimation().entrySet()) {
-                Animation<Sprite> animation = new Animation<>(entryAnim.getKey().getFps(),
+                Animation<Sprite> animation = new Animation<>(entryAnim.getKey().getFrequency(),
                         textureRegionToSprite(entryAnim.getValue()));
                 allAnimations.put(entryAnim.getKey(), animation);
             }
@@ -150,6 +153,10 @@ public class SpriteComponent implements Component, Poolable {
                 hide = true;
             }
         }
+    }
+
+    public TextureEnum getTexture() {
+        return texture;
     }
 
     public Vector2 getPosition() {

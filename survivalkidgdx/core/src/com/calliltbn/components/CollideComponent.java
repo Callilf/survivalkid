@@ -10,14 +10,19 @@ public class CollideComponent implements Component {
 
     /** Generate a CollideComponent */
     public static CollideComponent make(PooledEngine engine, int damage, float recoveryTime,
-                                        SpriteComponent spriteComponent, Rectangle hitboxOffsets) {
+                                        SpriteComponent spriteComponent) {
         CollideComponent component = engine.createComponent(CollideComponent.class);
         component.damage = damage;
         component.recoveryTime = recoveryTime;
         component.spriteComponent = spriteComponent;
         component.spritePosition = spriteComponent.getPosition();
-        component.offsets = hitboxOffsets;
-        component.hitbox = new RectangleMapObject(0, 0, hitboxOffsets.width, hitboxOffsets.height);
+        component.offsets = spriteComponent.getTexture().getOffsets();
+        if (component.offsets == null) {
+            // allow to have a full sprite hitbox
+            component.offsets = new Rectangle(0, 0,
+                    spriteComponent.getSprite().getWidth(), spriteComponent.getSprite().getHeight());
+        }
+        component.hitbox = new RectangleMapObject(0, 0, component.offsets.width, component.offsets.height);
         component.updateHitbox();
         return component;
     }
