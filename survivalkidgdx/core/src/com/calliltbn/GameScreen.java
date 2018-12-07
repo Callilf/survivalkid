@@ -33,6 +33,7 @@ import com.calliltbn.systems.MoveSystem;
 import com.calliltbn.systems.PlayerSpeedSystem;
 import com.calliltbn.systems.RenderingSystem;
 import com.calliltbn.systems.StateSystem;
+import com.calliltbn.systems.SuccessorSystem;
 import com.calliltbn.util.Mappers;
 
 public class GameScreen extends ScreenAdapter {
@@ -88,6 +89,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new MoveSystem());
 		engine.addSystem(new GeneratorEnemySystem(entityFactory, new Difficulty(DifficultyEnum.NORMAL)));
 		engine.addSystem(new RenderingSystem(game.batch, game.shapeRenderer));
+		engine.addSystem(new SuccessorSystem(entityFactory));
 	}
 
 	public void update (float deltaTime) {

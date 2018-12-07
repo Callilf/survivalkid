@@ -39,9 +39,9 @@ public enum TextureEnum {
     PARTICLE_SMOKE_WHITE_ROUND("sprites/particle_smoke_white_round_short2.png", null, 5, 3,
             PARTICLE_SMOKE_FAINT1, PARTICLE_SMOKE_FAINT2, PARTICLE_SMOKE_FAINT3),
 
-    SMOKE_BROWN_LARGE("sprites/dead_anim_black.png", null, 7, 1, SMOKE_BROWN_LARGE_DIE),
-    SMOKE_WHITE_LARGE("sprites/dead_anim.png", null, 7, 1, SMOKE_WHITE_LARGE_DIE),
-    SMOKE_WHITE_SMALL("sprites/dead_anim_small.png", null, 7, 1, SMOKE_WHITE_SMALL_DIE),
+    SMOKE_BROWN_LARGE("sprites/dead_anim_black.png", null, 7, 1, SMOKE_ALL_DIE),
+    SMOKE_WHITE_LARGE("sprites/dead_anim.png", null, 7, 1, SMOKE_ALL_DIE),
+    SMOKE_WHITE_SMALL("sprites/dead_anim_small.png", null, 7, 1, SMOKE_ALL_DIE),
 
     // items
     CORRIDA("images/corrida.png", new Rectangle(5, 0, 90, 95), 1, 1), // muleta

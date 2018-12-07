@@ -82,10 +82,21 @@ public class RenderingSystem extends IteratingSystem {
 
         background.draw(batch);
 
+
+        // contained decoration animation when they are over
+        List<Entity> deadEntities = new ArrayList<>();
+
+        // contained hitbox to draw
         List<RectangleMapObject> listHitbox = new ArrayList<>();
+
         for (Entity entity : renderQueue) {
             SpriteComponent spriteCompo = Mappers.getComponent(SpriteComponent.class, entity);
             if (spriteCompo != null) {
+                if (spriteCompo.isFinished()) {
+                    deadEntities.add(entity);
+                    continue;
+                }
+
                 spriteCompo.increaseAnimTime(deltaTime);
                 if (!spriteCompo.isHide()) {
                     spriteCompo.getSprite().draw(batch);
@@ -97,6 +108,11 @@ public class RenderingSystem extends IteratingSystem {
                     listHitbox.add(collideCompo.getHitbox());
                 }
             }
+        }
+
+        // remove dead decoration entity
+        for (Entity entity: deadEntities) {
+            getEngine().removeEntity(entity);
         }
 
         batch.end();

@@ -29,6 +29,7 @@ public class SpriteComponent implements Component, Poolable {
         component.position = position;
         component.currentAnimation = currentAnimation;
         component.loop = true;
+        component.dieWhenAnimFinished = false;
         component.zindex = zindex;
         component.flip = false;
         component.initTexture(texture);
@@ -41,6 +42,8 @@ public class SpriteComponent implements Component, Poolable {
     private Sprite sprite;
     private SpriteAnimationEnum currentAnimation;
     private boolean loop;
+
+    private boolean dieWhenAnimFinished;
 
     private boolean flip;
     private float flipShift;
@@ -154,6 +157,16 @@ public class SpriteComponent implements Component, Poolable {
                 hide = true;
             }
         }
+    }
+
+    public void setDieOnFinished() {
+        dieWhenAnimFinished = true;
+        loop = false;
+    }
+
+    public boolean isFinished() {
+        return dieWhenAnimFinished &&
+                allAnimations.get(currentAnimation).isAnimationFinished(stateTime);
     }
 
     public TextureEnum getTexture() {

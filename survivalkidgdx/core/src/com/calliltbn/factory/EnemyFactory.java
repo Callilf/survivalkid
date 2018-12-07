@@ -10,6 +10,7 @@ import com.calliltbn.components.HealthComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.MoveStraightComponent.BorderCollision;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
@@ -70,7 +71,7 @@ public class EnemyFactory {
         entity.add(GravityComponent.make(engine, 2));
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
         entity.add(HealthComponent.make(engine, 1));
-
+        entity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_SMALL));
 
         engine.addEntity(entity);
         return entity;

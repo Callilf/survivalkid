@@ -36,9 +36,10 @@ public enum SpriteAnimationEnum {
     PARTICLE_SMOKE_FAINT2(new int[] { 5, 6, 7, 8, 9 }, 5),
     PARTICLE_SMOKE_FAINT3(new int[] { 10, 11, 12, 13, 14 }, 5),
 
-    SMOKE_BROWN_LARGE_DIE(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25),
-    SMOKE_WHITE_LARGE_DIE(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25),
-    SMOKE_WHITE_SMALL_DIE(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25),
+    SMOKE_ALL_DIE(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25),
+    // SMOKE_BROWN_LARGE_DIE(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25),
+    // SMOKE_WHITE_LARGE_DIE(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25),
+    // SMOKE_WHITE_SMALL_DIE(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 25),
 
     // manage items
     BALLON_MOVE(new int[] { 0, 1, 2, 1, 0, 3, 4, 3 }, 8),

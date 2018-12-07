@@ -13,6 +13,7 @@ import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.PlayerComponent.Perso;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.components.StateComponent;
+import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
@@ -27,7 +28,8 @@ public class EntityFactory {
     /** The gdx pooled engine. */
     private PooledEngine engine;
 
-    EnemyFactory enemyFactory;
+    private EnemyFactory enemyFactory;
+    private DecorationFactory decorationFactory;
 
     /**
      * Constructor.
@@ -36,9 +38,20 @@ public class EntityFactory {
     public EntityFactory(PooledEngine e) {
         this.engine = e;
         enemyFactory = new EnemyFactory(e);
+        decorationFactory = new DecorationFactory(e);
     }
 
     public Entity createEnemy(TypeEntity enemy) {
+        return enemyFactory.createCaterpillar();
+    }
+
+    public Entity createSuccessor(Entity parentEntity, TypeEntity childEntity) {
+        switch (childEntity) {
+            case SMOKE_WHITE_SMALL:
+                return decorationFactory.createSmokeWhiteSmall(parentEntity);
+            case SMOKE_WHITE_LARGE:
+                return decorationFactory.createSmokeWhiteLarge(parentEntity);
+        }
         return enemyFactory.createCaterpillar();
     }
 
@@ -61,6 +74,7 @@ public class EntityFactory {
         playerEntity.add(GravityComponent.make(engine, 4));
         playerEntity.add(HealthComponent.make(engine, 30));
         playerEntity.add(CollideComponent.make(engine, 10, 1, spriteComponent));
+        playerEntity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE));
 
         engine.addEntity(playerEntity);
 
@@ -131,13 +145,13 @@ public class EntityFactory {
                         SpriteAnimationEnum.FIRE_GROUND_DIE, 8));
         createTestEntityFromSprite(
                 SpriteComponent.make(engine, TextureEnum.SMOKE_WHITE_LARGE, new Vector2(550,200),
-                        SpriteAnimationEnum.SMOKE_WHITE_LARGE_DIE, 8));
+                        SpriteAnimationEnum.SMOKE_ALL_DIE, 8));
         createTestEntityFromSprite(
                 SpriteComponent.make(engine, TextureEnum.SMOKE_BROWN_LARGE, new Vector2(700,200),
-                        SpriteAnimationEnum.SMOKE_BROWN_LARGE_DIE, 8));
+                        SpriteAnimationEnum.SMOKE_ALL_DIE, 8));
         createTestEntityFromSprite(
                 SpriteComponent.make(engine, TextureEnum.SMOKE_WHITE_SMALL, new Vector2(450,230),
-                        SpriteAnimationEnum.SMOKE_WHITE_SMALL_DIE, 8));
+                        SpriteAnimationEnum.SMOKE_ALL_DIE, 8));
         createTestEntityFromSprite(
                 SpriteComponent.make(engine, TextureEnum.PARTICLE_DUST_BROWN, new Vector2(370,230),
                         SpriteAnimationEnum.PARTICLE_DUST_FAINT, 8));
