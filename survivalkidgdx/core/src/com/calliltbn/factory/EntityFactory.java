@@ -25,7 +25,9 @@ import com.calliltbn.spritesdef.TextureEnum;
 public class EntityFactory {
 
     /** The gdx pooled engine. */
-    public PooledEngine engine;
+    private PooledEngine engine;
+
+    EnemyFactory enemyFactory;
 
     /**
      * Constructor.
@@ -33,6 +35,11 @@ public class EntityFactory {
      */
     public EntityFactory(PooledEngine e) {
         this.engine = e;
+        enemyFactory = new EnemyFactory(e);
+    }
+
+    public Entity createEnemy(TypeEntity enemy) {
+        return enemyFactory.createCaterpillar();
     }
 
     /**
@@ -91,7 +98,7 @@ public class EntityFactory {
                         SpriteAnimationEnum.CATERPILLAR_MOVE, 8));
         createTestEntityFromSprite(
                 SpriteComponent.make(engine, TextureEnum.CATERPILLAR_PURPLE, new Vector2(230,300),
-                        SpriteAnimationEnum.CATERPILLAR_PURPLE_MOVE, 8));
+                        SpriteAnimationEnum.CATERPILLAR_MOVE, 8));
         createTestEntityFromSprite(
                 SpriteComponent.make(engine, TextureEnum.BULL, new Vector2(180,360),
                         SpriteAnimationEnum.BULL_MOVE, 8));

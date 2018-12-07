@@ -25,7 +25,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.factory.EntityFactory;
+import com.calliltbn.param.Difficulty;
+import com.calliltbn.param.Difficulty.DifficultyEnum;
 import com.calliltbn.systems.CollisionSystem;
+import com.calliltbn.systems.GeneratorEnemySystem;
 import com.calliltbn.systems.MoveSystem;
 import com.calliltbn.systems.PlayerSpeedSystem;
 import com.calliltbn.systems.RenderingSystem;
@@ -34,6 +37,7 @@ import com.calliltbn.util.Mappers;
 
 public class GameScreen extends ScreenAdapter {
 
+
 	public enum State {
 		GAME_RUNNING, GAME_PAUSE, GAME_OVER;
 	}
@@ -41,6 +45,10 @@ public class GameScreen extends ScreenAdapter {
 	// dimensions
 	public static final int SCREEN_H = 480;
 	public static final int SCREEN_W = 854;
+
+	// constants
+	public static final int FLOOR_Y = 40;
+	public static final float FPS = 60f;
 
 	SurvivalKidGame game;
 
@@ -66,10 +74,10 @@ public class GameScreen extends ScreenAdapter {
 		engine = new PooledEngine();
 		this.entityFactory = new EntityFactory(this.engine);
 
-		player = entityFactory.createPlayer(new Vector2(100, 40), PlayerComponent.Perso.YUGO);
-		entityFactory.createPlayer(new Vector2(300, 250), PlayerComponent.Perso.YUNA);
-		entityFactory.createBouncePlayer();
-		entityFactory.createTestSprite();
+		//player = entityFactory.createPlayer(new Vector2(100, 40), PlayerComponent.Perso.YUGO);
+		player = entityFactory.createPlayer(new Vector2(300, 250), PlayerComponent.Perso.YUNA);
+		//entityFactory.createBouncePlayer();
+		//entityFactory.createTestSprite();
 
 		CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, player);
 		InputSingleton.getInstance().initMainPlayerPosition(collideComponent);
@@ -78,12 +86,13 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new CollisionSystem());
 		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());
+		engine.addSystem(new GeneratorEnemySystem(entityFactory, new Difficulty(DifficultyEnum.NORMAL)));
 		engine.addSystem(new RenderingSystem(game.batch, game.shapeRenderer));
 	}
 
 	public void update (float deltaTime) {
 		// force deltaTime equivalent to 60 fps
-		deltaTime = 1/60f;
+		deltaTime = 1/FPS;
 		engine.update(deltaTime);
 
 		switch (state) {

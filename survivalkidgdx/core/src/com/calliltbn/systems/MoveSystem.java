@@ -15,7 +15,6 @@ import com.calliltbn.util.Mappers;
 
 public class MoveSystem extends IteratingSystem {
 
-    private static final int FLOOR_Y = 40;
     private static final int MAX_SPEED_DOWN = -25;
 
     public MoveSystem() {
@@ -49,13 +48,16 @@ public class MoveSystem extends IteratingSystem {
             if (collideComponent != null) {
                 collideComponent.updateHitbox();
             }
-            processSpriteOutOfScreen(moveStraightComponent, collideComponent.getHitbox().getRectangle(),
+            boolean isDead = processSpriteOutOfScreen(moveStraightComponent, collideComponent.getHitbox().getRectangle(),
                     spriteComponent, speed, position);
+            if (isDead) {
+                getEngine().removeEntity(entity);
+            }
 
         }
     }
 
-    private void processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent, Rectangle hitbox,
+    private boolean processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent, Rectangle hitbox,
                                           SpriteComponent spriteComponent, Vector2 speed, Vector2 position) {
         Sprite sprite = spriteComponent.getSprite();
         // touch left or right
@@ -77,13 +79,11 @@ public class MoveSystem extends IteratingSystem {
                     spriteComponent.setFlip(hitbox.x > 0);
                     break;
                 case DIE_TOUCH:
-                    // destroy entity
-                    return;
+                    return true;
                 case DIE_OUT:
                     if (hitbox.x + hitbox.width < 0 || hitbox.x > GameScreen.SCREEN_W) {
-                        // destroy entity
+                        return true;
                     }
-                    return;
             }
         }
         // touch floor or ceil
@@ -93,18 +93,23 @@ public class MoveSystem extends IteratingSystem {
                     speed.y *= -1;
                     break;
                 case DIE_TOUCH:
-                    // destroy entity
-                    return;
+                    return true;
                 case DIE_OUT:
                     if (hitbox.y > GameScreen.SCREEN_H) {
-                        // destroy entity
+                        return true;
                     }
-                    return;
+                    else {
+                        // no entity can go throw the floor
+                        position.y -= hitbox.y - GameScreen.FLOOR_Y;
+                        hitbox.y = GameScreen.FLOOR_Y;
+                        speed.y = 0;
+                    }
                 case FALL:
                 case STOP:
-                    if (hitbox.y <= FLOOR_Y) {
-                        position.y -= hitbox.y - FLOOR_Y;
-                        hitbox.y = FLOOR_Y;
+                    if (hitbox.y <= GameScreen.FLOOR_Y) {
+                        position.y -= hitbox.y - GameScreen.FLOOR_Y;
+                        hitbox.y = GameScreen.FLOOR_Y;
+                        speed.y = 0;
                     }
                     else {
                         speed.y *= -1;
@@ -112,9 +117,10 @@ public class MoveSystem extends IteratingSystem {
                     break;
             }
         }
+        return false;
     }
 
     public static boolean isOnFloor(Rectangle hitbox) {
-        return hitbox.y <= FLOOR_Y;
+        return hitbox.y <= GameScreen.FLOOR_Y;
     }
 }

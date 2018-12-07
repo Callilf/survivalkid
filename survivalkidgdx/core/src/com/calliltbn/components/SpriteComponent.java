@@ -30,6 +30,7 @@ public class SpriteComponent implements Component, Poolable {
         component.currentAnimation = currentAnimation;
         component.loop = true;
         component.zindex = zindex;
+        component.flip = false;
         component.initTexture(texture);
         return component;
     }

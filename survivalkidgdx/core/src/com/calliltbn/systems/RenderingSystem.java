@@ -3,6 +3,7 @@ package com.calliltbn.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -30,6 +31,8 @@ public class RenderingSystem extends IteratingSystem {
     private Collection<Entity> renderQueue;
     private OrthographicCamera cam;
     private Sprite background;
+
+    private float lastLog = 0;
 
     public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
         super(Family.one(SpriteComponent.class).get());
@@ -66,6 +69,12 @@ public class RenderingSystem extends IteratingSystem {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
+        // log each second number of sprite in the render queue
+        if ((lastLog += deltaTime) > 1) {
+            lastLog = 0;
+            Gdx.app.log("GLOBAL", "Nb Sprite to draw : " + renderQueue.size());
+        }
 
         cam.update();
         batch.setProjectionMatrix(cam.combined);

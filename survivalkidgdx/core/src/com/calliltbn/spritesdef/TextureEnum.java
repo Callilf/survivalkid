@@ -23,7 +23,7 @@ public enum TextureEnum {
     // enemies
     BULL("sprites/bull.png",  new Rectangle(25, 0, 70, 80), 4, 2, BULL_MOVE),
     CATERPILLAR("sprites/caterpillar.png",  new Rectangle(18, 0, 74, 35), 4, 1, CATERPILLAR_MOVE),
-    CATERPILLAR_PURPLE("sprites/caterpillar_purple.png",  new Rectangle(18, 0, 74, 35), 4, 1, CATERPILLAR_PURPLE_MOVE),
+    CATERPILLAR_PURPLE("sprites/caterpillar_purple.png",  new Rectangle(18, 0, 74, 35), 4, 1, CATERPILLAR_MOVE),
     CIRCULAR_SAW("sprites/enemy_circular_saw.png",  new Rectangle(12, 8, 80, 80), 10, 1, CIRCULAR_SAW_MOVE),
     METEOR("images/meteor.png",  new Rectangle(18, 8, 74, 74), 1, 1),
     METEOR_FIRE("images/meteor_fire.png",  new Rectangle(18, 8, 74, 74), 1, 1),

@@ -21,7 +21,7 @@ public enum SpriteAnimationEnum {
     BULL_MOVE(new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, 30),
     CIRCULAR_SAW_MOVE(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 20),
     CATERPILLAR_MOVE(new int[] { 0, 1, 2, 3, 2, 1 }, 13),
-    CATERPILLAR_PURPLE_MOVE(new int[] { 0, 1, 2, 3, 2, 1 }, 13),
+    // CATERPILLAR_PURPLE_MOVE(new int[] { 0, 1, 2, 3, 2, 1 }, 13), // reuse CATERPILLAR_MOVE
     FIRE_GROUND_DO(new int[] { 0, 1, 2, 3, 4, 5, 6 }, 15),
     FIRE_GROUND_DIE(new int[] { 7, 8, 9, 10, 11 }, 10),
 
