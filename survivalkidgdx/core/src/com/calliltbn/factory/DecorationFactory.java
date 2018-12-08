@@ -24,28 +24,35 @@ public class DecorationFactory {
         this.engine = e;
     }
 
+    public Entity createMeteorExplosion(Entity parentEntity) {
+        return createDyingAnimation(parentEntity, TextureEnum.METEOR_EXPLOSION, SpriteAnimationEnum.METEOR_EXPLODE, 25);
+    }
+
+    public Entity createMeteorFireExplosion(Entity parentEntity) {
+        return createDyingAnimation(parentEntity, TextureEnum.METEOR_FIRE_EXPLOSION, SpriteAnimationEnum.METEOR_FIRE_EXPLODE, 25);
+    }
 
     public Entity createSmokeWhiteSmall(Entity parentEntity) {
-        return createDyingAnimation(parentEntity, TextureEnum.SMOKE_WHITE_SMALL);
+        return createDyingAnimation(parentEntity, TextureEnum.SMOKE_WHITE_SMALL, SpriteAnimationEnum.SMOKE_ALL_DIE, 10);
     }
 
     public Entity createSmokeWhiteLarge(Entity parentEntity) {
-        return createDyingAnimation(parentEntity, TextureEnum.SMOKE_WHITE_LARGE);
+        return createDyingAnimation(parentEntity, TextureEnum.SMOKE_WHITE_LARGE, SpriteAnimationEnum.SMOKE_ALL_DIE, 10);
     }
 
     public Entity createSmokeBrownLarge(Entity parentEntity) {
-        return createDyingAnimation(parentEntity, TextureEnum.SMOKE_BROWN_LARGE);
+        return createDyingAnimation(parentEntity, TextureEnum.SMOKE_BROWN_LARGE, SpriteAnimationEnum.SMOKE_ALL_DIE, 10);
     }
 
-    private Entity createDyingAnimation(Entity parentEntity, TextureEnum texture) {
+    private Entity createDyingAnimation(Entity parentEntity, TextureEnum texture, SpriteAnimationEnum anim, float shiftY) {
         Entity entity = engine.createEntity();
         CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, parentEntity);
         Rectangle hitbox = collideComponent.getHitbox().getRectangle();
 
         TextureRegion region =  texture.getTextureDefault();
         Vector2 position = new Vector2(hitbox.x + hitbox.width/2 - region.getRegionWidth() / 2,
-                hitbox.y + hitbox.height/2 - region.getRegionHeight() / 2);
-        SpriteComponent spriteComponent = SpriteComponent.make(engine, texture, position, SpriteAnimationEnum.SMOKE_ALL_DIE, 2);
+                hitbox.y + hitbox.height/2 - region.getRegionHeight() / 2 + shiftY);
+        SpriteComponent spriteComponent = SpriteComponent.make(engine, texture, position, anim, 2);
         spriteComponent.setDieOnFinished();
         entity.add(spriteComponent);
 

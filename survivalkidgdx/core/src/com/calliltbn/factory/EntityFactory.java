@@ -2,6 +2,7 @@ package com.calliltbn.factory;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
@@ -44,6 +45,13 @@ public class EntityFactory {
     }
 
     public Entity createEnemy(TypeEntity enemy) {
+        switch (enemy) {
+            case CATERPILLAR:
+                return enemyFactory.createCaterpillar();
+            case CIRCULAR_SAW:
+            case METEOR:
+                return enemyFactory.createMeteor();
+        }
         return enemyFactory.createCaterpillar();
     }
 
@@ -53,7 +61,14 @@ public class EntityFactory {
                 return decorationFactory.createSmokeWhiteSmall(parentEntity);
             case SMOKE_WHITE_LARGE:
                 return decorationFactory.createSmokeWhiteLarge(parentEntity);
+            case SMOKE_BROWN_LARGE:
+                return decorationFactory.createSmokeBrownLarge(parentEntity);
+            case METEOR_EXPLOSION:
+                return decorationFactory.createMeteorExplosion(parentEntity);
+            case METEOR_FIRE_EXPLOSION:
+                return decorationFactory.createMeteorFireExplosion(parentEntity);
         }
+        Gdx.app.log("EntityFactory", "no successor define " + childEntity);
         return enemyFactory.createCaterpillar();
     }
 
@@ -74,7 +89,7 @@ public class EntityFactory {
         playerEntity.add(PlayerComponent.make(engine, personage));
         playerEntity.add(StateComponent.make(engine));
         playerEntity.add(GravityComponent.make(engine, 4));
-        playerEntity.add(HealthComponent.make(engine, 30));
+        playerEntity.add(HealthComponent.make(engine, 50));
         playerEntity.add(CollideComponent.make(engine, 10, 1, spriteComponent));
         playerEntity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE));
 
@@ -186,17 +201,12 @@ public class EntityFactory {
 
     /**
      * Generate a random X position.
-     * @param isFlip if false, generate a position in the first half. Else in the second half
      * @return a random X position in the game, excluded the marginPct of each side
      */
-    public static int getRandomPositionX(boolean isFlip) {
+    public static int getRandomPositionX() {
         int marginPct = 1;
         int margin = GameScreen.SCREEN_W * marginPct / 100;
-        int result = (int)(Math.random() * (GameScreen.SCREEN_W - 2 * margin)) + margin;
-        if (result < GameScreen.SCREEN_W / 2 && isFlip) {
-            result = GameScreen.SCREEN_W - result;
-        }
-        return result;
+        return (int)(Math.random() * (GameScreen.SCREEN_W - 2 * margin)) + margin;
     }
 
     /**

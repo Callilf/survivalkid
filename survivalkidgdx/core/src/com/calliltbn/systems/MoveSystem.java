@@ -3,6 +3,7 @@ package com.calliltbn.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +12,7 @@ import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.util.Mappers;
 
 public class MoveSystem extends IteratingSystem {
@@ -48,16 +50,35 @@ public class MoveSystem extends IteratingSystem {
             if (collideComponent != null) {
                 collideComponent.updateHitbox();
             }
-            boolean isDead = processSpriteOutOfScreen(moveStraightComponent, collideComponent.getHitbox().getRectangle(),
+            Boolean isDead = processSpriteOutOfScreen(moveStraightComponent, collideComponent.getHitbox().getRectangle(),
                     spriteComponent, speed, position);
+            if (isDead == null) {
+                SuccessorComponent successors = Mappers.getComponent(SuccessorComponent.class , entity);
+                // if no successor, set dead to true
+                isDead = (successors == null);
+                if (!isDead) {
+                    successors.setActivated(true);
+                }
+            }
             if (isDead) {
+                Gdx.app.log("MOVE", "removing entity out of screen");
                 getEngine().removeEntity(entity);
             }
 
         }
     }
 
-    private boolean processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent, Rectangle hitbox,
+    /**
+     *  Check what to do when the sprite is out of screen
+     *
+     * @param moveStraightComponent move component
+     * @param hitbox hitbox of the entity
+     * @param spriteComponent sprite component
+     * @param speed speed of the component
+     * @param position position of the component
+     * @return true if entity should be remove, null if it should to be destroy, false otherwise
+     */
+    private Boolean processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent, Rectangle hitbox,
                                           SpriteComponent spriteComponent, Vector2 speed, Vector2 position) {
         Sprite sprite = spriteComponent.getSprite();
         // touch left or right
@@ -79,7 +100,7 @@ public class MoveSystem extends IteratingSystem {
                     spriteComponent.setFlip(hitbox.x > 0);
                     break;
                 case DIE_TOUCH:
-                    return true;
+                    return null;
                 case DIE_OUT:
                     if (hitbox.x + hitbox.width < 0 || hitbox.x > GameScreen.SCREEN_W) {
                         return true;
@@ -93,7 +114,7 @@ public class MoveSystem extends IteratingSystem {
                     speed.y *= -1;
                     break;
                 case DIE_TOUCH:
-                    return true;
+                    return null;
                 case DIE_OUT:
                     if (hitbox.y > GameScreen.SCREEN_H) {
                         return true;

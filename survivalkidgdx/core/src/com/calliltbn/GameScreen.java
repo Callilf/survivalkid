@@ -33,6 +33,7 @@ import com.calliltbn.systems.MoveSystem;
 import com.calliltbn.systems.PlayerSpeedSystem;
 import com.calliltbn.systems.RenderingSystem;
 import com.calliltbn.systems.StateSystem;
+import com.calliltbn.systems.SubstituteSystem;
 import com.calliltbn.systems.SuccessorSystem;
 import com.calliltbn.util.Mappers;
 
@@ -83,6 +84,7 @@ public class GameScreen extends ScreenAdapter {
 		CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, player);
 		InputSingleton.getInstance().initMainPlayerPosition(collideComponent);
 
+		engine.addSystem(new SubstituteSystem());
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new CollisionSystem());
 		engine.addSystem(new PlayerSpeedSystem());

@@ -10,6 +10,7 @@ import com.calliltbn.components.HealthComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.MoveStraightComponent.BorderCollision;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.components.SubstitutesComponent;
 import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.desc.Enemy;
 import com.calliltbn.desc.TypeEntity;
@@ -30,6 +31,39 @@ public class EnemyFactory {
     public EnemyFactory(PooledEngine e) {
         this.engine = e;
         this.difficulty = DifficultyEnum.NORMAL.getValue();
+    }
+
+    public Entity createMeteor() {
+        Entity entity = engine.createEntity();
+
+        Enemy enemy = Enemy.METEORE;
+
+        float speed = enemy.getBaseSpeed();
+        int damage = enemy.getDamage(difficulty);
+        float recoveryTime = enemy.getRecoveryTime();
+        TextureEnum texture = enemy.getTextureEnum();
+        Vector2 position = new Vector2();
+
+        SpriteComponent spriteComponent =
+                SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
+        boolean isFlip = initPosition(texture, position, false,  false, false);
+        if (isFlip) {
+            speed *= -1;
+            spriteComponent.setFlip(true);
+        }
+
+        entity.add(spriteComponent);
+        entity.add(
+                MoveStraightComponent.make(engine, new Vector2(speed,-2), BorderCollision.DIE_TOUCH));
+        entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
+        entity.add(SuccessorComponent.make(engine, TypeEntity.METEOR_EXPLOSION));
+
+        // second state
+        entity.add(SubstitutesComponent.make(engine, 1, enemy.getTypeEntity(),
+                MoveStraightComponent.make(engine, new Vector2(speed,-14), BorderCollision.DIE_TOUCH)));
+
+        engine.addEntity(entity);
+        return entity;
     }
 
     public Entity createCaterpillar() {
@@ -80,29 +114,32 @@ public class EnemyFactory {
      */
     private boolean initPosition(TextureEnum texture, Vector2 position, boolean startOnSide,
                                  boolean startOnFloor, boolean randomY) {
-        int random = (int) (Math.random() * 100);
-        boolean isFlip = random < 50;
+        boolean isFlip;
         if (startOnSide) {
+            int random = (int) (Math.random() * 100);
+            isFlip = random < 50;
+
             if (isFlip) {
                 position.x = GameScreen.SCREEN_W; // start at the right
             } else {
                 position.x = -texture.getTextureDefault().getRegionWidth(); // start at the left
             }
-        }
-        else {
-            // start at the top. Generate a random X position
-            position.x = EntityFactory.getRandomPositionX(true);
-        }
-        if (randomY) {
-            position.y = EntityFactory.getRandomPositionY();
-        }
-        else {
+
             if (startOnFloor || random < 34 || random > 65) {
                 position.y = GameScreen.FLOOR_Y; // start on the floor
             } else {
                 // case where an entity can start by falling from the top of the screen
                 position.y = GameScreen.SCREEN_H - 20; // start on the top
             }
+        }
+        else {
+            // start at the top. Generate a random X position
+            position.x = EntityFactory.getRandomPositionX();
+            isFlip = position.x > GameScreen.SCREEN_W / 2;
+            position.y = GameScreen.SCREEN_H + texture.getTextureDefault().getRegionHeight();
+        }
+        if (randomY) {
+            position.y = EntityFactory.getRandomPositionY();
         }
         return isFlip;
     }
