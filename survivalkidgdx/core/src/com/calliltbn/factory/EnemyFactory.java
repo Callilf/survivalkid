@@ -11,7 +11,9 @@ import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.MoveStraightComponent.BorderCollision;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.components.SuccessorComponent;
-import com.calliltbn.spritesdef.SpriteAnimationEnum;
+import com.calliltbn.desc.Enemy;
+import com.calliltbn.desc.TypeEntity;
+import com.calliltbn.param.Difficulty.DifficultyEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
 public class EnemyFactory {
@@ -19,49 +21,40 @@ public class EnemyFactory {
     /** The gdx pooled engine. */
     private PooledEngine engine;
 
+    private int difficulty;
+
     /**
      * Constructor.
      * @param e the engine
      */
     public EnemyFactory(PooledEngine e) {
         this.engine = e;
+        this.difficulty = DifficultyEnum.NORMAL.getValue();
     }
 
     public Entity createCaterpillar() {
         Entity entity = engine.createEntity();
 
-        float speed = (float) (Math.random() * (2.8f - 1.8f) + 1.8f);
-        int damage = 5;
-        float recoveryTime = 0.3f;
-        TextureEnum texture = TextureEnum.CATERPILLAR;
-
-        // switch to purple caterpillar is high speed
-        if(speed >= 2.5f) {
-            texture = TextureEnum.CATERPILLAR_PURPLE;
-            damage = 10;
-            recoveryTime = 0.5f;
+        Enemy enemy = Enemy.CATERPILLAR;
+        float speed = enemy.getBaseSpeed();
+        speed = (float) (Math.random() * 1f) + speed;
+        if (speed > 2.5f) {
+            enemy = Enemy.CATERPILLAR_PURPLE;
         }
+
+        int damage = enemy.getDamage(difficulty);
+        float recoveryTime = enemy.getRecoveryTime();
+        TextureEnum texture = enemy.getTextureEnum();
 
         Vector2 position = new Vector2();
         SpriteComponent spriteComponent =
-                SpriteComponent.make(engine, texture, position, SpriteAnimationEnum.CATERPILLAR_MOVE, 5);
+                SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
 
         // init position
-        int random = (int) (Math.random() * 100);
-        if (random < 50) {
-            // start at the left
-            position.x = - texture.getTextureDefault().getRegionWidth();
-        }
-        else {
-            position.x = GameScreen.SCREEN_W;
-            spriteComponent.setFlip(true);
+        boolean isFlip = initPosition(texture, position, true,  false, false);
+        if (isFlip) {
             speed *= -1;
-        }
-        if (random < 34 || random > 65) {
-            position.y = GameScreen.FLOOR_Y; // start on the floor
-        }
-        else {
-            position.y = GameScreen.SCREEN_H - 20; // start on the top
+            spriteComponent.setFlip(true);
         }
 
         entity.add(spriteComponent);
@@ -76,4 +69,43 @@ public class EnemyFactory {
         engine.addEntity(entity);
         return entity;
     }
+
+    /**
+     * Init position of the enemy
+     *
+     * @param texture texture of the enemy (used for the size of the sprite)
+     * @param position the position to set
+     * @param startOnSide if true, start on the right of left.
+     * @return if the enemy is flipped (move to the left)
+     */
+    private boolean initPosition(TextureEnum texture, Vector2 position, boolean startOnSide,
+                                 boolean startOnFloor, boolean randomY) {
+        int random = (int) (Math.random() * 100);
+        boolean isFlip = random < 50;
+        if (startOnSide) {
+            if (isFlip) {
+                position.x = GameScreen.SCREEN_W; // start at the right
+            } else {
+                position.x = -texture.getTextureDefault().getRegionWidth(); // start at the left
+            }
+        }
+        else {
+            // start at the top. Generate a random X position
+            position.x = EntityFactory.getRandomPositionX(true);
+        }
+        if (randomY) {
+            position.y = EntityFactory.getRandomPositionY();
+        }
+        else {
+            if (startOnFloor || random < 34 || random > 65) {
+                position.y = GameScreen.FLOOR_Y; // start on the floor
+            } else {
+                // case where an entity can start by falling from the top of the screen
+                position.y = GameScreen.SCREEN_H - 20; // start on the top
+            }
+        }
+        return isFlip;
+    }
+
+
 }

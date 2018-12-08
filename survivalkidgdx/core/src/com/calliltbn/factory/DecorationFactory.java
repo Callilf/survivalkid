@@ -33,6 +33,10 @@ public class DecorationFactory {
         return createDyingAnimation(parentEntity, TextureEnum.SMOKE_WHITE_LARGE);
     }
 
+    public Entity createSmokeBrownLarge(Entity parentEntity) {
+        return createDyingAnimation(parentEntity, TextureEnum.SMOKE_BROWN_LARGE);
+    }
+
     private Entity createDyingAnimation(Entity parentEntity, TextureEnum texture) {
         Entity entity = engine.createEntity();
         CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, parentEntity);

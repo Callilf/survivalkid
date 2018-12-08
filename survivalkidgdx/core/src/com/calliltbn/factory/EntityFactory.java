@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.HealthComponent;
@@ -14,6 +15,7 @@ import com.calliltbn.components.PlayerComponent.Perso;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.components.StateComponent;
 import com.calliltbn.components.SuccessorComponent;
+import com.calliltbn.desc.TypeEntity;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
@@ -180,5 +182,32 @@ public class EntityFactory {
             allFrames[i] = matrice[positions[i]/width-1][positions[i]%width];
         }
         return allFrames;
+    }
+
+    /**
+     * Generate a random X position.
+     * @param isFlip if false, generate a position in the first half. Else in the second half
+     * @return a random X position in the game, excluded the marginPct of each side
+     */
+    public static int getRandomPositionX(boolean isFlip) {
+        int marginPct = 1;
+        int margin = GameScreen.SCREEN_W * marginPct / 100;
+        int result = (int)(Math.random() * (GameScreen.SCREEN_W - 2 * margin)) + margin;
+        if (result < GameScreen.SCREEN_W / 2 && isFlip) {
+            result = GameScreen.SCREEN_W - result;
+        }
+        return result;
+    }
+
+    /**
+     * Generate a random Y position.
+     *
+     * @return a random Y position in the game (from ground to top), excluded the marginPct of each side
+     */
+    public static int getRandomPositionY() {
+        int marginPct = 5;
+        int heightScreenPlay = GameScreen.SCREEN_H - GameScreen.FLOOR_Y;
+        int margin = heightScreenPlay * marginPct / 100;
+        return (int)(Math.random() * (heightScreenPlay - 2 * margin)) + margin;
     }
 }

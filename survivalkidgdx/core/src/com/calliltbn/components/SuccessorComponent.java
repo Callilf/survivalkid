@@ -2,7 +2,7 @@ package com.calliltbn.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.PooledEngine;
-import com.calliltbn.factory.TypeEntity;
+import com.calliltbn.desc.TypeEntity;
 
 import java.util.Arrays;
 import java.util.List;

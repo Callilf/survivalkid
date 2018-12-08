@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.factory.EntityFactory;
-import com.calliltbn.factory.TypeEntity;
+import com.calliltbn.desc.TypeEntity;
 import com.calliltbn.util.Mappers;
 
 public class SuccessorSystem extends IteratingSystem {

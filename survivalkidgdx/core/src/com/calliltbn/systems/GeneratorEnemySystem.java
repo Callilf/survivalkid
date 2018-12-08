@@ -1,8 +1,9 @@
 package com.calliltbn.systems;
 
 import com.badlogic.ashley.core.EntitySystem;
+import com.calliltbn.desc.Enemy;
+import com.calliltbn.desc.TypeEntity;
 import com.calliltbn.factory.EntityFactory;
-import com.calliltbn.factory.TypeEntity;
 import com.calliltbn.param.Difficulty;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class GeneratorEnemySystem extends EntitySystem {
     private int maxDifficulty;
     private float generationDelay;
     private Difficulty difficulty;
-    private Map<Integer, List<TypeEntity>> enemyDifficultyMap;
+    private Map<Integer, List<Enemy>> enemyDifficultyMap;
 
     private float lastGenerationTime = 0;
     private float lastIncreaseDifficulty = 0;
@@ -25,7 +26,7 @@ public class GeneratorEnemySystem extends EntitySystem {
         this.currentDifficulty = 1;
         this.difficulty = difficulty;
         this.generationDelay = difficulty.getStartedGenDelay();
-        this.enemyDifficultyMap = TypeEntity.getEnemyDifficultyMap();
+        this.enemyDifficultyMap = Enemy.getEnemyDifficultyMap();
         this.maxDifficulty = enemyDifficultyMap.size();
     }
 
@@ -41,8 +42,8 @@ public class GeneratorEnemySystem extends EntitySystem {
             // generate the difficulty of the enemy to generate
             int difficulty = getRandomComplexity(currentDifficulty, maxDifficulty);
             // get a random enemy with this difficulty
-            List<TypeEntity> enemies = enemyDifficultyMap.get(Integer.valueOf(difficulty));
-            TypeEntity enemyToGenerate = enemies.get((int) (Math.random() * (enemies.size())));
+            List<Enemy> enemies = enemyDifficultyMap.get(Integer.valueOf(difficulty));
+            TypeEntity enemyToGenerate = enemies.get((int) (Math.random() * (enemies.size()))).getTypeEntity();
             // create the entity associated to the enemy
             entityFactory.createEnemy(enemyToGenerate);
         }
