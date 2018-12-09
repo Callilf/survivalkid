@@ -46,12 +46,13 @@ public class EntityFactory {
 
     public Entity createEnemy(TypeEntity enemy) {
         switch (enemy) {
+            case CIRCULAR_SAW:
             case CATERPILLAR:
                 return enemyFactory.createCaterpillar();
             case METEOR:
                 return enemyFactory.createMeteor();
-            //case BULL:
-            case CIRCULAR_SAW:
+            case BULL:
+                return enemyFactory.createBull();
             case METEOR_FIRE:
                 return enemyFactory.createFireMeteor();
         }
@@ -97,7 +98,7 @@ public class EntityFactory {
         playerEntity.add(StateComponent.make(engine));
         playerEntity.add(GravityComponent.make(engine, 4));
         playerEntity.add(HealthComponent.make(engine, 50));
-        playerEntity.add(CollideComponent.make(engine, 10, 1, spriteComponent));
+        playerEntity.add(CollideComponent.make(engine, 1, 1, spriteComponent));
         playerEntity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE));
 
         engine.addEntity(playerEntity);

@@ -32,7 +32,10 @@ public final class Mappers {
 
 	public static boolean hasAtLeastOneComponent(Entity entity, Class<? extends Component>... classList) {
 		for (Class<? extends Component> clazz: classList) {
-			if (allMappers.get(clazz) != null && allMappers.get(clazz).get(entity) != null) {
+			// need to call getComponent if allMappers.get(clazz) is null to initialize the class
+			boolean isInitialize = allMappers.get(clazz) != null;
+			if (isInitialize && allMappers.get(clazz).get(entity) != null
+					|| !isInitialize && getComponent(clazz, entity) != null) {
 				return true;
 			}
 		}

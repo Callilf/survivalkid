@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 
 /**
- * Set the personage (YUNA or YUGA) and its animation.
+ * Set the personage (YUNA or YUGA) and its animation. Affect by input (keyboard, touch)
  * Entity that collide with other CollideComponent which don't have PlayerComponent
  *
  * @author callil, tbn

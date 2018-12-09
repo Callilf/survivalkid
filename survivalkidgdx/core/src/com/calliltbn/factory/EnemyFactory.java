@@ -8,6 +8,7 @@ import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.ExpirationComponent;
 import com.calliltbn.components.FollowerComponent;
+import com.calliltbn.components.FriendlyFireComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.HealthComponent;
 import com.calliltbn.components.MoveStraightComponent;
@@ -129,6 +130,7 @@ public class EnemyFactory {
         SpriteComponent spriteComponent =
                 SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
         entity.add(spriteComponent);
+        entity.add(HealthComponent.make(engine, 25)); // to die when the bull walk on it
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
         entity.add(
                 MoveStraightComponent.make(engine, new Vector2(0,-2), BorderCollision.STOP));
@@ -172,6 +174,34 @@ public class EnemyFactory {
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
         entity.add(HealthComponent.make(engine, 1));
         entity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_SMALL));
+
+        engine.addEntity(entity);
+        return entity;
+    }
+
+    public Entity createBull() {
+        Entity entity = engine.createEntity();
+
+        Enemy enemy = Enemy.BULL;
+        float speed = enemy.getBaseSpeed();
+        int damage = enemy.getDamage(difficulty);
+        float recoveryTime = enemy.getRecoveryTime();
+        TextureEnum texture = enemy.getTextureEnum();
+        Vector2 position = new Vector2();
+        boolean isFlip = initPosition(texture, position, true,  true, false);
+        SpriteComponent spriteComponent =
+                SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
+        if (isFlip) {
+            speed *= -1;
+            spriteComponent.setFlip(true);
+        }
+        entity.add(spriteComponent);
+        entity.add(
+                MoveStraightComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
+        entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
+        entity.add(HealthComponent.make(engine, damage));
+        entity.add(FriendlyFireComponent.make(engine));
+        entity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE));
 
         engine.addEntity(entity);
         return entity;
