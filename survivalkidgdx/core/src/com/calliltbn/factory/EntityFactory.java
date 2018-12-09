@@ -48,9 +48,12 @@ public class EntityFactory {
         switch (enemy) {
             case CATERPILLAR:
                 return enemyFactory.createCaterpillar();
-            case CIRCULAR_SAW:
             case METEOR:
                 return enemyFactory.createMeteor();
+            //case BULL:
+            case CIRCULAR_SAW:
+            case METEOR_FIRE:
+                return enemyFactory.createFireMeteor();
         }
         return enemyFactory.createCaterpillar();
     }
@@ -67,6 +70,10 @@ public class EntityFactory {
                 return decorationFactory.createMeteorExplosion(parentEntity);
             case METEOR_FIRE_EXPLOSION:
                 return decorationFactory.createMeteorFireExplosion(parentEntity);
+            case FIRE_GROUND:
+                return enemyFactory.createFireGround(parentEntity);
+            case FIRE_GROUND_DIE:
+                return decorationFactory.createFireGoundDie(parentEntity);
         }
         Gdx.app.log("EntityFactory", "no successor define " + childEntity);
         return enemyFactory.createCaterpillar();
@@ -220,4 +227,6 @@ public class EntityFactory {
         int margin = heightScreenPlay * marginPct / 100;
         return (int)(Math.random() * (heightScreenPlay - 2 * margin)) + margin;
     }
+
+    //public static Vector2 getPositionInMiddle(Sprite parent, TextureEnum)
 }

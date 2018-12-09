@@ -12,7 +12,7 @@ public enum Enemy {
     CATERPILLAR(TextureEnum.CATERPILLAR, TypeEntity.CATERPILLAR, SpriteAnimationEnum.CATERPILLAR_MOVE, 0, 5, 1.8f, 0.3f, "catterDesc", 5, 5, 10, 15),
     CATERPILLAR_PURPLE(TextureEnum.CATERPILLAR_PURPLE, TypeEntity.CATERPILLAR, SpriteAnimationEnum.CATERPILLAR_MOVE, -1, 5, 2.5f, 0.5f, "catter2Desc", 10, 10, 15, 20),
     CIRCULAR_SAW(TextureEnum.CIRCULAR_SAW, TypeEntity.CIRCULAR_SAW, SpriteAnimationEnum.CIRCULAR_SAW_MOVE, 1, 5, 2f, 0.7f, "sawDesc", 15, 20, 25, 30),
-    METEORE(TextureEnum.METEOR, TypeEntity.METEOR, null, 1, 5, 1f, 0.5f, "meteorDesc", 10, 10, 15, 20),
+    METEOR(TextureEnum.METEOR, TypeEntity.METEOR, null, 1, 5, 1f, 0.5f, "meteorDesc", 10, 10, 15, 20),
     FIRE_GROUND(TextureEnum.FIRE_GROUND, TypeEntity.FIRE_GROUND, SpriteAnimationEnum.FIRE_GROUND_DO, -1, 5, 0f, 0.2f, "groundFireDesc", 1, 1, 2, 3),
     METEOR_FIRE(TextureEnum.METEOR_FIRE, TypeEntity.METEOR_FIRE, null, 2, 5, 1f, 0.5f, "meteorFireDesc", 10, 10, 15, 20),
     BULL(TextureEnum.BULL, TypeEntity.BULL, SpriteAnimationEnum.BULL_MOVE, 2, 5, 15f, 0.9f, "bullDesc", 25, 30, 40, 50);

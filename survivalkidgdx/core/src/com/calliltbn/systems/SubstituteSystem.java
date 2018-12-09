@@ -23,6 +23,7 @@ public class SubstituteSystem extends IteratingSystem {
         TypeEntity typeEntity = substitutes.getTypeEntity();
         switch (typeEntity) {
             case METEOR:
+            case METEOR_FIRE:
                 manageMeteorSubstitutes(entity, substitutes);
                 return;
         }

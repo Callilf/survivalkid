@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
+import com.calliltbn.components.ExpirationComponent;
 import com.calliltbn.components.FollowerComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.HealthComponent;
@@ -19,6 +20,7 @@ import com.calliltbn.desc.TypeEntity;
 import com.calliltbn.param.Difficulty.DifficultyEnum;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
+import com.calliltbn.util.Mappers;
 
 public class EnemyFactory {
 
@@ -42,8 +44,8 @@ public class EnemyFactory {
         TextureEnum texture = TextureEnum.FIRE_TRAIL;
         texture.getTextureDefault().getRegionWidth();
 
-        float shiftX = spriteMeteor.getWidth() * (isFlip? 1/3f  : 2/3f) - texture.getTextureDefault().getRegionWidth() / 2f;
-        float shiftY = texture.getTextureDefault().getRegionHeight() * 2/4f;
+        float shiftX = spriteMeteor.getWidth() * (isFlip? 1.35f/3f  : 1.65f/3f) - texture.getTextureDefault().getRegionWidth() / 2f;
+        float shiftY = texture.getTextureDefault().getRegionHeight() * 1.6f/4f;
         Vector2 shift = new Vector2(shiftX, shiftY);
 
         Vector2 position = new Vector2(spriteMeteor.getX() + shiftX,
@@ -65,9 +67,17 @@ public class EnemyFactory {
     }
 
     public Entity createMeteor() {
+        return createCommonMeteor(false);
+    }
+
+    public Entity createFireMeteor() {
+        return createCommonMeteor(true);
+    }
+
+    public Entity createCommonMeteor(boolean isFire) {
         Entity entity = engine.createEntity();
 
-        Enemy enemy = Enemy.METEORE;
+        Enemy enemy = isFire? Enemy.METEOR_FIRE : Enemy.METEOR;
 
         float speed = enemy.getBaseSpeed();
         int damage = enemy.getDamage(difficulty);
@@ -88,7 +98,6 @@ public class EnemyFactory {
                 MoveStraightComponent.make(engine, new Vector2(speed,-2), BorderCollision.DIE_TOUCH));
         entity.add(HealthComponent.make(engine, 1));
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
-        entity.add(SuccessorComponent.make(engine, TypeEntity.METEOR_EXPLOSION));
 
         // second state
         entity.add(SubstitutesComponent.make(engine, 1, enemy.getTypeEntity(),
@@ -96,6 +105,35 @@ public class EnemyFactory {
 
         // add fire trail decoration
         Entity fireTrail = createMeteorTrailFire(entity, spriteComponent.getSprite(), !isFlip);
+
+        // successor
+        entity.add(SuccessorComponent.make(engine,
+                isFire? TypeEntity.METEOR_FIRE_EXPLOSION : TypeEntity.METEOR_EXPLOSION));
+
+        engine.addEntity(entity);
+        return entity;
+    }
+
+    public Entity createFireGround(Entity parent) {
+        Entity entity = engine.createEntity();
+
+        Enemy enemy = Enemy.FIRE_GROUND;
+        int damage = enemy.getDamage(difficulty);
+        float recoveryTime = enemy.getRecoveryTime();
+        TextureEnum texture = enemy.getTextureEnum();
+
+        Sprite spriteParent = Mappers.getComponent(SpriteComponent.class, parent).getSprite();
+        Vector2 position = new Vector2(spriteParent.getX() + spriteParent.getWidth() / 2 - texture.getTextureDefault().getRegionWidth() / 1.8f,
+                spriteParent.getY());
+
+        SpriteComponent spriteComponent =
+                SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
+        entity.add(spriteComponent);
+        entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
+        entity.add(
+                MoveStraightComponent.make(engine, new Vector2(0,-2), BorderCollision.STOP));
+        entity.add(ExpirationComponent.make(engine, 3f));
+        entity.add(SuccessorComponent.make(engine, TypeEntity.FIRE_GROUND_DIE));
 
         engine.addEntity(entity);
         return entity;
@@ -178,6 +216,5 @@ public class EnemyFactory {
         }
         return isFlip;
     }
-
 
 }

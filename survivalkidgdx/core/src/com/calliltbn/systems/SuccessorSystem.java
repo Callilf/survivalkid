@@ -4,6 +4,7 @@ package com.calliltbn.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.factory.EntityFactory;
 import com.calliltbn.desc.TypeEntity;
@@ -23,6 +24,7 @@ public class SuccessorSystem extends IteratingSystem {
         SuccessorComponent successors = Mappers.getComponent(SuccessorComponent.class , entity);
         if (successors.isActivated()) {
             for (TypeEntity successor : successors.getSuccessors()) {
+                Gdx.app.log("SUCCESSOR", "Create successor " + successor);
                 entityFactory.createSuccessor(entity, successor);
             }
 

@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.components.SuccessorComponent;
+import com.calliltbn.desc.TypeEntity;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 import com.calliltbn.util.Mappers;
@@ -29,7 +31,14 @@ public class DecorationFactory {
     }
 
     public Entity createMeteorFireExplosion(Entity parentEntity) {
-        return createDyingAnimation(parentEntity, TextureEnum.METEOR_FIRE_EXPLOSION, SpriteAnimationEnum.METEOR_FIRE_EXPLODE, 25);
+        Entity entity = createDyingAnimation(parentEntity, TextureEnum.METEOR_FIRE_EXPLOSION, SpriteAnimationEnum.METEOR_FIRE_EXPLODE, 35);
+        // the end of the explosion produce the new enemy fire ground
+        entity.add(SuccessorComponent.make(engine, TypeEntity.FIRE_GROUND));
+        return entity;
+    }
+
+    public Entity createFireGoundDie(Entity parentEntity) {
+        return createDyingAnimation(parentEntity, TextureEnum.FIRE_GROUND, SpriteAnimationEnum.FIRE_GROUND_DIE, 0);
     }
 
     public Entity createSmokeWhiteSmall(Entity parentEntity) {

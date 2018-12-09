@@ -28,6 +28,7 @@ import com.calliltbn.factory.EntityFactory;
 import com.calliltbn.param.Difficulty;
 import com.calliltbn.param.Difficulty.DifficultyEnum;
 import com.calliltbn.systems.CollisionSystem;
+import com.calliltbn.systems.ExpirationSystem;
 import com.calliltbn.systems.GeneratorEnemySystem;
 import com.calliltbn.systems.MoveSystem;
 import com.calliltbn.systems.PlayerSpeedSystem;
@@ -84,6 +85,7 @@ public class GameScreen extends ScreenAdapter {
 		CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, player);
 		InputSingleton.getInstance().initMainPlayerPosition(collideComponent);
 
+		engine.addSystem(new ExpirationSystem());
 		engine.addSystem(new SubstituteSystem());
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new CollisionSystem());

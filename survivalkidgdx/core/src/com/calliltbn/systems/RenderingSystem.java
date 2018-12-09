@@ -32,7 +32,7 @@ public class RenderingSystem extends IteratingSystem {
     private OrthographicCamera cam;
     private Sprite background;
 
-    private float lastLog = 0;
+    private int lastNbSprite = 0;
 
     public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
         super(Family.one(SpriteComponent.class).get());
@@ -71,9 +71,9 @@ public class RenderingSystem extends IteratingSystem {
         super.update(deltaTime);
 
         // log each second number of sprite in the render queue
-        if ((lastLog += deltaTime) > 1) {
-            lastLog = 0;
-            Gdx.app.log("GLOBAL", "Nb Sprite to draw : " + renderQueue.size());
+        if (lastNbSprite != renderQueue.size()) {
+            lastNbSprite = renderQueue.size();
+            Gdx.app.log("GLOBAL", "Nb Sprite to draw : " + lastNbSprite);
         }
 
         cam.update();
@@ -112,7 +112,7 @@ public class RenderingSystem extends IteratingSystem {
 
         // remove dead decoration entity
         for (Entity entity: deadEntities) {
-            SystemUtils.removeEntity(getEngine(), entity, false, "dead decoration");
+            SystemUtils.removeEntity(getEngine(), entity, true, "dead decoration");
         }
 
         batch.end();
