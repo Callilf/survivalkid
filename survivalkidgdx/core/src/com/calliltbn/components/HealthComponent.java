@@ -2,14 +2,13 @@ package com.calliltbn.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.utils.Pool;
 
 /**
- * Partially copied from TJ
+ * Entity that has hit point, and die when HP reach zero
  *
  * @author callil, tbn
  */
-public class HealthComponent implements Component, Pool.Poolable {
+public class HealthComponent implements Component {
 
     /** Generate a HealthComponent */
     public static HealthComponent make(PooledEngine engine, int maxHp) {
@@ -31,11 +30,6 @@ public class HealthComponent implements Component, Pool.Poolable {
      */
     public boolean isDead() {
         return hp <= 0;
-    }
-
-
-    @Override
-    public void reset() {
     }
 
     // Getters and Setters

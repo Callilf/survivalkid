@@ -3,6 +3,11 @@ package com.calliltbn.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.PooledEngine;
 
+/**
+ * The entity fall faster without vertical speed
+ *
+ * @author tbn
+ */
 public class GravityComponent implements Component {
 
     /** Generate a GravityComponent */

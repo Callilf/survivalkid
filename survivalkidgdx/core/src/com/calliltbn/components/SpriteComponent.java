@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * For Sprite and Sprite Animated component (perhaps I should have split them)
+ * For Sprite and Sprite Animated component (perhaps I should have split them).
  *
  * @author callil, tbn
  */

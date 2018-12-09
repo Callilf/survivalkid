@@ -112,7 +112,7 @@ public class RenderingSystem extends IteratingSystem {
 
         // remove dead decoration entity
         for (Entity entity: deadEntities) {
-            getEngine().removeEntity(entity);
+            SystemUtils.removeEntity(getEngine(), entity, false, "dead decoration");
         }
 
         batch.end();

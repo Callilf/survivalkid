@@ -2,9 +2,11 @@ package com.calliltbn.factory;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
+import com.calliltbn.components.FollowerComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.HealthComponent;
 import com.calliltbn.components.MoveStraightComponent;
@@ -15,6 +17,7 @@ import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.desc.Enemy;
 import com.calliltbn.desc.TypeEntity;
 import com.calliltbn.param.Difficulty.DifficultyEnum;
+import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
 public class EnemyFactory {
@@ -31,6 +34,34 @@ public class EnemyFactory {
     public EnemyFactory(PooledEngine e) {
         this.engine = e;
         this.difficulty = DifficultyEnum.NORMAL.getValue();
+    }
+
+    private Entity createMeteorTrailFire(Entity meteorEntity, Sprite spriteMeteor, boolean isFlip) {
+        Entity entity = engine.createEntity();
+
+        TextureEnum texture = TextureEnum.FIRE_TRAIL;
+        texture.getTextureDefault().getRegionWidth();
+
+        float shiftX = spriteMeteor.getWidth() * (isFlip? 1/3f  : 2/3f) - texture.getTextureDefault().getRegionWidth() / 2f;
+        float shiftY = texture.getTextureDefault().getRegionHeight() * 2/4f;
+        Vector2 shift = new Vector2(shiftX, shiftY);
+
+        Vector2 position = new Vector2(spriteMeteor.getX() + shiftX,
+                spriteMeteor.getY() + shiftY);
+
+        //  Random rand = new Random();
+        // emitter.setX(fireAnim.getX() + rand.nextInt(fireAnim.getWidth()));
+        // emitter.setY(fireAnim.getY() + fireAnim.getHeight()/2);
+
+        SpriteComponent spriteComponent =
+                SpriteComponent.make(engine, texture, position, SpriteAnimationEnum.FIRE_TRAIL_DO, 2);
+        spriteComponent.setFlip(isFlip);
+        entity.add(spriteComponent);
+
+        meteorEntity.add(FollowerComponent.make(engine, shift, entity));
+
+        engine.addEntity(entity);
+        return entity;
     }
 
     public Entity createMeteor() {
@@ -55,12 +86,16 @@ public class EnemyFactory {
         entity.add(spriteComponent);
         entity.add(
                 MoveStraightComponent.make(engine, new Vector2(speed,-2), BorderCollision.DIE_TOUCH));
+        entity.add(HealthComponent.make(engine, 1));
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
         entity.add(SuccessorComponent.make(engine, TypeEntity.METEOR_EXPLOSION));
 
         // second state
         entity.add(SubstitutesComponent.make(engine, 1, enemy.getTypeEntity(),
                 MoveStraightComponent.make(engine, new Vector2(speed,-14), BorderCollision.DIE_TOUCH)));
+
+        // add fire trail decoration
+        Entity fireTrail = createMeteorTrailFire(entity, spriteComponent.getSprite(), !isFlip);
 
         engine.addEntity(entity);
         return entity;

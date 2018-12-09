@@ -4,6 +4,12 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.PooledEngine;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 
+/**
+ * Set the personage (YUNA or YUGA) and its animation.
+ * Entity that collide with other CollideComponent which don't have PlayerComponent
+ *
+ * @author callil, tbn
+ */
 public class PlayerComponent implements Component {
 
     public enum PlayerAnimation {

@@ -9,10 +9,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
+import com.calliltbn.components.FollowerComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.MoveStraightComponent;
 import com.calliltbn.components.SpriteComponent;
-import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.util.Mappers;
 
 public class MoveSystem extends IteratingSystem {
@@ -53,16 +53,26 @@ public class MoveSystem extends IteratingSystem {
             Boolean isDead = processSpriteOutOfScreen(moveStraightComponent, collideComponent.getHitbox().getRectangle(),
                     spriteComponent, speed, position);
             if (isDead == null) {
-                SuccessorComponent successors = Mappers.getComponent(SuccessorComponent.class , entity);
-                // if no successor, set dead to true
-                isDead = (successors == null);
-                if (!isDead) {
-                    successors.setActivated(true);
-                }
+                SystemUtils.removeEntity(getEngine(), entity, true, "touch screen");
             }
-            if (isDead) {
+            else if (isDead) {
                 Gdx.app.log("MOVE", "removing entity out of screen");
-                getEngine().removeEntity(entity);
+                SystemUtils.removeEntity(getEngine(), entity, false, "out of screen");
+            }
+            else {
+                // entity has moved and is not dead
+                FollowerComponent followerComponent = Mappers.getComponent(FollowerComponent.class, entity);
+                if (followerComponent != null) {
+                    // move the follower
+                    SpriteComponent spriteFollower = Mappers.getComponent(SpriteComponent.class, followerComponent.getFollower());
+                    if (spriteFollower != null) {
+                        Vector2 shift = followerComponent.getShift();
+                        Vector2 followerPosition = spriteFollower.getPosition();
+                        followerPosition.x = position.x + shift.x;
+                        followerPosition.y = position.y + shift.y;
+                    }
+                }
+
             }
 
         }

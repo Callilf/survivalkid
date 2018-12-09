@@ -7,6 +7,11 @@ import com.calliltbn.desc.TypeEntity;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * List entities that should spawn when the entity die
+ *
+ * @author tbn
+ */
 public class SuccessorComponent implements Component {
 
     private List<TypeEntity> successors;

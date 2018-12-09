@@ -4,6 +4,11 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Set a constant vertical and horizontal speed to the entity. Can be change to adapt changes of speed
+ *
+ * @author tbn
+ */
 public class MoveStraightComponent implements Component {
 
     public enum BorderCollision {

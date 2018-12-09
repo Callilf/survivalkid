@@ -9,7 +9,6 @@ import com.calliltbn.components.HealthComponent;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.StateComponent;
 import com.calliltbn.components.StateComponent.State;
-import com.calliltbn.components.SuccessorComponent;
 import com.calliltbn.util.Mappers;
 
 import java.util.ArrayList;
@@ -62,13 +61,7 @@ public class CollisionSystem extends IteratingSystem {
         }
 
         for (Entity deadEntity : listDeadEntity) {
-            SuccessorComponent successors = Mappers.getComponent(SuccessorComponent.class , deadEntity);
-            if (successors == null) {
-                getEngine().removeEntity(deadEntity);
-            }
-            else {
-                successors.setActivated(true);
-            }
+            SystemUtils.removeEntity(getEngine(), deadEntity, true,"destroyed");
         }
 
         collideEntity.clear();

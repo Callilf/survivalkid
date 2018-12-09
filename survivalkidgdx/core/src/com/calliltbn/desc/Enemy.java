@@ -39,6 +39,7 @@ public enum Enemy {
         this.level = level;
         this.zindex = zindex;
         this.baseSpeed = baseSpeed;
+        this.recoveryTime = recoveryTime;
         this.damage = new ArrayList<>();
         for (int damage : damages) {
             this.damage.add(damage);

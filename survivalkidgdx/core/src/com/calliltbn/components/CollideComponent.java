@@ -6,6 +6,11 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Describe how the entity collide
+ *
+ * @author tbn
+ */
 public class CollideComponent implements Component {
 
     /** Generate a CollideComponent */

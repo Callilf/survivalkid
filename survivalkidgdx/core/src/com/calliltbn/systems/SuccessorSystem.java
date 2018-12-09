@@ -27,7 +27,7 @@ public class SuccessorSystem extends IteratingSystem {
             }
 
             // delete the entity
-            getEngine().removeEntity(entity);
+            SystemUtils.removeEntity(getEngine(), entity, false, "with successor");
         }
     }
 }

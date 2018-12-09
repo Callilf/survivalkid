@@ -7,6 +7,12 @@ import com.calliltbn.desc.TypeEntity;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Stock futures components that should be added to the entity.
+ * {@link com.calliltbn.systems.SubstituteSystem} manage the change of state depending on the TypeEntity which has this component.
+ *
+ * @author tbn
+ */
 public class SubstitutesComponent implements Component {
 
     private List<Component> substitutes;
