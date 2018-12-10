@@ -18,11 +18,14 @@ public class SuccessorComponent implements Component {
 
     private boolean activated;
 
+    private boolean deadWhenEnable;
+
     /** Generate a SuccessorComponent */
     public static SuccessorComponent make(PooledEngine engine, TypeEntity... typeEntities) {
         SuccessorComponent component = engine.createComponent(SuccessorComponent.class);
         component.successors = Arrays.asList(typeEntities);
         component.activated = false;
+        component.deadWhenEnable = true;
         return component;
     }
 
@@ -36,5 +39,13 @@ public class SuccessorComponent implements Component {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+
+    public boolean isDeadWhenEnable() {
+        return deadWhenEnable;
+    }
+
+    public void setDeadWhenEnable(boolean deadWhenEnable) {
+        this.deadWhenEnable = deadWhenEnable;
     }
 }

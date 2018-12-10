@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.InputSingleton;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.GravityComponent;
-import com.calliltbn.components.MoveStraightComponent;
+import com.calliltbn.components.MoveComponent;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.PlayerComponent.PlayerAnimation;
 import com.calliltbn.components.SpriteComponent;
@@ -34,7 +34,7 @@ public class PlayerSpeedSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        MoveStraightComponent moveStraightComponent = Mappers.getComponent(MoveStraightComponent.class, entity);
+        MoveComponent moveStraightComponent = Mappers.getComponent(MoveComponent.class, entity);
         SpriteComponent spriteComponent = Mappers.getComponent(SpriteComponent.class, entity);
         PlayerComponent playerComponent = Mappers.getComponent(PlayerComponent.class, entity);
         if (moveStraightComponent != null && spriteComponent != null && playerComponent != null) {

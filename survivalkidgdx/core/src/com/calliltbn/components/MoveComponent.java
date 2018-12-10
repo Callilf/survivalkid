@@ -9,15 +9,15 @@ import com.badlogic.gdx.math.Vector2;
  *
  * @author tbn
  */
-public class MoveStraightComponent implements Component {
+public class MoveComponent implements Component {
 
     public enum BorderCollision {
         FALL, BOUNCE, DIE_TOUCH, DIE_OUT, STOP;
     }
 
-    /** Generate a MoveStraightComponent */
-    public static MoveStraightComponent make(PooledEngine engine, Vector2 speed, BorderCollision borderCollision) {
-        MoveStraightComponent component = engine.createComponent(MoveStraightComponent.class);
+    /** Generate a MoveComponent */
+    public static MoveComponent make(PooledEngine engine, Vector2 speed, BorderCollision borderCollision) {
+        MoveComponent component = engine.createComponent(MoveComponent.class);
         component.speed = speed;
         component.borderCollision = borderCollision;
         return component;

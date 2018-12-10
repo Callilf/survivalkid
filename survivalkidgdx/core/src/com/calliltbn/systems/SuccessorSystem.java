@@ -21,15 +21,21 @@ public class SuccessorSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        SuccessorComponent successors = Mappers.getComponent(SuccessorComponent.class , entity);
+        SuccessorComponent successors = Mappers.getComponent(SuccessorComponent.class, entity);
         if (successors.isActivated()) {
             for (TypeEntity successor : successors.getSuccessors()) {
                 Gdx.app.log("SUCCESSOR", "Create successor " + successor);
                 entityFactory.createSuccessor(entity, successor);
             }
 
-            // delete the entity
-            SystemUtils.removeEntity(getEngine(), entity, false, "with successor");
+            if (successors.isDeadWhenEnable()) {
+                // delete the entity
+                SystemUtils.removeEntity(getEngine(), entity, false, "with successor");
+            }
+            else {
+                // disable the successor component on the entity
+                entity.remove(SuccessorComponent.class);
+            }
         }
     }
 }

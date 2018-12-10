@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,8 +12,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
+import com.calliltbn.components.MoveOnLineComponent;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.util.Mappers;
 
@@ -29,13 +32,14 @@ public class RenderingSystem extends IteratingSystem {
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private Collection<Entity> renderQueue;
+    private Collection<Entity> shapeQueue;
     private OrthographicCamera cam;
     private Sprite background;
 
     private int lastNbSprite = 0;
 
     public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
-        super(Family.one(SpriteComponent.class).get());
+        super(Family.one(SpriteComponent.class, MoveOnLineComponent.class).get());
 
         this.batch = batch;
         this.shapeRenderer = shapeRenderer;
@@ -55,7 +59,7 @@ public class RenderingSystem extends IteratingSystem {
         };
 
         renderQueue = new TreeSet<>(comparator);
-        //renderQueue = new ArrayList<>();
+        shapeQueue = new ArrayList<>();
 
         // init background
         Texture img = new Texture("images/ground.png");
@@ -118,20 +122,38 @@ public class RenderingSystem extends IteratingSystem {
         batch.end();
         renderQueue.clear();
         
-        if (!listHitbox.isEmpty()) {
+        if (!listHitbox.isEmpty() || !shapeQueue.isEmpty()) {
             shapeRenderer.begin(); // ShapeType.Filled
             for (RectangleMapObject hitbox : listHitbox) {
                 Rectangle rect = hitbox.getRectangle();
                 shapeRenderer.setColor(0, 0, 1, 0.5f);
                 shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
             }
+            //shapeRenderer.set(ShapeType.Filled);
+            // set grey color for circular saw points
+            shapeRenderer.setColor(Color.DARK_GRAY);
+            for (Entity entity : shapeQueue) {
+                MoveOnLineComponent moveOnLine = Mappers.getComponent(MoveOnLineComponent.class, entity);
+                int nbPointToDraw = moveOnLine.getLastPointToDraw(deltaTime);
+                List<Vector2> listPoints = moveOnLine.getListPoints();
+                for (int i = moveOnLine.getNextPoint(); i < nbPointToDraw ; i++) {
+                    Vector2 point = listPoints.get(i);
+                    shapeRenderer.circle(point.x, point.y, 0.65f);
+                }
+            }
             shapeRenderer.end();
+            shapeQueue.clear();
         }
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        renderQueue.add(entity);
+        if (Mappers.hasAtLeastOneComponent(entity, SpriteComponent.class)) {
+            renderQueue.add(entity);
+        }
+        if (Mappers.hasAtLeastOneComponent(entity, MoveOnLineComponent.class)) {
+            shapeQueue.add(entity);
+        }
     }
 
 }

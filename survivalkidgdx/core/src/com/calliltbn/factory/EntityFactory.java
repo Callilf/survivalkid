@@ -9,8 +9,8 @@ import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.HealthComponent;
-import com.calliltbn.components.MoveStraightComponent;
-import com.calliltbn.components.MoveStraightComponent.BorderCollision;
+import com.calliltbn.components.MoveComponent;
+import com.calliltbn.components.MoveComponent.BorderCollision;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.PlayerComponent.Perso;
 import com.calliltbn.components.SpriteComponent;
@@ -46,10 +46,10 @@ public class EntityFactory {
 
     public Entity createEnemy(TypeEntity enemy) {
         switch (enemy) {
-            case CIRCULAR_SAW:
-                return enemyFactory.createCircularSaw();
             case CATERPILLAR:
                 return enemyFactory.createCaterpillar();
+            case CIRCULAR_SAW:
+                return enemyFactory.createCircularSaw();
             case METEOR:
                 return enemyFactory.createMeteor();
             case BULL:
@@ -94,7 +94,7 @@ public class EntityFactory {
                 SpriteComponent.make(engine, texture, pos, null, 10);
         playerEntity.add(spriteComponent);
         playerEntity.add(
-                MoveStraightComponent.make(engine, new Vector2(0,0), BorderCollision.STOP));
+                MoveComponent.make(engine, new Vector2(0,0), BorderCollision.STOP));
         playerEntity.add(PlayerComponent.make(engine, personage));
         playerEntity.add(StateComponent.make(engine));
         playerEntity.add(GravityComponent.make(engine, 4));
@@ -118,7 +118,7 @@ public class EntityFactory {
                         SpriteAnimationEnum.YUNA_RUN, 8);
         bounceEntity.add(spriteComponent);
         bounceEntity.add(
-                MoveStraightComponent.make(engine, new Vector2(5,4), BorderCollision.BOUNCE));
+                MoveComponent.make(engine, new Vector2(5,4), BorderCollision.BOUNCE));
         bounceEntity.add(CollideComponent.make(engine, 10, 2, spriteComponent));
 
         engine.addEntity(bounceEntity);

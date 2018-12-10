@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
 import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
+import com.calliltbn.components.MoveOnLineComponent;
 import com.calliltbn.components.SubstitutesComponent;
 import com.calliltbn.desc.TypeEntity;
 import com.calliltbn.util.Mappers;
@@ -26,6 +27,18 @@ public class SubstituteSystem extends IteratingSystem {
             case METEOR_FIRE:
                 manageMeteorSubstitutes(entity, substitutes);
                 return;
+            case CIRCULAR_SAW:
+                manageCircularSawSubstitutes(entity, substitutes);
+                return;
+        }
+    }
+
+    private void manageCircularSawSubstitutes(Entity entity, SubstitutesComponent substitutes) {
+        MoveOnLineComponent moveOnLineComponent = Mappers.getComponent(MoveOnLineComponent.class , entity);
+        // if the last point is draw
+        if (moveOnLineComponent.isAllLineDraw()) {
+            // process second state
+            replaceAllSubstitutes(entity, substitutes);
         }
     }
 
@@ -43,7 +56,7 @@ public class SubstituteSystem extends IteratingSystem {
     private void replaceAllSubstitutes(Entity entity, SubstitutesComponent substitutes) {
         // add or replace all component inside the substitutes component
         for (Component component : substitutes.getSubstitutes()) {
-            entity.remove(component.getClass());
+            // entity.remove(component.getClass()); // no need, the add do it
             entity.add(component);
         }
         if (substitutes.incRotation()) {

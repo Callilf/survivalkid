@@ -11,7 +11,8 @@ import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.FollowerComponent;
 import com.calliltbn.components.GravityComponent;
-import com.calliltbn.components.MoveStraightComponent;
+import com.calliltbn.components.MoveComponent;
+import com.calliltbn.components.MoveOnLineComponent;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.util.Mappers;
 
@@ -20,12 +21,12 @@ public class MoveSystem extends IteratingSystem {
     private static final int MAX_SPEED_DOWN = -25;
 
     public MoveSystem() {
-        super(Family.all(MoveStraightComponent.class).get());
+        super(Family.all(MoveComponent.class).get());
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        MoveStraightComponent moveStraightComponent = Mappers.getComponent(MoveStraightComponent.class, entity);
+        MoveComponent moveStraightComponent = Mappers.getComponent(MoveComponent.class, entity);
         SpriteComponent spriteComponent = Mappers.getComponent(SpriteComponent.class, entity);
         CollideComponent collideComponent = Mappers.getComponent(CollideComponent.class, entity);
 
@@ -45,6 +46,23 @@ public class MoveSystem extends IteratingSystem {
             if (speed.isZero()) {
                 return;
             }
+
+            MoveOnLineComponent moveOnLineComponent = Mappers.getComponent(MoveOnLineComponent.class, entity);
+            if (moveOnLineComponent != null) {
+                // constant x speed, speed y = speed x * direction
+                Vector2 pointToFollow = moveOnLineComponent.getPointToFollow(position);
+                float diffY = Math.abs(pointToFollow.y - position.y);
+                if (diffY < 0.01f) {
+                    speed.y = 0;
+                }
+                else if (pointToFollow.y > position.y) {
+                    speed.y = Math.abs(speed.x);
+                }
+                else {
+                    speed.y = - Math.abs(speed.x);
+                }
+            }
+
             position.add(speed);
 
             if (collideComponent != null) {
@@ -88,8 +106,8 @@ public class MoveSystem extends IteratingSystem {
      * @param position position of the component
      * @return true if entity should be remove, null if it should to be destroy, false otherwise
      */
-    private Boolean processSpriteOutOfScreen(MoveStraightComponent moveStraightComponent, Rectangle hitbox,
-                                          SpriteComponent spriteComponent, Vector2 speed, Vector2 position) {
+    private Boolean processSpriteOutOfScreen(MoveComponent moveStraightComponent, Rectangle hitbox,
+                                             SpriteComponent spriteComponent, Vector2 speed, Vector2 position) {
         Sprite sprite = spriteComponent.getSprite();
         // touch left or right
         if (hitbox.x <= 0 && speed.x < 0 || hitbox.x + hitbox.width >= GameScreen.SCREEN_W && speed.x > 0) {
@@ -110,7 +128,7 @@ public class MoveSystem extends IteratingSystem {
                     spriteComponent.setFlip(hitbox.x > 0);
                     break;
                 case DIE_TOUCH:
-                    return null;
+                    // die only when touch floor, not sides or top
                 case DIE_OUT:
                     if (hitbox.x + hitbox.width < 0 || hitbox.x > GameScreen.SCREEN_W) {
                         return true;
@@ -124,12 +142,16 @@ public class MoveSystem extends IteratingSystem {
                     speed.y *= -1;
                     break;
                 case DIE_TOUCH:
-                    return null;
+                    // die only when touch floor, not sides or top
+                    if (isOnFloor(hitbox)) {
+                        return null;
+                    }
+                    // continue to die out
                 case DIE_OUT:
                     if (hitbox.y > GameScreen.SCREEN_H) {
                         return true;
                     }
-                    else {
+                    else if (isOnFloor(hitbox)) {
                         // no entity can go throw the floor
                         position.y -= hitbox.y - GameScreen.FLOOR_Y;
                         hitbox.y = GameScreen.FLOOR_Y;

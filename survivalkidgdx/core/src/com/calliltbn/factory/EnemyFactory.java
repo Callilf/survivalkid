@@ -10,8 +10,9 @@ import com.calliltbn.components.FollowerComponent;
 import com.calliltbn.components.FriendlyFireComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.HealthComponent;
-import com.calliltbn.components.MoveStraightComponent;
-import com.calliltbn.components.MoveStraightComponent.BorderCollision;
+import com.calliltbn.components.MoveComponent;
+import com.calliltbn.components.MoveOnLineComponent;
+import com.calliltbn.components.MoveComponent.BorderCollision;
 import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.components.SubstitutesComponent;
 import com.calliltbn.components.SuccessorComponent;
@@ -95,13 +96,13 @@ public class EnemyFactory {
 
         entity.add(spriteComponent);
         entity.add(
-                MoveStraightComponent.make(engine, new Vector2(speed,-2), BorderCollision.DIE_TOUCH));
+                MoveComponent.make(engine, new Vector2(speed,-2), BorderCollision.DIE_TOUCH));
         entity.add(HealthComponent.make(engine, 1));
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
 
         // second state
         entity.add(SubstitutesComponent.make(engine, 1, enemy.getTypeEntity(),
-                MoveStraightComponent.make(engine, new Vector2(speed,-14), BorderCollision.DIE_TOUCH)));
+                MoveComponent.make(engine, new Vector2(speed,-14), BorderCollision.DIE_TOUCH)));
 
         // add fire trail decoration
         Entity fireTrail = createMeteorTrailFire(entity, spriteComponent.getSprite(), !isFlip);
@@ -132,7 +133,7 @@ public class EnemyFactory {
         entity.add(HealthComponent.make(engine, 25)); // to die when the bull walk on it
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
         entity.add(
-                MoveStraightComponent.make(engine, new Vector2(0,-2), BorderCollision.STOP));
+                MoveComponent.make(engine, new Vector2(0,-2), BorderCollision.STOP));
         entity.add(ExpirationComponent.make(engine, 3f));
         entity.add(SuccessorComponent.make(engine, TypeEntity.FIRE_GROUND_DIE));
 
@@ -168,7 +169,7 @@ public class EnemyFactory {
         entity.add(spriteComponent);
 
         entity.add(
-                MoveStraightComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
+                MoveComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
         entity.add(GravityComponent.make(engine, 2));
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
         entity.add(HealthComponent.make(engine, 1));
@@ -196,7 +197,7 @@ public class EnemyFactory {
         }
         entity.add(spriteComponent);
         entity.add(
-                MoveStraightComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
+                MoveComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
         CollideComponent collideComponent = CollideComponent.make(engine, damage, recoveryTime, spriteComponent);
         collideComponent.setInitiative(true);
         entity.add(collideComponent);
@@ -224,12 +225,17 @@ public class EnemyFactory {
             speed *= -1;
             spriteComponent.setFlip(true);
         }
-        entity.add(spriteComponent);
-        entity.add(
-                MoveStraightComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
-        entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
-        entity.add(HealthComponent.make(engine, 25));
-        entity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_SMALL));
+        MoveComponent moveComponent = MoveComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_TOUCH);
+        CollideComponent collideComponent = CollideComponent.make(engine, damage, recoveryTime, spriteComponent);
+        HealthComponent healthComponent = HealthComponent.make(engine, 25);
+        SuccessorComponent successorComponent = SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_SMALL);
+
+        // put all component of the saw in the substitute component to delay the apparition when the line is draw
+        SubstitutesComponent substitutesComponent = SubstitutesComponent.make(engine, 1, TypeEntity.CIRCULAR_SAW,
+                spriteComponent, moveComponent, collideComponent, healthComponent, successorComponent);
+        entity.add(substitutesComponent);
+        // add the line component
+        entity.add(MoveOnLineComponent.make(engine, spriteComponent.getSprite(), speed));
 
         engine.addEntity(entity);
         return entity;
