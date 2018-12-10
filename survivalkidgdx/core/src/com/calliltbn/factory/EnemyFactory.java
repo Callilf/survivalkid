@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.calliltbn.GameScreen;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.ExpirationComponent;
 import com.calliltbn.components.FollowerComponent;
@@ -88,7 +87,7 @@ public class EnemyFactory {
 
         SpriteComponent spriteComponent =
                 SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
-        boolean isFlip = initPosition(texture, position, false,  false, false);
+        boolean isFlip = EntityFactory.initPosition(texture, position, false,  false, false);
         if (isFlip) {
             speed *= -1;
             spriteComponent.setFlip(true);
@@ -160,7 +159,7 @@ public class EnemyFactory {
                 SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
 
         // init position
-        boolean isFlip = initPosition(texture, position, true,  false, false);
+        boolean isFlip = EntityFactory.initPosition(texture, position, true,  false, false);
         if (isFlip) {
             speed *= -1;
             spriteComponent.setFlip(true);
@@ -188,7 +187,37 @@ public class EnemyFactory {
         float recoveryTime = enemy.getRecoveryTime();
         TextureEnum texture = enemy.getTextureEnum();
         Vector2 position = new Vector2();
-        boolean isFlip = initPosition(texture, position, true,  true, false);
+        boolean isFlip = EntityFactory.initPosition(texture, position, true,  true, false);
+        SpriteComponent spriteComponent =
+                SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
+        if (isFlip) {
+            speed *= -1;
+            spriteComponent.setFlip(true);
+        }
+        entity.add(spriteComponent);
+        entity.add(
+                MoveStraightComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
+        CollideComponent collideComponent = CollideComponent.make(engine, damage, recoveryTime, spriteComponent);
+        collideComponent.setInitiative(true);
+        entity.add(collideComponent);
+        entity.add(HealthComponent.make(engine, 30));
+        entity.add(FriendlyFireComponent.make(engine));
+        entity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE));
+
+        engine.addEntity(entity);
+        return entity;
+    }
+
+    public Entity createCircularSaw() {
+        Entity entity = engine.createEntity();
+
+        Enemy enemy = Enemy.CIRCULAR_SAW;
+        float speed = enemy.getBaseSpeed();
+        int damage = enemy.getDamage(difficulty);
+        float recoveryTime = enemy.getRecoveryTime();
+        TextureEnum texture = enemy.getTextureEnum();
+        Vector2 position = new Vector2();
+        boolean isFlip = EntityFactory.initPosition(texture, position, true,  false, true);
         SpriteComponent spriteComponent =
                 SpriteComponent.make(engine, texture, position, enemy.getBaseAnimation(), enemy.getZindex());
         if (isFlip) {
@@ -199,52 +228,12 @@ public class EnemyFactory {
         entity.add(
                 MoveStraightComponent.make(engine, new Vector2(speed,0), BorderCollision.DIE_OUT));
         entity.add(CollideComponent.make(engine, damage, recoveryTime, spriteComponent));
-        entity.add(HealthComponent.make(engine, damage));
-        entity.add(FriendlyFireComponent.make(engine));
-        entity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE));
+        entity.add(HealthComponent.make(engine, 25));
+        entity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_SMALL));
 
         engine.addEntity(entity);
         return entity;
-    }
 
-    /**
-     * Init position of the enemy
-     *
-     * @param texture texture of the enemy (used for the size of the sprite)
-     * @param position the position to set
-     * @param startOnSide if true, start on the right of left.
-     * @return if the enemy is flipped (move to the left)
-     */
-    private boolean initPosition(TextureEnum texture, Vector2 position, boolean startOnSide,
-                                 boolean startOnFloor, boolean randomY) {
-        boolean isFlip;
-        if (startOnSide) {
-            int random = (int) (Math.random() * 100);
-            isFlip = random < 50;
-
-            if (isFlip) {
-                position.x = GameScreen.SCREEN_W; // start at the right
-            } else {
-                position.x = -texture.getTextureDefault().getRegionWidth(); // start at the left
-            }
-
-            if (startOnFloor || random < 34 || random > 65) {
-                position.y = GameScreen.FLOOR_Y; // start on the floor
-            } else {
-                // case where an entity can start by falling from the top of the screen
-                position.y = GameScreen.SCREEN_H - 20; // start on the top
-            }
-        }
-        else {
-            // start at the top. Generate a random X position
-            position.x = EntityFactory.getRandomPositionX();
-            isFlip = position.x > GameScreen.SCREEN_W / 2;
-            position.y = GameScreen.SCREEN_H + texture.getTextureDefault().getRegionHeight();
-        }
-        if (randomY) {
-            position.y = EntityFactory.getRandomPositionY();
-        }
-        return isFlip;
     }
 
 }

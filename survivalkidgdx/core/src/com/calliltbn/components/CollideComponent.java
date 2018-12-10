@@ -18,6 +18,7 @@ public class CollideComponent implements Component {
                                         SpriteComponent spriteComponent) {
         CollideComponent component = engine.createComponent(CollideComponent.class);
         component.damage = damage;
+        component.initiative = false;
         component.recoveryTime = recoveryTime;
         component.spriteComponent = spriteComponent;
         component.spritePosition = spriteComponent.getPosition();
@@ -41,8 +42,10 @@ public class CollideComponent implements Component {
     private SpriteComponent spriteComponent;
 
     private int damage;
-
     private float recoveryTime;
+
+    /** Hit first. If the opponent die, don't receive damage unless it has also initiative */
+    private boolean initiative;
 
     /**
      * Test if the component collide with another component
@@ -85,5 +88,13 @@ public class CollideComponent implements Component {
 
     public void setRecoveryTime(float recoveryTime) {
         this.recoveryTime = recoveryTime;
+    }
+
+    public boolean hasInitiative() {
+        return initiative;
+    }
+
+    public void setInitiative(boolean initiative) {
+        this.initiative = initiative;
     }
 }

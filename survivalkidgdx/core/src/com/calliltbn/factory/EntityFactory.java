@@ -47,6 +47,7 @@ public class EntityFactory {
     public Entity createEnemy(TypeEntity enemy) {
         switch (enemy) {
             case CIRCULAR_SAW:
+                return enemyFactory.createCircularSaw();
             case CATERPILLAR:
                 return enemyFactory.createCaterpillar();
             case METEOR:
@@ -56,7 +57,7 @@ public class EntityFactory {
             case METEOR_FIRE:
                 return enemyFactory.createFireMeteor();
         }
-        return enemyFactory.createCaterpillar();
+        return enemyFactory.createCircularSaw();
     }
 
     public Entity createSuccessor(Entity parentEntity, TypeEntity childEntity) {
@@ -227,6 +228,46 @@ public class EntityFactory {
         int heightScreenPlay = GameScreen.SCREEN_H - GameScreen.FLOOR_Y;
         int margin = heightScreenPlay * marginPct / 100;
         return (int)(Math.random() * (heightScreenPlay - 2 * margin)) + margin;
+    }
+
+    /**
+     * Init position of the enemy
+     *
+     * @param texture texture of the enemy (used for the size of the sprite)
+     * @param position the position to set
+     * @param startOnSide if true, start on the right of left.
+     * @return if the enemy is flipped (move to the left)
+     */
+    static boolean initPosition(TextureEnum texture, Vector2 position, boolean startOnSide,
+                                boolean startOnFloor, boolean randomY) {
+        boolean isFlip;
+        if (startOnSide) {
+            int random = (int) (Math.random() * 100);
+            isFlip = random < 50;
+
+            if (isFlip) {
+                position.x = GameScreen.SCREEN_W; // start at the right
+            } else {
+                position.x = -texture.getTextureDefault().getRegionWidth(); // start at the left
+            }
+
+            if (startOnFloor || random < 34 || random > 65) {
+                position.y = GameScreen.FLOOR_Y; // start on the floor
+            } else {
+                // case where an entity can start by falling from the top of the screen
+                position.y = GameScreen.SCREEN_H - 20; // start on the top
+            }
+        }
+        else {
+            // start at the top. Generate a random X position
+            position.x = getRandomPositionX();
+            isFlip = position.x > GameScreen.SCREEN_W / 2;
+            position.y = GameScreen.SCREEN_H + texture.getTextureDefault().getRegionHeight();
+        }
+        if (randomY) {
+            position.y = getRandomPositionY();
+        }
+        return isFlip;
     }
 
     //public static Vector2 getPositionInMiddle(Sprite parent, TextureEnum)

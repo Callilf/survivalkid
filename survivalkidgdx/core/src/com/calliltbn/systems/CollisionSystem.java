@@ -80,25 +80,42 @@ public class CollisionSystem extends IteratingSystem {
         }
 
         if (collideSource.collideWith(collideTarget)) {
-            // process hit target -> source
-            if (healthSource != null && !StateComponent.hasAtLeastOneState(stateSource, State.INVICIBLE)) {
-                if (healthSource.hit(collideTarget.getDamage())) {
-                    listDeadEntity.add(sourceEntity);
+            // 0 = same initiative, 1 = target has initiative, -1 = source has initiative
+            int compareInitiative = Boolean.compare(collideTarget.hasInitiative(), collideSource.hasInitiative());
+
+            // case when no initiative or target has initiative
+            if (compareInitiative >= 0) {
+                // process hit target -> source
+                boolean isDead = processCollision(listDeadEntity, sourceEntity, stateSource, healthSource, collideTarget);
+                if (!isDead || compareInitiative == 0) {
+                    // process hit source -> target
+                    processCollision(listDeadEntity, targetEntity, stateTarget, healthTarget, collideSource);
                 }
-                else if (stateSource != null && collideTarget.getRecoveryTime() != 0) {
-                    stateSource.addState(State.RECOVERY, collideTarget.getRecoveryTime());
+            }
+            else {
+                // source has initiative
+                // process hit source -> target
+                boolean isDead = processCollision(listDeadEntity, targetEntity, stateTarget, healthTarget, collideSource);
+                if (!isDead) {
+                    // process hit target -> source
+                    processCollision(listDeadEntity, sourceEntity, stateSource, healthSource, collideTarget);
                 }
             }
 
-            if (healthTarget != null && !StateComponent.hasAtLeastOneState(stateTarget, State.INVICIBLE)) {
-                if (healthTarget.hit(collideSource.getDamage())) {
-                    listDeadEntity.add(targetEntity);
-                }
-                else if (stateTarget != null && collideSource.getRecoveryTime() != 0) {
-                    stateTarget.addState(State.RECOVERY, collideSource.getRecoveryTime());
-                }
+        }
+    }
+
+    private boolean processCollision(Set<Entity> listDeadEntity, Entity sourceEntity, StateComponent stateSource, HealthComponent healthSource, CollideComponent collideTarget) {
+        if (healthSource != null && !StateComponent.hasAtLeastOneState(stateSource, State.INVICIBLE)) {
+            if (healthSource.hit(collideTarget.getDamage())) {
+                listDeadEntity.add(sourceEntity);
+                return true;
+            }
+            else if (stateSource != null && collideTarget.getRecoveryTime() != 0) {
+                stateSource.addState(State.RECOVERY, collideTarget.getRecoveryTime());
             }
         }
+        return false;
     }
 
     @Override
