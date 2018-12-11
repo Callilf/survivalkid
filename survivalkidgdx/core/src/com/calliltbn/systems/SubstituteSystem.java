@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
 import com.calliltbn.GameScreen;
+import com.calliltbn.components.BlinkComponent;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.MoveOnLineComponent;
 import com.calliltbn.components.SubstitutesComponent;
@@ -30,6 +31,23 @@ public class SubstituteSystem extends IteratingSystem {
             case CIRCULAR_SAW:
                 manageCircularSawSubstitutes(entity, substitutes);
                 return;
+            case BULL:
+                manageBullSubstitutes(entity, substitutes, deltaTime);
+        }
+    }
+
+    private void manageBullSubstitutes(Entity entity, SubstitutesComponent substitutes, float deltaTime) {
+        float duration = substitutes.getDuration(deltaTime);
+        if (substitutes.getRotation() == 0 && duration > 1.5f) {
+            // rotation 1 - increase blink frequency
+            substitutes.incRotation();
+            BlinkComponent blinkComponent = Mappers.getComponent(BlinkComponent.class, entity);
+            blinkComponent.updateBlinkPeriod(1/31f, 1/31f);
+        }
+        else if (duration > 2f){
+            // rotation 2 - enable bull
+            entity.remove(BlinkComponent.class);
+            replaceAllSubstitutes(entity, substitutes);
         }
     }
 

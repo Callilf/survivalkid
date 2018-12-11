@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.calliltbn.GameScreen;
+import com.calliltbn.components.BlinkComponent;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.MoveOnLineComponent;
 import com.calliltbn.components.SpriteComponent;
@@ -102,7 +103,9 @@ public class RenderingSystem extends IteratingSystem {
                 }
 
                 spriteCompo.increaseAnimTime(deltaTime);
-                if (!spriteCompo.isHide()) {
+
+                BlinkComponent blinkComponent =  Mappers.getComponent(BlinkComponent.class, entity);
+                if (blinkComponent == null || blinkComponent.isVisible(deltaTime)) {
                     spriteCompo.getSprite().draw(batch);
                 }
             }

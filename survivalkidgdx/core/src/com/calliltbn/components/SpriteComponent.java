@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Pool.Poolable;
 import com.calliltbn.spritesdef.SpriteAnimationEnum;
 import com.calliltbn.spritesdef.TextureEnum;
 
@@ -19,7 +18,7 @@ import java.util.Map;
  *
  * @author callil, tbn
  */
-public class SpriteComponent implements Component, Poolable {
+public class SpriteComponent implements Component {
 
     /** Generate a SpriteComponent */
     public static SpriteComponent make(PooledEngine engine, TextureEnum texture, Vector2 position,
@@ -32,11 +31,10 @@ public class SpriteComponent implements Component, Poolable {
         component.dieWhenAnimFinished = false;
         component.zindex = zindex;
         component.flip = false;
+        component.stateTime = 0f;
         component.initTexture(texture);
         return component;
     }
-
-    public boolean hide;
 
     private TextureEnum texture;
     private Sprite sprite;
@@ -54,18 +52,6 @@ public class SpriteComponent implements Component, Poolable {
     private float stateTime = 0f;
 
     private int zindex = 0;
-
-    // Manage blink
-    private float blinkDurationVisible = 0.03f;
-    private float blinkDurationInvisible = 0.015f;
-    private float currentBlinkDuration = 0f;
-
-    @Override
-    public void reset() {
-        hide = false;
-        currentAnimation = null;
-        stateTime = 0f;
-    }
 
     public void initTexture(TextureEnum textureEnum) {
         Map<SpriteAnimationEnum, TextureRegion[]> animations = textureEnum.getTextureAnimation();
@@ -143,22 +129,6 @@ public class SpriteComponent implements Component, Poolable {
         return resultSprite;
     }
 
-    public void processBlink(float deltaTime) {
-        currentBlinkDuration += deltaTime;
-        if (hide) {
-            if (currentBlinkDuration > blinkDurationInvisible) {
-                currentBlinkDuration =  0;
-                hide = false;
-            }
-        }
-        else {
-            if (currentBlinkDuration > blinkDurationVisible) {
-                currentBlinkDuration =  0;
-                hide = true;
-            }
-        }
-    }
-
     public void setDieOnFinished() {
         dieWhenAnimFinished = true;
         loop = false;
@@ -201,11 +171,4 @@ public class SpriteComponent implements Component, Poolable {
         this.zindex = zindex;
     }
 
-    public boolean isHide() {
-        return hide;
-    }
-
-    public void setHide(boolean hide) {
-        this.hide = hide;
-    }
 }

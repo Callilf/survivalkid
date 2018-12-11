@@ -22,13 +22,16 @@ public class SubstitutesComponent implements Component {
     private int rotation;
     private int nbRotation;
 
+    private float duration;
+
     /** Generate a ReplaceComponent */
     public static SubstitutesComponent make(PooledEngine engine, int nbRotation, TypeEntity typeEntity, Component... components) {
         SubstitutesComponent component = engine.createComponent(SubstitutesComponent.class);
         component.typeEntity =  typeEntity;
         component.substitutes = Arrays.asList(components);
-        component.rotation = 0;
         component.nbRotation = nbRotation;
+        component.rotation = 0;
+        component.duration = 0;
         return component;
     }
 
@@ -45,6 +48,11 @@ public class SubstitutesComponent implements Component {
      */
     public boolean incRotation() {
         return ++rotation == nbRotation;
+    }
+
+    public float getDuration(float deltaTime) {
+        duration += deltaTime;
+        return duration;
     }
 
     public int getRotation() {
