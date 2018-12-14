@@ -98,7 +98,7 @@ public class EntityFactory {
         playerEntity.add(PlayerComponent.make(engine, personage));
         playerEntity.add(StateComponent.make(engine));
         playerEntity.add(GravityComponent.make(engine, 4));
-        playerEntity.add(HealthComponent.make(engine, 50));
+        playerEntity.add(HealthComponent.make(engine, 100));
         playerEntity.add(CollideComponent.make(engine, 1, 1, spriteComponent));
         playerEntity.add(SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE));
 

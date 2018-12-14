@@ -12,6 +12,8 @@ import com.calliltbn.components.MoveComponent;
 import com.calliltbn.components.PlayerComponent;
 import com.calliltbn.components.PlayerComponent.PlayerAnimation;
 import com.calliltbn.components.SpriteComponent;
+import com.calliltbn.components.StateComponent;
+import com.calliltbn.components.StateComponent.State;
 import com.calliltbn.util.Mappers;
 
 public class PlayerSpeedSystem extends IteratingSystem {
@@ -34,6 +36,12 @@ public class PlayerSpeedSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        StateComponent stateComponent = Mappers.getComponent(StateComponent.class, entity);
+        if (stateComponent.hasAtLeastOneState(State.STUN)) {
+            // player is stun, move action disable
+            return;
+        }
+
         MoveComponent moveStraightComponent = Mappers.getComponent(MoveComponent.class, entity);
         SpriteComponent spriteComponent = Mappers.getComponent(SpriteComponent.class, entity);
         PlayerComponent playerComponent = Mappers.getComponent(PlayerComponent.class, entity);

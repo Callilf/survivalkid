@@ -69,4 +69,9 @@ public class DecorationFactory {
 
         return entity;
     }
+
+    public Entity createDamageHoverText(Vector2 parentPosition) {
+        Entity entity = engine.createEntity();
+        return entity;
+    }
 }

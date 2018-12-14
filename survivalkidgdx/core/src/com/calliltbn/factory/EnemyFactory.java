@@ -12,6 +12,7 @@ import com.calliltbn.components.FollowerComponent;
 import com.calliltbn.components.FriendlyFireComponent;
 import com.calliltbn.components.GravityComponent;
 import com.calliltbn.components.HealthComponent;
+import com.calliltbn.components.KnockbackComponent;
 import com.calliltbn.components.MoveComponent;
 import com.calliltbn.components.MoveComponent.BorderCollision;
 import com.calliltbn.components.MoveOnLineComponent;
@@ -195,11 +196,13 @@ public class EnemyFactory {
         // initialize warning sign
         TextureEnum warnText = TextureEnum.BULL_WARNING;
         Vector2 posWarn = new Vector2(5, 120);
+        Vector2 speedKnockback = new Vector2(30, 50);
         SpriteComponent spriteWarnComponent =
                 SpriteComponent.make(engine, TextureEnum.BULL_WARNING, posWarn, SpriteAnimationEnum.BULL_WARN_ANIM, 10);
         if (isFlip) {
             posWarn.x = GameScreen.SCREEN_W - warnText.getTextureDefault().getRegionWidth() - posWarn.x;
             spriteWarnComponent.setFlip(true);
+            speedKnockback.x *= -1;
         }
         entity.add(spriteWarnComponent);
         entity.add(BlinkComponent.make(engine, 1/12f, 1/12f));
@@ -216,10 +219,11 @@ public class EnemyFactory {
         collideComponent.setInitiative(true);
         HealthComponent healthComponent = HealthComponent.make(engine, 30);
         FriendlyFireComponent friendlyFireComponent = FriendlyFireComponent.make(engine);
+        KnockbackComponent knockbackComponent = KnockbackComponent.make(engine, speedKnockback,0.4f);
         SuccessorComponent successorComponent = SuccessorComponent.make(engine, TypeEntity.SMOKE_WHITE_LARGE);
 
         SubstitutesComponent substitutesComponent = SubstitutesComponent.make(engine, 2, TypeEntity.BULL,
-                spriteComponent, moveComponent, collideComponent, healthComponent, friendlyFireComponent, successorComponent);
+                spriteComponent, moveComponent, collideComponent, healthComponent, friendlyFireComponent, knockbackComponent, successorComponent);
 
         // add substitute component
         entity.add(substitutesComponent);

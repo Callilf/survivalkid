@@ -6,7 +6,11 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.calliltbn.components.CollideComponent;
 import com.calliltbn.components.FriendlyFireComponent;
 import com.calliltbn.components.HealthComponent;
+import com.calliltbn.components.KnockbackComponent;
+import com.calliltbn.components.MoveComponent;
 import com.calliltbn.components.PlayerComponent;
+import com.calliltbn.components.PlayerComponent.PlayerAnimation;
+import com.calliltbn.components.SpriteComponent;
 import com.calliltbn.components.StateComponent;
 import com.calliltbn.components.StateComponent.State;
 import com.calliltbn.util.Mappers;
@@ -86,34 +90,48 @@ public class CollisionSystem extends IteratingSystem {
             // case when no initiative or target has initiative
             if (compareInitiative >= 0) {
                 // process hit target -> source
-                boolean isDead = processCollision(listDeadEntity, sourceEntity, stateSource, healthSource, collideTarget);
+                boolean isDead = processCollision(listDeadEntity, sourceEntity, stateSource, healthSource, targetEntity, collideTarget);
                 if (!isDead || compareInitiative == 0) {
                     // process hit source -> target
-                    processCollision(listDeadEntity, targetEntity, stateTarget, healthTarget, collideSource);
+                    processCollision(listDeadEntity, targetEntity, stateTarget, healthTarget, sourceEntity, collideSource);
                 }
             }
             else {
                 // source has initiative
                 // process hit source -> target
-                boolean isDead = processCollision(listDeadEntity, targetEntity, stateTarget, healthTarget, collideSource);
+                boolean isDead = processCollision(listDeadEntity, targetEntity, stateTarget, healthTarget, sourceEntity, collideSource);
                 if (!isDead) {
                     // process hit target -> source
-                    processCollision(listDeadEntity, sourceEntity, stateSource, healthSource, collideTarget);
+                    processCollision(listDeadEntity, sourceEntity, stateSource, healthSource, targetEntity, collideTarget);
                 }
             }
 
         }
     }
 
-    private boolean processCollision(Set<Entity> listDeadEntity, Entity sourceEntity, StateComponent stateSource, HealthComponent healthSource, CollideComponent collideTarget) {
+    private boolean processCollision(Set<Entity> listDeadEntity, Entity sourceEntity, StateComponent stateSource, HealthComponent healthSource, Entity targetEntity, CollideComponent collideTarget) {
         if (healthSource != null && !StateComponent.hasAtLeastOneState(stateSource, State.INVICIBLE)) {
             if (healthSource.hit(collideTarget.getDamage())) {
                 listDeadEntity.add(sourceEntity);
                 return true;
             }
-            else if (stateSource != null && collideTarget.getRecoveryTime() != 0) {
-                stateSource.addState(State.RECOVERY, collideTarget.getRecoveryTime());
+            if (stateSource != null) {
+                if (collideTarget.getRecoveryTime() != 0) {
+                    stateSource.addState(State.RECOVERY, collideTarget.getRecoveryTime());
+                }
+                KnockbackComponent knockbackComponent = Mappers.getComponent(KnockbackComponent.class, targetEntity);
+                if (knockbackComponent != null) {
+                    stateSource.addState(State.STUN, knockbackComponent.getStunDuration());
+                    MoveComponent moveComponent = Mappers.getComponent(MoveComponent.class, sourceEntity);
+                    if (moveComponent != null) {
+                        moveComponent.setSpeed(knockbackComponent.getSpeed());
+                        SpriteComponent spriteComponent = Mappers.getComponent(SpriteComponent.class, sourceEntity);
+                        PlayerComponent playerComponent = Mappers.getComponent(PlayerComponent.class, sourceEntity);
+                        spriteComponent.setCurrentAnimation(playerComponent.getSpriteAnim(PlayerAnimation.KNOCK_BACK), false);
+                    }
+                }
             }
+
         }
         return false;
     }

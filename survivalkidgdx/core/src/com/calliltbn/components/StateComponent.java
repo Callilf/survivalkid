@@ -19,14 +19,14 @@ public class StateComponent implements Component {
         RECOVERY,
         /** Can collide but not be collide. */
         INVICIBLE,
+        /** Stun by an enemy (like the bull), movement disable. */
+        STUN,
         /** Low speed mode */
         LOW_SPEED(),
         /** High speed enemy mode */
         HIGH_SPEED_ENEMIES(),
         /** Low speed enemy mode */
-        LOW_SPEED_ENEMIES(),
-        /** Knocked back / Stun by an enemy (like the bull), movement disable. */
-        KNOCK_BACK;
+        LOW_SPEED_ENEMIES();
     }
 
     /** Generate a StateComponent */
