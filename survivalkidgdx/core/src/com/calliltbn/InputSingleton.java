@@ -239,18 +239,13 @@ public class InputSingleton {
 	
 
 	/**
-	 * Convert screenX and screenY positions into game positions.
-	 * I don't know why but the origin of the game is the center of the screen there,
-	 * but the hitbox of the player has it's origin on the bottom left corner so I have to
-	 * translate again after calling unproject...
+	 * Convert screenX and screenY positions into game positions and set them in the touchPoint attribute.
 	 * @param screenX the screen x pos
 	 * @param screenY the screen y pos
 	 */
 	private void unprojectTouchPoint(int screenX, int screenY) {
 		touchPoint.set(screenX, screenY, 0);
 		guicam.unproject(touchPoint);
-		touchPoint.x = touchPoint.x + GameScreen.SCREEN_W/2;
-		touchPoint.y = touchPoint.y + GameScreen.SCREEN_H/2;
 	}
 
 	public void initMainPlayerPosition(CollideComponent collideComponent) {

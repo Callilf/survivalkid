@@ -94,7 +94,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());
 		engine.addSystem(new GeneratorEnemySystem(entityFactory, new Difficulty(DifficultyEnum.NORMAL)));
-		engine.addSystem(new RenderingSystem(game.batch, game.shapeRenderer));
+		engine.addSystem(new RenderingSystem(game.batch, game.shapeRenderer, guiCam));
 		engine.addSystem(new SuccessorSystem(entityFactory));
 	}
 
