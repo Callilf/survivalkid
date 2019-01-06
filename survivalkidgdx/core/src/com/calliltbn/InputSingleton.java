@@ -6,9 +6,11 @@ package com.calliltbn;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.calliltbn.components.CollideComponent;
 
 /**
@@ -20,6 +22,15 @@ public class InputSingleton {
 	
 	/** The instance. */
 	private static InputSingleton instance;
+	
+	/** The camera. */
+	private OrthographicCamera guicam;
+	
+	/** The last touched point. */
+	private Vector3 touchPoint = new Vector3();
+	
+	//*****************
+	// Mouse / touch
 	
 	/** Whether the left key has been pressed during this frame. */
     public boolean leftPressed;
@@ -49,16 +60,22 @@ public class InputSingleton {
 	 */
 	private InputSingleton() {}
 	
+	
+	/**
+	 * Instanciate the InputSingleton with the camera.
+	 * @param guicam the game camera
+	 */
+	public static void createInstance(OrthographicCamera guicam) {
+		instance = new InputSingleton();
+		instance.guicam = guicam;
+		instance.initInputProcessor();
+	}
+	
 	/**
 	 * Get the instance.
 	 * @return the {@link InputSingleton} instance.
 	 */
 	public static InputSingleton getInstance() {
-		if (instance == null) {
-			instance = new InputSingleton();
-			instance.initInputProcessor();
-		}
-		
 		return instance;
 	}
 	
@@ -72,12 +89,30 @@ public class InputSingleton {
 		this.jumpPressed = false;
 	}
 	
+	/**
+	 * Get the x location of the touch.
+	 * @return the x location of the touch
+	 */
 	public int getClickX() {
-		return Gdx.input.getX();
+		return (int) touchPoint.x;
 	}
+	
+	/**
+	 * Get the y location of the touch.
+	 * @return the y location of the touch
+	 */
 	public int getClickY() {
-		return Gdx.graphics.getHeight() - Gdx.input.getY();
+		return (int) touchPoint.y;
 	}
+	
+	/**
+	 * Get the location of the touch.
+	 * @return the location of the touch
+	 */
+	public Vector3 getTouchPoint() {
+		return touchPoint;
+	}
+	
 
 	private boolean setKeyUpOrDown(int keycode, boolean kewDown) {
 		switch(keycode) {
@@ -129,7 +164,7 @@ public class InputSingleton {
 				rightPressed = true;
 				leftPressed = false;
 			}
-			if (screenY < GameScreen.SCREEN_H / 2) {
+			if (screenY > GameScreen.SCREEN_H / 2) {
 				jumpPressed = true;
 			}
 		}
@@ -159,26 +194,32 @@ public class InputSingleton {
 
 			@Override
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+				unprojectTouchPoint(screenX, screenY);
+				
 				if (Input.Buttons.LEFT == button) {
 					lastPointer = pointer;
-					return touchUpOrDown(screenX, screenY, true);
+					return touchUpOrDown((int)touchPoint.x, (int)touchPoint.y, true);
 				}
 				return false;
 			}
 
 			@Override
 			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+				unprojectTouchPoint(screenX, screenY);
+
 				if (Input.Buttons.LEFT == button) {
 					lastPointer = -1;
-					return touchUpOrDown(screenX, screenY, false);
+					return touchUpOrDown((int)touchPoint.x, (int)touchPoint.y, false);
 				}
 				return false;
 			}
 
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) {
+				unprojectTouchPoint(screenX, screenY);
+
 				if (pointer == lastPointer) {
-					return touchUpOrDown(screenX, screenY, true);
+					return touchUpOrDown((int)touchPoint.x, (int)touchPoint.y, true);
 				}
 				return false;
 			}
@@ -194,6 +235,17 @@ public class InputSingleton {
 			}
 
         });
+	}
+	
+
+	/**
+	 * Convert screenX and screenY positions into game positions and set them in the touchPoint attribute.
+	 * @param screenX the screen x pos
+	 * @param screenY the screen y pos
+	 */
+	private void unprojectTouchPoint(int screenX, int screenY) {
+		touchPoint.set(screenX, screenY, 0);
+		guicam.unproject(touchPoint);
 	}
 
 	public void initMainPlayerPosition(CollideComponent collideComponent) {

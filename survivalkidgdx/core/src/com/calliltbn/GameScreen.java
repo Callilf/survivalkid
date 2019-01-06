@@ -67,12 +67,14 @@ public class GameScreen extends ScreenAdapter {
 
 	public GameScreen (SurvivalKidGame game) {
 		this.game = game;
-		// init singleton
-		InputSingleton.getInstance();
+		
 		// already running
 		state = State.GAME_RUNNING;
 		guiCam = new OrthographicCamera(SCREEN_W, SCREEN_H);
 		guiCam.position.set(SCREEN_W / 2, SCREEN_H / 2, 0);
+		
+		// init input processor singleton
+		InputSingleton.createInstance(guiCam);
 
 		engine = new PooledEngine();
 		this.entityFactory = new EntityFactory(this.engine);
@@ -92,7 +94,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new PlayerSpeedSystem());
 		engine.addSystem(new MoveSystem());
 		engine.addSystem(new GeneratorEnemySystem(entityFactory, new Difficulty(DifficultyEnum.NORMAL)));
-		engine.addSystem(new RenderingSystem(game.batch, game.shapeRenderer));
+		engine.addSystem(new RenderingSystem(game.batch, game.shapeRenderer, guiCam));
 		engine.addSystem(new SuccessorSystem(entityFactory));
 	}
 

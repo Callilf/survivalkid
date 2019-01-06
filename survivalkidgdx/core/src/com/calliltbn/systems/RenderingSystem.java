@@ -39,14 +39,13 @@ public class RenderingSystem extends IteratingSystem {
 
     private int lastNbSprite = 0;
 
-    public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer) {
+    public RenderingSystem(SpriteBatch batch, ShapeRenderer shapeRenderer, OrthographicCamera camera) {
         super(Family.one(SpriteComponent.class, MoveOnLineComponent.class).get());
 
         this.batch = batch;
         this.shapeRenderer = shapeRenderer;
         shapeRenderer.setAutoShapeType(true);
-        cam = new OrthographicCamera(GameScreen.SCREEN_W, GameScreen.SCREEN_H);
-        cam.position.set(GameScreen.SCREEN_W/2, GameScreen.SCREEN_H/2, 0);
+        cam = camera;
 
         Comparator<Entity> comparator = new Comparator<Entity>() {
             @Override
