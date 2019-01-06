@@ -31,6 +31,7 @@ public class SpriteComponent implements Component {
         component.dieWhenAnimFinished = false;
         component.zindex = zindex;
         component.flip = false;
+        component.flipShift = 0f;
         component.stateTime = 0f;
         component.initTexture(texture);
         return component;
